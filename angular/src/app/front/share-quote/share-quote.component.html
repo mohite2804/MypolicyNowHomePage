@@ -1,0 +1,97 @@
+<!-- Main Wrapper -->
+<div class="main-wrapper" *ngIf="quoteData">
+
+    <!-- Page Wrapper -->
+    <div class="page-wrapper sharescreen">
+
+        <!-- Page Content -->
+        <div class="content">
+
+            <section class="py-0">
+                <div class="container-md">
+                    <div class="row mb-4 align-items-center justify-content-center">
+                        <div class="col-lg-10 col-md-11 text-center text-md-left">
+                            <img src="assets/front/img/hib-logo.png" alt="" width="160">
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-10 col-md-11 border quotes-topinfo shadowbox py-2">
+                            <div class="row py-2">
+                                <div class="col-md-6 col-sm-5 col-12 quotes-box">
+                                    <div>
+                                        <span class="text-muted white">Your Vehicle:</span>
+                                        <h4 class="mb-0">
+
+                                            {{quoteData[0].rto_label | uppercase}} {{quoteData[0].registration_no_part_3 | uppercase}} {{quoteData[0].registration_no_part_4}}, {{quoteData[0].model | uppercase}} , {{quoteData[0].variant | uppercase}}, ({{quoteData[0].vehicle_fuel | uppercase}} {{quoteData[0].cc}}
+                                            CC)
+                                        </h4>
+                                        <h4 class="mb-0"><span class="text-muted white">Registered:</span>{{quoteData[0].registration_date}} </h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-4 col-12 quotes-box">
+                                    <div>
+                                        <span class="text-muted white">Previous Policy:</span>
+                                        <h4 class="mb-0"><span class="text-muted white">Type:</span> {{quoteData[0].policy_subtype_label}}</h4>
+                                        <h4 class="mb-0"><span class="text-muted white">Expiry:</span> {{quoteData[0].prev_policy_expiry_date}}</h4>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-3 col-sm-3 col-12 quotes-box">
+                                        <div>
+                                            <span class="text-muted white">NCB:</span>
+                                            <h4 class="mb-0"><span class="text-muted white">Claim:</span> NO</h4>
+                                            <h4 class="mb-0"><span class="text-muted white">Previous NCB:</span> {{quoteData[0].prev_policy_ncb_per}}%, <span class="text-muted white">New NCB:</span> {{quoteData[0].current_ncb_per}}%</h4>
+                                        </div>
+                                    </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-lg-10 col-md-11 quoteslistwrap">
+                            <div class="quoteslist px-0">
+                                <div class="row">
+
+                                    <div *ngFor="let row of quoteData" id="quoteitem_1" class="col-md-12 col-sm-6 col-12 quoteitem border">
+                                        <div class="row align-items-center py-2">
+                                            <div class="col-lg-2 col-md-4 col-4 quoteitembox insurer-box">
+                                                <img src="assets/front/img/partners-logos/{{row.ic_logo}}" alt="{{quoteData.ic_code}}" />
+                                            </div>
+                                            <div class="col-lg-1 col-md-4 col-3 quoteitembox idvdisc-box">
+                                                <h4 class="mb-0"><span class="text-muted">IDV:</span> {{row.idv}}</h4>
+                                            </div>
+                                            <div class="col-lg-2 col-md-4 col-5 quoteitembox premium-box">
+                                                <span class="text-muted">Premium:</span>
+                                                <h2 class="premiumamt mb-0"><i class="fa fa-inr"></i> {{row.gross_premium}} <span class="d-block mt-1">(Incl. GST)</span></h2>
+                                            </div>
+                                            <!-- <div class="col-lg-5 col-md-8">
+                                                <span class="text-muted">Selected Addons:</span>
+                                                <ul class="selected-addons-list">
+                                                    <li *ngFor="let subrow of row.selected_addons">
+                                                        <i [ngClass]="subrow.class"></i> {{ subrow.name }} - <i class="fa fa-inr"></i> {{ subrow.amount }}
+                                                    </li>
+                                                </ul>
+                                            </div> -->
+                                            <!-- <div class="col-lg-2 col-md-4 text-lg-right">
+                                                <span class="text-muted">Addon Premium:</span>
+                                                <h4 class="mb-0 addonpremium"><i class="fa fa-inr"></i> {{row.total_addon_premium}} <span class="d-block">(Incl. GST)</span></h4>
+                                            </div> -->
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+        </div>
+        <!-- /Page Content -->
+    </div>
+    <!-- /Page Wrapper end-->
+</div>
+<!-- Main Wrapper end-->
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

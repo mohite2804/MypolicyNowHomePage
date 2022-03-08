@@ -1,0 +1,106 @@
+<div class="page-wrapper sharescreen">
+
+    <!-- Page Content -->
+    <div class="content" *ngIf="result_proposal_details">
+        <div class="container">
+            <div class="row mb-4 align-items-center justify-content-center">
+                <div class="col-12 text-center text-md-left">
+                    <img src="assets/front/img/hib-logo.png" alt="" width="160">
+                </div>
+            </div>
+        </div>
+
+
+        <app-proposal-middle-content (parentIsAuthenticate)='onParentIsAuthenticate($event)' [is_from_proposal_page]="is_from_proposal_page" [result_proposal_details]="result_proposal_details" [result_banks]="result_banks" [result_payment_types]="result_payment_types"></app-proposal-middle-content>
+
+
+        <ul class="shareIcons proposal-shareIcons">
+
+
+
+
+            <!-- <li class="shareIcon download"> -->
+            <!-- <a (click)="downloadProposal()" href="javascript:void(0)">Download Proposal</a> -->
+            <!-- </li> -->
+
+            <!-- <li class="shareIcon forward"> -->
+            <!-- <a (click)="openForwardProposalModal()" href="javascript:void(0)">Forward Proposal</a> -->
+            <!-- </li> -->
+        </ul>
+
+        <div class="text-center my-2">
+            <button (click)="LoadMoreQuotes()" type="button" class="btn btn-custom blue">
+                Load More Quotes
+            </button>
+
+        </div>
+
+        <div class="container-md">
+
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-10 col-md-11 quoteslistwrap">
+                    <div class="quoteslist px-0">
+                        <div class="row" *ngIf="result_quote_data">
+                            <div *ngFor="let row of result_quote_data" class="col-md-12 col-sm-6 col-12 quoteitem border">
+
+
+
+                                <div class="row align-items-center py-2">
+
+
+                                    <div class="col-lg-2 col-md-3 col-sm-3 col-3 quoteitembox insurer-box">
+                                        <img src="assets/front/img/partners-logos/{{row.ic_logo}}" alt="">
+                                    </div>
+
+
+                                    <div class="col-lg-3 col-md-5 col-sm-5 col-5 quoteitembox idvdisc-box">
+                                        <h4 class="mb-0"><span class="text-muted">IDV:</span>{{row.idv}}</h4>
+                                    </div>
+
+
+                                    <div class="col-lg-3 col-sm-4 col-4 quoteitembox premium-box">
+                                        <span class="text-muted">Premium:</span>
+
+                                        <h2 class="premiumamt mb-0">
+                                            <i class="fa fa-inr"></i> {{row.gross_premium}} <span>(Incl. GST)</span>
+                                        </h2>
+
+                                    </div>
+
+
+                                    <!-- <div class="col-lg-2 col-md-4 col-1 quoteitembox premium-box"> -->
+                                    <!-- <span class="text-muted">Premium:</span> -->
+                                    <!-- <h2 class="premiumamt mb-0"><i class="fa fa-inr"></i> {{row.gross_premium}} <span class="d-block mt-1">(Incl. GST)</span></h2> -->
+                                    <!-- </div> -->
+                                    <!-- <div class="col-lg-5 col-md-8"> -->
+                                    <!-- <span class="text-muted">Selected Addons:</span> -->
+                                    <!-- <ul class="selected-addons-list"> -->
+                                    <!-- <li *ngFor="let subrow of row.selected_addons"> -->
+                                    <!-- <i [ngClass]="subrow.class"></i> {{ subrow.name }} - <i class="fa fa-inr"></i> {{ subrow.amount }} -->
+                                    <!-- </li> -->
+                                    <!-- </ul> -->
+                                    <!-- </div> -->
+                                    <!-- <div class="col-lg-2 col-md-1 text-lg-right"> -->
+                                    <!-- <span class="text-muted">Addon Premium:</span> -->
+                                    <!-- <h4 class="mb-0 addonpremium"><i class="fa fa-inr"></i> {{row.total_addon_premium}} <span class="d-block">(Incl. GST)</span></h4> -->
+                                    <!-- </div> -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

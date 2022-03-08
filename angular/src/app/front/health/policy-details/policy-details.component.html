@@ -1,0 +1,84 @@
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content"> 
+        <div class="policy-details" style="padding: 10px;">
+            <div class="row">
+                <div class="col-md-3 pd-leftinfo">
+                    <div class="insurer-box option-box">
+                        <img src="assets/front/img/partners-logos/{{policyList[0].logo}}" alt="">
+                    </div>
+                    <div class="insurer-idvncb option-box">
+                        <span>Basic Premium:</span>
+                        <h4><i class="fa fa-inr"></i> {{policyList[0].BasicPremium}}.00</h4>
+                        <span>Tax Premium</span>
+                        <h4 class="mb-0"><i class="fa fa-inr"></i> {{policyList[0].ServiceTax}}.00</h4>
+                    </div>
+                    <div class="insurer-premium option-box">
+                        <span>Discount Rate:</span>
+                        <h4 class="mb-0"><i class="fa fa-inr"></i> {{policyList[0].TotalDiscountAmount}}.00</h4>
+                        <span>Discount Premium:</span>
+                        <h2 class="mb-0"><i class="fa fa-inr"></i> {{policyList[0].OnlineDiscount}}.00</h2> 
+                    </div>
+                    <div class="insurer-premium option-box">
+                        <span>Premium:</span>
+                        <h4 class="mb-0"><i class="fa fa-inr"></i> {{policyList[0].BasicPremium}}.00</h4>
+                        <span>GST @18%:</span>
+                        <h2 class="mb-0"><i class="fa fa-inr"></i> {{policyList[0].OnlineDiscount}}.00</h2> 
+                    </div>
+                    <div class="insurer-premium option-box">
+                        <span>Final Premium (Incl. GST):</span>
+                        <h2 class="premiumamt mb-0"><i class="fa fa-inr"></i> {{policyList[0].TotalPremium}}.00</h2>
+                    </div>
+                </div>
+                <div class="col-md-9 pd-rightinfo">
+                    <div class="col-md-12">
+                        <a routerLink ="../quotation" href="javascript:void(0)"><span aria-hidden="true" style="float: right; font-size: 56px; font-weight: 100;">&times;</span></a>
+                    </div>
+                    <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+                        <li class="nav-item" *ngIf="policy_highlights !='' && policy_highlights !=null"><a class="nav-link active" href="#policy-details-tab1" data-toggle="tab">Highlights</a></li>
+                        <li class="nav-item" *ngIf="policy_features !='' && policy_features !=null"><a class="nav-link active" href="#policy-details-tab2" data-toggle="tab">Features</a></li>
+                        <li class="nav-item" *ngIf="policy_claim_process !='' && policy_claim_process !=null"><a class="nav-link active" href="#policy-details-tab3" data-toggle="tab">Claim Process</a></li>
+                        <li class="nav-item" *ngIf="policy_cashless_hospitals !='' && policy_cashless_hospitals !=null"><a class="nav-link active" href="#policy-details-tab4" data-toggle="tab">Cashless Hospitals</a></li>
+                        <li class="nav-item" *ngIf="policy_portability !='' && policy_portability !=null"><a class="nav-link active" href="#policy-details-tab5" data-toggle="tab">Portability</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane show active" id="policy-details-tab1" *ngIf="policy_highlights !=''">
+                            <div class="premium-breakup-content" [innerHTML]="policy_highlights">
+                                
+                            </div>
+                        </div>
+                        <div class="tab-pane active" id="policy-details-tab2" *ngIf="policy_features !=''">
+                            <div class="coverage-details-content">
+                                <div class="row" [innerHTML]="policy_features">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane active" id="policy-details-tab3" *ngIf="policy_claim_process !=''">
+                            <div class="cashless-garages-content">
+                                <div class="row" [innerHTML]="policy_claim_process">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane active" id="policy-details-tab4" *ngIf="policy_cashless_hospitals !=''">
+                            <div class="coverage-details-content">
+                                <div class="row" [innerHTML]="policy_cashless_hospitals">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane active" id="policy-details-tab5" *ngIf="policy_portability !=''"> 
+                            <div class="coverage-details-content">
+                                <div class="row" [innerHTML]="policy_portability">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  
+<app-loader [loaderActive]="loaderActive"></app-loader>      

@@ -1,0 +1,13 @@
+<div class="row align-items-center latest-update ">
+	<div class="col-auto float-left mr-auto labeltext">Latest Update</div>
+	<div class="col updatetext" >
+		<!-- <ul>
+	      <li *ngFor="let movie of moviesArr; let i = index">
+	          {{i}}{{movie.title}}
+	      </li>
+	    </ul> -->
+	    <marquee class="display-block" scrolldelay="120" onmouseover="this.stop();" onmouseout="this.start();" >    	
+	        <span *ngFor="let row of tickers_data">{{row.ticker_name}} : {{row.ticker_description}} <a href='{{attachment_path}}uploads/ticker-attachment/{{row.ticker_attachment}}' target="_blank"download>{{row.ticker_attachment}}</a></span>
+	    </marquee>
+	</div>
+</div>

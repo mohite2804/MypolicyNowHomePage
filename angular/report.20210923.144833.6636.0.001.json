@@ -1,0 +1,417 @@
+
+{
+  "header": {
+    "reportVersion": 1,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20210923.144833.6636.0.001.json",
+    "dumpEventTime": "2021-09-23T14:48:33Z",
+    "dumpEventTimeStamp": "1632388713890",
+    "processId": 6636,
+    "cwd": "C:\\projects\\code\\mypolicynow_rewamp\\angular",
+    "commandLine": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\admin\\AppData\\Roaming\\npm/node_modules/@angular/cli/bin/ng",
+      "serve"
+    ],
+    "nodejsVersion": "v12.16.1",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "win32",
+    "componentVersions": {
+      "node": "12.16.1",
+      "v8": "7.8.279.23-node.31",
+      "uv": "1.34.0",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "72",
+      "nghttp2": "1.40.0",
+      "napi": "5",
+      "llhttp": "2.0.4",
+      "http_parser": "2.9.3",
+      "openssl": "1.1.1d",
+      "cldr": "35.1",
+      "icu": "64.2",
+      "tz": "2019c",
+      "unicode": "12.1"
+    },
+    "release": {
+      "name": "node",
+      "lts": "Erbium",
+      "headersUrl": "https://nodejs.org/download/release/v12.16.1/node-v12.16.1-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v12.16.1/node-v12.16.1.tar.gz",
+      "libUrl": "https://nodejs.org/download/release/v12.16.1/win-x64/node.lib"
+    },
+    "osName": "Windows_NT",
+    "osRelease": "6.3.9600",
+    "osVersion": "Windows 8.1 Pro",
+    "osMachine": "x86_64",
+    "cpus": [
+      {
+        "model": "Intel(R) Core(TM) i5-4300U CPU @ 1.90GHz",
+        "speed": 2494,
+        "user": 1070437,
+        "nice": 0,
+        "sys": 946812,
+        "idle": 13650453,
+        "irq": 19656
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-4300U CPU @ 1.90GHz",
+        "speed": 2494,
+        "user": 1022515,
+        "nice": 0,
+        "sys": 740734,
+        "idle": 13904171,
+        "irq": 54875
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-4300U CPU @ 1.90GHz",
+        "speed": 2494,
+        "user": 1186953,
+        "nice": 0,
+        "sys": 758078,
+        "idle": 13722390,
+        "irq": 4765
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-4300U CPU @ 1.90GHz",
+        "speed": 2494,
+        "user": 1072968,
+        "nice": 0,
+        "sys": 706546,
+        "idle": 13887890,
+        "irq": 2796
+      }
+    ],
+    "networkInterfaces": [
+      {
+        "name": "Wi-Fi",
+        "internal": false,
+        "mac": "a4:c4:94:a9:0c:36",
+        "address": "2409:4040:e0a:8c62:6da3:cc7c:f60:78a8",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "Wi-Fi",
+        "internal": false,
+        "mac": "a4:c4:94:a9:0c:36",
+        "address": "2409:4040:e0a:8c62:e062:6271:e995:c0ed",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "Wi-Fi",
+        "internal": false,
+        "mac": "a4:c4:94:a9:0c:36",
+        "address": "fe80::6da3:cc7c:f60:78a8",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 3
+      },
+      {
+        "name": "Wi-Fi",
+        "internal": false,
+        "mac": "a4:c4:94:a9:0c:36",
+        "address": "192.168.39.231",
+        "netmask": "255.255.255.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "Loopback Pseudo-Interface 1",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "::1",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "Loopback Pseudo-Interface 1",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "127.0.0.1",
+        "netmask": "255.0.0.0",
+        "family": "IPv4"
+      }
+    ],
+    "host": "hp"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x00007ff787a519f9",
+      "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+10873"
+    },
+    {
+      "pc": "0x00007ff787a55e1c",
+      "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+28316"
+    },
+    {
+      "pc": "0x00007ff787a54dd8",
+      "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+24152"
+    },
+    {
+      "pc": "0x00007ff787b534cb",
+      "symbol": "v8::base::CPU::has_sse+38363"
+    },
+    {
+      "pc": "0x00007ff788369f4e",
+      "symbol": "v8::Isolate::ReportExternalAllocationLimitReached+94"
+    },
+    {
+      "pc": "0x00007ff788352021",
+      "symbol": "v8::SharedArrayBuffer::Externalize+833"
+    },
+    {
+      "pc": "0x00007ff78821e57c",
+      "symbol": "v8::internal::Heap::EphemeronKeyWriteBarrierFromCode+1436"
+    },
+    {
+      "pc": "0x00007ff7882297d0",
+      "symbol": "v8::internal::Heap::ProtectUnprotectedMemoryChunks+1312"
+    },
+    {
+      "pc": "0x00007ff7882262f4",
+      "symbol": "v8::internal::Heap::PageFlagsAreConsistent+3204"
+    },
+    {
+      "pc": "0x00007ff78821bb13",
+      "symbol": "v8::internal::Heap::CollectGarbage+1283"
+    },
+    {
+      "pc": "0x00007ff78821a184",
+      "symbol": "v8::internal::Heap::AddRetainedMap+2452"
+    },
+    {
+      "pc": "0x00007ff78823b36d",
+      "symbol": "v8::internal::Factory::NewFillerObject+61"
+    },
+    {
+      "pc": "0x00007ff787fa0c51",
+      "symbol": "v8::internal::interpreter::JumpTableTargetOffsets::iterator::operator=+1665"
+    },
+    {
+      "pc": "0x00007ff7887b4ddd",
+      "symbol": "v8::internal::SetupIsolateDelegate::SetupHeap+546637"
+    },
+    {
+      "pc": "0x00007ff78873b281",
+      "symbol": "v8::internal::SetupIsolateDelegate::SetupHeap+48113"
+    },
+    {
+      "pc": "0x0000008e57b9d9fd",
+      "symbol": ""
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 2152873984,
+    "totalCommittedMemory": 2152873984,
+    "usedMemory": 2120908776,
+    "availableMemory": 49888168,
+    "memoryLimit": 2197815296,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 262144,
+        "committedMemory": 262144,
+        "capacity": 32808,
+        "used": 32808,
+        "available": 0
+      },
+      "new_space": {
+        "memorySize": 2621440,
+        "committedMemory": 2621440,
+        "capacity": 1309320,
+        "used": 478736,
+        "available": 830584
+      },
+      "old_space": {
+        "memorySize": 1825456128,
+        "committedMemory": 1825456128,
+        "capacity": 1812502280,
+        "used": 1809695328,
+        "available": 2806952
+      },
+      "code_space": {
+        "memorySize": 10915840,
+        "committedMemory": 10915840,
+        "capacity": 9544512,
+        "used": 9544512,
+        "available": 0
+      },
+      "map_space": {
+        "memorySize": 16781312,
+        "committedMemory": 16781312,
+        "capacity": 5374960,
+        "used": 5374960,
+        "available": 0
+      },
+      "large_object_space": {
+        "memorySize": 296214528,
+        "committedMemory": 296214528,
+        "capacity": 295238144,
+        "used": 295238144,
+        "available": 0
+      },
+      "code_large_object_space": {
+        "memorySize": 622592,
+        "committedMemory": 622592,
+        "capacity": 544288,
+        "used": 544288,
+        "available": 0
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 1309320,
+        "used": 0,
+        "available": 1309320
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 894.078,
+    "kernelCpuSeconds": 33,
+    "cpuConsumptionPercent": 106.561,
+    "maxRss": 2451267584,
+    "pageFaults": {
+      "IORequired": 2502654,
+      "IONotRequired": 0
+    },
+    "fsActivity": {
+      "reads": 20104,
+      "writes": 789
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "=::": "::\\",
+    "ACLOCAL_PATH": "C:\\Program Files\\Git\\mingw64\\share\\aclocal;C:\\Program Files\\Git\\usr\\share\\aclocal",
+    "ALLUSERSPROFILE": "C:\\ProgramData",
+    "APPDATA": "C:\\Users\\admin\\AppData\\Roaming",
+    "BROWSERSLIST_IGNORE_OLD_DATA": "1",
+    "COMMONPROGRAMFILES": "C:\\Program Files\\Common Files",
+    "COMPUTERNAME": "HP",
+    "COMSPEC": "C:\\windows\\system32\\cmd.exe",
+    "CONFIG_SITE": "C:/Program Files/Git/mingw64/etc/config.site",
+    "CommonProgramFiles(x86)": "C:\\Program Files (x86)\\Common Files",
+    "CommonProgramW6432": "C:\\Program Files\\Common Files",
+    "DISPLAY": "needs-to-be-defined",
+    "EXEPATH": "C:\\Program Files\\Git",
+    "FP_NO_HOST_CHECK": "NO",
+    "HOME": "C:\\Users\\admin",
+    "HOMEDRIVE": "C:",
+    "HOMEPATH": "\\Users\\admin",
+    "HOSTNAME": "hp",
+    "INFOPATH": "C:\\Program Files\\Git\\usr\\local\\info;C:\\Program Files\\Git\\usr\\share\\info;C:\\Program Files\\Git\\usr\\info;C:\\Program Files\\Git\\share\\info",
+    "LANG": "en_US.UTF-8",
+    "LOCALAPPDATA": "C:\\Users\\admin\\AppData\\Local",
+    "LOGONSERVER": "\\\\MicrosoftAccount",
+    "MANPATH": "C:\\Program Files\\Git\\mingw64\\local\\man;C:\\Program Files\\Git\\mingw64\\share\\man;C:\\Program Files\\Git\\usr\\local\\man;C:\\Program Files\\Git\\usr\\share\\man;C:\\Program Files\\Git\\usr\\man;C:\\Program Files\\Git\\share\\man",
+    "MINGW_CHOST": "x86_64-w64-mingw32",
+    "MINGW_PACKAGE_PREFIX": "mingw-w64-x86_64",
+    "MINGW_PREFIX": "C:/Program Files/Git/mingw64",
+    "MSYSTEM": "MINGW64",
+    "MSYSTEM_CARCH": "x86_64",
+    "MSYSTEM_CHOST": "x86_64-w64-mingw32",
+    "MSYSTEM_PREFIX": "C:/Program Files/Git/mingw64",
+    "NUMBER_OF_PROCESSORS": "4",
+    "ORIGINAL_PATH": "C:\\Program Files\\Git\\mingw64\\bin;C:\\Program Files\\Git\\usr\\bin;C:\\Users\\admin\\bin;C:\\Program Files (x86)\\Intel\\iCLS Client;C:\\Program Files\\Intel\\iCLS Client;C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0;C:\\Program Files\\Intel\\WiFi\\bin;C:\\Program Files\\Common Files\\Intel\\WirelessCommon;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files\\Git\\cmd;C:\\xampp\\php;C:\\Program Files\\PuTTY;C:\\Program Files (x86)\\PuTTY;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files (x86)\\HP\\IdrsOCR_15.2.10.1114;C:\\Program Files\\nodejs;C:\\Program Files\\TortoiseGit\\bin;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\admin\\AppData\\Roaming\\npm",
+    "ORIGINAL_TEMP": "C:/Users/admin/AppData/Local/Temp",
+    "ORIGINAL_TMP": "C:/Users/admin/AppData/Local/Temp",
+    "OS": "Windows_NT",
+    "OnlineServices": "Online Services",
+    "PATH": "C:\\Users\\admin\\bin;C:\\Program Files\\Git\\mingw64\\bin;C:\\Program Files\\Git\\usr\\local\\bin;C:\\Program Files\\Git\\usr\\bin;C:\\Program Files\\Git\\usr\\bin;C:\\Program Files\\Git\\mingw64\\bin;C:\\Program Files\\Git\\usr\\bin;C:\\Users\\admin\\bin;C:\\Program Files (x86)\\Intel\\iCLS Client;C:\\Program Files\\Intel\\iCLS Client;C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0;C:\\Program Files\\Intel\\WiFi\\bin;C:\\Program Files\\Common Files\\Intel\\WirelessCommon;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files\\Git\\cmd;C:\\xampp\\php;C:\\Program Files\\PuTTY;C:\\Program Files (x86)\\PuTTY;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files (x86)\\HP\\IdrsOCR_15.2.10.1114;C:\\Program Files\\nodejs;C:\\Program Files\\TortoiseGit\\bin;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\admin\\AppData\\Roaming\\npm;C:\\Program Files\\Git\\usr\\bin\\vendor_perl;C:\\Program Files\\Git\\usr\\bin\\core_perl",
+    "PATHEXT": ".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC",
+    "PKG_CONFIG_PATH": "C:\\Program Files\\Git\\mingw64\\lib\\pkgconfig;C:\\Program Files\\Git\\mingw64\\share\\pkgconfig",
+    "PLINK_PROTOCOL": "ssh",
+    "PROCESSOR_ARCHITECTURE": "AMD64",
+    "PROCESSOR_IDENTIFIER": "Intel64 Family 6 Model 69 Stepping 1, GenuineIntel",
+    "PROCESSOR_LEVEL": "6",
+    "PROCESSOR_REVISION": "4501",
+    "PROGRAMFILES": "C:\\Program Files",
+    "PSCP": "C:/Program Files/putty",
+    "PSModulePath": "C:\\windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\",
+    "PTSMINSTALLPATH_X86": "c:\\Program Files (x86)\\Hewlett-Packard\\HP ProtectTools Security Manager\\",
+    "PUBLIC": "C:\\Users\\Public",
+    "PWD": "C:/projects/code/mypolicynow_rewamp/angular",
+    "Platform": "BNB",
+    "ProgramData": "C:\\ProgramData",
+    "ProgramFiles(x86)": "C:\\Program Files (x86)",
+    "ProgramW6432": "C:\\Program Files",
+    "SESSIONNAME": "Console",
+    "SHELL": "C:\\Program Files\\Git\\usr\\bin\\bash.exe",
+    "SHLVL": "2",
+    "SSH_ASKPASS": "C:/Program Files/Git/mingw64/libexec/git-core/git-gui--askpass",
+    "SYSTEMDRIVE": "C:",
+    "SYSTEMROOT": "C:\\windows",
+    "TEMP": "C:\\Users\\admin\\AppData\\Local\\Temp",
+    "TERM": "xterm",
+    "TMP": "C:\\Users\\admin\\AppData\\Local\\Temp",
+    "TMPDIR": "C:\\Users\\admin\\AppData\\Local\\Temp",
+    "USERDOMAIN": "HP",
+    "USERDOMAIN_ROAMINGPROFILE": "HP",
+    "USERNAME": "admin",
+    "USERPROFILE": "C:\\Users\\admin",
+    "WEBPACK_DEV_SERVER": "true",
+    "WINDIR": "C:\\windows",
+    "_": "C:/Program Files/nodejs/node"
+  },
+  "sharedObjects": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "C:\\windows\\SYSTEM32\\ntdll.dll",
+    "C:\\windows\\system32\\KERNEL32.DLL",
+    "C:\\windows\\system32\\KERNELBASE.dll",
+    "C:\\windows\\SYSTEM32\\dbghelp.dll",
+    "C:\\windows\\system32\\WS2_32.dll",
+    "C:\\windows\\SYSTEM32\\IPHLPAPI.DLL",
+    "C:\\windows\\system32\\PSAPI.DLL",
+    "C:\\windows\\SYSTEM32\\USERENV.dll",
+    "C:\\windows\\system32\\ADVAPI32.dll",
+    "C:\\windows\\system32\\USER32.dll",
+    "C:\\windows\\system32\\CRYPT32.dll",
+    "C:\\windows\\SYSTEM32\\bcrypt.dll",
+    "C:\\windows\\SYSTEM32\\WINMM.dll",
+    "C:\\windows\\system32\\msvcrt.dll",
+    "C:\\windows\\system32\\NSI.dll",
+    "C:\\windows\\system32\\RPCRT4.dll",
+    "C:\\windows\\SYSTEM32\\WINNSI.DLL",
+    "C:\\windows\\SYSTEM32\\profapi.dll",
+    "C:\\windows\\SYSTEM32\\sechost.dll",
+    "C:\\windows\\system32\\GDI32.dll",
+    "C:\\windows\\system32\\MSASN1.dll",
+    "C:\\windows\\SYSTEM32\\WINMMBASE.dll",
+    "C:\\windows\\system32\\SspiCli.dll",
+    "C:\\windows\\SYSTEM32\\cfgmgr32.dll",
+    "C:\\windows\\SYSTEM32\\DEVOBJ.dll",
+    "C:\\windows\\system32\\IMM32.DLL",
+    "C:\\windows\\system32\\MSCTF.dll",
+    "C:\\windows\\SYSTEM32\\powrprof.dll",
+    "C:\\windows\\SYSTEM32\\CRYPTBASE.DLL",
+    "C:\\windows\\SYSTEM32\\bcryptPrimitives.dll",
+    "C:\\windows\\system32\\uxtheme.dll",
+    "C:\\windows\\SYSTEM32\\combase.dll",
+    "C:\\windows\\system32\\mswsock.dll",
+    "C:\\windows\\SYSTEM32\\dhcpcsvc6.DLL",
+    "C:\\windows\\SYSTEM32\\dhcpcsvc.DLL",
+    "C:\\windows\\SYSTEM32\\DNSAPI.dll",
+    "C:\\Program Files\\Bonjour\\mdnsNSP.dll",
+    "C:\\Windows\\System32\\rasadhlp.dll",
+    "C:\\windows\\System32\\fwpuclnt.dll",
+    "C:\\windows\\system32\\napinsp.dll",
+    "C:\\windows\\system32\\pnrpnsp.dll",
+    "C:\\windows\\system32\\NLAapi.dll",
+    "C:\\windows\\System32\\winrnr.dll",
+    "C:\\windows\\system32\\wshbth.dll"
+  ]
+}

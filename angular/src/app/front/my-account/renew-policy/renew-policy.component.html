@@ -1,0 +1,630 @@
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content container-fluid">
+        <app-tickers></app-tickers>
+        <div class="row align-items-center latest-update ">
+            <!-- <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-4 ml-auto" *ngFor="let row of product_list">
+                        <a *ngIf="row.parent_id == 0" class="btn btn-custom  {{product_type==row.renewal_url?'green':'btn-outline-success line'}} w-100" href="javascript:void(0);" (click)="changeProduct(row.renewal_url);"> {{ row.renewal_label }} </a>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- <div class="col-md-2 float-right ml-auto">
+                <a  class="btn btn-custom {{product_type=='car'?'green':'btn-outline-success line'}}  w-100"  href="javascript:void(0);"   (click)="changeProduct('car');"  > Private Car </a>
+            </div>
+            <div class="col-md-2" >
+                <a class="btn btn-custom  {{product_type=='bike'?'green':'btn-outline-success line'}} w-100"    href="javascript:void(0);" (click)="changeProduct('bike');"  > Bike</a>
+            </div> -->
+
+            <!-- <div class="col-md-2 float-right ml-auto"> -->
+            <!-- <a *ngIf="show_renewal_btn" class="btn btn-custom green w-100" href="javascript:void(0);" data-toggle="modal" data-target="#send_renewal"> -->
+            <!-- <i class="fa fa-share mr-2"></i> Send Renewal -->
+            <!-- </a> -->
+            <!-- </div> -->
+            <div _ngcontent-ipv-c133="" class="col-md-3 float-right ml-auto">
+                <a _ngcontent-ipv-c133="" download="policy-renewal-note.pdf" target="_blank" href="{{baseurl}}uploads/policy_renewal_note/policy-renewal-note.pdf" class="btn btn-custom green w-100">Download Process Note</a>
+            </div>
+        </div>
+         
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col-9">
+                    <h3 class="page-title">Renewal Management System</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="['/my-account/dashboard']" href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Renewal Management System</li>
+                    </ul>
+                </div>
+                <div class="col-3">
+                    <a [routerLink]="['/my-account/upload-policy-renewal']" href="javascript:void(0)" class="btn btn-custom green w-100 float-right ml-auto">Upload Bulk Renewal Policy</a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadowbox">
+                    <!-- <div class="card-header">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-md-6 col-12">
+                                <div class="form-group ui form mb-0">
+                                    <div class="row align-items-center justify-content-lg-start justify-content-center inline fields mb-0">
+                                        <div class="col-md-auto col-12 px-3 field">
+                                            <div class="ui radio checkbox">
+                                                <input type="radio" name="rmsleads" id="rms-allleads" value="rms-allleads" checked="checked" (click)="showHideRenewLeads('all');">
+                                                <label class="mb-0" for="rms-allleads">All Leads
+                                                    <span class="badge badge-danger" id="all_leads">{{all_leads}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-auto col-12 px-3 field">
+                                            <div class="ui radio checkbox">
+                                                <input type="radio" name="rmsleads" id="rms-openleads" value="rms-openleads" (click)="showHideRenewLeads(7);">
+                                                <label class="mb-0" for="rms-openleads">Open Leads
+                                                    <span class="badge badge-danger" id="open_leads">{{open_leads}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-auto col-12 px-3 field">
+                                            <div class="ui radio checkbox">
+                                                <input type="radio" name="rmsleads" id="rms-followup" value="rms-followup" (click)="showHideRenewLeads(2);">
+                                                <label class="mb-0" for="rms-followup">Follow Up
+                                                   <span class="badge badge-danger" id="follow_up">{{follow_up}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-auto col-12 px-3 field">
+                                            <div class="ui radio checkbox">
+                                                <input type="radio" name="rmsleads" id="rms-closedleads" value="rms-closedleads" (click)="showHideRenewLeads(4);">
+                                                <label class="mb-0" for="rms-closedleads">Closed Leads
+                                                    <span class="badge badge-danger" id="closed_leads">{{closed_leads}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group ui form mb-0">
+                                    <div class="row align-items-center justify-content-lg-end justify-content-center inline fields mb-0">
+                                        <div class="col-md-auto col-12 px-3 field">
+                                            <div class="ui radio checkbox">
+                                                <input type="radio" name="rmsdays" id="rms-15days" value="rms-15days" checked="" (click)="showHideRenewDays(15);getPolicyCount(15);">
+                                                <label class="mb-0" for="rms-15days">1-15 Days
+                                                  <span class="badge badge-danger">{{one_to_fifteen_days}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-auto col-12 px-3 field">
+                                            <div class="ui radio checkbox">
+                                                <input type="radio" name="rmsdays" id="rms-30days" value="rms-30days" (click)="showHideRenewDays(30);getPolicyCount(30);">
+                                                <label class="mb-0" for="rms-30days">16-30 Days
+                                                  <span class="badge badge-danger">{{sixteen_to_thirty_days}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-auto col-12 px-3 field">
+                                            <div class="ui radio checkbox">
+                                                <input type="radio" name="rmsdays" id="rms-40days" value="rms-40days" (click)="showHideRenewDays(45);getPolicyCount(45);">
+                                                <label class="mb-0" for="rms-40days">31-45 Days
+                                                  <span class="badge badge-danger">{{thirty_one_to_fourty_five_days}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-auto col-12 px-3 field">
+                                            <div class="ui radio checkbox">
+                                                <input type="radio" name="rmsdays" id="rms-60days" value="rms-60days" (click)="showHideRenewDays(60);getPolicyCount(60);">
+                                                <label class="mb-0" for="rms-60days">46-60 Days
+                                                  <span class="badge badge-danger">{{fourty_six_to_sixty_days}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card shadowbox">
+                                <div class="card-body pb-0">
+                                    <form class="form-horizontal" [formGroup]="formRecodEdit">
+                                        <div class="row">
+                                            <div class="col-lg-2 col-md-3">
+                                                <div class="form-group">
+                                                    <label>Policy/Regi/Engine/Chassis No:</label>
+                                                    <input type="text" formControlName="filter_policy_no" class="form-control" placeholder="Policy/Registration/Engine/Chassis Number" autocomplete="off">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3">
+                                                <div class="form-group">
+                                                    <label>Policy From :</label>
+                                                    <div class="cal-icon">
+                                                        <input (click)="e.toggle()" (dateSelect)="selectDate('policy_from',$event)" class="form-control" placeholder="yyyy-mm-dd" formControlName="policy_from" [(ngModel)]="date_picker_policy_from" ngbDatepicker #e="ngbDatepicker" placeholder="yyyy-mm-dd" autocomplete="off"
+                                                            readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3">
+                                                <div class="form-group">
+                                                    <label>Policy To :</label>
+                                                    <div class="cal-icon">
+                                                        <input [minDate]="minDateForToDate" (click)="f.toggle()" class="form-control" placeholder="yyyy-mm-dd" formControlName="policy_to" [(ngModel)]="date_picker_policy_to" ngbDatepicker #f="ngbDatepicker" placeholder="yyyy-mm-dd" autocomplete="off" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-4">
+                                                <div class="form-group">
+                                                    <label>Insurance Name :</label>
+                                                    <ng-select placeholder="Select IC" (clear)="clearValue('insurance_name',$event)" (change)="changeSelectBox('insurance_name',$event)" [(ngModel)]="selectedInsurance_name" [ngModelOptions]="{standalone: true}">
+                                                        <ng-option value="">ALL </ng-option>
+                                                        <ng-option *ngFor="let row of icList" [value]="row.id">{{row.code}}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-4">
+                                                <div class="form-group">
+                                                    <label>Product Type :</label>
+                                                    <ng-select placeholder="Select Product Type" (clear)="clearValue('product_name',$event)" (change)="changeSelectBox('product_name',$event)" [(ngModel)]="selectedProduct_name" [ngModelOptions]="{standalone: true}">
+                                                        <ng-option value="">ALL </ng-option>
+                                                        <ng-option *ngFor="let row of product_list" [value]="row.renewal_code">{{row.renewal_label}}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+
+                                           <!--  <div class="col-lg-2 col-md-4">
+                                                <div class="form-group">
+                                                    <label>Policy Type :</label>
+                                                    <ng-select placeholder="Select Policy Type" (clear)="clearValue('policy_type_name',$event)" (change)="changeSelectBox('policy_type_name',$event)" [(ngModel)]="selectedPolicyType_name" [ngModelOptions]="{standalone: true}">
+                                                      
+                                                        <ng-option value="renew">Renew</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div> -->
+
+                                            <!-- <div class="col-lg-2 col-md-4">
+                                                <div class="form-group">
+                                                    <label>Policy Sub-Type :</label>
+                                                    <ng-select placeholder="Select Policy Sub Type" (clear)="clearValue('policy_sub_type_name',$event)" (change)="changeSelectBox('policy_sub_type_name',$event)" [(ngModel)]="selectedPolicySubType_name" [ngModelOptions]="{standalone: true}">
+                                                        <ng-option *ngFor="let row of policySubTypeList" [value]="row.policy_subtype_id">{{row.code}}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                             -->
+
+                                            <div class="col-lg-2 col-md-4">
+                                                <div class="form-group">
+                                                    <label>Lead Status :</label>
+                                                    <ng-select placeholder="Select Lead Status" (clear)="clearValue('lead_status',$event)" (change)="changeSelectBox('lead_status',$event)" [(ngModel)]="selectedlead_status" [ngModelOptions]="{standalone: true}">
+                                                        <ng-option value="all">ALL </ng-option>
+                                                         <ng-option value="7">Open</ng-option>
+                                                        <ng-option value="2">Follow up</ng-option>
+                                                        <ng-option value="4">Closed</ng-option>
+                                                       
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-4">
+                                                <div class="form-group">
+                                                    <label>No.of Days for renewal</label>
+                                                    <ng-select placeholder="Select No.of Days for renewal" (clear)="clearValue('renewal_days',$event)" (change)="changeSelectBox('renewal_days',$event)" [(ngModel)]="selectedrenewal_days" [ngModelOptions]="{standalone: true}">
+                                                        <ng-option value="expired">Expired </ng-option>
+                                                         <ng-option value="15">1-15 Days</ng-option>
+                                                        <ng-option value="30">16-30 Days</ng-option>
+                                                        <ng-option value="40">31-45 Days</ng-option>
+                                                        <ng-option value="60">46-60 Days</ng-option>
+                                                        
+                                                       
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-4">
+                                                <div class="form-group">
+                                                    <label>External / Internal :</label>
+                                                    <ng-select placeholder="Select External/Internal" (clear)="clearValue('is_external',$event)" (change)="changeSelectBox('is_external',$event)" [(ngModel)]="selectedis_external" [ngModelOptions]="{standalone: true}">
+                                                        <ng-option value="">ALL </ng-option>
+                                                        <ng-option value="1">External </ng-option>
+                                                         <ng-option value="0">Internal</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label class="d-block">&nbsp;</label>
+                                                <button (click)="submitFormFilter()" type="submit" class="btn btn-custom green w-43" title="Search"><i class="fa fa-search"></i></button> &nbsp;
+                                            </div>
+                                            <div>
+                                                <label class="d-block">&nbsp;</label>
+                                                <button type="button" (click)="resetFilterForm()" class="btn btn-custom yellow w-43" title="Reset"><i class="fa fa-refresh"></i></button>&nbsp;
+                                            </div>
+                                            <div>
+                                                <label class="d-block">&nbsp;</label>
+                                                <button type="button" (click)="exportDataForm()" class="btn btn-custom blue w-43" title="Export"><i class="fa fa-download"></i></button>&nbsp;
+                                            </div>
+                                            <div class="col-lg-2 col-md-3">
+                                                <!-- <button (click)="exportAsXLSX()" class="btn btn-custom green w-43 pull-left" title="Export To Excel">Export <i class="fa fa-download"></i></button> -->
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table datatable *ngIf="dtRendered" [dtOptions]="dtOptions" dt-column-defs="dtColumnDefs" class="table table-striped table-bordered custom-table srn action-table datatable"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--  Forward Renewal Modal -->
+        <div id="send_renewal" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Send Renewal</h5>
+                        <button type="button" (click)="resetCommonCheckBox()" class="close" #closebutton1 data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+                            <li class="nav-item" (click)="selectTabSms()">
+                                <a class="nav-link active" href="#sendmessage-tab1" data-toggle="tab">SMS</a>
+                            </li>
+                            <li class="nav-item" (click)="selectTabEmail()">
+                                <a class="nav-link" href="#sendmessage-tab3" data-toggle="tab">E-Mail</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+
+                            <div class="tab-pane show active" id="sendmessage-tab1">
+                                <form [formGroup]="formRenewalSMS" (ngSubmit)="submitFormRenewSms()">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-10 col-12 mb-3">
+                                            <div class="form-group">
+                                                <div class="col-12">
+                                                    <label class="focus-label">Insurance Companies</label>
+
+                                                </div>
+
+                                                <div *ngFor="let row of ic_list_for_sms_all let i = index" class="col-lg-12 col-sm-6 col-12">
+                                                    <div class="ui checkbox">
+                                                        <input (click)="getICIdsForSms($event,row)" id="ic_list_{{row.id}}" [ngModelOptions]="{standalone: true}" [(ngModel)]="row.checked" [name]="'row'+i" value="{{row.id}}" type="checkbox">
+                                                        <label class="mt-2 mb-3" for="ic_list_{{row.id}}">{{ row.code }}</label>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <button type="submit" class="btn btn-custom green"> Send</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+
+
+                            <div class="tab-pane" id="sendmessage-tab3">
+                                <form [formGroup]="formRenewalMail" (ngSubmit)="submitRenewalEmail()">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-10 col-12 mb-3">
+                                            <div class="form-group">
+                                                <div class="col-12">
+                                                    <label class="focus-label">Insurance Companies</label>
+                                                </div>
+                                                <div *ngFor="let row of ic_list_for_email_all let i = index" class="col-lg-12 col-sm-6 col-12">
+                                                    <div class="ui checkbox">
+                                                        <input (click)="getICIdsForEmail($event,row)" [ngModelOptions]="{standalone: true}" [(ngModel)]="row.checked" id="email_ic_list_{{row.id}}" [name]="'row'+i" value="{{row.id}}" type="checkbox">
+                                                        <label class="mt-2 mb-3" for="email_ic_list_{{row.id}}">{{ row.code }}</label>
+                                                    </div>
+                                                </div>
+
+
+
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <button type="submit" class="btn btn-custom green"> Send</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / Forward Renewal Modal -->
+
+
+        <!--  Forward Renewal Modal -->
+        <!--  -->
+        <div id="send_renewal_individual" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Send Renewal</h5>
+                        <button type="button" class="close" #closebutton2 data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+
+                    </div>
+                    <div class="modal-body">
+                        <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+                            <li class="nav-item"><a class="nav-link active" href="#sendmessage-individual-tab1" data-toggle="tab">SMS</a></li>
+                            <!-- <li class="nav-item"><a class="nav-link" href="#sendmessage-tab2" data-toggle="tab">WhatsApp</a></li> -->
+                            <li class="nav-item"><a class="nav-link" href="#sendmessage-individual-tab3" data-toggle="tab">E-Mail</a></li>
+                        </ul>
+                        <div class="tab-content">
+
+                            <div class="tab-pane show active" id="sendmessage-individual-tab1">
+                                <form [formGroup]="formRenewalSMSIndividual" (ngSubmit)="submitFormRenewSmsIndividual()">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-10 col-12 mb-3">
+                                            <div class="form-group">
+                                                <div class="col-12">
+                                                    <label class="focus-label">Insurance Companies</label>
+
+                                                </div>
+                                                <!-- [ngModelOptions]="{standalone: true}" [(ngModel)]="row.checked" -->
+                                                <div *ngFor="let row of ic_list_for_sms_individual let i = index" class="col-lg-12 col-sm-6 col-12">
+                                                    <div class="ui checkbox">
+                                                        <input (click)="getICIdsForSmsIndividual($event.target.checked,row)" [ngModelOptions]="{standalone: true}" [(ngModel)]="row.checked" id="ic_list_Individual_{{row.id}}" [name]="'row'+i" value="{{row.id}}" type="checkbox">
+                                                        <label class="mt-2 mb-3" for="ic_list_Individual_{{row.id}}">{{ row.code }}</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <button type="submit" class="btn btn-custom green"> Send</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+
+                            <!-- <div class="tab-pane" id="sendmessage-individual-tab2">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-10 col-12 mb-3">
+                                        <div class="form-group">
+                                            <label class="focus-label">Insurance Company</label>
+                                            <select class="ui search dropdown">
+                                                        <option value="">Select Insurance Company</option>
+                                                        <option *ngFor="let row of ic_list let i = index" value="{{row.id}}">{{row.code}}</option>
+                                                    </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <a href="javascript:void(0);" class="btn btn btn-custom green submit-btn">Send</a>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <div class="tab-pane" id="sendmessage-individual-tab3">
+                                <form [formGroup]="formRenewalMailIndividual" (ngSubmit)="submitRenewalEmailIndividual()">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-10 col-12 mb-3">
+                                            <div class="form-group">
+                                                <div class="col-12">
+                                                    <label class="focus-label">Insurance Companies</label>
+
+                                                </div>
+
+                                                <!-- <div *ngFor="let row of ic_list let i = index" class="col-lg-12 col-sm-6 col-12">
+                                                    <div class="ui checkbox">
+                                                        <input *ngIf="ic_id==row.id" id="ic_list_for_email_{{row.id}}" [name]="'row'+i" value="{{row.id}}" type="checkbox" checked>
+                                                        <input *ngIf="ic_id!=row.id" id="ic_list_for_email_{{row.id}}" [name]="'row'+i" value="{{row.id}}" type="checkbox">
+                                                        <label class="mt-2 mb-3" for="ic_list_for_email_{{row.id}}">{{ row.code }}</label>
+                                                    </div>
+                                                </div> -->
+
+                                                <!-- [ngModelOptions]="{standalone: true}" [(ngModel)]="row.checked" -->
+
+                                                <div *ngFor="let row of ic_list_for_email_individual let i = index" class="col-lg-12 col-sm-6 col-12">
+                                                    <div class="ui checkbox">
+                                                        <input (click)="getICIdsForEmailIndividual($event,row)" id="ic_list_email_Individual_{{row.id}}" [ngModelOptions]="{standalone: true}" [(ngModel)]="row.checked" [name]="'row'+i" value="{{row.id}}" type="checkbox">
+                                                        <label class="mt-2 mb-3" for="ic_list_email_Individual_{{row.id}}">{{ row.code }}</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <button type="submit" class="btn btn-custom green"> Send</button>
+                                            <!-- <a href="javascript:void(0);" class="btn btn btn-custom green submit-btn">Send</a> -->
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / Forward Renewal Modal -->
+
+        <!--  Disposition Modal -->
+        <form [formGroup]="formchAddDisposition" (ngSubmit)="submitFormAddDisposition()">
+            <div id="dispositionbox" class="modal custom-modal fade" role="dialog" [ngClass]="{'d-none': add_disposition_model }">
+                <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add Disposition</h5>
+                            <button type="button" class="close" #closebutton data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group form-focus select-focus">
+                                        <label class="focus-label req">Disposition</label>
+                                        <select class="ui search dropdown" formControlName="disposition">
+                                                    <option value="">Select Disposition</option>
+                                                    <option value="1">Won</option>
+                                                    <option value="4">Closed</option>
+                                                    <option value="3">Non Contactable</option>
+                                                    <option value="5">Lost</option>
+                                                    <option value="6">Quote shared</option>
+                                                    <option value="2">Follow Up</option>
+                                                </select>
+                                        <div *ngIf="submittedAddDisposition && formchAddDisposition.controls.disposition.errors">
+                                            <small *ngIf="submittedAddDisposition && formchAddDisposition.controls.disposition.errors.required" class="text-danger">
+                                                    Please Select Disposition.
+                                                  </small>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group form-focus select-focus">
+                                        <label class="focus-label req">Communication Mode</label>
+                                        <select class="ui search dropdown" formControlName="communication_mode">
+                                                    <option value="">Select Communication Mode</option>
+                                                    <option value="Call">Call</option>
+                                                    <option value="Mail">Mail</option>
+                                                    <option value="Sms">Sms</option>
+                                                </select>
+                                        <div *ngIf="submittedAddDisposition && formchAddDisposition.controls.communication_mode.errors">
+                                            <small *ngIf="submittedAddDisposition && formchAddDisposition.controls.communication_mode.errors.required" class="text-danger">
+                                                    Please Select communication mode.
+                                                  </small>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!--   <div id="disposition_won_box" class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group form-focus">
+                                                        <input type="text" class="form-control floating">
+                                                        <label class="focus-label req">Policy No.</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group form-focus">
+                                                        <input type="text" class="form-control floating">
+                                                        <label class="focus-label req">Premium</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                <div id="disposition_datetime_box" class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-12" style="padding-top:38px">
+                                            <div class="form-group form-focus focused">
+                                                <div class="cal-icon">
+                                                    <input type="text" formControlName="disposition_date" outsideDays="collapsed" (dateSelect)="selectDate('disposition_date',$event)" class="form-control floating datetimepicker-month" (click)="h.toggle()" ngbDatepicker #h="ngbDatepicker" [(ngModel)]="date_picker_disposition_date"
+                                                        readonly>
+                                                    <!--  <input type="text" class="form-control floating datetimepicker" formControlName="disposition_date"> -->
+                                                    <label class="focus-label req">Date</label>
+                                                </div>
+                                                <div *ngIf="submittedAddDisposition && formchAddDisposition.controls.disposition_date.errors">
+                                                    <small *ngIf="submittedAddDisposition && formchAddDisposition.controls.disposition_date.errors.required" class="text-danger">
+                                                            Please enter Date.
+                                                          </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group form-focus">
+                                                <ngb-timepicker [(ngModel)]="time" [meridian]="meridian" formControlName="disposition_time"></ngb-timepicker>
+                                                <!-- <input type="text" class="form-control floating datetimepicker-time" formControlName="disposition_time"> -->
+                                                <div *ngIf="submittedAddDisposition && formchAddDisposition.controls.disposition_time.errors">
+                                                    <small *ngIf="submittedAddDisposition && formchAddDisposition.controls.disposition_time.errors.required" class="text-danger">
+                                                            Please enter Time.
+                                                          </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-12" style="padding-top:10px">
+                                    <div class="form-group form-focus focused">
+                                        <textarea class="form-control" rows="3" placeholder="Enter comment" formControlName="disposition_comment"></textarea>
+                                         <label class="focus-label req">Comment</label>
+
+                                        
+                                        <div *ngIf="submittedAddDisposition && formchAddDisposition.controls.disposition_comment.errors">
+                                            <small *ngIf="submittedAddDisposition && formchAddDisposition.controls.disposition_comment.errors.required" class="text-danger">
+                                                            Please enter comment.
+                                                          </small>
+                                        </div>
+                                        <!-- <input type="hidden" formControlName="policy_master_id"> -->
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-center">
+
+                                    <button type="submit" class="btn btn-custom green"> Submit</button>
+                                    <!-- <a href="javascript:void(0);" class="btn btn btn-custom green submit-btn">Submit</a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- / Disposition Modal -->
+
+        <!--  History Modal -->
+        <div id="historybox" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">History- {{ history_policy_no }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-nowrap custom-table table-sm mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr. No.</th>
+                                                <th>Date</th>
+                                                <th>Time</th>
+                                                <th>Communication Mode</th>
+                                                <th>Disposition</th>
+                                                <th>Comments</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let row of history_policy_records let i = index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{row.follow_date}}</td>
+                                                <td>{{row.follow_time}}</td>
+                                                <td>{{row.c_mode}}</td>
+                                                <td>{{row.disposition_name}}</td>
+                                                <td>{{row.call_comment}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- / History Modal -->
+
+        </div>
+        <!-- /Page Content -->
+    </div>
+
+    <app-loader [loaderActive]="loaderActive"></app-loader>

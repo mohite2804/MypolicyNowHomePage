@@ -1,0 +1,53 @@
+.bg-brand-red,
+.btn.red,
+.sidebar-menu li.active a,
+.sidebar-menu li.submenu>a.active,
+.display-box .display-text,
+.checkbox-instab:checked+label,
+.proposal-infobar  {
+    background-color: #002F34;
+}
+
+.text-brand-red,
+.btn.red:hover,
+.sidebar-menu li a:hover,
+.display-box:hover .display-text h3,
+.checkbox-instab:checked+label,
+.checkbox-instab:not(:checked)+label {
+    color: #002F34;
+}
+
+.btn.red:hover,
+.display-box .display-text,
+.display-box:hover .display-text,
+.checkbox-instab:checked+label,
+.checkbox-instab:not(:checked)+label,
+.checkbox-instab:checked+label {
+    border-color: #002F34;
+}
+
+.checkbox-instab:checked+label {
+    background: linear-gradient( #002F34, #c2271e);
+}
+
+
+.header,
+.card-header,
+.bg-brand-blue,
+.blue-gradient,
+.btn.blue,
+.btn.blue:hover {
+    background-color: #002F34;
+}
+.proposalform .card-header h3,
+.text-brand-blue { 
+    color: #002F34;
+}
+.topsearchbar,
+.blue-gradient,
+.btn.blue:hover {
+    border-color: #002F34;
+}
+.blue-gradient {
+    background: linear-gradient( #002F34, #157fac);
+}

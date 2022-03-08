@@ -1,0 +1,79 @@
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <section class="usecreativepage py-0">
+        <div class="container-fluid">
+            <div #screen class="row" *ngFor="let row of generateCreativeData">
+                <div class="col-md-8 bg-light py-4 border-right">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-lg-7 col-md-10 col-12 border px-0" id="my-node">
+                            <div class="imglogo bg-white p-2">
+                                <img src="assets/front/logo/mpn-logo.png" alt="" style="max-height:40px;">
+                            </div>
+                            <div class="img">
+                                <img src="{{row.image}}" alt="">
+                            </div>
+                            <div #chgcolor class="custominfo bg-white p-2 text-center" style="background-color: #eee;">
+                                <h5 class="mb-0">{{row.user_name}}</h5>
+                                <p class="mb-0">{{row.mobile_no}} <br>{{row.company_name}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="content p-5">
+                        <h3 class="text-black mb-2">{{row.name}}</h3>
+                        <p>{{row.discription}}</p>
+                        <div class="row justify-content-center py-3">
+                            <div class="col-12 mb-4">
+                                <p class="mb-0"><strong>Change Text Color</strong> </p>
+                                <div class="cp-container" id="cp3-container">
+                                    <div class="input-group" title="Using input value">
+                                        <input (change)="colorTextChange($event)" type="color">
+                                        <!-- <input id="cp3" type="text" class="form-control" value="#ff9900" autocomplete="off" /> -->
+                                        <!-- <input [(colorPicker)]="color" [style.background]="color" /> -->
+                                        <!-- <color-sketch [color]="state" (onChangeComplete)="changeComplete($event)"></color-sketch> -->
+
+                                        <!-- <div class="input-group-append">
+                                            <button type="button" class="btn btn-primary colorpicker-input-addon"><i></i></button>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="col-12 mb-3 text-center d-flext justify-content-around">
+                                <a href="javascript:void(0);" class="sharebtn facebook">
+                                    <span class="iconify" data-icon="brandico:facebook" data-inline="false"></span> Share
+                                </a>
+                                <a href="javascript:void(0);" class="sharebtn twitter">
+                                    <span class="iconify" data-icon="bi:twitter" data-inline="false"></span> Tweet
+                                </a>
+                                <a href="javascript:void(0);" class="sharebtn fb-messanger">
+                                    <span class="iconify" data-icon="bi:messenger" data-inline="false"></span> Share
+                                </a>
+                                <a href="javascript:void(0);" class="sharebtn whatsapp">
+                                    <span class="iconify" data-icon="bi:whatsapp" data-inline="false"></span> Share
+                                </a>
+                                <a href="javascript:void(0);" class="sharebtn insta">
+                                    <span class="iconify" data-icon="akar-icons:instagram-fill" data-inline="false"></span> Share
+                                </a>
+                            </div> -->
+
+                            <div class="col-12">
+
+                                <button (click)="downloadGreeting()" type="button" class="btn btn-success btn-lg w-100"><span class="iconify" data-icon="ri:download-cloud-line" data-inline="false"></span> Download Creative</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="download">
+                <img #canvas>
+                <a #downloadLink></a>
+            </div>
+        </div>
+    </section>
+    <!-- /Page Content -->
+</div>
+<!-- /Page Wrapper -->
+<app-loader [loaderActive]="loaderActive"></app-loader>

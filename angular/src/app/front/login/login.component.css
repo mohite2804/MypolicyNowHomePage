@@ -1,0 +1,15 @@
+#recaptcha_switch_audio {
+    display: none;
+}
+
+.audio-button-holder {
+    display: none !important;
+}
+
+.captcha-wrap>iframe .rc-audiochallenge-tdownload {
+    display: none !important;
+}
+
+.rc-audiochallenge-tdownload{
+	display: none !important;
+}

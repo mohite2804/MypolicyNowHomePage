@@ -1,0 +1,760 @@
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content container-fluid">
+        <div class="row align-items-center latest-update ">
+            <!-- <div class="col-auto float-left mr-auto labeltext">Latest Update</div>
+            <div class="col updatetext">
+                <marquee class="display-block" scrolldelay="120" onmouseover="this.stop();" onmouseout="this.start();">
+                    <span><a href="#">Issuance of Digital Surveyor and Loss Assessor Licenses.</a></span>
+                    <span><a href="#">Issuance of Digital Surveyor and Loss Assessor Licenses.</a></span>
+                    <span><a href="#">Issuance of Digital Surveyor and Loss Assessor Licenses.</a></span>
+                </marquee>
+            </div> -->
+        </div>
+        <div class="page-header">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-9 col-md-10 col-12 mt-3">
+                    <h3 class="page-title text-center">Policy Transfer[Payable] Endorsement for Policy Number - <b>{{policy_no}}</b></h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2 col-md-12 col-12 mt-3">
+                </div>
+                <div class="col-lg-3 col-md-6 col-12 mt-3">
+                    <h4 class="text-right">Policy Type: <b>{{policy_type_name}}</b> </h4>
+                </div>
+                <div class="col-lg-7 col-md-6 col-12 mt-3">
+                    <h4 class="text-left">Policy Subtype: <b>{{policy_subtype_name}}</b></h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row align-items-center justify-content-center">
+            <div class="col-lg-10 col-md-10 col-12">
+                <div class="card shadowbox">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+<form [formGroup]="formeditTransfer" (ngSubmit)="submitFormTransfer()">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="row align-items-center">
+                    <div class="col-md-12 col-12">
+                        <h4>Upload Documents</h4>
+                        <hr>
+                    </div>
+                    <!-- NOC -->
+                    <div class="col-md-4 col-12">
+                        <div class="card shadowbox">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-2"><b>NOC: <sup class="text-danger">*</sup></b></h5>
+                                        <label>{{noc_label}}</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="box fileuploadbox">
+                                            <input type="file" id="noc-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadNOCcopy($event)">
+                                            <label for="noc-copy-1">
+                                                <figure>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                        <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                    </svg>
+                                                </figure>
+                                                <span>{{noc_url_label}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="uploaded-img">
+                                            <img [src]="noc_url" alt="">
+                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.noc_document.errors">
+                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.noc_document.errors.required" class="text-danger">
+                                        Please upload noc.
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.noc_document.errors?.requiredFileType" class="text-danger">
+                                        Allowed file type "jpg", "png", "jpeg", "pdf"
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.noc_document.errors?.fileSizeValidator" class="text-danger">
+                                        Allowed file size is 5 MB.
+                                      </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Invoice/rc copy -->
+                    <div class="col-md-4 col-12">
+                        <div class="card shadowbox">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-2"><b>Invoice/RC Copy: <sup class="text-danger">*</sup></b></h5>
+                                        <label>{{invoice_rc_copy_label}}</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="box fileuploadbox">
+                                            <input type="file" id="invoice_rc_copy-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadInvoiceRCcopy($event)">
+                                            <label for="invoice_rc_copy-copy-1">
+                                                <figure>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                        <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                    </svg>
+                                                </figure>
+                                                <span>{{invoice_rc_copy_url_label}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="uploaded-img">
+                                            <img [src]="invoice_rc_copy_url" alt="">
+                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.invoice_rc_copy_document.errors">
+                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.invoice_rc_copy_document.errors.required" class="text-danger">
+                                        Please upload invoice/rc copy.
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.invoice_rc_copy_document.errors?.requiredFileType" class="text-danger">
+                                        Allowed file type "jpg", "png", "jpeg", "pdf"
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.invoice_rc_copy_document.errors?.fileSizeValidator" class="text-danger">
+                                        Allowed file size is 5 MB.
+                                      </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- form 29 / form 30 -->
+                    <div class="col-md-4 col-12">
+                        <div class="card shadowbox">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-2"><b>Form 29/ Form 30: </b></h5>
+                                        <label>{{form29_form30_label}}</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="box fileuploadbox">
+                                            <input type="file" id="form29_form30-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadForm29Form30copy($event)">
+                                            <label for="form29_form30-copy-1">
+                                                <figure>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                        <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                    </svg>
+                                                </figure>
+                                                <span>{{form29_form30_url_label}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="uploaded-img">
+                                            <img [src]="form29_form30_url" alt="">
+                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.form29_form30_document.errors">
+                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.form29_form30_document.errors.required" class="text-danger">
+                                        Please upload form 29/ form 30.
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.form29_form30_document.errors?.requiredFileType" class="text-danger">
+                                        Allowed file type "jpg", "png", "jpeg", "pdf"
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.form29_form30_document.errors?.fileSizeValidator" class="text-danger">
+                                        Allowed file size is 5 MB.
+                                      </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inspection report -->
+                    <div class="col-md-4 col-12">
+                        <div class="card shadowbox">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-2"><b>Inspection Report Image: <sup class="text-danger">*</sup>  </b></h5>
+                                        <label>{{inpection_report_label}}</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="box fileuploadbox">
+                                            <input type="file" id="inpection_report-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadInpspectionReportcopy($event)">
+                                            <label for="inpection_report-copy-1">
+                                                <figure>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                        <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                    </svg>
+                                                </figure>
+                                                <span>{{inpection_report_url_label}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="uploaded-img">
+                                            <img [src]="inpection_report_url" alt="">
+                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.inpection_report_document.errors">
+                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.inpection_report_document.errors.required" class="text-danger">
+                                        Please upload inpection report image.
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.inpection_report_document.errors?.requiredFileType" class="text-danger">
+                                        Allowed file type "jpg", "png", "jpeg", "pdf"
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.inpection_report_document.errors?.fileSizeValidator" class="text-danger">
+                                        Allowed file size is 5 MB.
+                                      </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Front image -->
+                    <div class="col-md-4 col-12">
+                        <div class="card shadowbox">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-2"><b>Front Image: <sup class="text-danger">*</sup> </b></h5>
+                                        <label>{{front_image_label}}</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="box fileuploadbox">
+                                            <input type="file" id="front_image-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadFrontImagecopy($event)">
+                                            <label for="front_image-copy-1">
+                                                <figure>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                        <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                    </svg>
+                                                </figure>
+                                                <span>{{front_image_url_label}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="uploaded-img">
+                                            <img [src]="front_image_url" alt="">
+                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.front_image_document.errors">
+                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.front_image_document.errors.required" class="text-danger">
+                                        Please upload front image.
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.front_image_document.errors?.requiredFileType" class="text-danger">
+                                        Allowed file type "jpg", "png", "jpeg", "pdf"
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.front_image_document.errors?.fileSizeValidator" class="text-danger">
+                                        Allowed file size is 5 MB.
+                                      </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rear image -->
+                    <div class="col-md-4 col-12">
+                        <div class="card shadowbox">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-2"><b>Rear Image: <sup class="text-danger">*</sup> </b></h5>
+                                        <label>{{rear_image_label}}</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="box fileuploadbox">
+                                            <input type="file" id="rear_image-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadRearImagecopy($event)">
+                                            <label for="rear_image-copy-1">
+                                                <figure>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                        <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                    </svg>
+                                                </figure>
+                                                <span>{{rear_image_url_label}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="uploaded-img">
+                                            <img [src]="rear_image_url" alt="">
+                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.rear_image_document.errors">
+                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.rear_image_document.errors.required" class="text-danger">
+                                        Please upload rear image.
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.rear_image_document.errors?.requiredFileType" class="text-danger">
+                                        Allowed file type "jpg", "png", "jpeg", "pdf"
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.rear_image_document.errors?.fileSizeValidator" class="text-danger">
+                                        Allowed file size is 5 MB.
+                                      </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Left image -->
+                    <div class="col-md-4 col-12">
+                        <div class="card shadowbox">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-2"><b>Left Image: <sup class="text-danger">*</sup> </b></h5>
+                                        <label>{{left_image_label}}</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="box fileuploadbox">
+                                            <input type="file" id="left_image-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadLeftImagecopy($event)">
+                                            <label for="left_image-copy-1">
+                                                <figure>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                        <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                    </svg>
+                                                </figure>
+                                                <span>{{left_image_url_label}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="uploaded-img">
+                                            <img [src]="left_image_url" alt="">
+                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.left_image_document.errors">
+                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.left_image_document.errors.required" class="text-danger">
+                                        Please upload left image.
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.left_image_document.errors?.requiredFileType" class="text-danger">
+                                        Allowed file type "jpg", "png", "jpeg", "pdf"
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.left_image_document.errors?.fileSizeValidator" class="text-danger">
+                                        Allowed file size is 5 MB.
+                                      </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- right_image -->
+                    <div class="col-md-4 col-12">
+                        <div class="card shadowbox">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-2"><b>Right Image: <sup class="text-danger">*</sup> </b></h5>
+                                        <label>{{right_image_label}}</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="box fileuploadbox">
+                                            <input type="file" id="right_image-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadRightImagecopy($event)">
+                                            <label for="right_image-copy-1">
+                                                <figure>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                        <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                    </svg>
+                                                </figure>
+                                                <span>{{right_image_url_label}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="uploaded-img">
+                                            <img [src]="right_image_url" alt="">
+                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.right_image_document.errors">
+                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.right_image_document.errors.required" class="text-danger">
+                                        Please upload right image.
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.right_image_document.errors?.requiredFileType" class="text-danger">
+                                        Allowed file type "jpg", "png", "jpeg", "pdf"
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.right_image_document.errors?.fileSizeValidator" class="text-danger">
+                                        Allowed file size is 5 MB.
+                                      </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- windscreen_inside -->
+                    <div class="col-md-4 col-12">
+                        <div class="card shadowbox">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-2"><b>Windscreen Inside Image: <sup class="text-danger">*</sup></b></h5>
+                                        <label>{{windscreen_inside_label}}</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="box fileuploadbox">
+                                            <input type="file" id="windscreen_inside-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadWindscreenInsidecopy($event)">
+                                            <label for="windscreen_inside-copy-1">
+                                                <figure>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                        <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                    </svg>
+                                                </figure>
+                                                <span>{{windscreen_inside_url_label}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="uploaded-img">
+                                            <img [src]="windscreen_inside_url" alt="">
+                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.windscreen_inside_document.errors">
+                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.windscreen_inside_document.errors.required" class="text-danger">
+                                        Please upload windscreen inside image.
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.windscreen_inside_document.errors?.requiredFileType" class="text-danger">
+                                        Allowed file type "jpg", "png", "jpeg", "pdf"
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.windscreen_inside_document.errors?.fileSizeValidator" class="text-danger">
+                                        Allowed file size is 5 MB.
+                                      </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- windscreen_outside -->
+                    <div class="col-md-4 col-12">
+                        <div class="card shadowbox">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-2"><b>Windscreen Outside Image: <sup class="text-danger">*</sup></b></h5>
+                                        <label>{{windscreen_outside_label}}</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="box fileuploadbox">
+                                            <input type="file" id="windscreen_outside-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadWindscreenOutsidecopy($event)">
+                                            <label for="windscreen_outside-copy-1">
+                                                <figure>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                        <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                    </svg>
+                                                </figure>
+                                                <span>{{windscreen_outside_url_label}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="uploaded-img">
+                                            <img [src]="windscreen_outside_url" alt="">
+                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.windscreen_outside_document.errors">
+                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.windscreen_outside_document.errors.required" class="text-danger">
+                                        Please upload windscreen outside image.
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.windscreen_outside_document.errors?.requiredFileType" class="text-danger">
+                                        Allowed file type "jpg", "png", "jpeg", "pdf"
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.windscreen_outside_document.errors?.fileSizeValidator" class="text-danger">
+                                        Allowed file size is 5 MB.
+                                      </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- autometer_with_engine_on -->
+                    <div class="col-md-4 col-12">
+                        <div class="card shadowbox">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-2"><b>Odometer With Engine On: <sup class="text-danger">*</sup></b></h5>
+                                        <label>{{autometer_with_engine_on_label}}</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="box fileuploadbox">
+                                            <input type="file" id="autometer_with_engine_on-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadAutometerWithEngineOncopy($event)">
+                                            <label for="autometer_with_engine_on-copy-1">
+                                                <figure>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                        <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                    </svg>
+                                                </figure>
+                                                <span>{{autometer_with_engine_on_url_label}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="uploaded-img">
+                                            <img [src]="autometer_with_engine_on_url" alt="">
+                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.autometer_with_engine_on_document.errors">
+                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.autometer_with_engine_on_document.errors.required" class="text-danger">
+                                        Please upload odometer with engine on image.
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.autometer_with_engine_on_document.errors?.requiredFileType" class="text-danger">
+                                        Allowed file type "jpg", "png", "jpeg", "pdf"
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.autometer_with_engine_on_document.errors?.fileSizeValidator" class="text-danger">
+                                        Allowed file size is 5 MB.
+                                      </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- chassis_plate_print -->
+                    <div class="col-md-4 col-12">
+                        <div class="card shadowbox">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-2"><b>Chassis/Plate Print: <sup class="text-danger">*</sup> </b></h5>
+                                        <label>{{chassis_plate_print_label}}</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="box fileuploadbox">
+                                            <input type="file" id="chassis_plate_print-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadChassisPlatePrintcopy($event)">
+                                            <label for="chassis_plate_print-copy-1">
+                                                <figure>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                        <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                    </svg>
+                                                </figure>
+                                                <span>{{chassis_plate_print_url_label}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="uploaded-img">
+                                            <img [src]="chassis_plate_print_url" alt="">
+                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.chassis_plate_print_document.errors">
+                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.chassis_plate_print_document.errors.required" class="text-danger">
+                                        Please upload chassis plate print.
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.chassis_plate_print_document.errors?.requiredFileType" class="text-danger">
+                                        Allowed file type "jpg", "png", "jpeg", "pdf"
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.chassis_plate_print_document.errors?.fileSizeValidator" class="text-danger">
+                                        Allowed file size is 5 MB.
+                                      </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- previous_insurance_copy -->
+                    <div class="col-md-4 col-12">
+                        <div class="card shadowbox">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-2"><b>Previous Insurances Copy: </b></h5>
+                                        <label>{{previous_insurance_copy_label}}</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="box fileuploadbox">
+                                            <input type="file" id="previous_insurance_copy-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadPreviousInsuranceCopycopy($event)">
+                                            <label for="previous_insurance_copy-copy-1">
+                                                <figure>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                        <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                    </svg>
+                                                </figure>
+                                                <span>{{previous_insurance_copy_url_label}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="uploaded-img">
+                                            <img [src]="previous_insurance_copy_url" alt="">
+                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.previous_insurance_copy_document.errors">
+                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.previous_insurance_copy_document.errors.required" class="text-danger">
+                                        Please upload previous insurance copy.
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.previous_insurance_copy_document.errors?.requiredFileType" class="text-danger">
+                                        Allowed file type "jpg", "png", "jpeg", "pdf"
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.previous_insurance_copy_document.errors?.fileSizeValidator" class="text-danger">
+                                        Allowed file size is 5 MB.
+                                      </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- dicky_open -->
+                    <div class="col-md-4 col-12">
+                        <div class="card shadowbox">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-2"><b>Dicky Open Image: <sup class="text-danger">*</sup></b></h5>
+                                        <label>{{dicky_open_label}}</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="box fileuploadbox">
+                                            <input type="file" id="dicky_open-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadDickyOpencopy($event)">
+                                            <label for="dicky_open-copy-1">
+                                                <figure>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                        <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                    </svg>
+                                                </figure>
+                                                <span>{{dicky_open_url_label}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="uploaded-img">
+                                            <img [src]="dicky_open_url" alt="">
+                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.dicky_open_document.errors">
+                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.dicky_open_document.errors.required" class="text-danger">
+                                        Please upload dicky open copy.
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.dicky_open_document.errors?.requiredFileType" class="text-danger">
+                                        Allowed file type "jpg", "png", "jpeg", "pdf"
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.dicky_open_document.errors?.fileSizeValidator" class="text-danger">
+                                        Allowed file size is 5 MB.
+                                      </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- selfie_with_vehicle -->
+                    <div class="col-md-4 col-12">
+                        <div class="card shadowbox">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-2"><b>Selfie With Vehicle: </b></h5>
+                                        <label>{{selfie_with_vehicle_label}}</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="box fileuploadbox">
+                                            <input type="file" id="selfie_with_vehicle-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadSelfieWithVehiclecopy($event)">
+                                            <label for="selfie_with_vehicle-copy-1">
+                                                <figure>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                        <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                    </svg>
+                                                </figure>
+                                                <span>{{selfie_with_vehicle_url_label}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="uploaded-img">
+                                            <img [src]="selfie_with_vehicle_url" alt="">
+                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                        </div>
+                                    </div>
+                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.selfie_with_vehicle_document.errors">
+                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.selfie_with_vehicle_document.errors.required" class="text-danger">
+                                        Please upload selfie with vehicle.
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.selfie_with_vehicle_document.errors?.requiredFileType" class="text-danger">
+                                        Allowed file type "jpg", "png", "jpeg", "pdf"
+                                      </small>
+                                        <small *ngIf="formeditTransfer.controls.selfie_with_vehicle_document.errors?.fileSizeValidator" class="text-danger">
+                                        Allowed file size is 5 MB.
+                                      </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row align-items-center">
+                    <div class="col-12">
+                        <p class="alert alert-info" *ngIf="docuploaded">Documents already uploaded</p>
+                        <button type="submit" class="btn btn-custom green w-100"  *ngIf="submitbtn"> Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /Page Content -->
+</div>
+<!-- /Page Wrapper -->
+<app-loader [loaderActive]="loaderActive"></app-loader>

@@ -1,0 +1,95 @@
+<<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 col-md-10">  
+                <div class="card shadowbox mb-0">
+                    <div class="card-body">
+                        <div class="payment-success">
+                            <div class="tophead">
+                                <div class="success-icon">
+                                    <i class="fa fa-check-circle"></i>
+                                </div>
+                                <h2>Congratulations, <span>{{result_output_data.customer_salutation}} {{result_output_data.customer_first_name}} {{result_output_data.customer_middle_name}} {{result_output_data.customer_last_name}}</span></h2>
+                                <h3>Your policy has been booked successfully.</h3>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-md-5 col-12">
+                                    <div class="policynobox card">
+                                        <div class="card-body">
+                                            <h4>Your Policy Number</h4>
+                                            <h3>{{result_output_data.policy_no}}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="premiumpaid">
+                                        <h4>Premium Piad <span><i class="fa fa-inr"></i> {{result_output_data.due_premium}}</span></h4>
+                                    </div>
+                                    <div class="text-center">                                            
+                                        <a href="javascript:void(0);" (click)="downloadPolicy()" class="btn btn-custom green my-2 w-100"><i class="fa fa-download mr-1"></i> Download Policy</a>
+                                        <a href="javascript:void(0);" *ngIf="is_dealer_url_with_login" [routerLink]="['/home']" class="btn btn-custom green my-2 w-100"><i class="fa fa-file-text-o mr-1"></i> Buy Another Policy</a>
+                                        <a href="javascript:void(0);" *ngIf="is_dealer_url_with_login" [routerLink]="['/my-account/dashboard']" class="btn btn-custom green my-2 w-100"><i class="fa fa-user mr-1"></i> Go To Myaccount</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-7 col-12">
+                                    <div class="card shadowbox border">
+                                        <div class="card-header">
+                                            <div class="row justify-content-center align-items-center ">
+                                                <div class="col-lg-3 col-md-3 col-12 insurer-box">
+                                                    <img src="assets/front/img/partners-logos/{{policylogo}}" alt="">
+                                                </div>
+                                                <div class="col-lg-9 col-md-9 col-12 insurer-co">
+                                                    <h4 style="color:#fff;">{{policyList.plan_comp_code}}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <ul class="infolist">
+                                                        <li>
+                                                            <div class="title">Insured Name (Age):</div>
+                                                            <div class="text">{{result_output_data.customer_salutation}} {{result_output_data.customer_first_name}} {{result_output_data.customer_middle_name}} {{result_output_data.customer_last_name}} ({{userQuotedetails.insured_type_self_age}})</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Phone Number:</div>
+                                                            <div class="text">{{result_output_data.customer_mobile}}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Email Address:</div>
+                                                            <div class="text">{{result_output_data.customer_email_id}}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Policy Start:</div>
+                                                            <div class="text">{{result_output_data.effective_date}}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Policy End:</div>
+                                                            <div class="text">{{result_output_data.expiry_date}}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Address:</div>
+                                                            <div class="text">{{result_output_data.customer_address1}}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Aadhaar No.:</div>
+                                                            <div class="text">{{result_output_data.customer_adhar}}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Pan No.:</div>
+                                                            <div class="text">{{result_output_data.customer_pan}}</div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>        
+<app-loader [loaderActive]="loaderActive"></app-loader>

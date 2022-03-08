@@ -1,0 +1,913 @@
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <app-tickers></app-tickers>
+        <div class="page-header">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-9 col-md-10 col-12 mt-3">
+                    <h3 class="page-title text-center">Cancellation Request for Policy Number - {{policy_no}}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-center">
+            <div class="col-lg-9 col-md-10 col-12">
+                <div class="card shadowbox">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+                                    <li class="nav-item" *ngIf="sameDayPolicyAvailable"><a class="nav-link {{sameDayPolicyAvailable ? 'active' : '' }}" href="#same-day-cancellation" data-toggle="tab">Same Day Cancellation</a></li>
+                                    <li class="nav-item"><a class="nav-link {{sameDayPolicyAvailable ? '' : 'active' }}" href="#double-policy" data-toggle="tab">Double
+                      Policy</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#other-reason" data-toggle="tab">Other</a></li>
+                                </ul>
+
+                                <div id="accordion" class="tab-content">
+                                    <div class="tab-pane show {{sameDayPolicyAvailable ? 'active' : '' }} " id="same-day-cancellation" *ngIf="sameDayPolicyAvailable">
+                                        <div class="accordion-style-1">
+                                            <div class="card shadowbox">
+                                                <!-- <div class="card-header">
+                                                    <h5>
+                                                        <a href="javascript:void(0);" class="collapsed" data-toggle="collapse" data-target="#collapseSameDayPolicy" aria-expanded="false" aria-controls="collapseSameDayPolicy">
+                                                                    Document Upload
+                                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                                </a>
+                                                    </h5>
+                                                </div> -->
+                                                <form [formGroup]="formSameDayCancel" (ngSubmit)="submitFormSameDayPolicy()">
+                                                    <!-- <div id="collapseSameDayPolicy" class="collapse" data-parent="#accordion"> -->
+                                                    <div class="card-body">
+
+                                                        <div class="row">
+                                                            <div class="col-lg-5 col-md-6 border-right">
+                                                                <h4>Existing Details</h4>
+                                                                <ul class="endorsement-infolist">
+                                                                    <li>
+                                                                        <div class="title">Policy Number:</div>
+                                                                        <div class="text">{{curr_policy_no}}</div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="title">Risk Start Date:</div>
+                                                                        <div class="text">{{curr_policy_risk_start_date}}</div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="title">Risk End Date:</div>
+                                                                        <div class="text">{{curr_policy_risk_end_date}}</div>
+                                                                    </li>
+                                                                </ul>
+                                                                <br><br>
+                                                                <h4>Refund Details</h4>
+                                                                <ul class="endorsement-infolist">
+                                                                    <li class="text-danger">
+                                                                        <div class="title refund_info text-danger"><b>Refund Amount:</b></div>
+                                                                        <div class="text"><b>{{ gross_premium }}</b></div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-lg-7 col-md-6">
+                                                                <div class="row align-items-center">
+                                                                    <div class="col-md-8 col-12">
+                                                                        <div class="form-group form-focus select-focus error" [ngClass]="{'focused': formSameDayCancel.value.sub_reason_id}">
+                                                                            <label class="focus-label pl-0 req">Cancellation Reason</label>
+                                                                            <select class="form-control" formControlName="sub_reason_id">
+                                        <option value="">Select Cancellation Reason</option>
+                                        <option value="{{ row.policy_cancellation_reason_id }}"
+                                          *ngFor="let row of reasonData">{{ row.lable }}</option>
+                                      </select>
+                                                                            <div class="error" *ngIf="submittedSameDayPolicy && formSameDayCancel.controls.sub_reason_id.errors">
+                                                                                <div *ngIf="submittedSameDayPolicy && formSameDayCancel.controls.sub_reason_id.errors.required">
+                                                                                    Please select reason.
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4 col-12">
+
+                                                                    </div>
+
+                                                                    <div class="col-md-6 col-12">
+                                                                        <div class="card shadowbox">
+                                                                            <div class="card-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-12">
+                                                                                        <h5 class="my-2"><b>Dealer Request Letter: <sup
+                                                  class="text-danger">*</sup></b></h5>
+                                                                                    </div>
+                                                                                    <div class="col-8">
+                                                                                        <div class="box fileuploadbox">
+                                                                                            <input type="file" accept="image/*, application/pdf" id="dealer_letter" class="inputfile" (change)="uploadSameDayPolicy($event)">
+                                                                                            <label for="dealer_letter">
+                                                <figure>
+                                                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                                    viewBox="0 0 20 17">
+                                                    <path
+                                                      d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                                    </path>
+                                                  </svg>
+                                                </figure>
+                                                <span>{{same_daypolicyurl_label}}</span>
+                                              </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-4">
+                                                                                        <div class="uploaded-img">
+                                                                                            <img [src]="same_daypolicyurl" alt="">
+                                                                                            <!-- <span class="delete-img">
+                                            <i class="fa fa-times"></i>
+                                          </span> -->
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div *ngIf="submittedSameDayPolicy &&  formSameDayCancel.controls.dealer_letter.errors">
+                                                                                        <small *ngIf="submittedSameDayPolicy && formSameDayCancel.controls.dealer_letter.errors.required" class="text-danger">
+                                              Please upload dealer request letter.
+                                            </small>
+                                                                                        <small *ngIf="formSameDayCancel.controls.dealer_letter.errors?.requiredFileType" class="text-danger">
+                                              Allowed file type "jpg", "png", "jpeg", "pdf"
+                                            </small>
+                                                                                        <small *ngIf="formSameDayCancel.controls.dealer_letter.errors?.fileSizeValidator" class="text-danger">
+                                              Allowed file size is 5 MB.
+                                            </small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-12">
+                                                                        <div class="card shadowbox">
+                                                                            <div class="card-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-12">
+                                                                                        <h5 class="my-2"><b>Upload Customer Request Letter: </b></h5>
+                                                                                    </div>
+                                                                                    <div class="col-8">
+                                                                                        <div class="box fileuploadbox">
+                                                                                            <input type="file" accept="image/*, application/pdf" id="customer_Letter_SameDay" class="inputfile" (change)="uploadConfirmLetterSameDayCopyNew($event)">
+                                                                                            <label for="customer_Letter_SameDay">
+                                                <figure>
+                                                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                                    viewBox="0 0 20 17">
+                                                    <path
+                                                      d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                                    </path>
+                                                  </svg>
+                                                </figure>
+                                                <span>{{customerletterurl_sameday_label}}</span>
+                                              </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-4">
+                                                                                        <div class="uploaded-img">
+                                                                                            <img [src]="customerletterurl_sameday" alt="">
+                                                                                            <!-- <span class="delete-img">
+                                                        <i class="fa fa-times"></i>
+                                                    </span> -->
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div *ngIf="submittedSameDayPolicy && formSameDayCancel.controls.customer_Letter_SameDay.errors">
+                                                                                        <small *ngIf="submittedSameDayPolicy && formSameDayCancel.controls.customer_Letter_SameDay.errors.required" class="text-danger">
+                                              Please upload customer request letter.
+                                            </small>
+                                                                                        <small *ngIf="formSameDayCancel.controls.customer_Letter_SameDay.errors?.requiredFileType" class="text-danger">
+                                              Allowed file type "jpg", "png", "jpeg", "pdf"
+                                            </small>
+                                                                                        <small *ngIf="formSameDayCancel.controls.customer_Letter_SameDay.errors?.fileSizeValidator" class="text-danger">
+                                              Allowed file size is 5 MB.
+                                            </small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12" style="font-weight: bold;padding-bottom: 20px;">
+                                                                        Note : Only "jpg", "png", "jpeg", "pdf" files are allowed.
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <div class="form-group">
+                                                                            <h5 class="my-2"><b>Remark: <sup class="text-danger">*</sup></b></h5>
+                                                                            <textarea formControlName="remark_name_sameday" type="text" class="form-control" rows="3" placeholder="Remark"></textarea>
+                                                                            <div *ngIf="submittedSameDayPolicy &&  formSameDayCancel.controls.remark_name_sameday.errors">
+                                                                                <small *ngIf="submittedSameDayPolicy && formSameDayCancel.controls.remark_name_sameday.errors.required" class="text-danger">
+                                          Please enter remark.
+                                        </small>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-12">
+                                                                        <div class="row">
+                                                                            <div class="card-body">
+                                                                                <ul class="endorsement-infolist">
+                                                                                    <div class="row">
+                                                                                        <div class="col-12 text-center">
+                                                                                            <h5 class="my-2"><b>REFUND DETAILS </b></h5>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-6">
+                                                                                            <label class="focus-label pl-0 req">Payment To: </label>
+                                                                                            <select class="form-control" formControlName="refund_to">
+                                                <option value="">Select Payment To</option>
+                                                <option value="misp">POS</option>
+                                                <option value="customer">CUSTOMER</option>
+                                              </select>
+                                                                                            <div class="error" *ngIf="submittedSameDayPolicy && formSameDayCancel.controls.refund_to.errors">
+                                                                                                <div *ngIf="submittedSameDayPolicy && formSameDayCancel.controls.refund_to.errors.required">
+                                                                                                    Select payment to
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                            <label class="focus-label pl-0 req">Payee Account Holder Name: </label>
+                                                                                            <input formControlName="refund_payee_account_name" type="text" class="form-control" maxlength="50">
+                                                                                            <div class="error" *ngIf="submittedSameDayPolicy && formSameDayCancel.controls.refund_payee_account_name.errors">
+                                                                                                <div *ngIf="submittedSameDayPolicy && formSameDayCancel.controls.refund_payee_account_name.errors.required">
+                                                                                                    Please enter payee acoount holder name
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-6">
+                                                                                            <label class="focus-label pl-0 req">Account Number: </label>
+                                                                                            <input formControlName="refund_payee_account_no" type="text" class="form-control" maxlength="20">
+                                                                                            <div class="error" *ngIf="submittedSameDayPolicy && formSameDayCancel.controls.refund_payee_account_no.errors">
+                                                                                                <div *ngIf="submittedSameDayPolicy && formSameDayCancel.controls.refund_payee_account_no.errors.required">
+                                                                                                    Please enter valid acoount number
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                            <label class="focus-label pl-0 req">Bank IFSC Code: </label>
+                                                                                            <input formControlName="refund_payee_bank_ifsc_code" type="text" class="form-control" maxlength="20" #input [value]="input.value.toUpperCase()" (change)="getBankDetails($event.target.value)" (keyup)="getBankDetails($event.target.value)" maxlength="11">
+                                                                                            <div class="error" *ngIf="submittedSameDayPolicy && formSameDayCancel.controls.refund_payee_bank_ifsc_code.errors">
+                                                                                                <div *ngIf="submittedSameDayPolicy && formSameDayCancel.controls.refund_payee_bank_ifsc_code.errors.required">
+                                                                                                    Please enter valid IFSC code
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-6">
+                                                                                            <label class="focus-label pl-0 req">Bank Name: </label>
+                                                                                            <input readonly formControlName="refund_payee_bank_name" type="text" class="form-control">
+                                                                                            <div class="error" *ngIf="submittedSameDayPolicy && formSameDayCancel.controls.refund_payee_bank_name.errors">
+                                                                                                <div *ngIf="submittedSameDayPolicy && formSameDayCancel.controls.refund_payee_bank_name.errors.required">
+                                                                                                    Bank Name is required.
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                            <label class="focus-label pl-0 req">Bank Branch: </label>
+                                                                                            <input readonly formControlName="refund_payee_bank_branch" type="text" class="form-control">
+                                                                                            <div class="error" *ngIf="submittedSameDayPolicy && formSameDayCancel.controls.refund_payee_bank_branch.errors">
+                                                                                                <div *ngIf="submittedSameDayPolicy && formSameDayCancel.controls.refund_payee_bank_branch.errors.required">
+                                                                                                    Bank Branch is required.
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="col-12">
+                                                                        <button type="submit" class="btn btn-custom green w-100"> Submit</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- </div> -->
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane show {{sameDayPolicyAvailable ? '' : 'active' }}" id="double-policy">
+                                        <div class="accordion-style-1">
+                                            <div class="card shadowbox">
+                                                <!-- <div class="card-header">
+                                                    <h5>
+                                                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDoublePolicy" aria-expanded="true" aria-controls="collapseDoublePolicy">
+                                                            Document Upload
+                                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                            </a>
+                                                    </h5>
+                                                </div> -->
+                                                <form [formGroup]="formDoublePolicy" (ngSubmit)="submitformDoublePolicy()">
+                                                    <!-- <div id="collapseDoublePolicy" class="collapse show" data-parent="#accordion"> -->
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-lg-5 col-md-6 border-right">
+                                                                <h4>Existing Details</h4>
+                                                                <ul class="endorsement-infolist">
+                                                                    <li>
+                                                                        <div class="title">Policy Number:</div>
+                                                                        <div class="text">{{curr_policy_no}}</div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="title">Risk Start Date:</div>
+                                                                        <div class="text">{{curr_policy_risk_start_date}}</div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="title">Risk End Date:</div>
+                                                                        <div class="text">{{curr_policy_risk_end_date}}</div>
+                                                                    </li>
+                                                                </ul>
+                                                                <br><br>
+                                                                <h4>Premium Breakup</h4>
+                                                                <ul class="endorsement-infolist">
+                                                                    <li>
+                                                                        <div class="title">[A] OD Premium:</div>
+                                                                        <div class="text">{{ total_basic_od }}</div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="title">[B] TP Premium:</div>
+                                                                        <div class="text">{{ net_liability_premium_b }}</div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="title">[C] Total Premium(A+B):</div>
+                                                                        <div class="text">{{ gross_premium_without_gst }}</div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="title">[D] GST:</div>
+                                                                        <div class="text">{{ service_tax }}</div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="title">Total Premium(C+D):</div>
+                                                                        <div class="text">{{ gross_premium }}</div>
+                                                                    </li>
+                                                                </ul>
+                                                                <div *ngIf="is_double_policy_refund_show">
+                                                                    <h4>Refund Details</h4>
+                                                                    <ul class="endorsement-infolist">
+                                                                        <li>
+                                                                            <div class="title refund_info">[A] Total Premium:</div>
+                                                                            <div class="text">{{ gross_premium }}</div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="title refund_info">[B] OD Premium Charges:</div>
+                                                                            <div class="text">{{ double_policy_od_deduct }}</div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="title refund_info">[C] TP Premium Charges:</div>
+                                                                            <div class="text">{{ double_policy_tp_deduct }}</div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="title refund_info">[D] GST Charges:</div>
+                                                                            <div class="text">{{ double_policy_gst_deduct }}</div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="title refund_info">[E] Total Charges(B+C+D):</div>
+                                                                            <div class="text">{{ double_policy_total_deduct }}</div>
+                                                                        </li>
+
+                                                                        <li>
+                                                                            <div class="title refund_info">[E] Cancellation Charges:</div>
+                                                                            <div class="text">{{ double_policy_cancellation_charge }}</div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="title refund_info">[F] Cancellation Charges GST:</div>
+                                                                            <div class="text">{{ double_policy_cancellation_charge_gst }}</div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="title refund_info">[G] Total Cancellation Charges(E+F):</div>
+                                                                            <div class="text">{{ double_policy_cancellation_charge_total }}</div>
+                                                                        </li>
+                                                                        <li class="text-danger">
+                                                                            <div class="title refund_info text-danger"><b>Refund Amount(A-E-G):</b></div>
+                                                                            <div class="text"><b>{{ double_policy_refund_amount }}</b></div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-7 col-md-6">
+                                                                <div class="row align-items-center">
+                                                                    <div class="col-md-6 col-12">
+                                                                        <div class="form-group form-focus" [ngClass]="{'focused': formDoublePolicy.value.double_policy_no}">
+                                                                            <input maxlength="25" formControlName="double_policy_no" type="text" class="form-control floating">
+                                                                            <label class="focus-label req">Alternate Policy Number</label>
+                                                                            <div *ngIf="(submittedDoublePolicy || formDoublePolicy.controls.double_policy_no.invalid && (formDoublePolicy.controls.double_policy_no.dirty || formDoublePolicy.controls.double_policy_no.touched)) && formDoublePolicy.controls.double_policy_no.errors">
+                                                                                <small *ngIf="(submittedDoublePolicy || formDoublePolicy.controls.double_policy_no.invalid && (formDoublePolicy.controls.double_policy_no.dirty || formDoublePolicy.controls.double_policy_no.touched)) && formDoublePolicy.controls.double_policy_no.errors"
+                                                                                    class="text-danger">
+                                          Please enter valid alternate policy number.
+                                        </small>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-12">
+                                                                        <div class="form-group form-focus" [ngClass]="{'focused': formDoublePolicy.value.double_policy_start_date}">
+                                                                            <div class="cal-icon">
+                                                                                <input readonly select-other-detail="other_field" [ngModelOptions]="{standalone: true}" (click)="h.toggle()" (dateSelect)="selectDate('double_policy_start_date',$event)" class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="date_picker_double_policy_start_date"
+                                                                                    ngbDatepicker #h="ngbDatepicker" placeholder="" autocomplete="off">
+                                                                            </div>
+                                                                            <label class="focus-label req">Alternate Policy Risk Start Date</label>
+                                                                            <div *ngIf="submittedDoublePolicy && formDoublePolicy.controls.double_policy_start_date.errors">
+                                                                                <small *ngIf="submittedDoublePolicy && formDoublePolicy.controls.double_policy_start_date.errors.required" class="text-danger">
+                                          Please select alternate policy risk start date.
+                                        </small>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-6 col-12">
+                                                                        <div class="card shadowbox">
+                                                                            <div class="card-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-12">
+                                                                                        <h5 class="my-2"><b>Alternate Policy Copy: <sup
+                                                  class="text-danger">*</sup></b></h5>
+                                                                                    </div>
+                                                                                    <div class="col-8">
+                                                    <div class="box fileuploadbox">
+                                <input type="file" accept="image/*, application/pdf" id="double_policy" class="inputfile" (change)="uploadDuplicatePolicy($event)">
+                                                                                            <label for="double_policy">
+                                                <figure>
+                                                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                                    viewBox="0 0 20 17">
+                                                    <path
+                                                      d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                                    </path>
+                                                  </svg>
+                                                </figure>
+                                                <span>{{duplicatepolicyurl_label}}</span>
+                                              </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-4">
+                                                                                        <div class="uploaded-img">
+                                                                                            <img [src]="duplicatepolicyurl" alt="">
+                                                                                            <!-- <span class="delete-img">
+                                        <i class="fa fa-times"></i>
+                                      </span> -->
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div *ngIf="duplicate_policy" class="col-4">
+                                                                <a href="{{duplicatepolicyurl}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                               
+                                                            </div>
+                                                                                    <div *ngIf="submittedDoublePolicy &&  formDoublePolicy.controls.double_policy.errors">
+                                                                                        <small *ngIf="submittedDoublePolicy && formDoublePolicy.controls.double_policy.errors.required" class="text-danger">
+                                              Please upload alternate policy copy.
+                                            </small>
+                                                                                        <small *ngIf="formDoublePolicy.controls.double_policy.errors?.requiredFileType" class="text-danger">
+                                              Allowed file type "jpg", "png", "jpeg", "pdf"
+                                            </small>
+                                                                                        <small *ngIf="formDoublePolicy.controls.double_policy.errors?.fileSizeValidator" class="text-danger">
+                                              Allowed file size is 5 MB.
+                                            </small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-12">
+                                                                        <div class="card shadowbox">
+                                                                            <div class="card-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-12">
+                                                                                        <h5 class="my-2"><b>Upload Customer Request Letter: <sup
+                                                  class="text-danger">*</sup></b></h5>
+                                                                                    </div>
+                                                                                    <div class="col-8">
+                                                                                        <div class="box fileuploadbox">
+                                                                                            <input type="file" accept="image/*, application/pdf" id="customerletter2" class="inputfile" (change)="uploadConfirmLetterDuplicateCopyNew($event)">
+                                                                                            <label for="customerletter2">
+                                                <figure>
+                                                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                                    viewBox="0 0 20 17">
+                                                    <path
+                                                      d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                                    </path>
+                                                  </svg>
+                                                </figure>
+                                                <span>{{customerletterurl1_label}}</span>
+                                              </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-4">
+                                                                                        <div class="uploaded-img">
+                                                                                            <img [src]="customerletterurl1" alt="">
+                                                                                            <!-- <span class="delete-img">
+                                                    <i class="fa fa-times"></i>
+                                                </span> -->
+                                                                                        </div>
+                                                                                    </div>
+                                                                                     <div *ngIf="customerlett" class="col-4">
+                                                                <a href="{{customerletterurl1}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                               
+                                                            </div>
+                                                                                    <div *ngIf="submittedDoublePolicy && formDoublePolicy.controls.customerLetter.errors">
+                                                                                        <small *ngIf="submittedDoublePolicy && formDoublePolicy.controls.customerLetter.errors.required" class="text-danger">
+                                              Please upload customer request letter.
+                                            </small>
+                                                                                        <small *ngIf="formDoublePolicy.controls.customerLetter.errors?.requiredFileType" class="text-danger">
+                                              Allowed file type "jpg", "png", "jpeg", "pdf"
+                                            </small>
+                                                                                        <small *ngIf="formDoublePolicy.controls.customerLetter.errors?.fileSizeValidator" class="text-danger">
+                                              Allowed file size is 5 MB.
+                                            </small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12" style="font-weight: bold;padding-bottom: 20px;">
+                                                                        Note : Only "jpg", "png", "jpeg", "pdf" files are allowed.
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <div class="form-group">
+                                                                            <h5 class="my-2"><b>Remark: <sup class="text-danger">*</sup></b></h5>
+                                                                            <textarea formControlName="remark_name_duplicate" type="text" class="form-control" rows="3" placeholder="Remark"></textarea>
+                                                                            <div *ngIf="submittedDoublePolicy &&  formDoublePolicy.controls.remark_name_duplicate.errors">
+                                                                                <small *ngIf="submittedDoublePolicy && formDoublePolicy.controls.remark_name_duplicate.errors.required" class="text-danger">
+                                          Please enter remark.
+                                        </small>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-12">
+                                                                        <div class="row">
+                                                                            <div class="card-body">
+                                                                                <ul class="endorsement-infolist">
+                                                                                    <div class="row">
+                                                                                        <div class="col-12 text-center">
+                                                                                            <h5 class="my-2"><b>REFUND DETAILS </b></h5>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-6">
+                                                                                            <label class="focus-label pl-0 req">Payment To: </label>
+                                                                                            <select class="form-control" formControlName="double_policy_refund_to">
+                                                <option value="">Select Payment To</option>
+                                                <option value="misp">POS</option>
+                                                <option value="customer">CUSTOMER</option>
+                                              </select>
+                                                                                            <div class="error" *ngIf="submittedDoublePolicy && formDoublePolicy.controls.double_policy_refund_to.errors">
+                                                                                                <div *ngIf="submittedDoublePolicy && formDoublePolicy.controls.double_policy_refund_to.errors.required">
+                                                                                                    Select payment to
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                            <label class="focus-label pl-0 req">Payee Account Holder Name: </label>
+                                                                                            <input formControlName="double_policy_refund_payee_account_name" type="text" class="form-control" maxlength="50">
+                                                                                            <div class="error" *ngIf="submittedDoublePolicy && formDoublePolicy.controls.double_policy_refund_payee_account_name.errors">
+                                                                                                <div *ngIf="submittedDoublePolicy && formDoublePolicy.controls.double_policy_refund_payee_account_name.errors.required">
+                                                                                                    Please enter payee acoount holder name
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-6">
+                                                                                            <label class="focus-label pl-0 req">Account Number: </label>
+                                                                                            <input formControlName="double_policy_refund_payee_account_no" type="text" class="form-control" maxlength="20">
+                                                                                            <div class="error" *ngIf="submittedDoublePolicy && formDoublePolicy.controls.double_policy_refund_payee_account_no.errors">
+                                                                                                <div *ngIf="submittedDoublePolicy && formDoublePolicy.controls.double_policy_refund_payee_account_no.errors.required">
+                                                                                                    Please enter valid acoount number
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                            <label class="focus-label pl-0 req">Bank IFSC Code: </label>
+                                                                                            <input formControlName="double_policy_refund_payee_bank_ifsc_code" type="text" class="form-control" maxlength="20" #input [value]="input.value.toUpperCase()" (change)="getBankDetails1($event.target.value)" (keyup)="getBankDetails1($event.target.value)"
+                                                                                                maxlength="11">
+                                                                                            <div class="error" *ngIf="submittedDoublePolicy && formDoublePolicy.controls.double_policy_refund_payee_bank_ifsc_code.errors">
+                                                                                                <div *ngIf="submittedDoublePolicy && formDoublePolicy.controls.double_policy_refund_payee_bank_ifsc_code.errors.required">
+                                                                                                    Please enter valid IFSC code
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-6">
+                                                                                            <label class="focus-label pl-0 req">Bank Name: </label>
+                                                                                            <input readonly formControlName="double_policy_refund_payee_bank_name" type="text" class="form-control">
+                                                                                            <div class="error" *ngIf="submittedDoublePolicy && formDoublePolicy.controls.double_policy_refund_payee_bank_name.errors">
+                                                                                                <div *ngIf="submittedDoublePolicy && formDoublePolicy.controls.double_policy_refund_payee_bank_name.errors.required">
+                                                                                                    Bank Name is required.
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                            <label class="focus-label pl-0 req">Bank Branch: </label>
+                                                                                            <input readonly formControlName="double_policy_refund_payee_bank_branch" type="text" class="form-control">
+                                                                                            <div class="error" *ngIf="submittedDoublePolicy && formDoublePolicy.controls.double_policy_refund_payee_bank_branch.errors">
+                                                                                                <div *ngIf="submittedDoublePolicy && formDoublePolicy.controls.double_policy_refund_payee_bank_branch.errors.required">
+                                                                                                    Bank Branch is required.
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="col-12">
+                                                                        <button type="submit" class="btn btn-custom green w-100"> Submit</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <!-- </div> -->
+                                                </form>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane show" id="other-reason">
+                                        <div class="accordion-style-1">
+                                            <div class="card shadowbox">
+
+                                                <form [formGroup]="formOtherReason" (ngSubmit)="submitformOtherReason()">
+
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-lg-5 col-md-6 border-right">
+                                                                <h4>Existing Details</h4>
+                                                                <ul class="endorsement-infolist">
+                                                                    <li>
+                                                                        <div class="title">Policy Number:</div>
+                                                                        <div class="text">{{curr_policy_no}}</div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="title">Risk Start Date:</div>
+                                                                        <div class="text">{{curr_policy_risk_start_date}}</div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="title">Risk End Date:</div>
+                                                                        <div class="text">{{curr_policy_risk_end_date}}</div>
+                                                                    </li>
+                                                                </ul>
+                                                                <br><br>
+                                                                <h4>Premium Breakup</h4>
+                                                                <ul class="endorsement-infolist">
+                                                                    <li>
+                                                                        <div class="title">OD Premium:</div>
+                                                                        <div class="text">{{ total_basic_od }}</div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="title">GST:</div>
+                                                                        <div class="text">{{ service_tax }}</div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="title">Total Premium:</div>
+                                                                        <div class="text">{{ gross_premium }}</div>
+                                                                    </li>
+                                                                </ul>
+                                                                <div *ngIf="is_other_policy_refund_show">
+                                                                    <h4>Refund Details</h4>
+                                                                    <ul class="endorsement-infolist">
+                                                                        <li>
+                                                                            <div class="title refund_info">[A] Total Premium:</div>
+                                                                            <div class="text">{{ gross_premium }}</div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="title refund_info">[B] OD Premium Charges:</div>
+                                                                            <div class="text">{{ other_policy_od_deduct }}</div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="title refund_info">[C] TP Premium Charges:</div>
+                                                                            <div class="text">{{ other_policy_tp_deduct }}</div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="title refund_info">[D] GST Charges:</div>
+                                                                            <div class="text">{{ other_policy_gst_deduct }}</div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="title refund_info">[E] Total Charges(B+C+D):</div>
+                                                                            <div class="text">{{ other_policy_total_deduct }}</div>
+                                                                        </li>
+
+                                                                        <li>
+                                                                            <div class="title refund_info">[E] Cancellation Charges:</div>
+                                                                            <div class="text">{{ other_policy_cancellation_charge }}</div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="title refund_info">[F] Cancellation Charges GST:</div>
+                                                                            <div class="text">{{ other_policy_cancellation_charge_gst }}</div>
+                                                                        </li>
+                                                                        <li>
+                                                                            <div class="title refund_info">[G] Total Cancellation Charges(E+F):</div>
+                                                                            <div class="text">{{ other_policy_cancellation_charge_total }}</div>
+                                                                        </li>
+                                                                        <li class="text-danger">
+                                                                            <div class="title refund_info text-danger"><b>Refund Amount(A-E-G):</b></div>
+                                                                            <div class="text"><b>{{ other_policy_refund_amount }}</b></div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-7 col-md-6">
+                                                                <div class="row align-items-center">
+                                                                    <div class="col-md-6 col-12">
+                                                                        <div class="card shadowbox">
+                                                                            <div class="card-body">
+                                                                                <div class="row">
+
+                                                                                    <div class="col-md-12 col-12">
+                                                                                        <div class="form-group form-focus select-focus error" [ngClass]="{'focused': formOtherReason.value.sub_reason_id}">
+                                                                                            <label class="focus-label pl-0 req">Is vehicle Delivered</label>
+                                                                                            <select class="form-control" formControlName="is_vehicle_delivered" (change)="getOtherPolicyRefundAmount($event)">
+                                                                                                <option value="">Select Is vehicle Delivered</option>
+                                                                                                <option value="no">No</option>
+                                                                                                <option value="yes">Yes</option>
+                                                                                              </select>
+                                                                                            <div class="error" *ngIf="submittedOtherReasonPolicy && formOtherReason.controls.is_vehicle_delivered.errors">
+                                                                                                <div *ngIf="submittedOtherReasonPolicy && formOtherReason.controls.is_vehicle_delivered.errors.required">
+                                                                                                    Please select is vehicle delivered or not.
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+
+                                                                                    <div class="col-12">
+                                                                                        <h5 class="my-2"><b>Upload Customer Request Letter: <sup
+                                                  class="text-danger">*</sup></b></h5>
+                                                                                    </div>
+
+                                                                                    <div class="col-8">
+                                                                                        <div class="box fileuploadbox">
+                                                                                            <input type="file" accept="image/*, application/pdf" id="customerLetterOther" class="inputfile" (change)="uploadConfirmLetterOtherCopy($event)">
+
+                                                                                            <label for="customerLetterOther">
+                                                <figure>
+                                                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                                    viewBox="0 0 20 17">
+                                                    <path
+                                                      d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                                    </path>
+                                                  </svg>
+                                                </figure>
+                                                <span>{{customerletterotherurl_label}}</span>
+                                              </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-4">
+                                                                                        <div class="uploaded-img">
+                                                                                            <img [src]="customerletterotherurl" alt="">
+                                                                                            <!-- <span class="delete-img">
+                                                    <i class="fa fa-times"></i>
+                                                </span> -->
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div *ngIf="othercustomerlett" class="col-4">
+                                                                <a href="{{customerletterotherurl_label}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                               
+                                                            </div>
+                                                                                    <div *ngIf="submittedOtherReasonPolicy && formOtherReason.controls.customerLetterOther.errors">
+                                                                                        <small *ngIf="submittedOtherReasonPolicy && formOtherReason.controls.customerLetterOther.errors.required" class="text-danger">
+                                              Please upload customer request letter.
+                                            </small>
+                                                                                        <small *ngIf="formOtherReason.controls.customerLetterOther.errors?.requiredFileType" class="text-danger">
+                                              Allowed file type "jpg", "png", "jpeg", "pdf"
+                                            </small>
+                                                                                        <small *ngIf="formOtherReason.controls.customerLetterOther.errors?.fileSizeValidator" class="text-danger">
+                                              Allowed file size is 5 MB.
+                                            </small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-12">
+
+                                                                    </div>
+                                                                    <div class="col-12" style="font-weight: bold;padding-bottom: 20px;">
+                                                                        Note : Only "jpg", "png", "jpeg", "pdf" files are allowed.
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <div class="form-group">
+                                                                            <h5 class="my-2"><b>Remark: <sup class="text-danger">*</sup></b></h5>
+                                                                            <textarea formControlName="remark_name_other" type="text" class="form-control" rows="3" placeholder="Remark"></textarea>
+                                                                            <div *ngIf="submittedOtherReasonPolicy &&  formOtherReason.controls.remark_name_other.errors">
+                                                                                <small *ngIf="submittedOtherReasonPolicy && formOtherReason.controls.remark_name_other.errors.required" class="text-danger">
+                                          Please enter remark.
+                                        </small>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-12">
+                                                                        <div class="row">
+                                                                            <div class="card-body">
+                                                                                <ul class="endorsement-infolist">
+                                                                                    <div class="row">
+                                                                                        <div class="col-12 text-center">
+                                                                                            <h5 class="my-2"><b>REFUND DETAILS </b></h5>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-6">
+                                                                                            <label class="focus-label pl-0 req">Payment To: </label>
+                                                                                            <select class="form-control" formControlName="other_reason_refund_to">
+                                                <option value="">Select Payment To</option>
+                                                <option value="misp">POS</option>
+                                                <option value="customer">CUSTOMER</option>
+                                              </select>
+                                                                                            <div class="error" *ngIf="submittedOtherReasonPolicy && formOtherReason.controls.other_reason_refund_to.errors">
+                                                                                                <div *ngIf="submittedOtherReasonPolicy && formOtherReason.controls.other_reason_refund_to.errors.required">
+                                                                                                    Select payment to
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                            <label class="focus-label pl-0 req">Payee Account Holder Name: </label>
+                                                                                            <input formControlName="other_reason_refund_payee_account_name" type="text" class="form-control" maxlength="50">
+                                                                                            <div class="error" *ngIf="submittedOtherReasonPolicy && formOtherReason.controls.other_reason_refund_payee_account_name.errors">
+                                                                                                <div *ngIf="submittedOtherReasonPolicy && formOtherReason.controls.other_reason_refund_payee_account_name.errors.required">
+                                                                                                    Please enter payee acoount holder name
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-6">
+                                                                                            <label class="focus-label pl-0 req">Account Number: </label>
+                                                                                            <input formControlName="other_reason_refund_payee_account_no" type="text" class="form-control" maxlength="20">
+                                                                                            <div class="error" *ngIf="submittedOtherReasonPolicy && formOtherReason.controls.other_reason_refund_payee_account_no.errors">
+                                                                                                <div *ngIf="submittedOtherReasonPolicy && formOtherReason.controls.other_reason_refund_payee_account_no.errors.required">
+                                                                                                    Please enter valid acoount number
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                            <label class="focus-label pl-0 req">Bank IFSC Code: </label>
+                                                                                            <input formControlName="other_reason_refund_payee_bank_ifsc_code" type="text" class="form-control" maxlength="20" #input [value]="input.value.toUpperCase()" (change)="getBankDetails2($event.target.value)" (keyup)="getBankDetails2($event.target.value)"
+                                                                                                maxlength="11">
+                                                                                            <div class="error" *ngIf="submittedOtherReasonPolicy && formOtherReason.controls.other_reason_refund_payee_bank_ifsc_code.errors">
+                                                                                                <div *ngIf="submittedOtherReasonPolicy && formOtherReason.controls.other_reason_refund_payee_bank_ifsc_code.errors.required">
+                                                                                                    Please enter valid IFSC code
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-6">
+                                                                                            <label class="focus-label pl-0 req">Bank Name: </label>
+                                                                                            <input readonly formControlName="other_reason_refund_payee_bank_name" type="text" class="form-control">
+                                                                                            <div class="error" *ngIf="submittedOtherReasonPolicy && formOtherReason.controls.other_reason_refund_payee_bank_name.errors">
+                                                                                                <div *ngIf="submittedOtherReasonPolicy && formOtherReason.controls.other_reason_refund_payee_bank_name.errors.required">
+                                                                                                    Bank Name is required.
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                            <label class="focus-label pl-0 req">Bank Branch: </label>
+                                                                                            <input readonly formControlName="other_reason_refund_payee_bank_branch" type="text" class="form-control">
+                                                                                            <div class="error" *ngIf="submittedOtherReasonPolicy && formOtherReason.controls.other_reason_refund_payee_bank_branch.errors">
+                                                                                                <div *ngIf="submittedOtherReasonPolicy && formOtherReason.controls.other_reason_refund_payee_bank_branch.errors.required">
+                                                                                                    Bank Branch is required.
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-12">
+                                                                        <button type="submit" class="btn btn-custom green w-100"> Submit</button>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- </div> -->
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-loader [loaderActive]="loaderActive"></app-loader>
+    </div>
+</div>

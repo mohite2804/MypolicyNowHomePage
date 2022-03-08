@@ -1,0 +1,557 @@
+<div class="page-wrapper">
+    <div class="content">
+
+        <section class="py-0"> 
+            <div class="row">
+                <div class="col-md-12 border quotes-topinfo shadowbox py-2">
+                    <div class="container">
+                        <div class="row py-2">
+                            <div class="col-md-1 col-sm-1 col-12 quotes-box d-block d-md-none">
+                                <div>
+                                    <a class="actionbtn edit-btn" href="#"><i class="fa fa-pencil"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-12 quotes-box">
+                                <div class="font-style">
+                                    <i class="fa fa-male brand-text-2 title-large"></i>
+                                </div>
+                                <div style="margin-top:11px;">
+                                    <h4 class="mb-0"><span class="text-muted white">Policy:</span> {{policy_type_name}} ( {{policy_subtype_name}} )</h4>
+                                    <h4 class="mb-0"><span class="text-muted white">Insured Members:</span> 
+                                        <span *ngIf="insured_type_self !=''">{{insured_type_self}} - ({{insured_type_self_age}})</span> 
+                                        <span *ngIf="insured_type_spouse !=''">, {{insured_type_spouse}} - ({{insured_type_spouse_age}})</span>
+                                        <span *ngIf="insured_type_mother !=''">, {{insured_type_mother}} - ({{insured_type_mother_age}})</span>
+                                        <span *ngIf="insured_type_father !=''">, {{insured_type_father}} - ({{insured_type_father_age}})</span>
+                                        <span *ngIf="insured_type_son1 !=''">, {{insured_type_son1}} - ({{insured_type_son1_age}})</span>
+                                        <span *ngIf="insured_type_son2 !=''">, {{insured_type_son2}} - ({{insured_type_son2_age}})</span>
+                                        <span *ngIf="insured_type_son3 !=''">, {{insured_type_son3}} - ({{insured_type_son3_age}})</span>
+                                        <span *ngIf="insured_type_son4 !=''">, {{insured_type_son4}} - ({{insured_type_son4_age}})</span>
+                                        <span *ngIf="insured_type_daughter1 !=''">, {{insured_type_daughter1}} - ({{insured_type_daughter1_age}})</span>
+                                        <span *ngIf="insured_type_daughter2 !=''">, {{insured_type_daughter2}} - ({{insured_type_daughter2_age}})</span>
+                                        <span *ngIf="insured_type_daughter3 !=''">, {{insured_type_daughter3}} - ({{insured_type_daughter3_age}})</span>
+                                        <span *ngIf="insured_type_daughter4 !=''">, {{insured_type_daughter4}} - ({{insured_type_daughter4_age}})</span></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-12 quotes-box customerdetail-box">
+                                <div>
+                                    <span class="text-muted white">Selected Insurer:</span>
+                                    <div class="row selectedinsurer align-items-center">
+                                        <div class="col-xl-2 col-lg-3 col-sm-3 col-3">
+                                            <img src="assets/front/img/partners-logos/{{policylogo}}" alt="">
+                                        </div>
+                                        <div class="col-xl-10 col-lg-9 col-sm-9 col-9 ">
+                                            <h4 class="mb-0">{{policyList.plan_name}}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-12 quotes-box border-right-0">
+                                <div>
+                                    <span class="text-muted white">Policy Period:</span>
+                                    <h4 class="mb-0"><span class="text-muted white">Start Date:</span> {{policyList.policy_start_date}}</h4>
+                                    <h4 class="mb-0"><span class="text-muted white">End Date:</span> {{policyList.policy_end_date}}</h4>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-1 col-sm-1 col-12 quotes-box d-none d-md-block">
+                                <div>
+                                    <a routerLink ="../quotation" class="actionbtn edit-btn" href="javascript:void(0);"><i class="fa fa-pencil"></i></a>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="row py-2 d-md-none align-items-center">
+                            <div class="col-sm-6 col-12">
+                                <div class="quotes-editoption">
+                                    <div class="option-box covers-option-box">
+                                        <a id="slidecover" class="actionbtn edit-btn" href="javascript:void(0);"><i class="fa fa-pencil"></i></a>
+                                        <h4 class="mb-0">Select Rider's Option</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>                   
+            <div class="container">
+                <div class="row mx-0">  
+                    <div class="col-lg-3 col-md-4 customerdetailform-sidebar my-3">
+                        <div class="totalpremium-box">
+                            <ul>
+                                <li>Basic Premium: <span class="float-right"><i class="fa fa-inr"></i> {{policyList.BasicPremium}}</span></li>
+                                <!-- <li>Addon Premium: <span class="float-right"><i class="fa fa-inr"></i> 1,410</span></li>
+                                <li>Third Party Premium: <span class="float-right"><i class="fa fa-inr"></i> 1,000</span></li> -->
+                                <li>Discount: <span class="float-right"> - <i class="fa fa-inr"></i> 0.00</span></li>
+                                <!-- <li><h4>Premium <span class="float-right"><i class="fa fa-inr"></i> 13,665</span></h4></li> -->
+                                <li>GST @18% <span class="float-right"><i class="fa fa-inr"></i> {{policyList.ServiceTax}}</span></li>
+                                <li class="finalpremium"><h4>Final Premium <em class="d-lg-inline d-md-block d-inline">(Incl. GST)</em> <span><i class="fa fa-inr"></i> {{policyList.FinalPremium}}.00</span></h4></li>
+                            </ul>
+                        </div>
+                    </div> 
+                    <div class="col-lg-9 col-md-8 customerdetailform mt-3">
+                        <div class="customerdetailform-container">
+                            <div class="card cardshadow">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 py-2">
+                                            <div class="customerdetailform-stepbox">
+                                                <h3 class="step-title">Just make sure, all details are correct</h3>
+                                                <div class="card shadowbox completeddetailsbox filled-ownerdetails">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-12 border-right">
+                                                                <h4>Owner Details</h4>
+                                                                <ul class="filledinfo">
+                                                                    <li>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Name (Age)</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{buyer_salutation}} {{buyer_first_name}} {{buyer_middle_name}} {{buyer_last_name}} ({{userQuotedetails.insured_type_self_age}})</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Email</div>
+                                                                                <div class="text">{{buyer_email_id}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Mobile</div>
+                                                                                <div class="text">{{buyer_mobile}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Gender</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{buyer_gender}}</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Marital Status</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{buyer_marital}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Pan Number</div>
+                                                                                <div class="text">{{buyer_pan}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Aadhaar Number</div>
+                                                                                <div class="text">{{buyer_adhar}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Nationality</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{buyer_nationality}}</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="row">
+                                                                            <div class="col-6">
+                                                                                <div class="title">Address</div>
+                                                                                <div class="text">{{buyer_address1}}, {{buyer_address2}}, {{buyer_address3}}, {{customerDetails.customer_dist}}  {{customerDetails.customer_city}}-{{buyer_pincode}}, {{customerDetails.customer_state}} (India)</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Pincode</div>
+                                                                                <div class="text">{{buyer_pincode}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">City</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{customerDetails.customer_city}}</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card shadowbox completeddetailsbox filled-ownerdetails">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-12 border-right"  *ngIf="userQuotedetails.insured_type_self =='1'">
+                                                                <h4>Members Details (Self)</h4>
+                                                                <ul class="filledinfo">
+                                                                    <li>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Name</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{memberself_salutation}} {{memberself_firstname}} {{memberself_middlename}} {{memberself_lastname}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Date Of Birth</div>
+                                                                                <div class="text">{{memberself_dob}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Marital</div>
+                                                                                <div class="text">{{memberself_marital}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Relationship</div>
+                                                                                <div class="text" style="text-transform: capitalize;">Self</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-12 border-right"  *ngIf="userQuotedetails.insured_type_spouse =='1'">
+                                                                <h4>Members Details (Spouse)</h4>
+                                                                <ul class="filledinfo">
+                                                                    <li>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Name</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{memberspouse_salutation}} {{memberspouse_firstname}} {{memberspouse_middlename}} {{memberspouse_lastname}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Date Of Birth</div>
+                                                                                <div class="text">{{memberspouse_dob}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Marital</div>
+                                                                                <div class="text">{{memberspouse_marital}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Relationship</div>
+                                                                                <div class="text" style="text-transform: capitalize;">Spouse</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-12 border-right"  *ngIf="userQuotedetails.insured_type_father =='1'">
+                                                                <h4>Members Details (Father)</h4>
+                                                                <ul class="filledinfo">
+                                                                    <li>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Name</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{memberfather_salutation}} {{memberfather_firstname}} {{memberfather_middlename}} {{memberfather_lastname}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Date Of Birth</div>
+                                                                                <div class="text">{{memberfather_dob}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Marital</div>
+                                                                                <div class="text">{{memberfather_marital}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Relationship</div>
+                                                                                <div class="text" style="text-transform: capitalize;">Father</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-12 border-right"  *ngIf="userQuotedetails.insured_type_mother =='1'">
+                                                                <h4>Members Details (Mother)</h4>
+                                                                <ul class="filledinfo">
+                                                                    <li>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Name</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{membermother_salutation}} {{membermother_firstname}} {{membermother_middlename}} {{membermother_lastname}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Date Of Birth</div>
+                                                                                <div class="text">{{membermother_dob}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Marital</div>
+                                                                                <div class="text">{{membermother_marital}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Relationship</div>
+                                                                                <div class="text" style="text-transform: capitalize;">Mother</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-12 border-right"  *ngIf="userQuotedetails.insured_type_son1 =='1'">
+                                                                <h4>Members Details (Son1)</h4>
+                                                                <ul class="filledinfo">
+                                                                    <li>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Name</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{memberson1_salutation}} {{memberson1_firstname}} {{memberson1_middlename}} {{memberson1_lastname}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Date Of Birth</div>
+                                                                                <div class="text">{{memberson1_dob}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Marital</div>
+                                                                                <div class="text">{{memberson1_marital}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Relationship</div>
+                                                                                <div class="text" style="text-transform: capitalize;">Son1</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-12 border-right"  *ngIf="userQuotedetails.insured_type_son2 =='1'">
+                                                                <h4>Members Details (Son2)</h4>
+                                                                <ul class="filledinfo">
+                                                                    <li>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Name</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{memberson2_salutation}} {{memberson2_firstname}} {{memberson2_middlename}} {{memberson2_lastname}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Date Of Birth</div>
+                                                                                <div class="text">{{memberson2_dob}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Marital</div>
+                                                                                <div class="text">{{memberson2_marital}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Relationship</div>
+                                                                                <div class="text" style="text-transform: capitalize;">Son2</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-12 border-right"  *ngIf="userQuotedetails.insured_type_son3 =='1'">
+                                                                <h4>Members Details (Son3)</h4>
+                                                                <ul class="filledinfo">
+                                                                    <li>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Name</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{memberson3_salutation}} {{memberson3_firstname}} {{memberson3_middlename}} {{memberson3_lastname}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Date Of Birth</div>
+                                                                                <div class="text">{{memberson3_dob}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Marital</div>
+                                                                                <div class="text">{{memberson3_marital}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Relationship</div>
+                                                                                <div class="text" style="text-transform: capitalize;">Son3</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-12 border-right"  *ngIf="userQuotedetails.insured_type_son4 =='1'">
+                                                                <h4>Members Details (Son4)</h4>
+                                                                <ul class="filledinfo">
+                                                                    <li>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Name</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{memberson4_salutation}} {{memberson4_firstname}} {{memberson4_middlename}} {{memberson4_lastname}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Date Of Birth</div>
+                                                                                <div class="text">{{memberson4_dob}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Marital</div>
+                                                                                <div class="text">{{memberson4_marital}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Relationship</div>
+                                                                                <div class="text" style="text-transform: capitalize;">Son4</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-12 border-right"  *ngIf="userQuotedetails.insured_type_daughter1 =='1'">
+                                                                <h4>Members Details (Daughter1)</h4>
+                                                                <ul class="filledinfo">
+                                                                    <li>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Name</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{memberdaughter1_salutation}} {{memberdaughter1_firstname}} {{memberdaughter1_middlename}} {{memberdaughter1_lastname}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Date Of Birth</div>
+                                                                                <div class="text">{{memberdaughter1_dob}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Marital</div>
+                                                                                <div class="text">{{memberdaughter1_marital}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Relationship</div>
+                                                                                <div class="text" style="text-transform: capitalize;">Daughter1</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-12 border-right"  *ngIf="userQuotedetails.insured_type_daughter2 =='1'">
+                                                                <h4>Members Details (Daughter2)</h4>
+                                                                <ul class="filledinfo">
+                                                                    <li>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Name</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{memberdaughter2_salutation}} {{memberdaughter2_firstname}} {{memberdaughter2_middlename}} {{memberdaughter2_lastname}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Date Of Birth</div>
+                                                                                <div class="text">{{memberdaughter2_dob}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Marital</div>
+                                                                                <div class="text">{{memberdaughter2_marital}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Relationship</div>
+                                                                                <div class="text" style="text-transform: capitalize;">Daughter2</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-12 border-right"  *ngIf="userQuotedetails.insured_type_daughter3 =='1'">
+                                                                <h4>Members Details (Daughter3)</h4>
+                                                                <ul class="filledinfo">
+                                                                    <li>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Name</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{memberdaughter3_salutation}} {{memberdaughter3_firstname}} {{memberdaughter3_middlename}} {{memberdaughter3_lastname}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Date Of Birth</div>
+                                                                                <div class="text">{{memberdaughter3_dob}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Marital</div>
+                                                                                <div class="text">Daughter3</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Relationship</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{memberdaughter3_relationship}}</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-12 border-right"  *ngIf="userQuotedetails.insured_type_daughter4 =='1'">
+                                                                <h4>Members Details (Daughter4)</h4>
+                                                                <ul class="filledinfo">
+                                                                    <li>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Name</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{memberdaughter4_salutation}} {{memberdaughter4_firstname}} {{memberdaughter4_middlename}} {{memberdaughter4_lastname}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Date Of Birth</div>
+                                                                                <div class="text">{{memberdaughter4_dob}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Marital</div>
+                                                                                <div class="text">{{memberdaughter4_marital}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Relationship</div>
+                                                                                <div class="text" style="text-transform: capitalize;">Daughter4</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card shadowbox completeddetailsbox filled-ownerdetails" *ngIf="is_ic_multiple_nominee == '0'">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-12 border-right">
+                                                                <h4>Nominee Details</h4>
+                                                                <ul class="filledinfo" >
+                                                                    <li>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Name</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{nominee_salutation}} {{nominee_firstname}} {{nominee_middlename}} {{nominee_lastname}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Date Of Birth</div>
+                                                                                <div class="text">{{nominee_dob}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Marital</div>
+                                                                                <div class="text">{{nominee_marital}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Relationship</div>
+                                                                                <div class="text" style="text-transform: capitalize;">{{nominee_relationship}}</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                                <div *ngIf="appointee_div">    
+                                                    <div class="card shadowbox completeddetailsbox filled-ownerdetails"  *ngIf="is_ic_multiple_appointee == '0'">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-12 border-right">
+                                                                    <h4>Appointee Details</h4>
+                                                                    <ul class="filledinfo" >
+                                                                        <li>
+                                                                            <div class="row">
+                                                                                <div class="col-md-3 col-sm-6 col-12">
+                                                                                    <div class="title">Name</div>
+                                                                                    <div class="text" style="text-transform: capitalize;">{{appointee_salutation}} {{appointee_firstname}} {{appointee_middlename}} {{appointee_lastname}}</div>
+                                                                                </div>
+                                                                                <div class="col-md-3 col-sm-6 col-12">
+                                                                                    <div class="title">Date Of Birth</div>
+                                                                                    <div class="text">{{appointee_dob}}</div>
+                                                                                </div>
+                                                                                <div class="col-md-3 col-sm-6 col-12">
+                                                                                    <div class="title">Marital</div>
+                                                                                    <div class="text">{{appointee_marital}}</div>
+                                                                                </div>
+                                                                                <div class="col-md-3 col-sm-6 col-12">
+                                                                                    <div class="title">Relationship</div>
+                                                                                    <div class="text" style="text-transform: capitalize;">{{appointee_relationship}}</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>   
+                                                </div>             
+                                                <div class="row border-top mt-2 pt-4 align-items-center proposal-groupbtns">
+                                                    <div class="col-lg-4 col-md-5 col-12 text-center text-sm-left">
+                                                        <a routerLink ="../customer-details"  href="javascript:void(0);" class="btn btn-secondary btn-custom mr-2"><i class="fa fa-pencil mr-1"></i> Edit</a>
+                                                    </div>
+                                                    <div class="col-lg-8 col-md-7 col-12 text-center text-sm-right">
+                                                        <a (click)="insertProposalData(quote_data_health_id,buyer_email_id)"  href="javascript:void(0);" class="btn next-step btn-lg btn-custom green"><i class="fa fa-arrow-circle-right mr-1"> </i> Generate Proposal</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>                 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                                                  
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <!-- /Page Content -->
+</div>
+<app-loader [loaderActive]="loaderActive"></app-loader> 

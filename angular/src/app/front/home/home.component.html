@@ -1,0 +1,56 @@
+<div class="page-wrapper">
+    <div class="content home-conetnt">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-10 col-12">
+                    <div class="banner-text text-center mb-4">
+                        <h2 class="mb-2"><span class="d-lg-inline d-block">Get Quick,</span> Hassle Free Insurance Quote <span class="font-weight-bold">Now!</span></h2>
+                        <h4>Expertise You Need. <span>Service You Deserve.</span></h4>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-9 col-md-12 col-12">
+                    <div class="product-row justify-content-center mb-2">
+                        <div class="display-box" *ngFor="let row of product_list">
+                            <a *ngIf="row.parent_id == 0" href="javascript:void(0);" (click)="redirectUrl(row)">
+                                <div class="display-img">
+                                    <img [src]="[row.icon_image]">
+                                </div>
+                                <div class="display-text">
+                                    <h3>{{ row.label }}</h3>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div *ngIf="sub_product_list?.length" class="row commercial-pod-listing justify-content-center">
+                        <ng-container *ngFor="let row of sub_product_list">
+                            <div class="col-auto" (click)="getSubOfSubProducts(row)">
+                                <a href=" javascript:void(0); " class="btn btn-custom green ">
+                                    {{ row.label }}
+                                </a>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <div class="row justify-content-center" *ngIf="sub_of_sub_product_list?.length">
+                        <div class="col-md-3 mt-5">
+                            <div class="form-group form-focus select-focus ">
+                                <select placeholder="Select" class="form-control" (change)="redirectPage($event)">
+                                    <option value="">Select Product</option>
+                                    <option  *ngFor="let row of sub_of_sub_product_list"  value="{{ row.product_type_id }}">
+                                      {{ row.label }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-loader [loaderActive]="loaderActive "></app-loader>
+    </div>
+</div>

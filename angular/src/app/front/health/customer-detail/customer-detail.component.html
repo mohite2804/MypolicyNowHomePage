@@ -1,0 +1,727 @@
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content">
+        <section class="py-0">
+            <div class="row">
+                <div class="col-md-12 border quotes-topinfo shadowbox py-2">
+                    <div class="container">
+                        <div class="row py-2">
+                            <div class="col-md-1 col-sm-1 col-12 quotes-box d-block d-md-none">
+                                <div>
+                                    <a class="actionbtn edit-btn" href="#"><i class="fa fa-pencil"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-12 quotes-box">
+                                <div class="font-style">
+                                    <i class="fa fa-male brand-text-2 title-large"></i>
+                                </div>
+                                <div style="margin-top:11px;">
+                                    <h4 class="mb-0"><span class="text-muted white">Policy:</span> {{policy_type_name}} ( {{policy_subtype_name}} )</h4>
+                                    <h4 class="mb-0"><span class="text-muted white">Insured Members:</span> 
+                                        <span *ngIf="insured_type_self !=''">{{insured_type_self}} - ({{insured_type_self_age}})</span> 
+                                        <span *ngIf="insured_type_spouse !=''">, {{insured_type_spouse}} - ({{insured_type_spouse_age}})</span>
+                                        <span *ngIf="insured_type_mother !=''">, {{insured_type_mother}} - ({{insured_type_mother_age}})</span>
+                                        <span *ngIf="insured_type_father !=''">, {{insured_type_father}} - ({{insured_type_father_age}})</span>
+                                        <span *ngIf="insured_type_son1 !=''">, {{insured_type_son1}} - ({{insured_type_son1_age}})</span>
+                                        <span *ngIf="insured_type_son2 !=''">, {{insured_type_son2}} - ({{insured_type_son2_age}})</span>
+                                        <span *ngIf="insured_type_son3 !=''">, {{insured_type_son3}} - ({{insured_type_son3_age}})</span>
+                                        <span *ngIf="insured_type_son4 !=''">, {{insured_type_son4}} - ({{insured_type_son4_age}})</span>
+                                        <span *ngIf="insured_type_daughter1 !=''">, {{insured_type_daughter1}} - ({{insured_type_daughter1_age}})</span>
+                                        <span *ngIf="insured_type_daughter2 !=''">, {{insured_type_daughter2}} - ({{insured_type_daughter2_age}})</span>
+                                        <span *ngIf="insured_type_daughter3 !=''">, {{insured_type_daughter3}} - ({{insured_type_daughter3_age}})</span>
+                                        <span *ngIf="insured_type_daughter4 !=''">, {{insured_type_daughter4}} - ({{insured_type_daughter4_age}})</span></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-12 quotes-box customerdetail-box">
+                                <div>
+                                    <span class="text-muted white">Selected Insurer:</span>
+                                    <div class="row selectedinsurer align-items-center">
+                                        <div class="col-xl-2 col-lg-3 col-sm-3 col-3">
+                                            <img src="assets/front/img/partners-logos/{{policylogo}}" alt="">
+                                        </div>
+                                        <div class="col-xl-10 col-lg-9 col-sm-9 col-9 ">
+                                            <h4 class="mb-0">{{policyList.plan_name}}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-12 quotes-box border-right-0">
+                                <div>
+                                    <span class="text-muted white">Policy Period:</span>
+                                    <h4 class="mb-0"><span class="text-muted white">Start Date:</span> {{policyList.policy_start_date}}</h4>
+                                    <h4 class="mb-0"><span class="text-muted white">End Date:</span> {{policyList.policy_end_date}}</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-12 quotes-box d-none d-md-block">
+                                <div>
+                                    <a routerLink ="../quotation" class="actionbtn edit-btn" href="javascript:void(0);"><i class="fa fa-pencil"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row py-2 d-md-none align-items-center">
+                            <div class="col-sm-6 col-12">
+                                <div class="quotes-editoption">
+                                    <div class="option-box covers-option-box">
+                                        <a id="slidecover" class="actionbtn edit-btn" href="javascript:void(0);"><i class="fa fa-pencil"></i></a>
+                                        <h4 class="mb-0">Select Rider's Option</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row mx-0">
+                    <div class="col-lg-3 col-md-4 customerdetailform-sidebar my-3">
+                        <div class="totalpremium-box">
+                            <ul>
+                                <li>Basic Premium: <span class="float-right"><i class="fa fa-inr"></i> {{policyList.BasicPremium}}</span></li>
+                                <!-- <li>Addon Premium: <span class="float-right"><i class="fa fa-inr"></i> 1,410</span></li>
+                                <li>Third Party Premium: <span class="float-right"><i class="fa fa-inr"></i> 1,000</span></li> -->
+                                <li>Discount: <span class="float-right"> - <i class="fa fa-inr"></i> 0.00</span></li>
+                                <!-- <li><h4>Premium <span class="float-right"><i class="fa fa-inr"></i> 13,665</span></h4></li> -->
+                                <li>GST @18% <span class="float-right"><i class="fa fa-inr"></i> {{policyList.ServiceTax}}</span></li>
+                                <li class="finalpremium"><h4>Final Premium <em class="d-lg-inline d-md-block d-inline">(Incl. GST)</em> <span><i class="fa fa-inr"></i> {{policyList.FinalPremium}}.00</span></h4></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8 proposalform mt-3">
+                        <div class="proposalform-container">
+                            <form  class="ui form" [formGroup]="formCustomerDetails" (ngSubmit)="submitFormCustomerData()">
+                                <div class="row align-items-center justify-content-center">
+                                    <div class="col-12">
+                                        <div class="card cardshadow blue-border">
+                                            <div class="card-header">
+                                                <h3>Buyer Billing Details</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="ui form">
+                                                <div class="row align-items-center" style="margin-top:20px;"> 
+                                                       <div class="col-lg-4 col-md-6 col-12" style="margin-top: -19px;">
+                                                         <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_email_id.invalid && (formCustomerDetails.controls.buyer_email_id.dirty || formCustomerDetails.controls.buyer_email_id.touched)) && formCustomerDetails.controls.buyer_email_id.errors}">
+                                                          <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_email_id.value}">
+                                                             <input type="text" class="form-control" formControlName="buyer_email_id">
+                                                             <label class="focus-label req">Email</label>
+                                                          </div>
+                                                        </div>
+                                                       </div>
+                                                        <div class="col-lg-4 col-md-6 col-12" style="margin-top: -19px;">
+                                                            <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_mobile.invalid && (formCustomerDetails.controls.buyer_mobile.dirty || formCustomerDetails.controls.buyer_mobile.touched)) && formCustomerDetails.controls.buyer_mobile.errors}">
+                                                                <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_mobile.value}">
+                                                                    <input select-other-detail="other_field" type="text" class="form-control" formControlName="buyer_mobile" id="buyer_mobile" maxlength="10" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                                                                    <label class="focus-label req">Mobile</label>
+                                                                </div>    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row align-items-center" style="margin-top:20px;"> 
+                                                        <div class="col-lg-3 col-md-9 col-12">
+                                                            <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_salutation.invalid && (formCustomerDetails.controls.buyer_salutation.dirty || formCustomerDetails.controls.buyer_salutation.touched)) && formCustomerDetails.controls.buyer_salutation.errors}">
+                                                                <div class="form-group form-focus select-focus">
+                                                                    <label class="focus-label req">Salutation</label>
+                                                                    <select formControlName="buyer_salutation" id="buyer_salutation" data-plaseholder="Select Salutation">
+                                                                        <option value="">Select</option>
+                                                                        <option value="Mr">Mr.</option>
+                                                                        <option value="Ms">Ms.</option>
+                                                                        <option value="Mrs">Mrs</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    <div class="col-lg-3 col-md-9 col-12">
+                                                        <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_first_name.invalid && (formCustomerDetails.controls.buyer_first_name.dirty || formCustomerDetails.controls.buyer_first_name.touched)) && formCustomerDetails.controls.buyer_first_name.errors}">
+                                                            <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_first_name.value}">
+                                                            <input type="text" class="form-control" formControlName="buyer_first_name" id="buyer_first_name">
+                                                            <label class="focus-label req">First Name</label>
+                                                            </div>
+                                                        </div>    
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-6 col-12">
+                                                        <div class="form-group form-focus mb-0">
+                                                            <input type="text" formControlName="buyer_middle_name" id="buyer_middle_name" class="form-control">
+                                                            <label class="focus-label">Middle Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-6 col-12">
+                                                        <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_last_name.invalid && (formCustomerDetails.controls.buyer_last_name.dirty || formCustomerDetails.controls.buyer_last_name.touched)) && formCustomerDetails.controls.buyer_last_name.errors}">
+                                                            <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_last_name.value}">
+                                                                <input type="text" formControlName="buyer_last_name" id="buyer_last_name" class="form-control">
+                                                                <label class="focus-label req">Last Name</label>
+                                                            </div>
+                                                        </div>    
+                                                    </div>
+                                                </div> 
+                                                <div class="row align-items-center" style="margin-top:20px">  
+                                                   
+                                                    <div class="col-lg-3 col-md-4 col-12" style="margin-top:23px;">
+                                                        <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_marital.invalid && (formCustomerDetails.controls.buyer_marital.dirty || formCustomerDetails.controls.buyer_marital.touched)) && formCustomerDetails.controls.buyer_marital.errors}">
+                                                            <div class="form-group form-focus select-focus">
+                                                                <div class="focus-label req">Select Marital Status</div>
+                                                                <select formControlName="buyer_marital" id="buyer_marital">
+                                                                    <option value="">Select Marital</option>
+                                                                    <option value="Single">Single</option>
+                                                                    <option value="Married">Married</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>    
+                                                    </div>                                                     
+                                                    <div class="col-lg-3 col-md-4 col-12">
+                                                        <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_occupation.invalid && (formCustomerDetails.controls.buyer_occupation.dirty || formCustomerDetails.controls.buyer_occupation.touched)) && formCustomerDetails.controls.buyer_occupation.errors}">
+                                                            <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_occupation.value}">
+                                                                <div class="focus-label req">Select Occupation</div>
+                                                                <select formControlName="buyer_occupation" id="buyer_occupation">
+                                                                    <option value="">Select Occupation</option>
+                                                                    <option *ngFor="let row of OccupationList" value="{{row.occupation_code}}">{{row.occupation}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>    
+                                                    </div>   
+                                                    <div class="col-lg-3 col-md-4 col-12">
+                                                    <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_dob.value}">
+                                                        <label class="focus-label req">DOB</label>
+                                                        <input type="date" formControlName="buyer_dob" id="buyer_dob" class="form-control">
+                                                    </div>                                                        
+<!--                                                         <div *ngIf="insured == true">
+                                                            <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_dob.invalid && (formCustomerDetails.controls.buyer_dob.dirty || formCustomerDetails.controls.buyer_dob.touched)) && formCustomerDetails.controls.buyer_dob.errors}">
+                                                                <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_dob.value}">
+                                                                    <div class="cal-icon">
+                                                                        <input  class="form-control" (dateSelect)="selectDateDob('buyer_dob',$event)" [minDate]="minDateForBirthdate" [maxDate]="maxDateForBirthdate"
+                                                                        [(ngModel)]="date_picker_birthday" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()">
+                                                                    </div>
+                                                                    <label class="focus-label req">Date of Birth</label>
+                                                                </div>    
+                                                            </div>
+                                                        </div> -->
+                                                        <!--<div *ngIf="insured == false">
+                                                            <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_dob.invalid && (formCustomerDetails.controls.buyer_dob.dirty || formCustomerDetails.controls.buyer_dob.touched)) && formCustomerDetails.controls.buyer_dob.errors}">
+                                                                <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_dob.value}">
+                                                                    <div class="cal-icon">
+                                                                        <input  class="form-control" (dateSelect)="selectDateDob('buyer_dob',$event)"  name="dp"  [minDate]="minDateForBirthdate" [maxDate]="maxDateForBirthdate" 
+                                                                        [(ngModel)]="date_picker_birthday" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" autocomplete="off">
+                                                                    </div>
+                                                                    <label class="focus-label req">Date of Birth</label>
+                                                                </div>    
+                                                            </div>
+                                                        </div>  -->
+                                                    </div> 
+                                                    <div class="col-lg-3 col-md-6 col-12">
+                                                        <div class="form-group ui form">                            
+                                                            <div class="inline fields">
+                                                                <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_gender.invalid && (formCustomerDetails.controls.buyer_gender.dirty || formCustomerDetails.controls.buyer_gender.touched)) && formCustomerDetails.controls.buyer_gender.errors}">
+                                                                    <div class="inline fields">
+                                                                        <label class="ui label req">Gender</label>
+                                                                        <div class="field">
+                                                                            <div class="ui radio checkbox">
+                                                                                <input type="radio" formControlName="buyer_gender" id="buyer_gender" value="male">
+                                                                                <label class="mb-0" for="gender-male">Male</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="field">
+                                                                            <div class="ui radio checkbox">
+                                                                                <input type="radio" formControlName="buyer_gender" id="buyer_gender" value="female">
+                                                                                <label class="mb-0" for="gender-female">Female</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>    
+                                                                </div>    
+                                                            </div>
+                                                        </div>
+                                                    </div>                                                                                                        
+                                                <!--<div class="col-lg-3 col-md-4 col-12">
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberself_dob.value}">
+                                                            <label class="focus-label req">DOB</label>
+                                                            <input type="date" formControlName="buyer_dob" id="buyer_dob" class="form-control">
+                                                        </div>
+                                                    </div>  -->   
+                                                </div>
+                                                <div class="row align-items-center" style="margin-top:20px;"> 
+                                                    <div class="col-lg-3 col-md-4 col-12">
+                                                        <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_address1.invalid && (formCustomerDetails.controls.buyer_address1.dirty || formCustomerDetails.controls.buyer_address1.touched)) && formCustomerDetails.controls.buyer_address1.errors}">
+                                                            <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_address1.value}">
+                                                                <input type="text" formControlName="buyer_address1" id="buyer_address1" class="form-control">
+                                                                <label class="focus-label req">Address 1</label>
+                                                            </div>
+                                                        </div>    
+                                                    </div>                                                      
+                                                    <div class="col-lg-4 col-md-4 col-12">
+                                                        <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_address2.invalid && (formCustomerDetails.controls.buyer_address2.dirty || formCustomerDetails.controls.buyer_address2.touched)) && formCustomerDetails.controls.buyer_address2.errors}">
+                                                            <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_address2.value}">
+                                                                <input type="text" formControlName="buyer_address2" id="buyer_address2" class="form-control">
+                                                                <label class="focus-label req">Address 2</label>
+                                                            </div>
+                                                        </div>    
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-12">
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_address3.value}">
+                                                            <input type="text" formControlName="buyer_address3" id="buyer_address3" class="form-control">
+                                                            <label class="focus-label req">Address 3</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row align-items-center" style="margin-top:20px;"> 
+                                                    <div class="col-lg-3 col-md-4 col-12">
+                                                        <div class="form-group form-focus mb-0 focused">
+                                                            <input type="text" formControlName="buyer_pincode" id="{{pin_code}}" value="{{pin_code}}" readonly="true" class="form-control ng-untouched ng-pristine ng-valid">
+                                                            <label class="focus-label req">Pincode</label>
+                                                        </div>
+                                                    </div>                                                          
+                                                    <div class="col-lg-3 col-md-4 col-12">
+                                                        <div class="form-group form-focus mb-0 focused">
+                                                            <input type="text" formControlName="buyer_state"  id="{{statecode}}" value="{{stateName}}" class="form-control ng-untouched ng-pristine ng-valid" readonly="true">
+                                                            <label class="focus-label req">State</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-4 col-12">
+                                                        <div class="form-group form-focus mb-0 focused">
+                                                            <input type="text" formControlName="buyer_city" id="{{citycode}}" value="{{cityname}}"class="form-control ng-untouched ng-pristine ng-valid" readonly="true">
+                                                            <label class="focus-label req">City</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-4 col-12">
+                                                        <div class="form-group form-focus mb-0 focused">
+                                                            <input type="text" formControlName="buyer_district" id="{{distcode}}" value="{{distname}}" class="form-control ng-untouched ng-pristine ng-valid" readonly="true">
+                                                            <label class="focus-label req">District</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row align-items-center" style="margin-top:20px;"> 
+
+                                                    <div class="col-lg-12 col-12">
+                                                        <div class="form-group ui form">  
+                                                            <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_nationality.invalid && (formCustomerDetails.controls.buyer_nationality.dirty || formCustomerDetails.controls.buyer_nationality.touched)) && formCustomerDetails.controls.buyer_nationality.errors}">                         
+                                                                <div class="inline fields">
+                                                                    <label class="ui label req">Nationality</label>
+                                                                    <div class="field">
+                                                                        <div class="ui radio checkbox">
+                                                                            <input type="radio" [formGroup]="formCustomerDetails" name="buyer_nationality"  id="buyer_nationality" value="indian" checked>
+                                                                            <label class="mb-0" for="nationality-indian">Indian</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="field">
+                                                                        <div class="ui radio checkbox">
+                                                                            <input type="radio" [formGroup]="formCustomerDetails" name="buyer_nationality" id="buyer_nationality" value="foreigner" [disabled]="true">
+                                                                            <label class="mb-0" for="nationality-foreigner">Foreigner</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>    
+                                                        </div>
+                                                    </div>
+                                                <div class="col-lg-12 col-12">
+                                                    <div class="row align-items-center">    
+                                                        <div class="col-lg-4 col-md-4 col-12">
+                                                            <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_pan.invalid && (formCustomerDetails.controls.buyer_pan.dirty || formCustomerDetails.controls.buyer_pan.touched)) && formCustomerDetails.controls.buyer_pan.errors}">
+                                                                <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_pan.value}">
+                                                                    <input type="text" class="form-control floating text-uppercase" maxlength="10" formControlName="buyer_pan" id="buyer_pan">
+                                                                    <label class="focus-label">PAN Number</label>
+                                                                </div>
+                                                            </div>    
+                                                        </div>                                                 
+                                                        <div class="col-lg-4 col-md-4 col-12">
+                                                            <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_adhar.invalid && (formCustomerDetails.controls.buyer_adhar.dirty || formCustomerDetails.controls.buyer_adhar.touched)) && formCustomerDetails.controls.buyer_adhar.errors}">
+                                                                <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_adhar.value}">
+                                                                    <input type="text" formControlName="buyer_adhar" id="buyer_adhar" class="form-control">
+                                                                    <label class="focus-label">Aadhar Number</label>
+                                                                </div>
+                                                            </div>    
+                                                        </div>
+                                                    </div>  
+                                                </div> 
+
+                                                <div class="row align-items-center" style="margin-top:20px;" *ngIf="showForSup">
+                                                    <div class="col-lg-12 col-12">
+                                                        <div class="form-group ui form">                            
+                                                            <div class="inline fields">
+                                                                <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.consume_oth_subs.invalid && (formCustomerDetails.controls.consume_oth_subs.dirty || formCustomerDetails.controls.consume_oth_subs.touched)) && formCustomerDetails.controls.consume_oth_subs.errors}">
+                                                                    <div class="inline fields">
+                                                                        <label class="ui label req">Do any of the insured members consume any other substance/s?
+                                                                        </label>
+                                                                        <div class="field">
+                                                                            <div class="ui radio checkbox">
+                                                                                <input type="radio" required  formControlName="consume_oth_subs" id="consume_oth_subs" value="Yes">
+                                                                                <label class="mb-0" for="consume_oth_subs_yes">Yes</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="field">
+                                                                            <div class="ui radio checkbox">
+                                                                                <input type="radio" required  formControlName="consume_oth_subs" id="consume_oth_subs" value="No">
+                                                                                <label class="mb-0" for="consume_oth_subs_no">No</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>    
+                                                                </div>    
+                                                            </div>
+                                                        </div>
+                                                <div class="form-group">                            
+                                                    <div class="inline fields">
+                                                        <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.oth_ins_pol.invalid && (formCustomerDetails.controls.oth_ins_pol.dirty || formCustomerDetails.controls.oth_ins_pol.touched)) && formCustomerDetails.controls.oth_ins_pol.errors}">
+                                                            <div class="inline fields">
+                                                                <label class="ui label req">Do you have health policy with any other insurance company?
+                                                                </label>
+                                                                <div class="field">
+                                                                    <div class="ui radio checkbox">
+                                                                        <input type="radio" formControlName="oth_ins_pol" id="oth_ins_pol" value="Yes" (click)="showClaimDiv('Yes')">
+                                                                        <label class="mb-0" for="oth_ins_pol_yes">Yes</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="field">
+                                                                    <div class="ui radio checkbox">
+                                                                        <input type="radio" formControlName="oth_ins_pol" id="oth_ins_pol" value="No" (click)="showClaimDiv('No')">
+                                                                        <label class="mb-0" for="oth_ins_pol_no">No</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>    
+                                                        </div>    
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group" [ngClass]="{'d-none': div_show_for_claim_policy }" class="col-auto d-none">                            
+                                                        <div class="inline fields">
+                                                            <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.claim_ins_bef.invalid && (formCustomerDetails.controls.claim_ins_bef.dirty || formCustomerDetails.controls.claim_ins_bef.touched)) && formCustomerDetails.controls.claim_ins_bef.errors}">
+                                                                    <div class="inline fields">
+                                                                        <label class="ui label req">Have you filed a claim for your health insurance before?
+                                                                        </label>
+                                                                        <div class="field">
+                                                                            <div class="ui radio checkbox">
+                                                                                <input type="radio" formControlName="claim_ins_bef" id="claim_ins_bef" value="Yes" (click)="claimInsBef('Yes')">
+                                                                                <label class="mb-0" for="claim_ins">Yes</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="field">
+                                                                            <div class="ui radio checkbox">
+                                                                                <input type="radio" formControlName="claim_ins_bef" id="claim_ins_bef" value="No" (click)="claimInsBef('No')">
+                                                                                <label class="mb-0" for="claim_ins">No</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>    
+                                                                </div>    
+                                                            </div>
+                                                        </div>
+                                                    </div>                                                   
+                                                </div>
+                                            </div>
+                                                <div class="row align-items-center" style="margin-top:20px;">     
+                                                    <div class="col-lg-4 col-md-4 col-12">
+                                                        <div class="ui checkbox">
+                                                            <input type="checkbox"   formControlName="buyer_insured" id="buyer_insured" (change)="ToggleButton1($event)">
+                                                            <label class="mb-0" for="insured">Proposer is an insured</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center justify-content-center">
+                                    <div class="col-12">
+                                        <div class="card cardshadow blue-border">
+                                            <div class="card-header">
+                                                <h3>Member Details</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <!-- Member 1 -->
+                                             <div  *ngFor="let item of member_list; let myIndex = index">                                               
+                                                <div class="row align-items-center">
+                                                    <div class="col-md-12">
+                                                        <h4 class="mb-4"><b>{{item.user_type}}</b></h4>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-3 col-12">
+                                                        <div class="field">
+                                                            <div class="form-group form-focus select-focus">
+                                                                <label class="focus-label req">Salutation</label>
+                                                                <select formControlName="member{{item.user_type.toLowerCase()}}_salutation" id="member{{item.user_type.toLowerCase()}}_salutation">
+                                                                    <option value="">Select</option>
+                                                                    <option value="Mr">Mr.</option>
+                                                                    <option value="Ms">Ms.</option>
+                                                                    <option value="Mrs">Mrs</option>
+                                                                </select>
+                                                            </div>    
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-9 col-12" style="margin-top:-22px;">
+                                                        <div class="form-group form-focus mb-0" [ngClass]="">
+                                                            <input type="text" formControlName="member{{item.user_type.toLowerCase()}}_firstname" id="member{{item.user_type.toLowerCase()}}_firstname" class="form-control">
+                                                            <label class="focus-label req">First Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-6 col-12" style="margin-top:-22px;">
+                                                        <div class="form-group form-focus mb-0">
+                                                            <input type="text" formControlName="member{{item.user_type.toLowerCase()}}_middlename" id="member{{item.user_type.toLowerCase()}}_middlename" class="form-control">
+                                                            <label class="focus-label">Middle Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-6 col-12" style="margin-top:-22px;">
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberself_lastname.value}">
+                                                            <input type="text" formControlName="member{{item.user_type.toLowerCase()}}_lastname" id="member{{item.user_type.toLowerCase()}}_lastname" class="form-control">
+                                                            <label class="focus-label req">Last Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-12"  style="margin-top:-22px;">
+                                                        <div class="form-group form-focus mb-0">
+                                                            <!--[ngClass]="{'focused': formCustomerDetails.controls.memberself_relationship.value}"-->
+                                                            <label class="focus-label">{{item.type}}</label>
+                                                            <input type="text"   value={{item.type}} readonly formControlName="member{{item.user_type.toLowerCase()}}_relationship" id="member{{item.user_type.toLowerCase()}}_relationship" class="form-control">
+                                                        </div>
+                                                    </div>
+<!--                                                <div class="col-lg-4 col-md-4 col-12"  style="margin-top:-22px;">
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberself_dob.value}" >
+                                                             <label class="focus-label req">DOB</label>
+                                                            <input type="date" formControlName="member{{item.user_type.toLowerCase()}}_dob" id="member{{item.user_type.toLowerCase()}}_dob" class="form-control">                                                            
+                                                        </div>
+                                                    </div>  -->       
+                                                    <div class="col-lg-4 col-md-4 col-12"  style="margin-top:-22px;">
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberself_dob.value}" >
+                                                                <!-- <div class="cal-icon"> -->
+                                                                    <!-- <label class="focus-label req">DOB</label> -->
+                                                                    <!-- <input (dateSelect)="selectDateDob('memberself_dob',$event)"  formControlName="member{{item.user_type.toLowerCase()}}_dob" id="member{{item.user_type.toLowerCase()}}_dob" 
+                                                                    [(ngModel)]="date_picker_birthday" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" class="form-control">-->
+                                                            <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberself_dob.value}">
+                                                                <label class="focus-label req">DOB</label>
+                                                                <input type="date" formControlName="member{{item.user_type.toLowerCase()}}_dob" id="member{{item.user_type.toLowerCase()}}_dob" class="form-control">
+                                                            </div>
+                                                            <!-- </div> -->
+                                                                <!--minDate="minDateForBirthdateself" maxDate="maxDateForBirthdateself"-->
+                                                            <!-- </div> -->
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-4 col-md-4 col-12">
+                                                        <div class="field">
+                                                            <div class="form-group form-focus select-focus">
+                                                                <div class="focus-label req">Select Marital Status</div>
+                                                                <select formControlName="member{{item.user_type.toLowerCase()}}_marital" id="member{{item.user_type.toLowerCase()}}_marital">
+                                                                    <option value="">Select Marital</option>
+                                                                    <option value="Single">Single</option>
+                                                                    <option value="Married">Married</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>    
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-12">
+                                                        <div class="field">
+                                                        <!-- <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.self_buyer_occupation.invalid && (formCustomerDetails.controls.self_buyer_occupation.dirty || formCustomerDetails.controls.self_buyer_occupation.touched)) && formCustomerDetails.controls.self_buyer_occupation.errors}"> -->
+                                                            <div class="form-group form-focus select-focus" *ngIf="item.type == 'Son' || item.type == 'Daughter'">
+                                                                <label class="focus-label req">Select Occupation</label>
+                                                                <select formControlName="{{item.type.toLowerCase()}}_buyer_occupation" id="{{item.user_type.toLowerCase()}}_buyer_occupation" aria-readonly="true">
+                                                                    <option value="13" [selected]="13">Homemaker,Student, Retirees, Pensioners and other dependents</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group form-focus select-focus" *ngIf="item.type != 'Son' && item.type != 'Daughter'"> 
+                                                                <label class="focus-label req">Select Occupation</label>
+                                                                <select formControlName="{{item.user_type.toLowerCase()}}_buyer_occupation" id="{{item.user_type.toLowerCase()}}_buyer_occupation">
+                                                                    <option value="">Select Occupation</option>
+                                                                    <option *ngFor="let row of OccupationList" value="{{row.occupation_code}}">{{row.occupation}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div> 
+                                                    </div>
+                                                    <div class="col-md-12" *ngIf="smoke_div">
+                                                        <div class="col-md-4" style="float:left;">
+                                                            <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberself_smoke_qty.value}">
+                                                                <label class="focus-label">Smoke Quantity Per Day In Number?</label>
+                                                                <input type="text" formControlName="member{{item.user_type.toLowerCase()}}_smoke_qty" id="member{{item.user_type.toLowerCase()}}_smoke_qty" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4" style="float:left;">
+                                                            <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberself_liquor_qty.value}">
+                                                                <label class="focus-label">Quantity Of Hard Liquor Consumed In Units Per Week?(1 unit =30 ml)</label>
+                                                                <input type="text" formControlName="member{{item.user_type.toLowerCase()}}_liquor_qty" id="member{{item.user_type.toLowerCase()}}_liquor_qty"  class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4" style="float:left;">
+                                                            <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberself_wine_qty.value}">
+                                                                <label class="focus-label">Glasses Of Wine Consumed In Units Per Week?(1 unit =1 glass)</label>
+                                                                <input type="text" formControlName="member{{item.user_type.toLowerCase()}}_wine_qty" id="member{{item.user_type.toLowerCase()}}_wine_qty"  class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </div> 
+                                                    <div class="col-md-12" *ngIf="smoke_div" style="margin-top:20px;">
+                                                        <div class="col-md-4" style="float:left;">
+                                                            <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberself_beer_qty.value}">
+                                                                <label class="focus-label">Quantity Of Beer Consumed In Units Per Week?(1 unit =500 ml)</label>
+                                                                <input type="text" formControlName="member{{item.user_type.toLowerCase()}}_beer_qty" id="member{{item.user_type.toLowerCase()}}_beer_qty" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4" style="float:left;">
+                                                            <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberself_gutka_qty.value}">
+                                                                <label class="focus-label">Masala/Gutka Quantity Per Day In Gms?</label>
+                                                                <input type="text" formControlName="member{{item.user_type.toLowerCase()}}_gutka_qty" id="member{{item.user_type.toLowerCase()}}_gutka_qty"  class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </div>                                                         
+                                                </div>
+                                             </div>    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center justify-content-center">
+                                    <div class="col-12">
+                                        <div class="card cardshadow blue-border">
+                                            <div class="card-header">
+                                                <h3>Nominee Details</h3>
+                                            </div>
+                                            <div class="card-body">
+                                               <div class="row align-items-center">
+                                                   <div class="col-lg-2 col-md-3 col-12">
+                                                        <div class="form-group form-focus select-focus">
+                                                            <div class="focus-label req">Salutation</div>
+                                                            <select formControlName="nominee_salutation" id="nominee_salutation">
+                                                                <option value="">Select</option>
+                                                                <option value="mr.">Mr.</option>
+                                                                <option value="mrs.">Mrs.</option>
+                                                                <option value="miss.">Miss</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-9 col-12" style="margin-top:-22px;">
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.nominee_firstname.value}">
+                                                            <input type="text" formControlName="nominee_firstname" id="nominee_firstname" class="form-control">
+                                                            <label class="focus-label req">First Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-6 col-12"  style="margin-top:-22px;">
+                                                        <div class="form-group form-focus mb-0">
+                                                            <input type="text" formControlName="nominee_middlename" id="nominee_middlename" class="form-control">
+                                                            <label class="focus-label">Middle Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-6 col-12"  style="margin-top:-22px;">
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.nominee_lastname.value}">
+                                                            <input type="text" formControlName="nominee_lastname" id="nominee_lastname" class="form-control">
+                                                            <label class="focus-label req">Last Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-12">
+                                                        <div class="form-group form-focus select-focus">
+                                                            <div class="focus-label req">Relationship</div>
+                                                            <select formControlName="nominee_relationship" id="nominee_relationship">
+                                                                <option value="">Select</option>
+                                                                <option *ngFor="let row of nmonieeList" value="{{row.code}}">{{row.name}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-12"  style="margin-top:-22px;">
+                                                        <!-- <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.nominee_dob.value}"> -->
+<!--                                                             <div class="cal-icon">
+                                                                <input  class="form-control" (dateSelect)="selectDate('nominee_dob',$event)"  placeholder="yyyy-mm-dd"
+                                                                 [(ngModel)]="date_picker_birthday" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()">
+                                                              </div>
+                                                            <label class="focus-label req">Date of Birth</label> -->
+                                                    <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.nominee_dob.value}">
+                                                             <label class="focus-label req">DOB</label>
+                                                             <input type="date" formControlName="nominee_dob" id="nominee_dob" class="form-control">
+                                                    </div>
+                                                        <!-- </div> -->
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-12">
+                                                        <div class="form-group form-focus select-focus">
+                                                            <div class="focus-label req">Select Marital Status</div>
+                                                            <select formControlName="nominee_marital" id="nominee_marital">
+                                                                <option value="">Select Marital</option>
+                                                                <option value="Single">Single</option>
+                                                                <option value="Married">Married</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row align-items-center justify-content-center" *ngIf="is_ic_multiple_appointee == '0'">
+                                    <div class="col-12"  *ngIf="nomnne_dob">
+                                        <div class="card cardshadow blue-border">
+                                            <div class="card-header">
+                                                <h3>Appointee Details</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-lg-2 col-md-3 col-12">
+                                                        <div class="form-group form-focus select-focus">
+                                                            <div class="focus-label req">Salutation</div>
+                                                            <select formControlName="appointee_salutation" id="appointee_salutation">
+                                                                <option value="">Select</option>
+                                                                <option value="mr.">Mr.</option>
+                                                                <option value="mrs.">Mrs.</option>
+                                                                <option value="miss.">Miss</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-9 col-12" style="margin-top:-22px;">
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.appointee_firstname.value}">
+                                                            <input type="text" formControlName="appointee_firstname" id="appointee_firstname" class="form-control">
+                                                            <label class="focus-label req">First Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-6 col-12"  style="margin-top:-22px;">
+                                                        <div class="form-group form-focus mb-0">
+                                                            <input type="text" formControlName="appointee_middlename" id="appointee_middlename" class="form-control">
+                                                            <label class="focus-label">Middle Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-6 col-12"  style="margin-top:-22px;">
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.appointee_lastname.value}">
+                                                            <input type="text" formControlName="appointee_lastname" id="appointee_lastname" class="form-control">
+                                                            <label class="focus-label req">Last Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-12">
+                                                        <div class="form-group form-focus select-focus">
+                                                            <div class="focus-label req">Relationship</div>
+                                                            <select formControlName="appointee_relationship" id="appointee_relationship">
+                                                                <option>Select</option>
+                                                                <option value="son">Son</option>
+                                                                <option value="daughter">Daughter</option>
+                                                                <option value="brother">Brother</option>
+                                                                <option value="Father">Father</option>
+                                                                <option value="Mother">Mother</option>
+                                                                <option value="Spouse">Spouse</option>
+                                                                <option value="Father-in-law">Father-in-law</option>
+                                                                <option value="Mother-in-law">Mother-in-law</option>
+                                                                <option value="OTHERS">OTHERS</option>
+                                                                <option value="Child">Child</option>
+                                                                <option value="Sibling">Sibling</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-12"  style="margin-top:-22px;">
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.appointee_dob.value}">
+                                                            <label class="focus-label req">DOB</label>
+                                                            <input type="date" formControlName="appointee_dob" id="appointee_dob" class="form-control">
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-12">
+                                                        <div class="form-group form-focus select-focus">
+                                                            <div class="focus-label req">Select Marital Status</div>
+                                                            <select formControlName="appointee_marital" id="appointee_marital">
+                                                                <option value="">Select Marital</option>
+                                                                <option value="Single">Single</option>
+                                                                <option value="Married">Married</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2 pt-4 align-items-center proposal-groupbtns" *ngIf="claim_ins == false">
+                                    <div class="col-12 text-center">
+                                        <button type="submit" class="btn next-step btn-lg btn-custom green"><i class="fa fa-arrow-circle-right mr-1"> </i> Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<!-- <app-loader [loaderActive]="loaderActive"></app-loader> -->

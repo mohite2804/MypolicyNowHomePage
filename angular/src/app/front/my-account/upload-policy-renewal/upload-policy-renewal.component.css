@@ -1,0 +1,23 @@
+th{
+	font-size: 14px !important;
+}
+td{
+	font-size: 12px !important;
+}
+
+.succ{
+	background-color: green !important;
+}
+.dup{
+	background-color: yellow !important;
+}
+.err{
+	background-color: red !important;
+}
+.tot{
+	background-color: aquamarine !important;
+}
+
+ul.b {
+  list-style-type: square !important;
+}

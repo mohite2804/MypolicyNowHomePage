@@ -1,0 +1,1669 @@
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <div *ngIf="result" class="content container-fluid">
+        <div class="row align-items-center latest-update ">
+            <!-- <div class="col-auto float-left mr-auto labeltext">Latest Update</div>
+            <div class="col updatetext">
+                <marquee class="display-block" scrolldelay="120" onmouseover="this.stop();" onmouseout="this.start();">
+                    <span><a href="#">Issuance of Digital Surveyor and Loss Assessor Licenses.</a></span>
+                    <span><a href="#">Issuance of Digital Surveyor and Loss Assessor Licenses.</a></span>
+                    <span><a href="#">Issuance of Digital Surveyor and Loss Assessor Licenses.</a></span>
+                </marquee>
+            </div> -->
+        </div>
+        <div class="page-header">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-9 col-md-10 col-12 mt-3">
+                    <h3 class="page-title text-center">Policy Transfer[Payable] Endorsement for Policy Number -
+                        <b>{{policy_no}}</b>
+                    </h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2 col-md-12 col-12 mt-3">
+                </div>
+                <div class="col-lg-3 col-md-6 col-12 mt-3">
+                    <h4 class="text-right">Policy Type: <b>{{policy_type_name}}</b> </h4>
+                </div>
+                <div class="col-lg-7 col-md-6 col-12 mt-3">
+                    <h4 class="text-left">Policy Subtype: <b>{{policy_subtype_name}}</b></h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger text-center" *ngIf="hide_initiated_btn">{{ already_initiated }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row align-items-center justify-content-center">
+            <div class="col-lg-10 col-md-10 col-12">
+                <div class="card shadowbox">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <form [formGroup]="formeditTransfer" (ngSubmit)="submitFormTransfer()">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-6 border-right">
+                                                <h4>Policy Details</h4>
+                                                <ul class="endorsement-infolist">
+                                                    <li>
+                                                        <div class="title">Policy Start Date:</div>
+                                                        <div class="text">{{policy_start_date}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">IDV:</div>
+                                                        <div class="text">{{idv}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Total OD:</div>
+                                                        <div class="text">{{total_od}} [OD Prem + Addons]</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">NCB:</div>
+                                                        <div class="text">{{ncb}}%</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">NCB Amount:</div>
+                                                        <div class="text">{{ncb_amount}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Addons:</div>
+                                                        <div class="text">{{addons_amt}}</div>
+                                                    </li>
+                                                </ul>
+
+                                                <hr>
+
+                                                <h4>Endorsement Charges</h4>
+                                                <ul class="endorsement-infolist" id="endorsement_charge">
+                                                    <li>
+                                                        <div class="title">NCB Recover Amount:</div>
+                                                        <div class="text">{{ncb_recover_amount}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">NCB Recover GST:</div>
+                                                        <div class="text">{{ncb_recover_gst}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Endorsement Fees:</div>
+                                                        <div class="text">{{endorsement_fees}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Endorsement Fees GST:</div>
+                                                        <div class="text">{{endorsement_fees_gst}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Total Recover Amount [A]:</div>
+                                                        <div class="text">{{total_recover_amount}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Total Endorsement Fees [B]:</div>
+                                                        <div class="text">{{total_endorsement_fees}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Total Endorsement Charges [A+B]:</div>
+                                                        <div class="text">{{total_endorsement_charges}}</div>
+                                                    </li>
+                                                </ul>
+
+                                                <hr>
+
+                                                <h4>Existing Proposer Details</h4>
+                                                <ul class="endorsement-infolist">
+                                                    <li>
+                                                        <div class="title">Proposer Type:</div>
+                                                        <div class="text">{{ex_policyholdertype}}</div>
+                                                    </li>
+                                                </ul>
+                                                <ul class="endorsement-infolist" *ngIf="ex_policyholdertype=='Corporate'">
+                                                    <li>
+                                                        <div class="title">Company Salutation:</div>
+                                                        <div class="text">{{ex_company_salutation}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Company Name:</div>
+                                                        <div class="text">{{ex_company_name}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Company GST No:</div>
+                                                        <div class="text">{{ex_company_gst_no}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Company PAN No:</div>
+                                                        <div class="text">{{ex_company_pan_no}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Owner Salutation:</div>
+                                                        <div class="text">{{ex_company_own_salutation}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">First Name:</div>
+                                                        <div class="text">{{ex_company_owner_fisrt_name}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Middle Name:</div>
+                                                        <div class="text">{{ex_company_owner_middle_name}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Last Name:</div>
+                                                        <div class="text">{{ex_company_owner_last_name}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Email:</div>
+                                                        <div class="text">{{ex_company_owner_email}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Mobile:</div>
+                                                        <div class="text">{{ex_company_owner_mobile}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Address 1:</div>
+                                                        <div class="text">{{ex_company_owner_address_1}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Address 2:</div>
+                                                        <div class="text">{{ex_company_owner_address_2}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Pincode:</div>
+                                                        <div class="text">{{ex_company_owner_pincode}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">City Name:</div>
+                                                        <div class="text">{{ex_company_owner_city_name}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">State Name:</div>
+                                                        <div class="text">{{ex_company_owner_state_name}}</div>
+                                                    </li>
+                                                </ul>
+                                                <hr *ngIf="ex_policyholdertype=='Individual'">
+                                                <ul class="endorsement-infolist" *ngIf="ex_policyholdertype=='Individual'">
+                                                    <li>
+                                                        <div class="title">Salutation:</div>
+                                                        <div class="text">{{ex_salutation}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">First Name:</div>
+                                                        <div class="text">{{ex_first_name}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Middle Name:</div>
+                                                        <div class="text">{{ex_middle_name}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Last Name:</div>
+                                                        <div class="text">{{ex_last_name}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Address 1:</div>
+                                                        <div class="text">{{ex_address1}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Address 2:</div>
+                                                        <div class="text">{{ex_address2}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Pincode:</div>
+                                                        <div class="text">{{ex_pincode}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">City:</div>
+                                                        <div class="text">{{ex_city}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">State:</div>
+                                                        <div class="text">{{ex_state}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Registration No:</div>
+                                                        <div class="text">{{ex_reg_no}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Email:</div>
+                                                        <div class="text">{{ex_email}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Mobile:</div>
+                                                        <div class="text">{{ex_mobile}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">D.O.B.:</div>
+                                                        <div class="text">{{ex_dob}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Gender:</div>
+                                                        <div class="text">{{ex_gender}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">PAN No:</div>
+                                                        <div class="text">{{ex_pan_no}}</div>
+                                                    </li>
+                                                </ul>
+
+                                                <hr *ngIf="ex_policyholdertype=='Individual'">
+
+                                                <h4 *ngIf="ex_policyholdertype=='Individual'">Existing Nominee Details</h4>
+                                                <ul class="endorsement-infolist" *ngIf="ex_policyholdertype=='Individual'">
+                                                    <li>
+                                                        <div class="title">Salutation:</div>
+                                                        <div class="text">{{ex_nominee_salutation}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">First Name:</div>
+                                                        <div class="text">{{ex_nominee_first_name}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Middle Name:</div>
+                                                        <div class="text">{{ex_nominee_middle_name}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Last Name:</div>
+                                                        <div class="text">{{ex_nominee_last_name}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Relation:</div>
+                                                        <div class="text">{{ex_nominee_relation}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Age:</div>
+                                                        <div class="text">{{ex_nominee_age}}</div>
+                                                    </li>
+                                                </ul>
+
+                                                <hr *ngIf="(ex_policyholdertype=='Individual' && ex_nominee_age<18)">
+
+                                                <h4 *ngIf="(ex_policyholdertype=='Individual' && ex_nominee_age<18)">Existing Appointee Details
+                                                </h4>
+                                                <ul class="endorsement-infolist" *ngIf="(ex_policyholdertype=='Individual' && ex_nominee_age<18)">
+                                                    <li>
+                                                        <div class="title">Salutation:</div>
+                                                        <div class="text">{{ex_appointee_salutation}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">First Name:</div>
+                                                        <div class="text">{{ex_appointee_first_name}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Middle Name:</div>
+                                                        <div class="text">{{ex_appointee_middle_name}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Last Name:</div>
+                                                        <div class="text">{{ex_appointee_last_name}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Relation:</div>
+                                                        <div class="text">{{ex_appointee_relation}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Age:</div>
+                                                        <div class="text">{{ex_appointee_age}}</div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-lg-8 col-md-6">
+
+                                                <div class="row align-items-center">
+                                                    <div class="col-md-12 col-12">
+                                                        <h4>New Proposer Details</h4>
+                                                        <hr>
+                                                    </div>
+                                                    <div class="col-md-12 col-12">
+                                                        <div class="ui form">
+                                                            <div class="col-md-3 col-12">
+                                                                <div class="form-group form-focus focused">
+                                                                    <label class="focus-label req">Policy Holder Type</label>
+                                                                    <select formControlName="ed_policyholdertype" class="ui search dropdown form-control" (change)="selectPolicyHolderType($event)">
+                                    <option value="">Select</option>
+                                    <option value="Individual">Individual</option>
+                                    <option value="Corporate">Corporate</option>
+                                  </select>
+                                                                    <div *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_policyholdertype.errors">
+                                                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_policyholdertype.errors.required" class="text-danger">
+                                      Select Policy Holder Type.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row align-items-center" *ngIf="div_show_owner_details">
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus focused">
+                                                            <label class="focus-label req">Salutation</label>
+                                                            <select formControlName="ed_salutation" class="ui search dropdown form-control">
+                                <option value="">Select</option>
+                                <option *ngFor="let row of salutation" value="{{ row.name }}">{{ row.name }}</option>
+                              </select>
+                                                            <div *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_salutation.errors">
+                                                                <small *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_salutation.errors.required" class="text-danger">
+                                  Please Select Salutation.
+                                </small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_first_name}">
+                                                            <input formControlName="ed_first_name" type="text" class="form-control" maxlength="25">
+
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_first_name.invalid && (formeditTransfer.controls.ed_first_name.dirty || formeditTransfer.controls.ed_first_name.touched)) && formeditTransfer.controls.ed_first_name.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_first_name.invalid && (formeditTransfer.controls.ed_first_name.dirty || formeditTransfer.controls.ed_first_name.touched)) && formeditTransfer.controls.ed_first_name.errors" class="text-danger">
+                                  Please Enter valid First Name.
+                                </small>
+                                                            </div>
+                                                            <label class="focus-label req">First Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_middle_name}">
+                                                            <input formControlName="ed_middle_name" type="text" class="form-control" maxlength="25">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_middle_name.invalid && (formeditTransfer.controls.ed_middle_name.dirty || formeditTransfer.controls.ed_middle_name.touched)) && formeditTransfer.controls.ed_middle_name.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_middle_name.invalid && (formeditTransfer.controls.ed_middle_name.dirty || formeditTransfer.controls.ed_middle_name.touched)) && formeditTransfer.controls.ed_middle_name.errors" class="text-danger">
+                                  Please Enter valid Middle Name.
+                                </small>
+                                                            </div>
+                                                            <label class="focus-label">Middle Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_last_name}">
+                                                            <input formControlName="ed_last_name" type="text" class="form-control">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_last_name.invalid && (formeditTransfer.controls.ed_last_name.dirty || formeditTransfer.controls.ed_last_name.touched)) && formeditTransfer.controls.ed_last_name.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_last_name.invalid && (formeditTransfer.controls.ed_last_name.dirty || formeditTransfer.controls.ed_last_name.touched)) && formeditTransfer.controls.ed_last_name.errors" class="text-danger">
+                                  Please Enter valid Last Name.
+                                </small>
+
+                                                            </div>
+                                                            <label class="focus-label req">Last Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_address1}">
+                                                            <input formControlName="ed_address1" type="text" class="form-control" maxlength="50">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_address1.invalid && (formeditTransfer.controls.ed_address1.dirty || formeditTransfer.controls.ed_address1.touched)) && formeditTransfer.controls.ed_address1.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_address1.invalid && (formeditTransfer.controls.ed_address1.dirty || formeditTransfer.controls.ed_address1.touched)) && formeditTransfer.controls.ed_address1.errors" class="text-danger">
+                                  Please Enter Valid Address.
+                                </small>
+                                                            </div>
+                                                            <label class="focus-label req">Address 1</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_address2}">
+                                                            <input formControlName="ed_address2" type="text" class="form-control" maxlength="50">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_address2.invalid && (formeditTransfer.controls.ed_address2.dirty || formeditTransfer.controls.ed_address2.touched)) && formeditTransfer.controls.ed_address2.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_address2.invalid && (formeditTransfer.controls.ed_address2.dirty || formeditTransfer.controls.ed_address2.touched)) && formeditTransfer.controls.ed_address2.errors" class="text-danger">
+                                  Please Enter Valid Address.
+                                </small>
+                                                            </div>
+                                                            <label class="focus-label req">Address 2</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_pincode}">
+                                                            <input formControlName="ed_pincode" type="text" class="form-control" (keyup)="changeOwnerPincode($event)">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_pincode.invalid && (formeditTransfer.controls.ed_pincode.dirty || formeditTransfer.controls.ed_pincode.touched)) && formeditTransfer.controls.ed_pincode.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_pincode.invalid && (formeditTransfer.controls.ed_pincode.dirty || formeditTransfer.controls.ed_pincode.touched)) && formeditTransfer.controls.ed_pincode.errors" class="text-danger">
+                                  Please Enter Valid Pin Code.
+                                </small>
+                                                            </div>
+                                                            <label class="focus-label req">Pincode</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_city}">
+                                                            <input formControlName="ed_city" type="text" class="form-control" readonly="readonly">
+                                                            <label class="focus-label req">City</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_state}">
+                                                            <input formControlName="ed_state" type="text" class="form-control" readonly="readonly">
+                                                            <label class="focus-label req">State</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_reg_no}">
+                                                            <input formControlName="ed_reg_no" type="text" class="form-control">
+                                                            <label class="focus-label req">Registration no</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_email}">
+                                                            <input formControlName="ed_email" type="text" class="form-control" maxlength="50">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_email.invalid && (formeditTransfer.controls.ed_email.dirty || formeditTransfer.controls.ed_email.touched)) && formeditTransfer.controls.ed_email.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_email.invalid && (formeditTransfer.controls.ed_email.dirty || formeditTransfer.controls.ed_email.touched)) && formeditTransfer.controls.ed_email.errors" class="text-danger">
+                                  Please Enter Valid Email ID.
+                                </small>
+                                                            </div>
+                                                            <label class="focus-label req">Email</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_mobile}">
+                                                            <input formControlName="ed_mobile" type="text" class="form-control" maxlength="10">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_mobile.invalid && (formeditTransfer.controls.ed_mobile.dirty || formeditTransfer.controls.ed_mobile.touched)) && formeditTransfer.controls.ed_mobile.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_mobile.invalid && (formeditTransfer.controls.ed_mobile.dirty || formeditTransfer.controls.ed_mobile.touched)) && formeditTransfer.controls.ed_mobile.errors" class="text-danger">
+                                  Please Enter Valid Mobile Number.
+                                </small>
+                                                                <!-- <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_mobile.invalid && (formeditTransfer.controls.ed_mobile.dirty || formeditTransfer.controls.ed_mobile.touched)) && formeditTransfer.controls.ed_mobile.errors.pattern" class="text-danger">
+                                  Please Enter Valid Mobile Number.
+                                </small>
+                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_mobile.invalid && (formeditTransfer.controls.ed_mobile.dirty || formeditTransfer.controls.ed_mobile.touched)) && formeditTransfer.controls.ed_mobile.errors.minlength" class="text-danger">
+                                  Please Enter Valid Mobile Number.
+                                </small>
+                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_mobile.invalid && (formeditTransfer.controls.ed_mobile.dirty || formeditTransfer.controls.ed_mobile.touched)) && formeditTransfer.controls.ed_mobile.errors.maxlength" class="text-danger">
+                                  Please Enter Valid Mobile Number.
+                                </small> -->
+                                                            </div>
+                                                            <label class="focus-label req">Mobile</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_dob}">
+                                                            <input [maxDate]="maxDateForBirthdate" type="text" [ngModelOptions]="{standalone: true}" outsideDays="collapsed" (dateSelect)="selectDate('ed_dob',$event)" class="form-control floating datetimepicker-month" (click)="h.toggle()" ngbDatepicker #h="ngbDatepicker"
+                                                                [minDate]="minDate" [(ngModel)]="date_picker_dob" [(ngModel)]="date_picker_dob">
+                                                            <label class="focus-label req">DOB</label>
+
+                                                            <div *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_dob.errors">
+                                                                <small *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_dob.errors.required" class="text-danger">
+                                  Please Select DOB.
+                                </small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus focused">
+                                                            <label class="focus-label req">Gender</label>
+                                                            <select formControlName="ed_gender" class="ui search dropdown form-control">
+                                <option value="">Select</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                              </select>
+
+                                                            <div *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_gender.errors">
+                                                                <small *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_gender.errors.required" class="text-danger">
+                                  Please Select Gender.
+                                </small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_pan_no}">
+                                                            <input formControlName="ed_pan_no" type="text" class="form-control" maxlength="10">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_pan_no.invalid && (formeditTransfer.controls.ed_pan_no.dirty || formeditTransfer.controls.ed_pan_no.touched)) && formeditTransfer.controls.ed_pan_no.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_pan_no.invalid && (formeditTransfer.controls.ed_pan_no.dirty || formeditTransfer.controls.ed_pan_no.touched)) && formeditTransfer.controls.ed_pan_no.errors" class="text-danger">
+                                  Please Enter Valid Pan Number.
+                                </small>
+                                                            </div>
+                                                            <label class="focus-label">Pan No</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row align-items-center" *ngIf="div_show_nominee_details">
+                                                    <div class="col-md-12 col-12">
+                                                        <h4>New Nominee Details</h4>
+                                                        <hr>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus focused">
+                                                            <label class="focus-label req">Salutation</label>
+                                                            <select formControlName="ed_nominee_salutation" class="ui search dropdown form-control" (change)="nomineeRelationType('nominee',$event.target.value)">
+                                <option value="">Select</option>
+                                <option *ngFor="let row of result_salutation" value="{{ row.name }}">{{ row.name }}
+                                </option>
+                              </select>
+                                                            <div *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_nominee_salutation.errors">
+                                                                <small *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_nominee_salutation.errors.required" class="text-danger">
+                                  Please Select Salutation.
+                                </small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_nominee_first_name}">
+                                                            <input formControlName="ed_nominee_first_name" type="text" class="form-control" maxlength="25">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_nominee_first_name.invalid && (formeditTransfer.controls.ed_nominee_first_name.dirty || formeditTransfer.controls.ed_nominee_first_name.touched)) && formeditTransfer.controls.ed_nominee_first_name.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_nominee_first_name.invalid && (formeditTransfer.controls.ed_nominee_first_name.dirty || formeditTransfer.controls.ed_nominee_first_name.touched)) && formeditTransfer.controls.ed_nominee_first_name.errors"
+                                                                    class="text-danger">
+                                  Please Enter Valid First Name.
+                                </small>
+                                                            </div>
+                                                            <label class="focus-label req">First Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_nominee_middle_name}">
+                                                            <input formControlName="ed_nominee_middle_name" type="text" class="form-control" maxlength="25">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_nominee_middle_name.invalid && (formeditTransfer.controls.ed_nominee_middle_name.dirty || formeditTransfer.controls.ed_nominee_middle_name.touched)) && formeditTransfer.controls.ed_nominee_middle_name.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_nominee_middle_name.invalid && (formeditTransfer.controls.ed_nominee_middle_name.dirty || formeditTransfer.controls.ed_nominee_middle_name.touched)) && formeditTransfer.controls.ed_nominee_middle_name.errors"
+                                                                    class="text-danger">
+                                  Please Enter Valid Middle Name.
+                                </small>
+                                                            </div>
+                                                            <label class="focus-label">Middle Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_nominee_last_name}">
+                                                            <input formControlName="ed_nominee_last_name" type="text" class="form-control" maxlength="25">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_nominee_last_name.invalid && (formeditTransfer.controls.ed_nominee_last_name.dirty || formeditTransfer.controls.ed_nominee_last_name.touched)) && formeditTransfer.controls.ed_nominee_last_name.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_nominee_last_name.invalid && (formeditTransfer.controls.ed_nominee_last_name.dirty || formeditTransfer.controls.ed_nominee_last_name.touched)) && formeditTransfer.controls.ed_nominee_last_name.errors"
+                                                                    class="text-danger">
+                                  Please Enter Valid Last Name.
+                                </small>
+                                                            </div>
+                                                            <label class="focus-label req">Last Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus focused">
+                                                            <label class="focus-label req">Nominee Relation</label>
+                                                            <select formControlName="ed_nominee_relation" class="ui search dropdown form-control">
+                                <option value="">Select Relationship</option>
+                                <option *ngFor="let row of result_relationsForNominee" value="{{ row.name }}">
+                                  {{ row.name }}</option>
+                              </select>
+                                                            <div *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_nominee_relation.errors">
+                                                                <small *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_nominee_relation.errors.required" class="text-danger">
+                                  Please Select Nominee Relation.
+                                </small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_nominee_age}">
+                                                            <input formControlName="ed_nominee_age" type="text" class="form-control" minlength="1" maxlength="2" (keyup)="nomineeAge($event.target.value)">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_nominee_age.invalid && (formeditTransfer.controls.ed_nominee_age.dirty || formeditTransfer.controls.ed_nominee_age.touched)) && formeditTransfer.controls.ed_nominee_age.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_nominee_age.invalid && (formeditTransfer.controls.ed_nominee_age.dirty || formeditTransfer.controls.ed_nominee_age.touched)) && formeditTransfer.controls.ed_nominee_age.errors.pattern"
+                                                                    class="text-danger">
+                                  Please Enter Valid Age.
+                                </small>
+
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_nominee_age.invalid && (formeditTransfer.controls.ed_nominee_age.dirty || formeditTransfer.controls.ed_nominee_age.touched)) && formeditTransfer.controls.ed_nominee_age.errors.nomineeAgeRange"
+                                                                    class="text-danger">
+                                  <!-- Please Enter age between 01 to 99. -->
+                                  Age 01 - 99.
+                                </small>
+
+                                                            </div>
+                                                            <label class="focus-label">Age</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div [ngClass]="{'d-none': div_show_for_appointee }" class="row align-items-center">
+                                                    <div class="col-md-12 col-12">
+                                                        <h4>New Appointee Details</h4>
+                                                        <hr>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus focused">
+                                                            <label class="focus-label req">Salutation</label>
+                                                            <select formControlName="ed_appointee_salutation" class="ui search dropdown form-control" (change)="nomineeRelationType('appointee',$event.target.value)">
+                                <option value="">Select</option>
+                                <option *ngFor="let row of result_salutation" value="{{ row.name }}">{{ row.name }}
+                                </option>
+                              </select>
+                                                            <div *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_appointee_salutation.errors">
+                                                                <small *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_appointee_salutation.errors.required" class="text-danger">
+                                  Please Select Salutation.
+                                </small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_appointee_first_name}">
+                                                            <input formControlName="ed_appointee_first_name" type="text" class="form-control" maxlength="25">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_appointee_first_name.invalid && (formeditTransfer.controls.ed_appointee_first_name.dirty || formeditTransfer.controls.ed_appointee_first_name.touched)) && formeditTransfer.controls.ed_appointee_first_name.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_appointee_first_name.invalid && (formeditTransfer.controls.ed_appointee_first_name.dirty || formeditTransfer.controls.ed_appointee_first_name.touched)) && formeditTransfer.controls.ed_appointee_first_name.errors"
+                                                                    class="text-danger">
+                                  Please Enter Valid First Name.
+                                </small>
+                                                            </div>
+                                                            <label class="focus-label req">First Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_appointee_middle_name}">
+                                                            <input formControlName="ed_appointee_middle_name" type="text" class="form-control" maxlength="25">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_appointee_middle_name.invalid && (formeditTransfer.controls.ed_appointee_middle_name.dirty || formeditTransfer.controls.ed_appointee_middle_name.touched)) && formeditTransfer.controls.ed_appointee_middle_name.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_appointee_middle_name.invalid && (formeditTransfer.controls.ed_appointee_middle_name.dirty || formeditTransfer.controls.ed_appointee_middle_name.touched)) && formeditTransfer.controls.ed_appointee_middle_name.errors"
+                                                                    class="text-danger">
+                                  Please Enter Valid Middle Name.
+                                </small>
+                                                            </div>
+                                                            <label class="focus-label">Middle Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_appointee_last_name}">
+                                                            <input formControlName="ed_appointee_last_name" type="text" class="form-control" maxlength="25">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_appointee_last_name.invalid && (formeditTransfer.controls.ed_appointee_last_name.dirty || formeditTransfer.controls.ed_appointee_last_name.touched)) && formeditTransfer.controls.ed_appointee_last_name.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_appointee_last_name.invalid && (formeditTransfer.controls.ed_appointee_last_name.dirty || formeditTransfer.controls.ed_appointee_last_name.touched)) && formeditTransfer.controls.ed_appointee_last_name.errors"
+                                                                    class="text-danger">
+                                  Please Enter Valid Last Name.
+                                </small>
+                                                            </div>
+                                                            <label class="focus-label req">Last Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus focused">
+                                                            <label class="focus-label req">Appointee Relation</label>
+                                                            <select formControlName="ed_appointee_relation" class="ui search dropdown form-control">
+                                <option value="">Select Relationship</option>
+                                <option *ngFor="let row of result_relationsForAppoint" value="{{ row.name }}">
+                                  {{ row.name }}</option>
+                              </select>
+                                                            <div *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_appointee_relation.errors">
+                                                                <small *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_appointee_relation.errors.required" class="text-danger">
+                                  Please Select Appointee Relation.
+                                </small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_appointee_age}">
+                                                            <input formControlName="ed_appointee_age" type="text" class="form-control" minlength="1" maxlength="2">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_appointee_age.invalid && (formeditTransfer.controls.ed_appointee_age.dirty || formeditTransfer.controls.ed_appointee_age.touched)) && formeditTransfer.controls.ed_appointee_age.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_appointee_age.invalid && (formeditTransfer.controls.ed_appointee_age.dirty || formeditTransfer.controls.ed_appointee_age.touched)) && formeditTransfer.controls.ed_appointee_age.errors.pattern"
+                                                                    class="text-danger">
+                                  Please Enter Valid Age.
+                                </small>
+
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_appointee_age.invalid && (formeditTransfer.controls.ed_appointee_age.dirty || formeditTransfer.controls.ed_appointee_age.touched)) && formeditTransfer.controls.ed_appointee_age.errors.appointeeAgeRange"
+                                                                    class="text-danger">
+                                  <!-- Please Enter age between 01 to 99. -->
+                                  Age 01 - 99.
+                                </small>
+
+                                                            </div>
+                                                            <label class="focus-label">Age</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row align-items-center" *ngIf="div_show_company_details">
+                                                    <div class="col-md-12 col-12">
+                                                        <h4>Company Details</h4>
+                                                        <hr>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus focused">
+                                                            <label class="focus-label req">Salutation</label>
+                                                            <select formControlName="ed_company_salutation" class="ui search dropdown form-control">
+                                <option value="M/s." selected>M/s.</option>
+                              </select>
+                                                            <div *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_company_salutation.errors">
+                                                                <small *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_company_salutation.errors.required" class="text-danger">
+                                  Please Select Salutation.
+                                </small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_company_name}">
+                                                            <input formControlName="ed_company_name" type="text" class="form-control" maxlength="25">
+
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_name.invalid && (formeditTransfer.controls.ed_company_name.dirty || formeditTransfer.controls.ed_company_name.touched)) && formeditTransfer.controls.ed_company_name.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_name.invalid && (formeditTransfer.controls.ed_company_name.dirty || formeditTransfer.controls.ed_company_name.touched)) && formeditTransfer.controls.ed_company_name.errors"
+                                                                    class="text-danger">
+                                  Please Enter valid Company Name.
+                                </small>
+                                                            </div>
+                                                            <label class="focus-label req">Company Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_company_gst_no}">
+                                                            <input formControlName="ed_company_gst_no" type="text" class="form-control" maxlength="30">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_gst_no.invalid && (formeditTransfer.controls.ed_company_gst_no.dirty || formeditTransfer.controls.ed_company_gst_no.touched)) && formeditTransfer.controls.ed_company_gst_no.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_gst_no.invalid && (formeditTransfer.controls.ed_company_gst_no.dirty || formeditTransfer.controls.ed_company_gst_no.touched)) && formeditTransfer.controls.ed_company_gst_no.errors"
+                                                                    class="text-danger">
+                                                                Please Enter Valid GST Number.
+                                                              </small>
+                                                            </div>
+                                                            <label class="focus-label req">GST No</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_company_pan_no}">
+                                                            <input formControlName="ed_company_pan_no" type="text" class="form-control" maxlength="10">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_pan_no.invalid && (formeditTransfer.controls.ed_company_pan_no.dirty || formeditTransfer.controls.ed_company_pan_no.touched)) && formeditTransfer.controls.ed_company_pan_no.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_pan_no.invalid && (formeditTransfer.controls.ed_company_pan_no.dirty || formeditTransfer.controls.ed_company_pan_no.touched)) && formeditTransfer.controls.ed_company_pan_no.errors"
+                                                                    class="text-danger">
+                                                                  Please Enter Valid PAN Number.
+                                                                </small>
+                                                            </div>
+                                                            <label class="focus-label req">PAN No</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus focused">
+                                                            <label class="focus-label req">Salutation</label>
+                                                            <select formControlName="ed_company_own_salutation" class="ui search dropdown form-control">
+                                                              <option value="">Select</option>
+                                                              <option *ngFor="let row of salutation" value="{{ row.name }}">{{ row.name }}</option>
+                                                            </select>
+                                                            <div *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_company_own_salutation.errors">
+                                                                <small *ngIf="submittedTransferDetails && formeditTransfer.controls.ed_company_own_salutation.errors.required" class="text-danger">
+                                                                  Select Owner Salutation.
+                                                                </small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_company_owner_fisrt_name}">
+                                                            <input formControlName="ed_company_owner_fisrt_name" type="text" class="form-control" maxlength="25">
+
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_fisrt_name.invalid && (formeditTransfer.controls.ed_company_owner_fisrt_name.dirty || formeditTransfer.controls.ed_company_owner_fisrt_name.touched)) && formeditTransfer.controls.ed_company_owner_fisrt_name.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_fisrt_name.invalid && (formeditTransfer.controls.ed_company_owner_fisrt_name.dirty || formeditTransfer.controls.ed_company_owner_fisrt_name.touched)) && formeditTransfer.controls.ed_company_owner_fisrt_name.errors"
+                                                                    class="text-danger">
+                                                                  Please Enter valid First Name.
+                                                                </small>
+                                                            </div>
+                                                            <label class="focus-label req">First Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_company_owner_middle_name}">
+                                                            <input formControlName="ed_company_owner_middle_name" type="text" class="form-control" maxlength="25">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_middle_name.invalid && (formeditTransfer.controls.ed_company_owner_middle_name.dirty || formeditTransfer.controls.ed_company_owner_middle_name.touched)) && formeditTransfer.controls.ed_company_owner_middle_name.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_middle_name.invalid && (formeditTransfer.controls.ed_company_owner_middle_name.dirty || formeditTransfer.controls.ed_company_owner_middle_name.touched)) && formeditTransfer.controls.ed_company_owner_middle_name.errors"
+                                                                    class="text-danger">
+                                                                  Please Enter valid Middle Name.
+                                                                </small>
+                                                            </div>
+                                                            <label class="focus-label">Middle Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_company_owner_last_name}">
+                                                            <input formControlName="ed_company_owner_last_name" type="text" class="form-control">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_last_name.invalid && (formeditTransfer.controls.ed_company_owner_last_name.dirty || formeditTransfer.controls.ed_company_owner_last_name.touched)) && formeditTransfer.controls.ed_company_owner_last_name.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_last_name.invalid && (formeditTransfer.controls.ed_company_owner_last_name.dirty || formeditTransfer.controls.ed_company_owner_last_name.touched)) && formeditTransfer.controls.ed_company_owner_last_name.errors"
+                                                                    class="text-danger">
+                                                                  Please Enter valid Last Name.
+                                                                </small>
+
+                                                            </div>
+                                                            <label class="focus-label req">Last Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_company_owner_address_1}">
+                                                            <input formControlName="ed_company_owner_address_1" type="text" class="form-control" maxlength="=50">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_address_1.invalid && (formeditTransfer.controls.ed_company_owner_address_1.dirty || formeditTransfer.controls.ed_company_owner_address_1.touched)) && formeditTransfer.controls.ed_company_owner_address_1.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_address_1.invalid && (formeditTransfer.controls.ed_company_owner_address_1.dirty || formeditTransfer.controls.ed_company_owner_address_1.touched)) && formeditTransfer.controls.ed_company_owner_address_1.errors"
+                                                                    class="text-danger">
+                                                                  Please Enter Valid Address.
+                                                                </small>
+                                                            </div>
+                                                            <label class="focus-label req">Address 1</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_company_owner_address_2}">
+                                                            <input formControlName="ed_company_owner_address_2" type="text" class="form-control" maxlength="50">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_address_2.invalid && (formeditTransfer.controls.ed_company_owner_address_2.dirty || formeditTransfer.controls.ed_company_owner_address_2.touched)) && formeditTransfer.controls.ed_company_owner_address_2.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_address_2.invalid && (formeditTransfer.controls.ed_company_owner_address_2.dirty || formeditTransfer.controls.ed_company_owner_address_2.touched)) && formeditTransfer.controls.ed_company_owner_address_2.errors"
+                                                                    class="text-danger">
+                                                                     Please Enter Valid Address.
+                                                                </small>
+                                                            </div>
+                                                            <label class="focus-label req">Address 2</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_company_owner_pincode}">
+                                                            <input formControlName="ed_company_owner_pincode" type="text" class="form-control" (keyup)="changeCompanyOwnerPincode($event)">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_pincode.invalid && (formeditTransfer.controls.ed_company_owner_pincode.dirty || formeditTransfer.controls.ed_company_owner_pincode.touched)) && formeditTransfer.controls.ed_company_owner_pincode.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_pincode.invalid && (formeditTransfer.controls.ed_company_owner_pincode.dirty || formeditTransfer.controls.ed_company_owner_pincode.touched)) && formeditTransfer.controls.ed_company_owner_pincode.errors"
+                                                                    class="text-danger">
+                                                                  Please Enter Valid Pin Code.
+                                                                </small>
+                                                            </div>
+                                                            <label class="focus-label req">Pincode</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_company_owner_city_name}">
+                                                            <input formControlName="ed_company_owner_city_name" type="text" class="form-control" readonly="readonly">
+                                                            <label class="focus-label req">City</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_company_owner_state_name}">
+                                                            <input formControlName="ed_company_owner_state_name" type="text" class="form-control" readonly="readonly">
+                                                            <label class="focus-label req">State</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_company_owner_email}">
+                                                            <input formControlName="ed_company_owner_email" type="text" class="form-control" maxlength="50">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_email.invalid && (formeditTransfer.controls.ed_company_owner_email.dirty || formeditTransfer.controls.ed_company_owner_email.touched)) && formeditTransfer.controls.ed_company_owner_email.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_email.invalid && (formeditTransfer.controls.ed_company_owner_email.dirty || formeditTransfer.controls.ed_company_owner_email.touched)) && formeditTransfer.controls.ed_company_owner_email.errors"
+                                                                    class="text-danger">
+                                  Please Enter Valid Email ID.
+                                </small>
+                                                            </div>
+                                                            <label class="focus-label req">Email</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formeditTransfer.value.ed_company_owner_mobile}">
+                                                            <input formControlName="ed_company_owner_mobile" type="text" class="form-control" maxlength="10">
+                                                            <div *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_mobile.invalid && (formeditTransfer.controls.ed_company_owner_mobile.dirty || formeditTransfer.controls.ed_company_owner_mobile.touched)) && formeditTransfer.controls.ed_company_owner_mobile.errors">
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_mobile.invalid && (formeditTransfer.controls.ed_company_owner_mobile.dirty || formeditTransfer.controls.ed_company_owner_mobile.touched)) && formeditTransfer.controls.ed_company_owner_mobile.errors"
+                                                                    class="text-danger">
+                                  Please Enter Valid Mobile Number.
+                                </small>
+                                                                <!-- <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_mobile.invalid && (formeditTransfer.controls.ed_company_owner_mobile.dirty || formeditTransfer.controls.ed_company_owner_mobile.touched)) && formeditTransfer.controls.ed_company_owner_mobile.errors.pattern"
+                                                                    class="text-danger">
+                                  Please Enter Valid Mobile Number.
+                                </small>
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_mobile.invalid && (formeditTransfer.controls.ed_company_owner_mobile.dirty || formeditTransfer.controls.ed_company_owner_mobile.touched)) && formeditTransfer.controls.ed_company_owner_mobile.errors.minlength"
+                                                                    class="text-danger">
+                                  Please Enter Valid Mobile Number.
+                                </small>
+                                                                <small *ngIf="(submittedTransferDetails || formeditTransfer.controls.ed_company_owner_mobile.invalid && (formeditTransfer.controls.ed_company_owner_mobile.dirty || formeditTransfer.controls.ed_company_owner_mobile.touched)) && formeditTransfer.controls.ed_company_owner_mobile.errors.maxlength"
+                                                                    class="text-danger">
+                                  Please Enter Valid Mobile Number.
+                                </small> -->
+                                                            </div>
+                                                            <label class="focus-label req">Mobile</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row align-items-center" *ngIf="is_not_third_party_policy">
+                                                    <div class="col-md-12 col-12">
+                                                        <h4>Upload Documents</h4>
+                                                        <hr>
+                                                    </div>
+                                                    <!-- NOC -->
+                                                    <div class="col-md-4 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>NOC: <sup class="text-danger">*</sup></b></h5>
+                                                                        <label>{{noc_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="noc-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadNOCcopy($event)">
+                                                                            <label for="noc-copy-1">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{noc_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="noc_url" alt="">
+                                                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                                                        </div>
+                                                                    </div>
+                                                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.noc_document.errors">
+                                                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.noc_document.errors.required" class="text-danger">
+                                      Please upload noc.
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.noc_document.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.noc_document.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Invoice/rc copy -->
+                                                    <div class="col-md-4 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Invoice/RC Copy: <sup class="text-danger">*</sup></b></h5>
+                                                                        <label>{{invoice_rc_copy_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="invoice_rc_copy-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadInvoiceRCcopy($event)">
+                                                                            <label for="invoice_rc_copy-copy-1">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{invoice_rc_copy_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="invoice_rc_copy_url" alt="">
+                                                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                                                        </div>
+                                                                    </div>
+                                                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.invoice_rc_copy_document.errors">
+                                                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.invoice_rc_copy_document.errors.required" class="text-danger">
+                                      Please upload invoice/rc copy.
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.invoice_rc_copy_document.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.invoice_rc_copy_document.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- form 29 / form 30 -->
+                                                    <div class="col-md-4 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Form 29/ Form 30: </b></h5>
+                                                                        <label>{{form29_form30_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="form29_form30-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadForm29Form30copy($event)">
+                                                                            <label for="form29_form30-copy-1">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{form29_form30_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="form29_form30_url" alt="">
+                                                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                                                        </div>
+                                                                    </div>
+                                                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.form29_form30_document.errors">
+                                                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.form29_form30_document.errors.required" class="text-danger">
+                                      Please upload form 29/ form 30.
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.form29_form30_document.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.form29_form30_document.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Inspection report -->
+                                                    <div class="col-md-4 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Inspection Report Image: <sup class="text-danger">*</sup> </b>
+                                                                        </h5>
+                                                                        <label>{{inpection_report_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="inpection_report-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadInpspectionReportcopy($event)">
+                                                                            <label for="inpection_report-copy-1">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{inpection_report_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="inpection_report_url" alt="">
+                                                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                                                        </div>
+                                                                    </div>
+                                                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.inpection_report_document.errors">
+                                                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.inpection_report_document.errors.required" class="text-danger">
+                                      Please upload inpection report image.
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.inpection_report_document.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.inpection_report_document.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Front image -->
+                                                    <div class="col-md-4 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Front Image: <sup class="text-danger">*</sup> </b></h5>
+                                                                        <label>{{front_image_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="front_image-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadFrontImagecopy($event)">
+                                                                            <label for="front_image-copy-1">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{front_image_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="front_image_url" alt="">
+                                                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                                                        </div>
+                                                                    </div>
+                                                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.front_image_document.errors">
+                                                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.front_image_document.errors.required" class="text-danger">
+                                      Please upload front image.
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.front_image_document.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.front_image_document.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Rear image -->
+                                                    <div class="col-md-4 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Rear Image: <sup class="text-danger">*</sup> </b></h5>
+                                                                        <label>{{rear_image_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="rear_image-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadRearImagecopy($event)">
+                                                                            <label for="rear_image-copy-1">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{rear_image_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="rear_image_url" alt="">
+                                                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                                                        </div>
+                                                                    </div>
+                                                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.rear_image_document.errors">
+                                                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.rear_image_document.errors.required" class="text-danger">
+                                      Please upload rear image.
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.rear_image_document.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.rear_image_document.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Left image -->
+                                                    <div class="col-md-4 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Left Image: <sup class="text-danger">*</sup> </b></h5>
+                                                                        <label>{{left_image_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="left_image-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadLeftImagecopy($event)">
+                                                                            <label for="left_image-copy-1">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{left_image_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="left_image_url" alt="">
+                                                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                                                        </div>
+                                                                    </div>
+                                                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.left_image_document.errors">
+                                                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.left_image_document.errors.required" class="text-danger">
+                                      Please upload left image.
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.left_image_document.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.left_image_document.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- right_image -->
+                                                    <div class="col-md-4 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Right Image: <sup class="text-danger">*</sup> </b></h5>
+                                                                        <label>{{right_image_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="right_image-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadRightImagecopy($event)">
+                                                                            <label for="right_image-copy-1">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{right_image_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="right_image_url" alt="">
+                                                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                                                        </div>
+                                                                    </div>
+                                                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.right_image_document.errors">
+                                                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.right_image_document.errors.required" class="text-danger">
+                                      Please upload right image.
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.right_image_document.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.right_image_document.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- windscreen_inside -->
+                                                    <div class="col-md-4 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Windscreen Inside Image: <sup class="text-danger">*</sup></b>
+                                                                        </h5>
+                                                                        <label>{{windscreen_inside_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="windscreen_inside-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadWindscreenInsidecopy($event)">
+                                                                            <label for="windscreen_inside-copy-1">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{windscreen_inside_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="windscreen_inside_url" alt="">
+                                                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                                                        </div>
+                                                                    </div>
+                                                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.windscreen_inside_document.errors">
+                                                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.windscreen_inside_document.errors.required" class="text-danger">
+                                      Please upload windscreen inside image.
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.windscreen_inside_document.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.windscreen_inside_document.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- windscreen_outside -->
+                                                    <div class="col-md-4 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Windscreen Outside Image: <sup class="text-danger">*</sup></b>
+                                                                        </h5>
+                                                                        <label>{{windscreen_outside_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="windscreen_outside-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadWindscreenOutsidecopy($event)">
+                                                                            <label for="windscreen_outside-copy-1">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{windscreen_outside_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="windscreen_outside_url" alt="">
+                                                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                                                        </div>
+                                                                    </div>
+                                                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.windscreen_outside_document.errors">
+                                                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.windscreen_outside_document.errors.required" class="text-danger">
+                                      Please upload windscreen outside image.
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.windscreen_outside_document.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.windscreen_outside_document.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- autometer_with_engine_on -->
+                                                    <div class="col-md-4 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Odometer With Engine On: <sup class="text-danger">*</sup></b>
+                                                                        </h5>
+                                                                        <label>{{autometer_with_engine_on_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="autometer_with_engine_on-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadAutometerWithEngineOncopy($event)">
+                                                                            <label for="autometer_with_engine_on-copy-1">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{autometer_with_engine_on_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="autometer_with_engine_on_url" alt="">
+                                                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                                                        </div>
+                                                                    </div>
+                                                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.autometer_with_engine_on_document.errors">
+                                                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.autometer_with_engine_on_document.errors.required" class="text-danger">
+                                      Please upload odometer with engine on image.
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.autometer_with_engine_on_document.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.autometer_with_engine_on_document.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- chassis_plate_print -->
+                                                    <div class="col-md-4 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Chassis/Plate Print: <sup class="text-danger">*</sup> </b></h5>
+                                                                        <label>{{chassis_plate_print_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="chassis_plate_print-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadChassisPlatePrintcopy($event)">
+                                                                            <label for="chassis_plate_print-copy-1">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{chassis_plate_print_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="chassis_plate_print_url" alt="">
+                                                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                                                        </div>
+                                                                    </div>
+                                                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.chassis_plate_print_document.errors">
+                                                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.chassis_plate_print_document.errors.required" class="text-danger">
+                                      Please upload chassis plate print.
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.chassis_plate_print_document.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.chassis_plate_print_document.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- previous_insurance_copy -->
+                                                    <div class="col-md-4 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Previous Insurances Copy: </b></h5>
+                                                                        <label>{{previous_insurance_copy_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="previous_insurance_copy-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadPreviousInsuranceCopycopy($event)">
+                                                                            <label for="previous_insurance_copy-copy-1">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{previous_insurance_copy_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="previous_insurance_copy_url" alt="">
+                                                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                                                        </div>
+                                                                    </div>
+                                                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.previous_insurance_copy_document.errors">
+                                                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.previous_insurance_copy_document.errors.required" class="text-danger">
+                                      Please upload previous insurance copy.
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.previous_insurance_copy_document.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.previous_insurance_copy_document.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- dicky_open -->
+                                                    <div class="col-md-4 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Dicky Open Image: <sup class="text-danger">*</sup></b></h5>
+                                                                        <label>{{dicky_open_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="dicky_open-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadDickyOpencopy($event)">
+                                                                            <label for="dicky_open-copy-1">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{dicky_open_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="dicky_open_url" alt="">
+                                                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                                                        </div>
+                                                                    </div>
+                                                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.dicky_open_document.errors">
+                                                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.dicky_open_document.errors.required" class="text-danger">
+                                      Please upload dicky open copy.
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.dicky_open_document.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.dicky_open_document.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- selfie_with_vehicle -->
+                                                    <div class="col-md-4 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Selfie With Vehicle: </b></h5>
+                                                                        <label>{{selfie_with_vehicle_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="selfie_with_vehicle-copy-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadSelfieWithVehiclecopy($event)">
+                                                                            <label for="selfie_with_vehicle-copy-1">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{selfie_with_vehicle_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="selfie_with_vehicle_url" alt="">
+                                                                            <!-- <span class="delete-img">
+                                                <i class="fa fa-times"></i>
+                                            </span> -->
+                                                                        </div>
+                                                                    </div>
+                                                                    <div *ngIf="submittedTransferDetails &&  formeditTransfer.controls.selfie_with_vehicle_document.errors">
+                                                                        <small *ngIf="submittedTransferDetails && formeditTransfer.controls.selfie_with_vehicle_document.errors.required" class="text-danger">
+                                      Please upload selfie with vehicle.
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.selfie_with_vehicle_document.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formeditTransfer.controls.selfie_with_vehicle_document.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row align-items-center">
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label class="focus-label req">Remark</label>
+
+                                                            <textarea formControlName="remark" maxlength="300" type="text" class="form-control" rows="3" placeholder="Remark"></textarea>
+                                                            <div *ngIf="submittedTransferDetails && formeditTransfer.controls.remark.errors">
+                                                                <small *ngIf="submittedTransferDetails && formeditTransfer.controls.remark.errors" class="text-danger">
+                                  Please Enter Valid Remark.
+                                </small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <button type="submit" class="btn btn-custom green w-100" *ngIf="show_initiated_btn">
+                              Initiate</button>
+                                                        <!-- <a href="javascript:void(0);" class="btn btn-custom green">Submit</a> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /Page Content -->
+</div>
+<!-- /Page Wrapper -->
+<app-loader [loaderActive]="loaderActive"></app-loader>

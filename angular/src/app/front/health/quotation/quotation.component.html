@@ -1,0 +1,338 @@
+<div class="page-wrapper">
+
+    <!-- Page Content -->
+    <div class="content">
+
+        <section class="py-0">                    
+            <div class="row">
+                <div class="col-md-12 border quotes-topinfo shadowbox py-2">
+                    <div class="container">
+                        <div class="row py-2">
+                            <div class="col-md-1 col-sm-1 col-12 quotes-box d-block d-md-none">
+                                <div>
+                                    <a class="actionbtn edit-btn" href="#"><i class="fa fa-pencil"></i></a>
+                                </div>
+                            </div> 
+                            <div class="col-md-5 col-sm-4 col-12 quotes-box">
+                                <div class="font-style">
+                                    <i class="fa fa-male brand-text-2 title-large"></i>
+                                </div>
+                                <div style="margin-top:11px;">
+                                    <h4 class="mb-0"><span class="text-muted white">Policy:</span> {{policy_type_name}} ( {{policy_subtype_name}} )</h4>                                            
+                                    <h4 class="mb-0"><span class="text-muted white">Insured Members:</span> 
+                                        <span *ngIf="insured_type_self !=''"> {{insured_type_self}} - ({{insured_type_self_age}})</span> 
+                                        <span *ngIf="insured_type_spouse !=''">, {{insured_type_spouse}} - ({{insured_type_spouse_age}})</span>
+                                        <span *ngIf="insured_type_mother !=''">, {{insured_type_mother}} - ({{insured_type_mother_age}})</span>
+                                        <span *ngIf="insured_type_father !=''">, {{insured_type_father}} - ({{insured_type_father_age}})</span>
+                                        <span *ngIf="insured_type_son1 !=''">, {{insured_type_son1}} - ({{insured_type_son1_age}})</span>
+                                        <span *ngIf="insured_type_son2 !=''">, {{insured_type_son2}} - ({{insured_type_son2_age}})</span>
+                                        <span *ngIf="insured_type_son3 !=''">, {{insured_type_son3}} - ({{insured_type_son3_age}})</span>
+                                        <span *ngIf="insured_type_son4 !=''">, {{insured_type_son4}} - ({{insured_type_son4_age}})</span>
+                                        <span *ngIf="insured_type_daughter1 !=''">, {{insured_type_daughter1}} - ({{insured_type_daughter1_age}})</span>
+                                        <span *ngIf="insured_type_daughter2 !=''">, {{insured_type_daughter2}} - ({{insured_type_daughter2_age}})</span>
+                                        <span *ngIf="insured_type_daughter3 !=''">, {{insured_type_daughter3}} - ({{insured_type_daughter3_age}})</span>
+                                        <span *ngIf="insured_type_daughter4 !=''">, {{insured_type_daughter4}} - ({{insured_type_daughter4_age}})</span>
+                                    </h4>                                            
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-12 quotes-box">
+                                <div>
+                                    <h4 class="mb-0"><span class="text-muted white">Child Planning:</span> {{childplanning}}</h4>
+                                    <h4 class="mb-0" *ngIf="membersdisease == 'membersdiseaseNo'"><span class="text-muted white">Disease:</span> No</h4>
+                                    <h4 class="mb-0" *ngIf="membersdisease == 'membersdiseaseYes'"><span class="text-muted white">Disease:</span> Yes</h4>
+                                    <h4 class="mb-0"><span class="text-muted white">Pincode:</span> {{pincode}}</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-12 quotes-box border-right-0">
+                                <div>
+                                    <h4 class="mb-0"><span class="text-muted white">SUM IN:</span> {{selected_suminsured}}</h4>
+                                    <h4 class="mb-0"><span class="text-muted white">Tenure:</span> {{tenure}} Year</h4>
+                                    <h4 class="mb-0"><span class="text-muted white" *ngIf="showTopup">Deductible:</span> {{selected_deductible}} Year</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-12 quotes-box d-none d-md-block">
+                                <div>
+                                    <a  routerLink ="../quote" class="actionbtn edit-btn" href="javascript:void(0);"><i class="fa fa-pencil"></i></a>
+                                </div>
+                            </div>                                    
+                        </div>
+                        <div class="row py-2 d-md-none align-items-center">
+                            <div class="col-sm-6 col-12">
+                                <div class="quotes-editoption">
+                                    <div class="option-box covers-option-box">
+                                        <a id="slidecover" class="actionbtn edit-btn" href="javascript:void(0);"><i class="fa fa-pencil"></i></a>
+                                        <h4 class="mb-0">Select Rider's Option</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+            <div class="container">
+                <div class="row mx-0">  
+                    <!-- <div class="col-lg-3 col-md-4 quotes-editoption sidebar-quotes-editoption d-none d-md-block my-3">
+                        <div class="quotes-editoption-inner slimscroll">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="option-box covers-option-box ui form">
+                                        <h4 class="mb-2">Quick filters (Tanure)</h4>
+                                        <div class="grouped fields">
+                                            <div class="field">
+                                              <div class="ui radio">
+                                                <input type="radio" name="tenure_year" (click)="filter_policylist(1)" checked="">
+                                                <label for="ridersoption-1" style="margin-left: 10px;">1 Year</label>
+                                              </div>
+                                            </div>
+                                            <div class="field">
+                                              <div class="ui radio">
+                                                <input type="radio" name="tenure_year" (click)="filter_policylist(2)">
+                                                <label for="ridersoption-2" style="margin-left: 10px;">2 Year</label>
+                                              </div>
+                                            </div>
+                                            <div class="field">
+                                              <div class="ui radio">
+                                                <input type="radio" name="tenure_year" (click)="filter_policylist(3)">
+                                                <label for="ridersoption-3" style="margin-left: 10px;">3 Year</label>
+                                              </div>
+                                            </div>
+                                            <div class="field">
+                                                <div class="ui radio">
+                                                  <input type="radio" name="tenure_year" (click)="filter_policylist(4)">
+                                                  <label for="ridersoption-3" style="margin-left: 10px;">4 Year</label>
+                                                </div>
+                                              </div>
+                                              <div class="field">
+                                                <div class="ui radio">
+                                                  <input type="radio" name="tenure_year" (click)="filter_policylist(5)">
+                                                  <label for="ridersoption-3" style="margin-left: 10px;">5 Year</label>
+                                                </div>
+                                              </div>
+                                        </div>
+                                    </div> 
+                                    <div class="text-center mb-5">
+                                        <a href="javascript:void(0);" class="btn btn-custom green w-100">Update</a>
+                                    </div>                                        
+                                </div>
+                            </div>                  
+                        </div>       
+                    </div>   -->
+                    <div class="col-lg-12 col-md-8 quoteslistwrap">
+                        <div class="quoteslist">
+                            <div class="row">
+                                <div id="quoteitem_1" *ngFor="let row of policyList" class="col-md-12 col-sm-6 col-12 quoteitem border">
+                                    <div class="row align-items-center py-2" >
+                                        <div class="col-lg-2 col-md-3 col-sm-5 col-5 quoteitembox insurer-box">
+                                            <img src="assets/front/img/partners-logos/{{row.logo}}" alt="">
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-4 col-sm-7 col-7 quoteitembox idvdisc-box" *ngIf="row.is_error =='0'">
+                                            <h4 class="mb-0"><span class="text-muted">Plan Name:</span> {{row.plan_name}}</h4>
+                                            <h4 class="mb-0"><span class="text-muted">SUM IN:</span>  ₹{{row.sum_insured}}</h4>
+                                            <h4 class="mb-0"><span class="text-muted">TENURE:</span> {{tenure}} Year</h4>
+                                            <h4 class="mb-0"><span class="text-muted" *ngIf="showTopup">Deductible: {{row.ded_insured}} Year</span> </h4>
+                                        </div>
+
+                                        <div class="col-md-5" *ngIf="row.is_error =='1'">
+                                            <h4 class="mb-0"><span class="text-muted"></span> {{row.error_message}}</h4>
+                                        </div>
+
+                                        <div class="col-lg-2 col-md-5 col-sm-12 quoteitembox addons-box"> 
+                                            <a href="javascript:void(0);" *ngIf="row.is_error =='0'" (click)="viewpolicy_Details(row.quote_id,row.unique_reference_no, row.plan_key)" style="color: green; font-weight: 700; text-decoration: none; padding: 10px;"> View Features &nbsp; &nbsp;</a> <br><br>
+                                            <span *ngIf="row.ic_id == '22'">
+                                                <a href="https://www.sbigeneral.in/portal/buy-online/uploads/policy_pdf/ArogyaPlusProductBrochure.pdf" target="_blank" style="color: green; font-weight: 700; text-decoration: none;padding: 10px;"> More Features &nbsp; &nbsp;</a>  
+                                            </span>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-6 col-6 quoteitembox premium-box" *ngIf="row.is_error =='0'">
+                                            <span class="text-muted">Premium:</span>
+                                            <h2 class="premiumamt mb-0"><i class="fa fa-inr"></i> {{row.TotalPremium}} <span>(Incl. GST)</span></h2>
+                                        </div>
+                                        <div class="col-lg-2 col-sm-6 col-6 text-right quoteitembox buypolicy-box" *ngIf="row.is_error =='0'">
+                                            <a href="javascript:void(0);" (click)="quote_customerDetails(row.quote_id, row.unique_reference_no)" class="btn btn-custom green">Buy Policy</a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row border-top py-2">
+                                       <div class="col-xl-10 col-lg-10 col-md-12" *ngIf="row.is_error =='0'">
+                                            <span class="text-muted">Selected Addons: </span>
+                                            <ul class="selected-addons-list">
+                                                <li *ngFor="let cover of row.covrage_list">
+                                                    <div class="ui checkbox">
+                                                    <span *ngIf="cover.cover_no == row.cover_data[cover.cover_no]">
+                                                        <label for="addon-zerodepcap">
+                                                        <input type="checkbox" disabled="{{cover.disabled}}"  checked  (click)="getPackageAddons(cover,$event,policyList[0].ic_id,row.plan_key,row.quote_id,row.unique_reference_no)" name="name_{{cover.cover_no}}" id="{{cover.cover_no}}" value="{{cover.cover_no}}" style="opacity: 1!important;">
+                                                        {{cover.covrage_name}}</label>   
+                                                    </span>    
+                                                    <span *ngIf="cover.cover_no !== row.cover_data[cover.cover_no]">
+                                                        <label for="addon-zerodepcap">
+                                                        <input type="checkbox" disabled="{{cover.disabled}}"   (click)="getPackageAddons(cover,$event,policyList[0].ic_id,row.plan_key,row.quote_id,row.unique_reference_no)" name="name_{{cover.cover_no}}" id="{{cover.cover_no}}" value="{{cover.cover_no}}" style="opacity: 1!important;">
+                                                        {{cover.covrage_name}}</label>   
+                                                    </span>                                                           
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-xl-2 col-lg-3 col-md-12 text-lg-right" *ngIf="row.is_error =='0'">
+                                            <span class="text-muted">Addon Premium:</span>
+                                            <h4 class="mb-0 addonpremium"><i class="fa fa-inr"></i> {{row.ServiceTax}} <span>(Incl. GST)</span></h4>
+                                        </div>
+                                    </div>
+                                    <!-- <div id="openModalButton" class="modal custom-modal coverage-modal fade" role="dialog">
+                                        <div class="modal-dialog  modal-dialog-centered modal-xl " role="document">
+                                            <form class="ui form" [formGroup]="formQuoteDetails" id="formcovrageform" (ngSubmit)="submitFormQuoteUpdate()" style="width: 52%;margin: auto;">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Addon Plan Covrage</h5>
+                                                    <button type="button"  class="close" data-dismiss="modal">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h4 class="text-center mt-3 mb-4">{{row.plan_comp_code}}</h4>
+                                                     <ul class="addonslist">
+                                                        <li *ngFor="let cover of covrageList">
+                                                            <div class="ui checkbox">
+                                                            <span *ngIf="cover.is_applied =='1'">
+                                                                <label for="addon-zerodepcap">
+                                                                    <input type="checkbox"  disabled="{{cover.disabled}}" checked="cover.is_applied == 1" style="opacity: 1!important;">       
+                                                                {{cover.covrage_name}}</label>                                                     
+                                                            </span>
+                                                            <span *ngIf="cover.is_applied =='0' && cover.disabled==''">
+                                                                <label for="addon-zerodepcap">
+                                                                <input type="checkbox" formControlName="{{cover.cover_no}}" id="{{cover.covrage_code}}"  value="{{cover.covrage_code}}" style="opacity: 1!important;">
+                                                                {{cover.covrage_name}}</label>   
+                                                            </span> 
+                                                            <span *ngIf="cover.is_applied =='0' && cover.disabled=='true'">
+                                                                <label for="addon-zerodepcap">
+                                                                <input type="checkbox" disabled="{{cover.disabled}}" style="opacity: 1!important;">
+                                                                {{cover.covrage_name}}</label>   
+                                                            </span>                                                            
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn btn-custom green btn-lg submit-btn" type="submit">Submit</button>
+                                                </div>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div id="quoteitem1_addon1" class="modal custom-modal fade" role="dialog">
+                                        <div class="modal-dialog modal-dialog-centered " role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Available Addons</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h4 class="text-center mt-3 mb-4">BHARTI AXA GENERAL INSURANCE CO. LTD.</h4>
+                                                    <ul class="addonslist">
+                                                        <li>
+                                                            <div class="ui checkbox">
+                                                            <input type="checkbox" name="addon-zerodepcap" id="addon-zerodepcap">
+                                                            <label for="addon-zerodepcap">Zero depreciation cap/Theft or loss of keys/Loss of personal belongings/Road side assistance (Rs 2629.90 - 1 year)</label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="ui checkbox">
+                                                            <input type="checkbox" name="addon-consumables" id="addon-consumables">
+                                                            <label for="addon-consumables">Consumables (Rs 809.20 - 1 year)</label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="ui checkbox">
+                                                            <input type="checkbox" name="addon-NCB" id="addon-NCB">
+                                                            <label for="addon-NCB">NCB Protection (Rs 1051.96 - 1 year)</label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="ui checkbox">
+                                                            <input type="checkbox" name="addon-RSA" id="addon-RSA">
+                                                            <label for="addon-RSA">RSA (Rs 500.00 - 1 year)</label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="ui checkbox">
+                                                            <input type="checkbox" name="addon-engine" id="addon-engine">
+                                                            <label for="addon-engine">Engine Protector (Rs 1213.80 - 1 year)</label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="ui checkbox">
+                                                            <input type="checkbox" name="addon-invoice" id="addon-invoice">
+                                                            <label for="addon-invoice">Return To Invoice (Rs 3034.50 - 1 year)</label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="ui checkbox">
+                                                            <input type="checkbox" name="addon-inconvenience" id="addon-inconvenience">
+                                                            <label for="addon-inconvenience">Inconvenience allowance (Rs 3400.00 - 1 year)</label>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="#" class="btn btn btn-custom green btn-lg submit-btn">Add</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div [attr.id]="'quoteitem1_policydetails'+row.plan_key" class="modal custom-modal policydetails-modal fade" role="dialog">
+                                        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Premium Breakup For</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body py-0">
+                                                    <div class="policy-details">
+                                                        <div class="row">
+                                                            
+                                                            <div class="col-md-12 pd-rightinfo">
+                                                                <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+                                                                    <li class="nav-item"><a class="nav-link active" href="#policy-details-tab1" data-toggle="tab">PREMIUM SUMMARY</a></li>
+                                                                   
+                                                                </ul>
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane show active" id="policy-details-tab1">
+                                                                        <div class="premium-breakup-content">
+                                                                            <ul>
+                                                                                <li class="sub"><span>Basic Premium: </span><span class="float-right"><i class="fa fa-inr"></i> {{row.BasicPremium}}.00</span></li>
+                                                                                <li class="sub"><span>Tax Premium</span><span class="float-right"><i class="fa fa-inr"></i> {{row.ServiceTax}}.00</span></li>
+                                                                                <li class="sub"><span>Discount Rate</span><span class="float-right" ><i class="fa fa-inr"></i> <span > {{row.TotalDiscountAmount}}.00</span></span></li>
+                                                                                <li class="sub"><span>Discount Premium</span><span class="float-right"><i class="fa fa-inr"></i> {{row.OnlineDiscount}}.00</span></li>
+                                                                            </ul>
+                                                                            <ul class="finalpremiumbox">
+                                                                                <li><h4><span>Premium</span><span class="float-right"><i class="fa fa-inr"></i> {{row.BasicPremium}}.00</span></h4></li>
+                                                                                <li class="sub"><span>GST @18% </span><span class="float-right"><i class="fa fa-inr"></i> {{row.ServiceTax}}.00</span></li>
+                                                                                <li><h4><span>Final Premium (Incl. GST)</span> <span class="float-right finalpremium"><i class="fa fa-inr"></i> {{row.TotalPremium}}.00</span></h4></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>                                                        
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>                                                  
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <!-- /Page Content -->
+</div>
+<div id="div_class"></div>
+<app-loader [loaderActive]="loaderActive"></app-loader>

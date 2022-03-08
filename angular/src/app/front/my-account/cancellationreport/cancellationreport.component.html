@@ -1,0 +1,228 @@
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content container-fluid">
+        <app-tickers></app-tickers>
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Cancellation Report</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="['/my-account/dashboard']" href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Cancellation Report</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+              <div *ngIf="atLeastOneRequired" class="alert alert-danger">
+                <strong>{{atLeastOneRequired}}</strong>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="card shadowbox">
+                <div class="card-body pb-0">
+                  <form  [formGroup]="formRecodEdit" class="form-horizontal" method="post">
+                    <div class="row" >
+                      <div class="col-lg-2 col-md-3" >
+                        <div class="form-group">
+                            <label>Insurance Company</label>
+                            <select class="form-control" formControlName="filter_txn_type" (change)="getFiltertxnTypeResult($event)">
+                                <option value="" selected>Select Insurance Company</option>
+                                <option *ngFor="let row of result_Insurance_Company"  value="{{ row.id }}">{{ row.code }}</option>
+                            </select>          
+                        </div>
+                      </div>
+                      <div class="col-lg-2 col-md-3" >
+                        <div class="form-group">
+                            <label>OEM Selection</label>
+                            <select class="form-control" formControlName="filter_txn_purpose" (change)="getFiltertxnPurposeResult($event)">
+                                <option value="" selected>Select OEM</option>
+                                <option *ngFor="let row of result_Insurance_Company"  value="{{ row.id }}">{{ row.code }}</option>
+                            </select>         
+                        </div>
+                      </div>
+                      <div class="col-lg-2 col-md-3" >
+                        <div class="form-group">
+                            <label>Tenure of Policy</label>
+                            <input formControlName="tenure_of_policy" type="text" class="form-control" maxlength="2">
+                            
+                        </div>
+                      </div>
+                      <div class="col-lg-2 col-md-3" >
+                        <div class="form-group">
+                          <label>START DATE :</label>
+          
+                          <div class="cal-icon">
+                          <input select-other-detail="other_field" ngbDatepicker #e="ngbDatepicker" (click)="e.toggle()"  class="form-control" placeholder="yyyy-mm-dd" formControlName="startDate"
+                          [(ngModel)]="date_picker_startDate" (dateSelect)="getFilterStartDateResult($event)" placeholder="yyyy-mm-dd" autocomplete="off">
+                          </div>
+          
+                        </div>
+                      </div>
+                      <div class="col-lg-2 col-md-3" >
+                        <div class="form-group">
+                          <label>END DATE :</label>
+          
+                          <div class="cal-icon">
+                            <input select-other-detail="other_field" ngbDatepicker #f="ngbDatepicker" (click)="f.toggle()"  class="form-control" placeholder="yyyy-mm-dd" formControlName="endDate"
+                            [(ngModel)]="date_picker_endDate" (dateSelect)="getFilterEndDateResult($event)" placeholder="yyyy-mm-dd" autocomplete="off">
+                            </div>
+          
+                        </div>
+                      </div>
+                      <div class="col-lg-2 col-md-4">
+                        <label class="d-block">&nbsp;</label>
+                        <button (click)="exportAsXLSX()" class="btn btn-custom green w-50"><i class="fa fa-search"></i></button>
+                        <button (click)="exportAsXLSX()" class="btn btn-custom green w-50"><i class="fa fa-download"></i></button>
+                        <!--button (click)="resetFilterForm()" class="btn btn-custom red w-50"><i class="fa fa-refresh"></i></button-->
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadowbox">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /Page Content -->
+
+    <!--  Send message Modal -->
+    <div id="send_message_pop" class="modal custom-modal fade" role="dialog" [ngStyle]="{'display':displayForwardQuote}">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Send Message</h5>
+                    <button #closebutton type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+                        <li class="nav-item"><a class="nav-link active" href="#sendmessage-tab1" data-toggle="tab">SMS</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link" href="#sendmessage-tab2" data-toggle="tab">WhatsApp</a></li> -->
+                        <li class="nav-item"><a class="nav-link" href="#sendmessage-tab3" data-toggle="tab">E-Mail</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane show active" id="sendmessage-tab1">
+                            <form [formGroup]="formForwardQuoteSms" method="post" (ngSubmit)="submitFormForwardQuoteSms()">
+                                <div class="modal-body">
+
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <div *ngIf="success_message" class="alert alert-success" role="alert">
+                                                {{ success_message }}
+                                            </div>
+
+                                            <div *ngIf="error_message" class="alert alert-danger" role="alert">
+                                                {{ error_message }}
+                                            </div>
+
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-sm">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="align-middle">Mobile No</td>
+                                                            <td>
+                                                                <input formControlName="mobile_no" type="text" class="form-control" maxlength="10">
+                                                                <div class="error" *ngIf="submittedForwardQuoteSms && formForwardQuoteSms.controls.mobile_no.errors">
+                                                                    <div *ngIf="submittedForwardQuoteSms && formForwardQuoteSms.controls.mobile_no.errors.required">
+                                                                        Please enter Mobile No.
+                                                                    </div>
+                                                                    <div *ngIf="submittedForwardQuoteSms && formForwardQuoteSms.controls.mobile_no.errors.pattern">
+                                                                        Please enter valid Mobile No.
+                                                                    </div>
+                                                                    <!-- <div *ngIf="submittedForwardQuoteSms && formForwardQuoteSms.controls.mobile_no.errors.email">
+                                                                        Please enter valid email address
+                                                                    </div> -->
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <button type="submit" class="btn btn btn-custom green submit-btn">Send</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane" id="sendmessage-tab2">
+                            <p>Dear Customer, You <b>"product name + Policy no"</b> is due for renewal on "policy end date". To enjoy continuity benefit kindly renew your policy by clicking "<a href="#">www.bitly.com/shorturl</a>" Link or visit your nearest
+                                branch or call on toll free number 1800-266-5844. Kindly Ignore if Renewed. Team LGI.</p>
+                            <p class="text-center"><a href="#" class="btn btn-custom green">Send</a></p>
+                        </div>
+                        <div class="tab-pane" id="sendmessage-tab3">
+                            <form [formGroup]="formForwardQuoteEmail" method="post" (ngSubmit)="submitFormForwardQuoteEmail()">
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <div *ngIf="success_message" class="alert alert-success" role="alert">
+                                                {{ success_message }}
+                                            </div>
+
+                                            <div *ngIf="error_message" class="alert alert-danger" role="alert">
+                                                {{ error_message }}
+                                            </div>
+
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-sm">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="align-middle">Email</td>
+                                                            <td>
+                                                                <input formControlName="email_1" type="text" class="form-control">
+                                                                <div class="error" *ngIf="submittedForwardQuoteEmail && formForwardQuoteEmail.controls.email_1.errors">
+                                                                    <div *ngIf="submittedForwardQuoteEmail && formForwardQuoteEmail.controls.email_1.errors.required">
+                                                                        Please enter email address
+                                                                    </div>
+                                                                    <div *ngIf="submittedForwardQuoteEmail && formForwardQuoteEmail.controls.email_1.errors.pattern">
+                                                                        Please enter valid email address
+                                                                    </div>
+                                                                    <!-- <div *ngIf="submittedForwardQuoteEmail && formForwardQuoteEmail.controls.email_1.errors.email">
+                                                                        Please enter valid email address
+                                                                    </div> -->
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <button type="submit" class="btn btn btn-custom green submit-btn">Send</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

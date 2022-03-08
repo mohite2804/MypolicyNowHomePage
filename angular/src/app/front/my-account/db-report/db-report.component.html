@@ -1,0 +1,115 @@
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <!-- Page Content -->
+
+
+    <div class="content container-fluid">
+        <app-tickers></app-tickers>
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Sold Policy</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="['/my-account/dashboard']" href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Sold Policy</li>
+                    </ul>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card shadowbox">
+                    <div class="card-body pb-0">
+                        <form class="form-horizontal" [formGroup]="formRecodEdit">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-3">
+                                    <div class="form-group">
+                                        <label>Policy From :</label>
+                                        <div class="cal-icon">
+                                            <input select-other-detail="other_field" (click)="e.toggle()" class="form-control" placeholder="yyyy-mm-dd" formControlName="policy_from" [(ngModel)]="date_picker_policy_from" ngbDatepicker #e="ngbDatepicker" placeholder="yyyy-mm-dd" autocomplete="off"
+                                                readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-3">
+                                    <div class="form-group">
+                                        <label>Policy To :</label>
+                                        <div class="cal-icon">
+                                            <input select-other-detail="other_field" (click)="f.toggle()" class="form-control" placeholder="yyyy-mm-dd" formControlName="policy_to" [(ngModel)]="date_picker_policy_to" ngbDatepicker #f="ngbDatepicker" placeholder="yyyy-mm-dd" autocomplete="off" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4">
+                                    <div class="form-group">
+                                        <label>Policy Type :</label>
+                                        <ng-select placeholder="Select Policy Type" (clear)="clearValue('policy_type_name',$event)" (change)="changeSelectBox('policy_type_name',$event)" [(ngModel)]="selectedPolicyType_name" [ngModelOptions]="{standalone: true}">
+                                            <ng-option *ngFor="let row of policyTypeList" [value]="row.policy_type_id">{{row.label}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4">
+                                    <div class="form-group">
+                                        <label>Policy Sub-Type :</label>
+                                        <ng-select placeholder="Select Policy Sub Type" (clear)="clearValue('policy_sub_type_name',$event)" (change)="changeSelectBox('policy_sub_type_name',$event)" [(ngModel)]="selectedPolicySubType_name" [ngModelOptions]="{standalone: true}">
+                                            <ng-option *ngFor="let row of policySubTypeList" [value]="row.policy_subtype_id">{{row.code}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="d-block">&nbsp;</label>
+                                    <button (click)="submitFormFilter()" type="submit" class="btn btn-custom green w-43" title="Search"><i class="fa fa-search"></i></button> &nbsp;
+                                </div>
+                                <div>
+                                    <label class="d-block">&nbsp;</label>
+                                    <button type="button" (click)="resetFilterForm()" class="btn btn-custom yellow w-43" title="Reset"><i class="fa fa-refresh"></i></button>&nbsp;
+                                </div>
+                                
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadowbox">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <H3>Buisness Partner wise</H3>
+                            <!-- <table  class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table> -->
+                            <table class="table table-striped table-bordered  srn action-table  w-100">
+                              
+                                <tr>
+                                  <td>IC Name</td>
+                                  <td>Product Type</td>
+
+
+                                  <td>NOP FTD</td>
+                                  <td>NOP MTD</td>
+                                  <td>NOP YTD</td>
+                           
+                                  <td>Premium FTD</td>
+                                  <td>Premium MTD</td>
+                                  <td>Premium YTD</td>
+                                  </tr>
+                               <!--  <ng-contai -->
+                          </table>
+                            <ul *ngFor="let row of ic_data;  let i =index">
+                                {{ i }}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /Page Content -->
+</div>
+<!-- /Page Wrapper-->
+<app-loader [loaderActive]="loaderActive"></app-loader>

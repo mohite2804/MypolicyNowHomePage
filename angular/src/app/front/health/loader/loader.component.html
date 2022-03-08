@@ -1,0 +1,16 @@
+<ng-container *ngIf="business_partner_code!='ISUZU'">
+    <div *ngIf="loaderActive" id="preloader">
+        <div class="preeloader">
+            <div class="preloader-spinner"></div>
+        </div>
+    </div>
+</ng-container>
+
+
+<ng-container *ngIf="business_partner_code=='ISUZU'">
+    <div *ngIf="loaderActive" id="preloader">
+        <div class="isuzu_preeloader">
+            <div class="isuzu_preloader-spinner"></div>
+        </div>
+    </div>
+</ng-container>

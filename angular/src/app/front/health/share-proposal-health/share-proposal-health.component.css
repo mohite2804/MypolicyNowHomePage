@@ -1,0 +1,11 @@
+.proposal-infobar {
+    background-color: #25aae1 !important;
+    color: #fff;
+}
+
+.page-wrapper {
+    padding-top: 29px;
+    padding-bottom: 20px;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+}

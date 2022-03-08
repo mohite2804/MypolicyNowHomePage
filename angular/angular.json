@@ -1,0 +1,190 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "angular": {
+            "projectType": "application",
+            "schematics": {},
+            "root": "",
+            "sourceRoot": "src",
+            "prefix": "app",
+            "architect": {
+
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "allowedCommonJsDependencies": [
+                            "rxjs-compat",
+                            "file-saver",
+                            "xlsx",
+                            "lodash",
+                            "chart.js"
+                        ],
+                        "outputPath": "dist/MPN",
+                        "index": "src/index.html",
+                        "main": "src/main.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "tsconfig.app.json",
+                        "aot": true,
+                        "assets": [
+                            "src/favicon.ico",
+                            "src/assets"
+
+                        ],
+
+                        "styles": [
+                            "node_modules/bootstrap/dist/css/bootstrap.min.css",
+
+                            "src/assets/front/landing_page/css/slick.css",
+                            "src/assets/front/landing_page/css/slick-theme.css",
+                            "src/assets/front/landing_page/css/style.css",
+
+                            "src/assets/plugins/fontawesome-free/css/all.min.css",
+                            "src/assets/dist/css/adminlte.min.css",
+                            "src/assets/dist/css/googleapis.css",
+                            "src/styles.css",
+
+                            "node_modules/datatables.net-dt/css/jquery.dataTables.css",
+                            "src/assets/front/css/font-awesome.min.css",
+                            "src/assets/front/css/line-awesome.min.css",
+
+                            "src/assets/front/css/semantic.min.css",
+                            "src/assets/front/css/bootstrap-datetimepicker.min.css",
+                            "src/assets/front/css/dataTables.bootstrap4.min.css",
+                            "src/assets/front/css/owl.carousel.min.css",
+                            "src/assets/front/css/owl.theme.default.css",
+                            "src/assets/front/css/style.css",
+                            "src/assets/front/css/responsive.css",
+                            "node_modules/ngx-lightbox/lightbox.css",
+                            "src/assets/front/css/login.css",
+                            {
+                                "input": "src/isuzu.css",
+                                "bundleName": "isuzu",
+                                "inject": false
+                            }
+
+
+
+
+
+                        ],
+                        "scripts": [
+                            "src/assets/plugins/jquery/jquery.min.js",
+                            "src/assets/plugins/bootstrap/js/bootstrap.bundle.min.js",
+                            "src/assets/front/landing_page/js/slick.min.js",
+
+                            "src/assets/front/js/popper.min.js",
+                            "src/assets/front/js/login.js",
+                            "src/assets/front/js/moment.min.js",
+                            "src/assets/front/js/semantic.js",
+                            "src/assets/front/js/bootstrap-datetimepicker.min.js",
+                            "src/assets/front/js/jquery.slimscroll.min.js",
+                            "src/assets/front/js/jquery.dataTables.min.js",
+                            "src/assets/front/js/jquery.dataTables.buttons.min.js",
+                            "src/assets/front/js/dataTables.bootstrap4.min.js",
+                            "src/assets/front/js/owl.carousel.min.js",
+
+                            "node_modules/datatables.net/js/jquery.dataTables.js",
+                            "src/assets/front/js/main.js"
+
+
+
+                        ]
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.prod.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [{
+                                    "type": "initial",
+                                    "maximumWarning": "4mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "angular:build",
+                        "proxyConfig": "src/proxy.conf.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "angular:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "angular:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "src/test.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "tsconfig.spec.json",
+                        "karmaConfig": "karma.conf.js",
+                        "assets": [
+                            "src/favicon.ico",
+                            "src/assets"
+                        ],
+                        "styles": [
+                            "src/styles.css"
+                        ],
+                        "scripts": []
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "tsconfig.app.json",
+                            "tsconfig.spec.json",
+                            "e2e/tsconfig.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                },
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "e2e/protractor.conf.js",
+                        "devServerTarget": "angular:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "angular:serve:production"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "defaultProject": "angular",
+    "cli": {
+        "analytics": "b47edfce-4e28-4759-9334-fd1909dd6e09"
+    }
+}

@@ -1,0 +1,90 @@
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content container-fluid">
+        <app-tickers></app-tickers>
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Wallet</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="my-account/dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Wallet</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadowbox">
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div *ngIf="loginUserType==5 || loginUserType==1 || loginUserType==2" class="col-4">
+                                <div class="loginform">
+                                    <button class="btn btn-custom green form-control" *ngIf="!is_account_available" (click)="createWalletAccount()"> Create Wallet Account</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+
+                            <div *ngIf="loginUserType==5 || loginUserType==1 || loginUserType==2" class="col-md-6">
+                                <form [formGroup]="formRecodEdit" method="post" (ngSubmit)="addWalletAccount()" class="row">
+                                    <div *ngIf="is_account_available" class="col-md-3">
+                                        <input formControlName="add_amount" type="text" maxlength="9" class="form-control" placeholder="Add amount in wallet" autocomplete="off">
+
+                                        <div class="error" *ngIf="submitted && formRecodEdit.controls.add_amount.errors">
+                                            <div *ngIf="submitted && formRecodEdit.controls.add_amount.errors.required">
+                                                Please enter amount.
+                                            </div>
+                                            <div *ngIf="submitted && formRecodEdit.controls.add_amount.errors.pattern">
+                                                Please enter valid amount.
+                                            </div>
+                                            <div *ngIf="submitted && formRecodEdit.controls.add_amount.errors.min">
+                                                Please enter amount above 1.
+                                            </div>
+                                            <div *ngIf="submitted && formRecodEdit.controls.add_amount.errors.max">
+                                                Please enter amount above 1.
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div *ngIf="is_account_available" class="col-md-3">
+                                        <button class="btn btn-custom green form-control" type="submit"> Add Amount</button>
+                                    </div>
+                                </form>
+                            </div>
+
+
+
+
+
+                        </div>
+                        <div class="row" *ngIf="is_account_available">
+                            <div class="col-12">
+                                <div class="card shadowbox">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Content -->
+</div>
+<!-- /Page Wrapper -->
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

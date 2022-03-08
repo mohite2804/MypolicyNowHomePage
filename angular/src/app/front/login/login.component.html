@@ -1,0 +1,83 @@
+<div class="loginform">
+    <div>
+        <h4>Login into account</h4>
+        <p>Use your credentials to access your account.</p>
+    </div>
+
+    <div *ngIf="invalidLoginMessage" class="alert alert-danger" role="alert">
+        {{invalidLoginMessage}}
+    </div>
+
+
+
+    <form class="ui form" [formGroup]="submitForm" (ngSubmit)="submitFormDetails()">
+        <div class="field" [ngClass]="{'error': submitted && submitForm.controls.user_name.errors}">
+            <div class="ui left icon input ">
+                <input formControlName="user_name" class="form-control" type="text" placeholder="Username">
+                <i class="icon user"></i>
+            </div>
+            <div *ngIf="submitted && submitForm.controls.user_name.errors">
+                <small *ngIf="submitted && submitForm.controls.user_name.errors.required" class="text-danger"> Please enter user name.</small>
+            </div>
+
+        </div>
+        <div class="field" [ngClass]="{'error': submitted && submitForm.controls.user_name.errors}">
+            <div class="ui left icon input">
+                <input formControlName="password" class="form-control" type="password" placeholder="Password">
+                <i class="icon lock"></i>
+            </div>
+            <div *ngIf="submitted && submitForm.controls.password.errors">
+                <small *ngIf="submitted && submitForm.controls.password.errors.required" class="text-danger"> Please enter password.</small>
+            </div>
+        </div>
+        <!-- *ngIf="captchaRequired" -->
+        <div *ngIf="captchaRequired" class="row my-4 captcha-wrap">
+            <re-captcha formControlName="captcha_google"></re-captcha>
+            <div *ngIf="submitted && submitForm.controls.captcha_google.errors">
+                <div *ngIf="submitted && submitForm.controls.captcha_google.errors.required" class="text-danger"> I am human.</div>
+            </div>
+        </div>
+
+        <!-- <div *ngIf="captchaRequired" class="row my-4">
+            <div class="col-6">
+                <div class="field" [ngClass]="{'error': submitted && submitForm.controls.user_name.errors}">
+                <div class="ui input">
+                    <input formControlName="captcha" class="form-control" type="text"  placeholder="Enter CAPTCHA "  autocomplete="off">
+                </div>
+                <div *ngIf="submitted && submitForm.controls.captcha.errors">
+                    <small *ngIf="submitted && submitForm.controls.captcha.errors.required" class="text-danger"> Please enter captcha.</small>
+                    <small *ngIf="submitted && submitForm.controls.captcha.errors.invalid" class="text-danger"> Must be 6 characters long.</small>
+                </div>
+
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="ui input disabled">
+                    <img src="assets/front/img/login/captcha-img.png">
+                </div>
+
+            </div>
+        </div> -->
+
+
+
+
+        <div class="row my-2 align-items-center">
+            <!-- <div class="col-6">
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" tabindex="0" class="hidden" id="rememberLogin">
+                        <label for="rememberLogin" class="mb-0">Remember me</label>
+                    </div>
+                </div>
+            </div>-->
+            <div class="col-12 my-2">
+                <a href="javascript:void(0);" [routerLink]="['/forgot-password']">Forgot password?</a>
+            </div>
+        </div>
+
+        <button class="btn btn-block btn-lg" type="submit">Submit</button>
+    </form>
+</div>
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

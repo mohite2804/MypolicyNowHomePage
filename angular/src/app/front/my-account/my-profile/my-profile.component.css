@@ -1,0 +1,8 @@
+.endorsement-infolist-new{
+	padding:0.1rem;
+}
+
+.endorsement-infolist-new > li{
+	margin-bottom: 15px;
+	list-style: none;
+}

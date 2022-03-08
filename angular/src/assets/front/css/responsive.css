@@ -1,0 +1,480 @@
+/*-----------------
+	Responsive
+-----------------------*/
+@media only screen and (min-width: 991px) {
+	#toggle_btn {
+		display: none;
+	}
+	.myaccount-page #toggle_btn,
+	.admin-page #toggle_btn {
+		color: #999;
+		float: left;
+		font-size: 26px;
+		line-height: 60px;
+		padding: 0 10px;
+		display: block;
+	}
+	.mini-sidebar .header .header-left .logo .logo-full {
+		display: none;
+	}
+	.mini-sidebar .header .header-left .logo .logo-small {
+		display: inline-block;
+	}
+	.mini-sidebar .header-left .logo img {
+		height: auto;
+		max-height: 50px;
+		width: auto;
+	}
+	.mini-sidebar .header .header-left {
+		padding: 0 5px;
+		width: 60px;
+	}
+	.mini-sidebar .sidebar {
+		width: 60px;
+	}
+	.mini-sidebar.expand-menu .sidebar {
+		width: 230px;
+	}
+	.mini-sidebar .menu-title {
+		visibility: hidden;
+		white-space: nowrap;
+	}
+	.mini-sidebar.expand-menu .menu-title {
+		visibility: visible;
+	}
+	.mini-sidebar .menu-title a {
+		visibility: hidden;
+	}
+	.mini-sidebar.expand-menu .menu-title a {
+		visibility: visible;
+	}
+	.mini-sidebar .sidebar .noti-dot:before {
+		display: none;
+	}
+	.mini-sidebar .sidebar .noti-dot:after {
+		display: none;
+	}
+	.mini-sidebar.expand-menu .sidebar .noti-dot:before {
+		display: block;
+	}
+	.mini-sidebar.expand-menu .sidebar .noti-dot:after {
+		display: block;
+	}
+	.modal-open.mini-sidebar .sidebar {
+		z-index: 1001;
+	}
+	.mini-sidebar .sidebar .sidebar-menu ul > li > a span {
+		display: none;
+		transition: all 0.2s ease-in-out;
+		opacity: 0;
+	}
+	.mini-sidebar .sidebar .sidebar-menu ul > li > a span.chat-avatar-sm {
+		display: inline-block;
+		opacity: 1;
+	}
+	.mini-sidebar .sidebar .sidebar-menu ul > li > a span.status {
+		display: inline-block;
+		opacity: 1;
+	}
+	.mini-sidebar.expand-menu .sidebar .sidebar-menu ul > li > a span {
+		display: inline;
+		opacity: 1;
+	}
+	.mini-sidebar .sidebar .sidebar-menu > ul > li > a i {
+		font-size: 30px;
+		width: 30px;
+	}
+	.mini-sidebar.expand-menu .sidebar .sidebar-menu > ul > li > a i {
+		font-size: 24px;
+		width: 20px;
+	}
+	.mini-sidebar .page-wrapper {
+		margin-left: 60px;
+	}
+}
+
+@media only screen and (max-width:2000px) {}
+
+@media only screen and (max-width:1600px) {}
+
+@media only screen and (max-width:1440px) {}
+
+@media only screen and (max-width:1366px) {}
+
+@media only screen and (max-width:1280px) {}
+
+@media only screen and (max-width:1200px) {}
+
+@media only screen and (max-width: 1024px) {	
+	.container,
+	.container-lg,
+	.container-md,
+	.container-sm {
+		max-width: 100%;
+	}
+	.display-box .display-text h3 {
+		font-size: 1.2rem;
+	}
+	.container, .container-lg, .container-md, .container-sm {
+		max-width: 100%;
+	}
+	.completeddetailsbox .filledinfo li .title {
+		width: 100%;
+		float: none;
+	}
+	.edit-btn:after {
+		display: none;
+	}
+	.addons-box .btn {
+		width: 100%;
+	}
+	.buypolicy-box .btn {
+		padding: .375rem .50rem;
+		line-height: 2;
+	}
+	.quoteitembox.premium-box, .quoteitembox.buypolicy-box {
+		padding-top:1rem;
+		padding-bottom:1rem; 
+	}
+	.selected-addons-list {
+		margin-bottom: 1rem;
+	}
+	.quotes-topinfo h4, .quotes-editoption h4, .customerdetail-box h4, .ui.checkbox label {
+		font-size: .9rem;
+	}
+}
+
+@media only screen and (max-width: 992px) {
+	.header .header-left {
+		position: absolute;
+		width: 100%;
+		text-align: left;
+	}
+	.myaccount-page .header .header-left,
+	.admin-page .header .header-left{
+		padding-left: 50px;
+	}
+	.myaccount-page .mobile_btn,
+	.admin-page .mobile_btn {
+		display: block;
+	}
+	.page-title-box {
+		display: none;
+	}
+	.sidebar {
+		margin-left: -225px;
+		width: 225px;
+		-webkit-transition: all 0.4s ease;
+		-moz-transition: all 0.4s ease;
+		transition: all 0.4s ease;
+		z-index: 1041;
+	}
+	.myaccount-page .page-wrapper,
+	.admin-page .page-wrapper {
+		margin-left: 0;
+		padding:60px 0 20px;
+	}
+	a.mobile_btn {
+		color: #fff;
+		font-size: 24px;
+		height: 60px;
+		left: 0;
+		line-height: 60px;
+		padding: 0 15px;
+		position: absolute;
+		top: 0;
+		width: 50px;
+		z-index: 10;
+	}
+	#toggle_btn {
+		display: none;
+	}
+	.page-wrapper {
+		-webkit-transition: all 0.4s ease;
+		-moz-transition: all 0.4s ease;
+		transition: all 0.4s ease;
+	}
+	.header .has-arrow .dropdown-toggle > span:nth-child(2) {
+		display: none;
+	}
+	.header .has-arrow .dropdown-toggle::after {
+		display: none;
+	}
+	.quotes-topinfo,
+	.customerdetail-infobar {
+		/*background-color: transparent;*/
+	}
+	.quotes-topinfo .quotes-box>div,
+	.customerdetail-infobar .customerdetail-box>div{
+		/*background-color: #123f6d;*/
+		padding: 1rem;
+		min-height: 95px;
+		position: relative;
+	}
+	.customerdetail-infobar .customerdetail-box>div{
+		min-height: 86px;
+		border-bottom-width: 1px;
+		border-bottom-style: solid;
+		border-bottom-color: rgba(255,255,255,.2); 
+	}
+	.quotes-topinfo .quotes-box,
+	.customerdetail-infobar .customerdetail-box {
+		border-right: 0;
+	}
+	.quotes-topinfo .actionbtn,
+	.quotes-topinfo .quotes-editoption .option-box .actionbtn {
+		top: 10px;
+	    right: 10px;
+	    position: absolute;
+	    width: auto;
+	    z-index: 1;
+	}
+	.proposal-groupbtns .btn {
+		margin: .5rem 0 !important;
+	}
+}
+
+@media only screen and (max-width: 768px) {}
+
+@media only screen and (min-width: 737px) {
+	.quotes-editoption .slimScrollDiv,
+	.quotes-editoption-inner.slimscroll {
+		height: 100% !important;
+	}
+	.quotes-editoption .slimScrollDiv .slimScrollBar,
+	.quotes-editoption .slimScrollDiv .slimScrollRail {
+		display: none !important;
+	}
+}
+
+@media only screen and (max-width: 736px) {
+	.header .header-left {
+		text-align: left;
+	}
+	.page-wrapper {
+		padding-bottom: 0;
+	}
+	.sharescreen {
+		padding-top: 1rem !important;
+		padding-bottom:0 !important;
+	}
+	.home-conetnt {
+		padding: 0;
+	}
+	.footer {
+		position: relative;
+	}
+	.footer .copyright {
+		text-align: center;
+	}
+	section {
+		padding: 30px 0;
+	}
+	.display-box .display-text h3 {
+		font-size: 1.4rem;
+	}
+	.checkbox-instab:checked+label, .checkbox-instab:not(:checked)+label {
+		font-size: 14px;
+		line-height: 16px;
+		padding: 15px;
+	}
+	.quotes-topinfo,
+	.customerdetail-infobar {
+		/*background-color: transparent;*/
+	}
+	.quotes-topinfo .quotes-box {
+		border-right: 0;
+	}
+	.quotes-topinfo .quotes-editoption .option-box {
+		padding: 1rem;
+		min-height: 32px;
+		/*background-color: #123f6d;*/
+		margin-bottom: 0;
+		border: 0;
+	}
+	.quotes-editoption .option-box:hover::before {
+		opacity: 0;
+	}
+	.quotes-topinfo .quotes-editoption .covers-option-box h4 {
+		line-height: 32px;
+	}
+	.quotes-topinfo .quotes-editoption .option-box .actionbtn {
+		top: 0;
+		right: 0;
+	}
+	.quoteslist {
+		padding: 1rem 0;
+	}
+	.idvdisc-box {
+		padding-left: 15px;
+	}
+	.quoteitem {
+		/*background-color: transparent;*/
+		margin-bottom: 0;
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+	}
+	.quoteitem .row{
+		/*background: rgba(0, 168, 204, 0.075);    	*/
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.addons-box .btn {
+		width: 47.2%;
+		margin-top: 1rem;
+	}
+	.premium-box .premiumamt {
+		line-height: 1.2;
+	}
+	.premium-box .premiumamt span {
+		display: block;
+	}
+	.slide-quotes-editoption .sidebar-quotes-editoption {
+		background-color: #dae1f2;
+	    bottom: 0;
+	    margin-top: 0!important;
+	    margin-bottom: 0!important;
+	    padding: 1rem;
+	    position: fixed;
+	    left: 0;
+	    top: 0;
+	    margin-left: 0;
+	    width: 300px;
+	    -webkit-transition: all 0.4s ease;
+	    -moz-transition: all 0.4s ease;
+	    transition: all 0.4s ease;
+	    z-index: 1041;
+	    display: block !important;
+	}
+	.sidebar-quotes-editoption .option-box {
+		padding: 1rem;
+	}
+	.option-box.idv-option-box .actionbtn {
+		right: 1rem;
+	}
+	.custom-modal.policydetails-modal .modal-body {
+		padding:  15px !important;
+	}
+	.premium-breakup-content,
+	.coverage-details-content,
+	.cashless-garages-content {
+		padding: 1rem 0;
+		background-color: #fff;
+	}
+	.customerdetailform-container {
+		margin: 0 -15px;
+	}
+	.main-search {
+	    margin: 10px 0;
+	    width: 100%;
+	}
+}
+
+@media only screen and (max-width: 684px) {}
+
+@media only screen and (max-width: 667px) {}
+
+@media only screen and (max-width: 640px) {
+	.quotes-topinfo .quotes-box>div {
+		min-height: 120px;
+		border-bottom-width: 1px;
+		border-bottom-style: solid;
+		border-bottom-color: rgba(255,255,255,.2); 
+	}
+	.quotes-topinfo .quotes-editoption {
+		border-bottom-width: 1px;
+		border-bottom-style: solid;
+		border-bottom-color: rgba(255,255,255,.2); 			
+	}
+	.quotes-topinfo .quotes-editoption .option-box .actionbtn {
+		top: 10px;
+		right: 10px;
+	}
+	.quoteitem {
+		margin-bottom: 1rem;
+	}
+	.addons-box .btn {
+		margin-top: .5rem;
+	}
+	.idv-content .min-value, 
+	.idv-content .max-value {
+		margin: .5rem 0;
+		font-size: 1rem;
+		line-height: 1.5;
+	}
+	.idv-content input[type=text] {
+		width: 50%;
+	}
+	.proposal-groupbtns .btn {
+		margin: .5rem 0 !important;
+		display: block;
+	}
+	.completeddetailsbox .filledinfo li {
+		padding: 0;
+	}
+	.completeddetailsbox .filledinfo li:nth-child(odd) {
+		background-color: #fff;
+	}
+	.completeddetailsbox .filledinfo li .row > div {
+		border-right: 0;
+		border-top: 1px solid rgba(174, 174, 174, 0.6);
+		padding-top: .5rem;
+		margin-top: .5rem;
+	}
+}
+
+@media only screen and (max-width:600px) {}
+
+@media only screen and (max-width:568px) {
+	.checkbox-instab:checked+label, .checkbox-instab:not(:checked)+label {		
+		margin: 0 0 .3rem 0;
+		letter-spacing: 0;
+	}
+}
+
+@media only screen and (max-width:480px) {
+	.checkbox-instab:checked+label, .checkbox-instab:not(:checked)+label {
+		width: 100%;
+	}
+	#askPolicytype .ui.form label.ui.label,
+	#ifPolicytypeNew .ui.form label.ui.label,
+	#ifPolicytypeRenew .ui.form label.ui.label,
+	#ifPolicytypeNew .ui.form .inline.fields .field,
+	#ifPolicytypeRenew .ui.form .inline.fields .field{ 
+		width: 100%;
+		text-align: center;
+		margin: .5rem 0 !important;
+	}
+	#askPolicytype .ui.form .inline.fields .field {
+		margin: 0 auto;
+	}
+	.quotes-topinfo .quotes-box>div,
+	.customerdetail-infobar .customerdetail-box>div{
+		min-height: auto;
+	}
+	.digit-group input {
+		width: 40px;
+    	height: 40px;
+    	line-height: 1;
+	}
+	.digit-group .splitter {
+		display: none;
+	}
+	.walletbox {
+		margin-bottom: 1rem;
+	}
+	.walletbox .wallet-text {
+		text-align: center;
+		padding: 1rem 0 0;
+	}
+}
+
+@media only screen and (max-width:414px) {}
+
+@media only screen and (max-width:384px) {}
+
+@media only screen and (max-width:370px) {}
+
+@media only screen and (max-width:320px) {}
+
+@media only screen and (max-height: 411px) {}

@@ -1,0 +1,58 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
+.no-data-available {
+    text-align: center;
+}
+
+.dataTables_empty {
+    display: none;
+}
+
+.dataTables_length select {
+    z-index: 2 !important;
+}
+
+
+/* You can add global styles to this file, and also import other style files */
+
+.error {
+    color: red;
+}
+
+
+/* .navbar-white{
+    background-color : red !important;
+}
+
+[class*=sidebar-dark-] {
+    background-color: red !important;
+} */
+
+
+/* deepak changes start */
+
+
+/* .navbar-brand {
+    background: indigo;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.sidebar {
+    background : red !important;
+}
+.mainpagewrap .main-container .main-container-before {
+    background : red !important;
+}
+
+.sidebar .list-group  a.list-group-item {
+    background : red !important;
+    color: #fff !important;
+}
+.sidebar .list-group a.router-link-active, .nested-menu .expand ul.submenu li a.router-link-active {
+    background : green !important;
+} */
+
+
+/* main-header navbar navbar-expand navbar-dark navbar-secondary */
+
+
+/* deepak changes end */

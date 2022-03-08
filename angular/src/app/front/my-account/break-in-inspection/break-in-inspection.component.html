@@ -1,0 +1,870 @@
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content container-fluid">
+         <app-tickers></app-tickers>
+        <div class="page-header">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-9 col-md-10 col-12 mt-3">
+                    <h3 class="page-title text-center">Breakin Inspection for Proposal Number - {{ proposal_no }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row align-items-center justify-content-center">
+            <div class="col-lg-10 col-md-10 col-12">
+                <div class="card shadowbox">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+
+                                <form [formGroup]="formUploadBreakinData" (ngSubmit)="submitFormUploadBreakinData()">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-5 col-md-6 border-right">
+                                                <h4> {{ resultProposalDetails.proposer_type_id==1 ? 'Proposer Details': 'Company Details' }} </h4>
+                                                <ul class="endorsement-infolist">
+                                                    <li>
+                                                        <div class="title">{{ resultProposalDetails.proposer_type_id==1 ? 'Customer Name': 'Company Name' }} :</div>
+                                                        <div class="text">{{ policy_holder_name }}</div>
+                                                    </li>
+                                                    <li *ngIf="resultProposalDetails.proposer_type_id==2">
+                                                        <div class="title">Owner Name :</div>
+                                                        <div class="text">{{ resultProposalDetails.company_full_name }}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Phone Number:</div>
+                                                        <div class="text">{{ policy_holder_mobile_no }}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Email Address:</div>
+                                                        <div class="text">{{ policy_holder_email }}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Address:</div>
+                                                        <div class="text">{{ proposer_address }}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Country:</div>
+                                                        <div class="text">India</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">State:</div>
+                                                        <div class="text">{{ state }}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">City:</div>
+                                                        <div class="text">{{ city }}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Pincode:</div>
+                                                        <div class="text">{{ proposer_pincode }}</div>
+                                                    </li>
+                                                </ul>
+
+                                                <div>
+                                                    <br><br>
+                                                    <h4>Vehicle Details</h4>
+                                                    <ul class="endorsement-infolist">
+                                                        <li>
+                                                            <div class="title">Vehicle Reg. Number:</div>
+                                                            <div class="text">{{ registration_no | uppercase }}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Chassis No:</div>
+                                                            <div class="text">{{ chassis_no }}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Engine No:</div>
+                                                            <div class="text">{{ engine_no }}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Make:</div>
+                                                            <div class="text">{{ make }}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Model:</div>
+                                                            <div class="text">{{ model }}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Varient:</div>
+                                                            <div class="text">{{ variant }}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Date Of Registration:</div>
+                                                            <div class="text">{{ registration_date }}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Year Of Manufacture:</div>
+                                                            <div class="text">{{ manufacturing_year }}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Color:</div>
+                                                            <div class="text">{{ color }}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Fuel Mode:</div>
+                                                            <div class="text">{{ fuel_type }}</div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div>
+                                                    <br><br>
+                                                    <h4>Insured Details</h4>
+                                                    <ul class="endorsement-infolist">
+                                                        <li>
+                                                            <div class="title">Insurance Company:</div>
+                                                            <div class="text">{{ ic_name }}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Proposal No:</div>
+                                                            <div class="text">{{ proposal_no }}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Breakin Created Date:</div>
+                                                            <div class="text">{{ breakin_created_date }}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Breakin Expiry Date:</div>
+                                                            <div class="text">{{ breakin_expiry_date }}</div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-7 col-md-6">
+                                                <h4>Upload Documents</h4>
+                                                <div class="card cardshadow">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <label class="focus-label req">Breakin Reference No</label>
+                                                            <input formControlName="breakin_reference_no" type="text" class="form-control" (focusout)="checkIsBreakinRefNo($event)" min="1">
+
+                                                            <div *ngIf="( formUploadBreakinData.controls.breakin_reference_no.invalid && (formUploadBreakinData.controls.breakin_reference_no.dirty || formUploadBreakinData.controls.breakin_reference_no.touched)) && formUploadBreakinData.controls.breakin_reference_no.errors">
+                                                                <small class="text-danger">
+                                                              Please Enter Valid Breakin Reference No.
+                                                            </small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="separator"> <b>OR</b> </div>
+
+                                                <div class="row align-items-center">
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Inspection Report Image: <sup class="text-danger">*</sup></b>
+                                                                        </h5>
+                                                                        <label>{{inspection_report_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="file-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadInspectionReportImage($event)">
+                                                                            <label for="file-1">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{inspection_report_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="inspection_report_url" alt="">
+                                                                        </div>
+                                                                        <a *ngIf="is_set_from_api_for_inspection_report_url" [href]="inspection_report_url" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                    </div>
+                                                                    <div *ngIf="submittedBreakinIspectionData &&  formUploadBreakinData.controls.inspection_report_image.errors">
+                                                                        <small *ngIf="submittedBreakinIspectionData && formUploadBreakinData.controls.inspection_report_image.errors.required" class="text-danger">
+                                      Please upload inspection report image.
+                                    </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.inspection_report_image.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.inspection_report_image.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-center" style="padding-bottom: 10px;">
+                                                                Note : Only "jpg", "png", "jpeg", "pdf" files are allowed.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Upload PDF: <sup class="text-danger">*</sup></b></h5>
+                                                                        <label>{{upload_pdf_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="file-2" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadPdf($event)">
+                                                                            <label for="file-2">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{upload_pdf_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img *ngIf="is_set_from_api_for_upload_pdf_url" src="{{public_path}}pdf_image.png" alt="">
+                                                                            <img *ngIf="!is_set_from_api_for_upload_pdf_url" src="{{public_path}}pdf_image.png" alt="">
+                                                                        </div>
+                                                                        <a *ngIf="is_set_from_api_for_upload_pdf_url" [href]="upload_pdf_url" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                    </div>
+                                                                    <div *ngIf="submittedBreakinIspectionData &&  formUploadBreakinData.controls.pdf_doc.errors">
+                                                                        <small *ngIf="submittedBreakinIspectionData && formUploadBreakinData.controls.pdf_doc.errors.required" class="text-danger">
+                                                                          Please upload pdf document.
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.pdf_doc.errors?.requiredFileType" class="text-danger">
+                                                                          Allowed file type "pdf"
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.pdf_doc.errors?.fileSizeValidator" class="text-danger">
+                                                                          Allowed file size is 5 MB.
+                                                                        </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-center" style="padding-bottom: 10px;">
+                                                                Note : Only "pdf" files are allowed.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Front Image: <sup class="text-danger">*</sup></b></h5>
+                                                                        <label>{{front_image_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="file-3" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadFrontImage($event)">
+                                                                            <label for="file-3">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{front_image_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="front_image_url" alt="">
+                                                                        </div>
+                                                                        <a *ngIf="is_set_from_api_for_front_image_url" [href]="front_image_url" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                    </div>
+                                                                    <div *ngIf="submittedBreakinIspectionData &&  formUploadBreakinData.controls.front_image.errors">
+                                                                        <small *ngIf="submittedBreakinIspectionData && formUploadBreakinData.controls.front_image.errors.required" class="text-danger">
+                                                                          Please upload front image.
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.front_image.errors?.requiredFileType" class="text-danger">
+                                                                          Allowed file type "jpg", "png", "jpeg", "pdf"
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.front_image.errors?.fileSizeValidator" class="text-danger">
+                                                                          Allowed file size is 5 MB.
+                                                                        </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-center" style="padding-bottom: 10px;">
+                                                                Note : Only "jpg", "png", "jpeg", "pdf" files are allowed.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Rear Image: <sup class="text-danger">*</sup></b></h5>
+                                                                        <label>{{rear_image_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="file-4" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadRearImage($event)">
+                                                                            <label for="file-4">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{rear_image_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="rear_image_url" alt="">
+                                                                        </div>
+                                                                        <a *ngIf="is_set_from_api_for_rear_image_url" [href]="rear_image_url" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                    </div>
+                                                                    <div *ngIf="submittedBreakinIspectionData &&  formUploadBreakinData.controls.rear_image.errors">
+                                                                        <small *ngIf="submittedBreakinIspectionData && formUploadBreakinData.controls.rear_image.errors.required" class="text-danger">
+                                                                          Please upload rear image.
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.rear_image.errors?.requiredFileType" class="text-danger">
+                                                                          Allowed file type "jpg", "png", "jpeg", "pdf"
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.rear_image.errors?.fileSizeValidator" class="text-danger">
+                                                                          Allowed file size is 5 MB.
+                                                                        </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-center" style="padding-bottom: 10px;">
+                                                                Note : Only "jpg", "png", "jpeg", "pdf" files are allowed.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Left Image: <sup class="text-danger">*</sup></b></h5>
+                                                                        <label>{{left_image_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="file-5" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadLeftImage($event)">
+                                                                            <label for="file-5">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{left_image_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="left_image_url" alt="">
+                                                                        </div>
+                                                                        <a *ngIf="is_set_from_api_for_left_image_url" [href]="left_image_url" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                    </div>
+                                                                    <div *ngIf="submittedBreakinIspectionData &&  formUploadBreakinData.controls.left_image.errors">
+                                                                        <small *ngIf="submittedBreakinIspectionData && formUploadBreakinData.controls.left_image.errors.required" class="text-danger">
+                                                                          Please upload left image.
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.left_image.errors?.requiredFileType" class="text-danger">
+                                                                          Allowed file type "jpg", "png", "jpeg", "pdf"
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.left_image.errors?.fileSizeValidator" class="text-danger">
+                                                                          Allowed file size is 5 MB.
+                                                                        </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-center" style="padding-bottom: 10px;">
+                                                                Note : Only "jpg", "png", "jpeg", "pdf" files are allowed.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Right Image: <sup class="text-danger">*</sup></b></h5>
+                                                                        <label>{{right_image_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="file-6" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadRightImage($event)">
+                                                                            <label for="file-6">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{right_image_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="right_image_url" alt="">
+                                                                        </div>
+                                                                        <a *ngIf="is_set_from_api_for_right_image_url" [href]="right_image_url" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                    </div>
+                                                                    <div *ngIf="submittedBreakinIspectionData &&  formUploadBreakinData.controls.right_image.errors">
+                                                                        <small *ngIf="submittedBreakinIspectionData && formUploadBreakinData.controls.right_image.errors.required" class="text-danger">
+                                      Please upload right image.
+                                    </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.right_image.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.right_image.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-center" style="padding-bottom: 10px;">
+                                                                Note : Only "jpg", "png", "jpeg", "pdf" files are allowed.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Chassis/Plate Print : <sup class="text-danger">*</sup></b></h5>
+                                                                        <label>{{car_chassis_print_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="file-7" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadChassisPlatePrint($event)">
+                                                                            <label for="file-7">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{car_chassis_print_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="car_chassis_print_url" alt="">
+
+                                                                        </div>
+                                                                        <a *ngIf="is_set_from_api_for_car_chassis_print_url" [href]="car_chassis_print_url" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                    </div>
+                                                                    <div *ngIf="submittedBreakinIspectionData &&  formUploadBreakinData.controls.car_chassis_print.errors">
+                                                                        <small *ngIf="submittedBreakinIspectionData && formUploadBreakinData.controls.car_chassis_print.errors.required" class="text-danger">
+                                      Please upload chassis/plate number image.
+                                    </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.car_chassis_print.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.car_chassis_print.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-center" style="padding-bottom: 10px;">
+                                                                Note : Only "jpg", "png", "jpeg", "pdf" files are allowed.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>RC Copy : </b></h5>
+                                                                        <label>{{rc_copy_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="file-8" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadRcCopy($event)">
+                                                                            <label for="file-8">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{rc_copy_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="rc_copy_url" alt="">
+                                                                        </div>
+                                                                        <a *ngIf="is_set_from_api_for_rc_copy_url" [href]="rc_copy_url" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                    </div>
+                                                                    <div *ngIf="submittedBreakinIspectionData &&  formUploadBreakinData.controls.rc_copy.errors">
+                                                                        <small *ngIf="submittedBreakinIspectionData && formUploadBreakinData.controls.rc_copy.errors.required" class="text-danger">
+                                      Please upload rc copy.
+                                    </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.rc_copy.errors?.requiredFileType" class="text-danger">
+                                      Allowed file type "jpg", "png", "jpeg", "pdf"
+                                    </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.rc_copy.errors?.fileSizeValidator" class="text-danger">
+                                      Allowed file size is 5 MB.
+                                    </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-center" style="padding-bottom: 10px;">
+                                                                Note : Only "jpg", "png", "jpeg", "pdf" files are allowed.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Previous Insurances: </b></h5>
+                                                                        <label>{{pervious_insurances_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="file-9" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadPreviousInsurance($event)">
+                                                                            <label for="file-9">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{pervious_insurances_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="pervious_insurances_url" alt="">
+
+                                                                        </div>
+                                                                        <a *ngIf="is_set_from_api_for_pervious_insurances_url" [href]="pervious_insurances_url" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                    </div>
+                                                                    <div *ngIf="submittedBreakinIspectionData &&  formUploadBreakinData.controls.pervious_insurances.errors">
+                                                                        <small *ngIf="submittedBreakinIspectionData && formUploadBreakinData.controls.pervious_insurances.errors.required" class="text-danger">
+                                                                          Please upload previous insurance document.
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.pervious_insurances.errors?.requiredFileType" class="text-danger">
+                                                                          Allowed file type "jpg", "png", "jpeg", "pdf"
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.pervious_insurances.errors?.fileSizeValidator" class="text-danger">
+                                                                          Allowed file size is 5 MB.
+                                                                        </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-center" style="padding-bottom: 10px;">
+                                                                Note : Only "jpg", "png", "jpeg", "pdf" files are allowed.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Dicky Open: <sup class="text-danger">*</sup></b></h5>
+                                                                        <label>{{dicky_open_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="file-10" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadDickyOpen($event)">
+                                                                            <label for="file-10">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{dicky_open_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="dicky_open_url" alt="">
+                                                                        </div>
+                                                                        <a *ngIf="is_set_from_api_for_dicky_open_url" [href]="dicky_open_url" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                    </div>
+                                                                    <div *ngIf="submittedBreakinIspectionData &&  formUploadBreakinData.controls.dicky_open.errors">
+                                                                        <small *ngIf="submittedBreakinIspectionData && formUploadBreakinData.controls.dicky_open.errors.required" class="text-danger">
+                                                                          Please upload dicky open image.
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.dicky_open.errors?.requiredFileType" class="text-danger">
+                                                                          Allowed file type "jpg", "png", "jpeg", "pdf"
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.dicky_open.errors?.fileSizeValidator" class="text-danger">
+                                                                          Allowed file size is 5 MB.
+                                                                        </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-center" style="padding-bottom: 10px;">
+                                                                Note : Only "jpg", "png", "jpeg", "pdf" files are allowed.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Selfie With Car: </b></h5>
+                                                                        <label>{{selfie_with_car_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="file-11" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadSelfieWithCar($event)">
+                                                                            <label for="file-11">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{selfie_with_car_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="selfie_with_car_url" alt="">
+                                                                        </div>
+                                                                        <a *ngIf="is_set_from_api_for_selfie_with_car_url" [href]="selfie_with_car_url" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                    </div>
+                                                                    <div *ngIf="submittedBreakinIspectionData &&  formUploadBreakinData.controls.selfie_with_car.errors">
+                                                                        <small *ngIf="submittedBreakinIspectionData && formUploadBreakinData.controls.selfie_with_car.errors.required" class="text-danger">
+                                                                          Please upload selefie with car.
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.selfie_with_car.errors?.requiredFileType" class="text-danger">
+                                                                          Allowed file type "jpg", "png", "jpeg", "pdf"
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.selfie_with_car.errors?.fileSizeValidator" class="text-danger">
+                                                                          Allowed file size is 5 MB.
+                                                                        </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-center" style="padding-bottom: 10px;">
+                                                                Note : Only "jpg", "png", "jpeg", "pdf" files are allowed.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Windscreen Inside/Outside: <sup class="text-danger">*</sup></b>
+                                                                        </h5>
+                                                                        <label>{{windscreen_inside_outside_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="file-12" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadWindscreenInsideOutside($event)">
+                                                                            <label for="file-12">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{windscreen_inside_outside_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="windscreen_inside_outside_url" alt="">
+                                                                        </div>
+                                                                        <a *ngIf="is_set_from_api_for_windscreen_inside_outside_url" [href]="windscreen_inside_outside_url" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                    </div>
+                                                                    <div *ngIf="submittedBreakinIspectionData &&  formUploadBreakinData.controls.windscreen_inside_outside.errors">
+                                                                        <small *ngIf="submittedBreakinIspectionData && formUploadBreakinData.controls.windscreen_inside_outside.errors.required" class="text-danger">
+                                                                          Please upload windscreen inside/outside image.
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.windscreen_inside_outside.errors?.requiredFileType" class="text-danger">
+                                                                          Allowed file type "jpg", "png", "jpeg", "pdf"
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.windscreen_inside_outside.errors?.fileSizeValidator" class="text-danger">
+                                                                          Allowed file size is 5 MB.
+                                                                        </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-center" style="padding-bottom: 10px;">
+                                                                Note : Only "jpg", "png", "jpeg", "pdf" files are allowed.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Windscreen Outside/Inside: <sup class="text-danger">*</sup></b>
+                                                                        </h5>
+                                                                        <label>{{windscreen_outside_inside_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="file-13" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadWindscreenOutsideInside($event)">
+                                                                            <label for="file-13">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{windscreen_outside_inside_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="windscreen_outside_inside_url" alt="">
+                                                                        </div>
+                                                                        <a *ngIf="is_set_from_api_for_windscreen_outside_inside_url" [href]="windscreen_outside_inside_url" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                    </div>
+                                                                    <div *ngIf="submittedBreakinIspectionData &&  formUploadBreakinData.controls.windscreen_outside_inside.errors">
+                                                                        <small *ngIf="submittedBreakinIspectionData && formUploadBreakinData.controls.windscreen_outside_inside.errors.required" class="text-danger">
+                                                                          Please upload windscreen outside inside image.
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.windscreen_outside_inside.errors?.requiredFileType" class="text-danger">
+                                                                          Allowed file type "jpg", "png", "jpeg", "pdf"
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.windscreen_outside_inside.errors?.fileSizeValidator" class="text-danger">
+                                                                          Allowed file size is 5 MB.
+                                                                        </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-center" style="padding-bottom: 10px;">
+                                                                Note : Only "jpg", "png", "jpeg", "pdf" files are allowed.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="card shadowbox">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-12">
+                                                                        <h5 class="my-2"><b>Autometer Engine: <sup class="text-danger">*</sup></b></h5>
+                                                                        <label>{{autometer_engine_label}}</label>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="box fileuploadbox">
+                                                                            <input type="file" id="file-14" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadAutometerEngine($event)">
+                                                                            <label for="file-14">
+                                        <figure>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                            viewBox="0 0 20 17">
+                                            <path
+                                              d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                          </svg>
+                                        </figure>
+                                        <span>{{autometer_engine_url_label}}</span>
+                                      </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <div class="uploaded-img">
+                                                                            <img [src]="autometer_engine_url" alt="">
+                                                                        </div>
+                                                                        <a *ngIf="is_set_from_api_for_autometer_engine_url" [href]="autometer_engine_url" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                    </div>
+                                                                    <div *ngIf="submittedBreakinIspectionData &&  formUploadBreakinData.controls.autometer_engine.errors">
+                                                                        <small *ngIf="submittedBreakinIspectionData && formUploadBreakinData.controls.autometer_engine.errors.required" class="text-danger">
+                                                                          Please upload autometer engine image.
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.autometer_engine.errors?.requiredFileType" class="text-danger">
+                                                                          Allowed file type "jpg", "png", "jpeg", "pdf"
+                                                                        </small>
+                                                                        <small *ngIf="formUploadBreakinData.controls.autometer_engine.errors?.fileSizeValidator" class="text-danger">
+                                                                          Allowed file size is 5 MB.
+                                                                        </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-center" style="padding-bottom: 10px;">
+                                                                Note : Only "jpg", "png", "jpeg", "pdf" files are allowed.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="col-12">
+                                                        <button type="submit" class="btn btn-custom green w-100"> Submit</button>
+                                                        <!-- <a href="javascript:void(0);" class="btn btn-custom green">Submit</a> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /Page Content -->
+</div>
+<!-- /Page Wrapper -->
+<app-loader [loaderActive]="loaderActive"></app-loader>

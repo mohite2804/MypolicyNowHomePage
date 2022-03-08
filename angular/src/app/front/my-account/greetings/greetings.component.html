@@ -1,0 +1,48 @@
+<div class="page-wrapper">
+
+    <main id="main">
+
+        <section class="creative-listing pt-3 pb-5">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <h4 class="mb-0 border-bottom text-center"><span class="py-2 px-5 d-inline-block bg-success text-white">Top Search</span></h4>
+                    </div>
+
+                    <div class="col-xl-2 col-lg-3 col-md-4 col-6" *ngFor="let row of greetingImages">
+
+                        <div class="single-creative my-3">
+                            <div class="img">
+                                <a (click)="redirectToCreativePage(row)">
+                                    <img src="{{row.image}}" alt="">
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h4 class="mb-0 border-bottom text-center"><span class="py-2 px-5 d-inline-block bg-warning text-black">All Creatives</span></h4>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-4 col-6" *ngFor="let row of greetingCreativeImages">
+                        <div class="single-creative my-3">
+                            <div class="img">
+                                <a (click)="redirectToCreativePage(row)">
+                                    <img src="{{row.image}}" alt="">
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+</div>
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

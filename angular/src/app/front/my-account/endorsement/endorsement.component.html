@@ -1,0 +1,473 @@
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content container-fluid">
+        <app-tickers></app-tickers>
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Endorsement</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="['/my-account/dashboard']" href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Endorsement</li>
+                    </ul>
+                </div>
+
+                <div [ngClass]="{'d-none': div_show_endorsement_new }" class="col-md-4 float-right ml-auto dashboard-search">
+                    <form [formGroup]="formchFilterDetails" (ngSubmit)="submitFormFilterDetails()">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Enter Policy Number,Chassis No, Engine No, Vehicle No" formControlName="policy_number">
+                            <div class="input-group-append">
+                                <button class="btn btn-custom blue" type="submit"><i class="fa fa-search"></i> Search</button>
+                            </div>
+                        </div>
+                        <div *ngIf="submittedSearch &&formchFilterDetails.controls.policy_number.errors">
+                            <small *ngIf="submittedSearch && formchFilterDetails.controls.policy_number.errors" class="text-danger">
+                              Please enter Enter Policy Number,Chassis No  or Engine No.
+                            </small>
+                            <!-- <small *ngIf="submittedSearch && formchFilterDetails.controls.policy_number.errors.cannotContainSpace" class="text-danger">
+                              Please enter Enter Policy Number,Chassis No  or Engine No.
+                            </small>
+
+                            <small *ngIf="submittedSearch && formchFilterDetails.controls.policy_number.errors.cannotContainZero" class="text-danger">
+                              Please enter Enter Policy Number,Chassis No or Engine No.
+                            </small> -->
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row" [ngClass]="{'d-none': div_show_endorsement_status }">
+            <div class="col-md-12">
+                <div class="card shadowbox">
+                    <div class="card-body pb-0">
+                        <form class="form-horizontal" [formGroup]="formRecodEdit">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-3">
+                                    <div class="form-group">
+                                        <label>Policy/Regi/Engine/Chassis No:</label>
+                                        <input type="text" formControlName="filter_policy_no" class="form-control" placeholder="Policy/Registration/Engine/Chassis Number" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-3">
+                                    <div class="form-group">
+                                        <label>From Date:</label>
+                                        <div class="cal-icon">
+                                            <input select-other-detail="other_field" (click)="e.toggle()" class="form-control" placeholder="yyyy-mm-dd" formControlName="policy_from" [(ngModel)]="date_picker_policy_from" ngbDatepicker #e="ngbDatepicker" placeholder="yyyy-mm-dd" autocomplete="off"
+                                                readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-3">
+                                    <div class="form-group">
+                                        <label>To Date:</label>
+                                        <div class="cal-icon">
+                                            <input select-other-detail="other_field" (click)="f.toggle()" class="form-control" placeholder="yyyy-mm-dd" formControlName="policy_to" [(ngModel)]="date_picker_policy_to" ngbDatepicker #f="ngbDatepicker" placeholder="yyyy-mm-dd" autocomplete="off" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4">
+                                    <div class="form-group">
+                                        <label>Insurance Name :</label>
+                                        <ng-select placeholder="Select IC" (clear)="clearValue('insurance_name',$event)" (change)="changeSelectBox('insurance_name',$event)" [(ngModel)]="selectedInsurance_name" [ngModelOptions]="{standalone: true}">
+                                            <ng-option *ngFor="let row of icList" [value]="row.id">{{row.code}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4">
+                                    <div class="form-group">
+                                        <label>Policy Type :</label>
+                                        <ng-select placeholder="Select Policy Type" (clear)="clearValue('policy_type_name',$event)" (change)="changeSelectBox('policy_type_name',$event)" [(ngModel)]="selectedPolicyType_name" [ngModelOptions]="{standalone: true}">
+                                            <ng-option *ngFor="let row of policyTypeList" [value]="row.policy_type_id">{{row.label}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4">
+                                    <div class="form-group">
+                                        <label>Product Type :</label>
+                                        <ng-select placeholder="Select Product Type" (clear)="clearValue('product_name',$event)" (change)="changeSelectBox('product_name',$event)" [(ngModel)]="selectedProduct_name" [ngModelOptions]="{standalone: true}">
+                                            <ng-option *ngFor="let row of productList" [value]="row.product_type_id">{{row.label}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4">
+                                    <div class="form-group">
+                                        <label>Endorsement Type :</label>
+                                        <ng-select placeholder="Select Endorsement Type" (clear)="clearValue('endorsement_type',$event)" (change)="changeSelectBox('endorsement_type',$event)" [(ngModel)]="selectedEndorsement_type" [ngModelOptions]="{standalone: true}">
+                                            <ng-option *ngFor="let row of endorsementList" [value]="row.endorsement_type_id">{{row.lable}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="d-block">&nbsp;</label>
+                                    <button (click)="submitFormFilter()" type="submit" class="btn btn-custom green w-43" title="Search"><i class="fa fa-search"></i></button> &nbsp;
+                                </div>
+                                <div>
+                                    <label class="d-block">&nbsp;</label>
+                                    <button type="button" (click)="resetFilterForm()" class="btn btn-custom yellow w-43" title="Reset"><i class="fa fa-refresh"></i></button>&nbsp;
+                                </div>
+                                <div>
+                                    <label class="d-block">&nbsp;</label>
+                                    <button type="button" (click)="exportDataForm()" class="btn btn-custom blue w-43" title="Export"><i class="fa fa-download"></i></button>&nbsp;
+                                </div>
+                                <div class="col-lg-2 col-md-3">
+                                    <!-- <button (click)="exportAsXLSX()" class="btn btn-custom green w-43 pull-left" title="Export To Excel">Export <i class="fa fa-download"></i></button> -->
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadowbox">
+                    <div class="card-header">
+                        <div class="form-group ui form mb-0">
+                            <div class="row align-items-center justify-content-center inline fields mb-0">
+
+                                <div *ngIf="loginUserType != 5" class="col-auto px-4 field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="searchbreakinbystatus" id="searchbreakinbystatus-new" checked="" value="searchbreakinbystatus-new" (click)="showHideNewEndorsement();">
+                                        <label class="mb-0" for="searchbreakinbystatus-new">New</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-auto px-4 field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="searchbreakinbystatus" id="searchbreakinbystatus-pending" value="searchbreakinbystatus-pending" (click)="showHideStatusEndorsement(1);">
+                                        <label class="mb-0" for="searchbreakinbystatus-pending">Pending</label>
+                                    </div>
+                                </div>
+                                <div class="col-auto px-4 field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="searchbreakinbystatus" id="searchbreakinbystatus-referback" value="searchbreakinbystatus-referback" (click)="showHideStatusEndorsement(3);">
+                                        <label class="mb-0" for="searchbreakinbystatus-referback">Refer Back</label>
+                                    </div>
+                                </div>
+                                <div class="col-auto px-4 field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="searchbreakinbystatus" id="searchbreakinbystatus-rejected" value="searchbreakinbystatus-rejected" (click)="showHideStatusEndorsement(2);">
+                                        <label class="mb-0" for="searchbreakinbystatus-rejected">Rejected</label>
+                                    </div>
+                                </div>
+                                <div class="col-auto px-4 field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="searchbreakinbystatus" id="searchbreakinbystatus-approved" value="searchbreakinbystatus-approved" (click)="showHideStatusEndorsement(4);">
+                                        <label class="mb-0" for="searchbreakinbystatus-approved">Approved</label>
+                                    </div>
+                                </div>
+                                <div class="col-auto px-4 field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="searchbreakinbystatus" id="searchbreakinbystatus-paid" value="searchbreakinbystatus-paid" (click)="showHideStatusEndorsement(5);">
+                                        <label class="mb-0" for="searchbreakinbystatus-paid">Paid</label>
+                                    </div>
+                                </div>
+                                <div class="col-auto px-4 field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="searchbreakinbystatus" id="searchbreakinbystatus-refund" value="searchbreakinbystatus-refund" (click)="showHideStatusEndorsement(6);">
+                                        <label class="mb-0" for="searchbreakinbystatus-refund">Refund</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body" [ngClass]="{'d-none': div_show_endorsement_new }">
+
+                        <div class="table-responsive">
+                            <table *ngIf="result" class="table table-striped table-bordered custom-table srn datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Sr.No</th>
+                                        <th>Policy Number</th>
+                                        <th>Product Type</th>
+                                        <th>Reg. No.</th>
+                                        <th>Insured Name</th>
+                                        <th>Insured Mobile No</th>
+                                        <th>Ins. Company</th>
+                                        <th>Final premium(inc. GST)</th>
+                                        <th>Created Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of result let i = index">
+                                        <td>1.</td>
+                                        <td>{{row.policy_no}}</td>
+                                        <td>{{row.product_type}}</td>
+                                        <td>{{row.reg_no}}</td>
+                                        <td>{{row.insured_name}} </td>
+                                        <td>+91 {{row.proposer_mobile_no}}</td>
+                                        <td>{{row.ic_name}}</td>
+                                        <td>Rs. {{row.gross_premium}}</td>
+                                        <td>{{row.quote_created_date}}</td>
+                                        <td class="action-btns" *ngIf="show_endorse_button">
+                                            <a class="btn btn-custom btn-sm green" href="javascript:void(0);" (click)="nilEndorsement(row.policy_no)"> NIL </a>
+                                            <a class="btn btn-custom btn-sm yellow" href="javascript:void(0);" (click)="non_nilEndorsement(row.policy_no)"> NON NIL(Payable) </a>
+                                            <a class="btn btn-custom btn-sm red" href="javascript:void(0);" (click)="transferEndorsement(row.policy_no)"> TRANSFER(Payable) </a>
+                                        </td>
+                                        <td *ngIf="policy_cancel">
+                                            <span class='text-danger'><b>{{policy_status}}</b></span>
+                                        </td>
+                                        <td *ngIf="already_initiated_show">
+                                            <span class='text-danger'><b>{{already_initiated_text}}</b></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card-body" [ngClass]="{'d-none': div_show_endorsement_status }">
+                        <div class="table-responsive">
+                            <table datatable *ngIf="dtRendered" [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn datatable"></table>
+                        </div>
+                    </div>
+
+                    <div id="openmodal" class="modal custom-modal fade" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <form [formGroup]="formPaymentEndorsement" method="post" (ngSubmit)="submitPaymentForm()">
+                                    <!-- <input formControlName="proposal_no" type="hidden" class="form-control"> -->
+
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">{{ popupTitle }}</h4>
+                                        <button #closebutton (click)="closePopup()" type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+
+                                    <div class="modal-body">
+
+                                        <div class="row justify-content-center" *ngIf="ic_id !=27">
+                                            <div class="col-12 walletbox">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-4 col-12 wallet-icon">
+                                                                <img src="assets/front/img/proposal/walleticon.svg" alt="" class="w-100">
+                                                            </div>
+                                                            <div class="col-sm-8 col-12 wallet-text">
+                                                                <h5>MY BALANCE</h5>
+                                                                <h2><i class="fa fa-inr"></i> {{wallet_balance /100}}</h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 finalpremium">
+                                            <h4>Final Premium <em class="d-lg-inline d-md-block d-inline">(Incl. GST) </em>
+                                                <span><i class="fa fa-inr"></i> {{ endorsement_premium }} </span></h4>
+                                        </div>
+
+                                        <div class="col-12 text-center">
+                                            <br><br>
+                                            <input *ngIf="btnPaymentSubmit && !in_sufficient_bal" class="btn btn-custom green" type="submit" value="Pay Now">
+                                            <div class="text-center" *ngIf="in_sufficient_bal && ic_id != 27">
+                                                <h5 class="text-danger"><b>Note: </b>In Sufficient Wallet Balance</h5>
+                                            </div>
+
+                                            <div class="text-center" *ngIf="ic_id == 27">
+                                                <h5 class="text-danger"><b>Note: </b>Please raise ticket or mail to asim@giib.co.in for endorsement payment.</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="viewPaymentDetailsModal" class="modal custom-modal fade" tabindex="-1" role="dialog" [ngStyle]="{'display':display_viewPaymentDetailsModal}">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{ popupPyDetailsTitle_viewPaymentDetailsModal }}</h4>
+                                    <button #closebutton type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card shadowbox">
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered custom-table srn" style="text-align: center;">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th style="width:30%!important;">Payment Refund To</th>
+                                                                    <td style="width:70%!important;">{{ detail_refund | uppercase }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="width:30%!important;">Account No</th>
+                                                                    <td style="width:70%!important;">{{ detail_account_no }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="width:30%!important;">Account Holder Name</th>
+                                                                    <td style="width:70%!important;">{{ detail_account_name | uppercase }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="width:30%!important;">Bank Name</th>
+                                                                    <td style="width:70%!important;">{{ detail_bank_name | uppercase }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="width:30%!important;">Branch Name</th>
+                                                                    <td style="width:70%!important;">{{ detail_bank_branch | uppercase }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="width:30%!important;">Bank IFSC Code</th>
+                                                                    <td style="width:70%!important;">{{ detail_bank_ifsc_code | uppercase }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="width:30%!important;">Refund Amount</th>
+                                                                    <td style="width:70%!important;">{{ detail_refund_amount }}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="payment_done_status" class="modal custom-modal fade" role="dialog" [ngStyle]="{'display':display}">
+                        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Payments Paid Info</h5>
+                                    <button #closebutton type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="tab-content">
+
+                                        <div class="tab-pane show active" id="sendmessage-tab3">
+
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-bordered table-sm">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th colspan="2" class="align-middle">REFUND PAYEE DETAILS</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="align-middle">Payment To</th>
+                                                                        <td>
+                                                                            {{ payment_refund_to_paid | uppercase }}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="align-middle">Account Holder Name</th>
+                                                                        <td>
+                                                                            {{ payment_refund_payee_account_name_paid | uppercase }}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="align-middle">Account Number</th>
+                                                                        <td>
+                                                                            {{ payment_refund_payee_account_no_paid }}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="align-middle">IFSC Code</th>
+                                                                        <td>
+                                                                            {{ payment_refund_payee_bank_ifsc_code_paid | uppercase }}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="align-middle">Bank Name</th>
+                                                                        <td>
+                                                                            {{ payment_refund_payee_bank_name_paid | uppercase }}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="align-middle">Bank Branch</th>
+                                                                        <td>
+                                                                            {{ payment_refund_payee_bank_branch_paid | uppercase }}
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-bordered table-sm">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th colspan="2" class="align-middle">PAYMENT DETAILS</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="align-middle">Transaction/Cheque Number</th>
+                                                                        <td>
+                                                                            {{ transaction_no_paid }}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="align-middle">Remark</th>
+                                                                        <td>
+                                                                            {{ payment_remark_paid }}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="align-middle">Refrence Document</th>
+                                                                        <td>
+                                                                            <a href="{{public_path}}endorsement/payment_doc/{{payment_doc_paid}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                            <div class="uploaded-img">
+                                                                                <img src="{{public_path}}endorsement/payment_doc/{{payment_doc_paid}}" alt="">
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="align-middle">Date</th>
+                                                                        <td>
+                                                                            {{ payment_date_paid }}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="align-middle">Updated By</th>
+                                                                        <td>
+                                                                            {{ payment_status_update_by }}
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <app-loader [loaderActive]="loaderActive"></app-loader>
+    </div>
+    <!-- /Page Content -->
+</div>
+<!-- /Page Wrapper -->

@@ -1,0 +1,1054 @@
+<div class="page-wrapper">
+    <div class="content">
+        <section>
+            <div class="container">
+                <form class="ui form" [formGroup]="formQuoteDetails" (ngSubmit)="submitFormQuoteDetails()">
+                    <div class="row align-items-center justify-content-strat">
+                        <div class="col-12">
+                            <div class="card cardshadow productbar">
+                                <div class="card-body">
+                                    <div class="field" 
+                                        [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.gender.invalid && (formQuoteDetails.controls.gender.dirty || formQuoteDetails.controls.gender.touched)) && formQuoteDetails.controls.gender.errors}">
+                                        <div class="ui form">
+                                            <div id="instabs" class="instabs d-sm-flex justify-content-center">
+                                                <div *ngFor="let gender of gender_selection" class="field">
+                                                    <input class="checkbox-instab" type="radio" name="gender"
+                                                        formControlName="gender" id="{{ gender.id }}"
+                                                        value="{{ gender.id }}">
+                                                    <label class="for-checkbox-instab" for="{{ gender.id}}"
+                                                        id="gender_cla">
+                                                        <span class="instab-text" title="{{ gender.id}}">{{ gender.name
+                                                            }}</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center"
+                                        *ngIf="(submittedQuoteDetails ||formQuoteDetails.controls.gender.invalid && (formQuoteDetails.controls.gender.dirty || formQuoteDetails.controls.gender.touched)) && formQuoteDetails.controls.gender.errors">
+                                        <small
+                                            *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.gender.invalid && (formQuoteDetails.controls.gender.dirty || formQuoteDetails.controls.gender.touched)) && formQuoteDetails.controls.gender.errors.required"
+                                            class="errorbox">
+                                            Please Select Gender.
+                                        </small>
+                                    </div>
+                                    <div class="row align-items-center justify-content-center mt-4">
+                                        <div class="col-auto">
+                                            <div class="field"
+                                                [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.policy_type.invalid && (formQuoteDetails.controls.policy_type.dirty || formQuoteDetails.controls.policy_type.touched)) && formQuoteDetails.controls.policy_type.errors}">
+                                                <div class="ui form">
+                                                    <div class="inline fields mb-0">
+                                                        <label class="ui label">Select Policy type:</label>
+                                                        <div *ngFor="let row of policy_types" class="field">
+                                                            <div class="ui radio checkbox">
+                                                                <input (click)="selectPolicyType(row.id,'angular')"
+                                                                    formControlName="policy_type" name="policy_type"
+                                                                    type="radio" value="{{ row.id }}" id="{{ row.id }}">
+                                                                <label for="policy_type_{{ row.id }}">{{ row.label
+                                                                    }}</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center"
+                                                *ngIf="(submittedQuoteDetails ||formQuoteDetails.controls.policy_type.invalid && (formQuoteDetails.controls.policy_type.dirty || formQuoteDetails.controls.policy_type.touched)) && formQuoteDetails.controls.policy_type.errors">
+                                                <small
+                                                    *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.policy_type.invalid && (formQuoteDetails.controls.policy_type.dirty || formQuoteDetails.controls.policy_type.touched)) && formQuoteDetails.controls.policy_type.errors.required"
+                                                    class="errorbox">
+                                                    Please Select Policy Type.
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div [ngClass]="{'d-none': div_show_for_policy_subtypes }"
+                                            class="col-auto d-none">
+                                            <div class="field"
+                                                [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.policy_sub_types.invalid && (formQuoteDetails.controls.policy_sub_types.dirty || formQuoteDetails.controls.policy_sub_types.touched)) && formQuoteDetails.controls.policy_sub_types.errors}">
+                                                <div class="ui form">
+                                                    <div class="inline fields mb-0">
+                                                        <label class="ui label">Select Option:</label>
+                                                        <div *ngFor="let row of policy_sub_types" class="field">
+                                                            <div class="ui radio checkbox">
+                                                                <input type="radio" formControlName="policy_sub_types"
+                                                                    id="{{row.policy_subtype_id}}"
+                                                                    name="policy_sub_types"
+                                                                    value="{{ row.policy_subtype_id }}"
+                                                                    (click)="getInsuredOneValidation()">
+                                                                <label for="{{ row.policy_subtype_id}}">{{ row.label
+                                                                    }}</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center"
+                                                *ngIf="(submittedQuoteDetails ||formQuoteDetails.controls.policy_sub_types.invalid && (formQuoteDetails.controls.policy_sub_types.dirty || formQuoteDetails.controls.policy_sub_types.touched)) && formQuoteDetails.controls.policy_sub_types.errors">
+                                                <small
+                                                    *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.policy_sub_types.invalid && (formQuoteDetails.controls.policy_sub_types.dirty || formQuoteDetails.controls.policy_sub_types.touched)) && formQuoteDetails.controls.policy_sub_types.errors.required"
+                                                    class="errorbox">
+                                                    Please Select Policy Sub Type.
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="healthcheck1" class="row align-items-center justify-content-center">
+                        <div class="col-12">
+                            <div class="card cardshadow blue-border">
+                                <div class="card-header">
+                                    <h3>Who would you like to get insured? </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row align-items-start">
+                                        <div *ngFor="let row of relations" class="field">
+                                            <div class="col-xl-2 col-lg-2 col-md-2 col-12">
+                                                <div class="card-body">
+                                                    <div class="ui checkbox">
+                                                        <input select-other-detail="other_field" type="checkbox"
+                                                            value="{{ row.name }}"
+                                                            formControlName="insured_type_{{ row.name }}"
+                                                            id="{{ row.id }}" (change)="ToggleButton1($event, row.id)">
+                                                        <label class="mb-0" for="self">{{ row.name }}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-start" *ngIf="showSelected1">
+                                        <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+                                            <div class="field"
+                                                [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.insured_type_self_age.invalid && (formQuoteDetails.controls.insured_type_self_age.dirty || formQuoteDetails.controls.insured_type_self_age.touched)) && formQuoteDetails.controls.insured_type_self_age.errors}">
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">Self Age</label>
+                                                    <select formControlName="insured_type_self_age" id="selfage"
+                                                        class="w-100">
+                                                        <option value="">Select Age</option>
+                                                        <option *ngFor="let row of self_agerelation_data"
+                                                            value="{{row.age_value}}">{{row.age}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+                                            <div class="field"
+                                                [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.insured_type_self_height.invalid && (formQuoteDetails.controls.insured_type_self_height.dirty || formQuoteDetails.controls.insured_type_self_height.touched)) && formQuoteDetails.controls.insured_type_self_height.errors}">
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">Self Height</label>
+                                                    <select formControlName="insured_type_self_height" id="selfheight"
+                                                        class="w-100">
+                                                        <option value="">Select Height</option>
+                                                        <option *ngFor="let row of member_height" value="{{row.id}}">
+                                                            {{row.height}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+                                            <div class="field"
+                                                [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.insured_type_self_weight.invalid && (formQuoteDetails.controls.insured_type_self_weight.dirty || formQuoteDetails.controls.insured_type_self_weight.touched)) && formQuoteDetails.controls.insured_type_self_weight.errors}">
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">Self Weight</label>
+                                                    <select formControlName="insured_type_self_weight" id="selfweight"
+                                                        class="w-100">
+                                                        <option value="">Select Weight</option>
+                                                        <option *ngFor="let row of member_weight" value="{{row.id}}">
+                                                            {{row.to_from}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-start" *ngIf="showSelected2">
+                                        <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+                                            <div class="field"
+                                                [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.insured_type_spouse_age.invalid && (formQuoteDetails.controls.insured_type_spouse_age.dirty || formQuoteDetails.controls.insured_type_spouse_age.touched)) && formQuoteDetails.controls.insured_type_spouse_age.errors}">
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">Spouse Age</label>
+                                                    <select formControlName="insured_type_spouse_age" id="spouseage"
+                                                        class="w-100">
+                                                        <option value="">Select Age</option>
+                                                        <option *ngFor="let row of spouse_agerelation_data"
+                                                            value="{{row.age_value}}">{{row.age}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+                                            <div class="field"
+                                                [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.insured_type_spouse_height.invalid && (formQuoteDetails.controls.insured_type_spouse_height.dirty || formQuoteDetails.controls.insured_type_spouse_height.touched)) && formQuoteDetails.controls.insured_type_spouse_height.errors}">
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">Spouse Height</label>
+                                                    <select formControlName="insured_type_spouse_height"
+                                                        id="spouseheight" class="w-100">
+                                                        <option value="">Select Height</option>
+                                                        <option *ngFor="let row of member_height" value="{{row.id}}">
+                                                            {{row.height}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+                                            <div class="field"
+                                                [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.insured_type_spouse_weight.invalid && (formQuoteDetails.controls.insured_type_spouse_weight.dirty || formQuoteDetails.controls.insured_type_spouse_weight.touched)) && formQuoteDetails.controls.insured_type_spouse_weight.errors}">
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">Spouse Weight</label>
+                                                    <select formControlName="insured_type_spouse_weight"
+                                                        id="spouseweight" class="w-100">
+                                                        <option value="">Select Weight</option>
+                                                        <option *ngFor="let row of member_weight" value="{{row.id}}">
+                                                            {{row.to_from}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-start" *ngIf="showSelected3">
+
+                                        <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+                                            <div class="field"
+                                                [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.insured_type_mother_age.invalid && (formQuoteDetails.controls.insured_type_mother_age.dirty || formQuoteDetails.controls.insured_type_mother_age.touched)) && formQuoteDetails.controls.insured_type_mother_age.errors}">
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">Mother Age</label>
+                                                    <select formControlName="insured_type_mother_age" id="motherage"
+                                                        class="w-100">
+                                                        <option value="">Select Age</option>
+                                                        <option *ngFor="let row of mother_agerelation_data"
+                                                            value="{{row.age_value}}">{{row.age}}</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+                                            <div class="field"
+                                                [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.insured_type_mother_height.invalid && (formQuoteDetails.controls.insured_type_mother_height.dirty || formQuoteDetails.controls.insured_type_mother_height.touched)) && formQuoteDetails.controls.insured_type_mother_height.errors}">
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">Mother Height</label>
+                                                    <select formControlName="insured_type_mother_height"
+                                                        id="motherheight" class="w-100">
+                                                        <option value="">Select Height</option>
+                                                        <option *ngFor="let row of member_height" value="{{row.id}}">
+                                                            {{row.height}}</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+                                            <div class="field"
+                                                [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.insured_type_mother_weight.invalid && (formQuoteDetails.controls.insured_type_mother_weight.dirty || formQuoteDetails.controls.insured_type_mother_weight.touched)) && formQuoteDetails.controls.insured_type_mother_weight.errors}">
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">Mother Weight</label>
+                                                    <select formControlName="insured_type_mother_weight"
+                                                        id="motherweight" class="w-100">
+                                                        <option value="">Select Weight</option>
+                                                        <option *ngFor="let row of member_weight" value="{{row.id}}">
+                                                            {{row.to_from}}</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-start" *ngIf="showSelected4">
+                                        <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+                                            <div class="field"
+                                                [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.insured_type_father_age.invalid && (formQuoteDetails.controls.insured_type_father_age.dirty || formQuoteDetails.controls.insured_type_father_age.touched)) && formQuoteDetails.controls.insured_type_father_age.errors}">
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">Father Age</label>
+                                                    <select formControlName="insured_type_father_age" id="fatherage"
+                                                        class="w-100">
+                                                        <option value="">Select Age</option>
+                                                        <option *ngFor="let row of father_agerelation_data"
+                                                            value="{{row.age_value}}">{{row.age}}</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+                                            <div class="field"
+                                                [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.insured_type_father_height.invalid && (formQuoteDetails.controls.insured_type_father_height.dirty || formQuoteDetails.controls.insured_type_father_height.touched)) && formQuoteDetails.controls.insured_type_father_height.errors}">
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">Father Height</label>
+                                                    <select formControlName="insured_type_father_height"
+                                                        id="fatherheight" class="w-100">
+                                                        <option value="">Select Height</option>
+                                                        <option *ngFor="let row of member_height" value="{{row.id}}">
+                                                            {{row.height}}</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+                                            <div class="field"
+                                                [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.insured_type_father_weight.invalid && (formQuoteDetails.controls.insured_type_father_weight.dirty || formQuoteDetails.controls.insured_type_father_weight.touched)) && formQuoteDetails.controls.insured_type_father_weight.errors}">
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">Father Weight</label>
+                                                    <select formControlName="insured_type_father_weight"
+                                                        id="fatherweight" class="w-100">
+                                                        <option value="">Select Weight</option>
+                                                        <option *ngFor="let row of member_weight" value="{{row.id}}">
+                                                            {{row.to_from}}</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-start" *ngIf="showSelected5">
+
+                                        <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+                                            <div class="field"
+                                                [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.insured_type_son_num.invalid && (formQuoteDetails.controls.insured_type_son_num.dirty || formQuoteDetails.controls.insured_type_son_num.touched)) && formQuoteDetails.controls.insured_type_son_num.errors}">
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req"> Number of Son</label>
+                                                    <select formControlName="insured_type_son_num" id="sonweight"
+                                                        class="w-100" (change)="insured_type_son_numCount($event)">
+                                                        <option value="">Select</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngFor="let row of insured_type_son_numarr; let i = index" class="field">
+                                        <div class="row align-items-start">
+                                            <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">Son {{i + 1}} Age</label>
+                                                    <select formControlName="insured_type_son{{ i + 1 }}_age"
+                                                        id="insured_type_son{{ i + 1 }}_age" class="w-100">
+                                                        <option value="">Select Age</option>
+                                                        <option *ngFor="let row of son_agerelation_data"
+                                                            value="{{row.age_value}}">{{row.age}}</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">Son {{i + 1}} Height</label>
+                                                    <select formControlName="insured_type_son{{ i + 1 }}_height"
+                                                        id="insured_type_son{{ i + 1 }}_height" class="w-100">
+                                                        <option value="">Select Height</option>
+                                                        <option *ngFor="let row of member_height" value="{{row.id}}">
+                                                            {{row.height}}</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">Son {{i + 1}} Weight</label>
+                                                    <select formControlName="insured_type_son{{ i + 1 }}_weight"
+                                                        id="insured_type_son{{ i + 1 }}_weight" class="w-100">
+                                                        <option value="">Select Weight</option>
+                                                        <option *ngFor="let row of member_weight" value="{{row.id}}">
+                                                            {{row.to_from}}</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-start" *ngIf="showSelected6">
+
+                                        <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+                                            <div class="field"
+                                                [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.insured_type_daughter_num.invalid && (formQuoteDetails.controls.insured_type_daughter_num.dirty || formQuoteDetails.controls.insured_type_daughter_num.touched)) && formQuoteDetails.controls.insured_type_daughter_num.errors}">
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">Number of doughter</label>
+                                                    <select formControlName="insured_type_daughter_num" id="daughterage"
+                                                        (change)="insured_type_daughter_numCount($event)" class="w-100">
+                                                        <option value="">Select</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngFor="let row of insured_type_daughter_numarr; let i = index" class="field">
+                                        <div class="row align-items-start">
+                                            <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">Daughter {{i + 1}} Age</label>
+                                                    <select formControlName="insured_type_daughter{{ i + 1 }}_age"
+                                                        id="insured_type_daughter{{ i + 1 }}_age" class="w-100">
+                                                        <option value="">Select Age</option>
+                                                        <option *ngFor="let row of daughter_agerelation_data"
+                                                            value="{{row.age_value}}">{{row.age}}</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">daughter {{i + 1}} Height</label>
+                                                    <select formControlName="insured_type_daughter{{ i + 1 }}_height"
+                                                        id="insured_type_daughter{{ i + 1 }}_height" class="w-100">
+                                                        <option value="">Select Height</option>
+                                                        <option *ngFor="let row of member_height" value="{{row.id}}">
+                                                            {{row.height}}</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-xl-3 col-lg-4 col-md-5 col-12">
+
+                                                <div class="form-group form-focus select-focus">
+                                                    <label class="focus-label req">Daughter {{i + 1}} Weight</label>
+                                                    <select formControlName="insured_type_daughter{{ i + 1 }}_weight"
+                                                        id="insured_type_daughter{{ i + 1 }}_weight" class="w-100">
+                                                        <option value="">Select Weight</option>
+                                                        <option *ngFor="let row of member_weight" value="{{row.id}}">
+                                                            {{row.to_from}}</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="healthcheck3" class="row align-items-center justify-content-center">
+                            <div class="col-12">
+                                <div class="card cardshadow blue-border">
+                                    <div class="card-header">
+                                        <h3>Does any member suffered or suffering from any illness/injury/disability?</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-auto col-12">
+                                                <div class="ui form">
+                                                    <div class="inline fields">
+                                                        <div class="field">
+                                                            <div class="ui radio checkbox">
+                                                                <input type="radio" formControlName="membersdisease" id="membersdiseaseYes" value="membersdiseaseYes" (click)="suffering_from_any_illness_yes()">
+                                                                <label for="membersdiseaseYes">Yes</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="field">
+                                                            <div class="ui radio checkbox">
+                                                                <input type="radio" formControlName="membersdisease" id="membersdiseaseNo" value="membersdiseaseNo" (click)="suffering_from_any_illness_no()">
+                                                                <label for="membersdiseaseNo">No</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+
+<!--                                         <div class="col-12">
+                                            <div class="ui form">
+ -->                                                
+ <!-- <div class="row"> -->
+
+
+
+                                        <div [ngClass]="{'d-none': suffering_from_any_illness}" class="row align-items-center">
+                                                <div class="ui form">
+                                                  <div class="row  align-items-center">
+                                                    <div class="col-md-auto col-12">                                                    
+                                                    <div *ngFor="let row of relations_new"
+                                                        class="inline fields col-auto">
+                                                    <div class="inline fields col-auto">
+                                                        <label class="ui label">{{row.name}}</label>                                                        
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox" formControlName="diabetes_{{ row.name }}" id="diabetes">
+                                                                <label for="diabetes">Diabetes</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input type="checkbox" select-other-detail="other_field" formControlName="bloodpressure_{{ row.name }}" id="bloodpressure_{{ row.name }}">
+                                                                <label for="bloodpressure">Blood pressure</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input type="checkbox" select-other-detail="other_field"  formControlName="heartdiseases_{{ row.name }}" id="heartdiseases_{{ row.name }}">
+                                                                <label for="heartdiseases">Heart diseases</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input type="checkbox" select-other-detail="other_field" formControlName="other_{{ row.name }}" id="other_{{ row.name }}">
+                                                                <label for="other">Other conditions</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                   </div>
+                                                   <!--son-->
+                                                    <div class="row align-items-center">
+                                                        <div class="col-md-auto col-12">
+                                                            <div *ngFor="let row of insured_type_son_numarr; let i = index"
+                                                                    class="inline fields col-auto">
+                                                                <div class="inline fields col-auto">
+                                                                    <label class="ui label">son{{i+1}}</label>                                                        
+                                                                    <div class="field">
+                                                                        <div class="ui checkbox">
+                                                                            <input select-other-detail="other_field" type="checkbox" formControlName="diabetes_son{{i+1}}" id="diabetes_son{{i+1}}">
+                                                                            <label for="diabetes">Diabetes</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="field">
+                                                                        <div class="ui checkbox">
+                                                                            <input type="checkbox" select-other-detail="other_field" formControlName="bloodpressure_son{{i+1}}" id="bloodpressure_son{{i+1}}">
+                                                                            <label for="bloodpressure">Blood pressure</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="field">
+                                                                        <div class="ui checkbox">
+                                                                            <input type="checkbox" select-other-detail="other_field"  formControlName="heartdiseases_son{{i+1}}" id="heartdiseases_son{{i+1}}">
+                                                                            <label for="heartdiseases">Heart diseases</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="field">
+                                                                        <div class="ui checkbox">
+                                                                            <input type="checkbox" select-other-detail="other_field" formControlName="other_son{{i+1}}" id="other_son{{i+1}}">
+                                                                            <label for="other">Other conditions</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>  
+                                                                </div>                                                
+                                                            </div>
+                                                        </div>
+                                                        <!--daughter-->
+                                                    <div class="row">
+                                                        <div class="col-md-auto col-12">
+                                                            <div *ngFor="let row of insured_type_daughter_numarr; let i = index"
+                                                                    class="inline fields col-auto">
+                                                                <div class="inline fields col-auto">
+                                                                    <label class="ui label">daughter{{i+1}}</label>                                                        
+                                                                    <div class="field">
+                                                                        <div class="ui checkbox">
+                                                                            <input select-other-detail="other_field" type="checkbox" formControlName="diabetes_daughter{{i+1}}" id="diabetes_daughter{{i+1}}">
+                                                                            <label for="diabetes">Diabetes</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="field">
+                                                                        <div class="ui checkbox">
+                                                                            <input type="checkbox" select-other-detail="other_field" formControlName="bloodpressure_daughter{{i+1}}" id="bloodpressure_daughter{{i+1}}">
+                                                                            <label for="bloodpressure">Blood pressure</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="field">
+                                                                        <div class="ui checkbox">
+                                                                            <input type="checkbox" select-other-detail="other_field"  formControlName="heartdiseases_daughter{{i+1}}" id="heartdiseases_daughter{{i+1}}">
+                                                                            <label for="heartdiseases">Heart diseases</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="field">
+                                                                        <div class="ui checkbox">
+                                                                            <input type="checkbox" select-other-detail="other_field" formControlName="other_daughter{{i+1}}" id="other_daughter{{i+1}}">
+                                                                            <label for="other">Other conditions</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>  
+                                                                </div>                                                
+                                                            </div>
+                                                        </div>                                                        
+                                                    </div>
+                                                   </div>                                                
+                                    </div>
+                                </div>
+                            </div>
+                    </div>   
+
+                    <div id="healthcheck4" class="row align-items-center justify-content-center">
+                        <div class="col-12">
+                            <div class="card cardshadow blue-border">
+                                <div class="card-header">
+                                    <h3>Does any of the members smoke?</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-auto col-12">
+                                            <div class="ui form">
+                                                <div class="inline fields">
+                                                    <div class="field">
+                                                        <div class="ui radio checkbox">
+                                                            <input select-other-detail="other_field" type="radio"
+                                                                formControlName="membersdisease_smoke" id="smokeYes"
+                                                                value="yes" (click)="any_of_the_members_smoke_yes()">
+                                                            <label for="smokeYes">Yes</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="field">
+                                                        <div class="ui radio checkbox">
+                                                            <input select-other-detail="other_field" type="radio"
+                                                                formControlName="membersdisease_smoke" id="smokeNo"
+                                                                value="no" (click)="any_of_the_members_smoke_no()">
+                                                            <label for="smokeNo">No</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div [ngClass]="{'d-none': any_of_the_members_smoke }"
+                                        class="row align-items-center">
+                                        <div class="col-12">
+                                            <div class="ui form">
+                                                <div class="row">
+                                                    <div *ngFor="let row of relations_new"
+                                                        class="inline fields col-auto">
+                                                        <label class="ui label">{{row.name}}</label>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox"
+                                                                    formControlName="smoke_{{ row.name }}"
+                                                                    value="{{ row.name }}" id="{{ row.name }}">
+                                                                <label for="self"></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngFor="let row of insured_type_son_numarr; let i = index"
+                                                        class="inline fields col-auto">
+                                                        <label class="ui label">Son {{i + 1}}</label>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox"
+                                                                    formControlName="smoke_son{{ i + 1 }}"
+                                                                    value="smoke_son{{ i + 1 }}"
+                                                                    id="smoke_son{{ i + 1 }}">
+                                                                <label for="son_{{ i + 1 }}"></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngFor="let row of insured_type_daughter_numarr; let i = index"
+                                                        class="inline fields col-auto">
+                                                        <label class="ui label">Daughter {{i + 1}}</label>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox"
+                                                                    formControlName="smoke_daughter{{ i + 1 }}"
+                                                                    value="smoke_daughter{{ i + 1 }}"
+                                                                    id="smoke_daughter{{ i + 1 }}">
+                                                                <label for="daughter_{{ i + 1 }}"></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="healthcheck5" class="row align-items-center justify-content-center">
+                        <div class="col-12">
+                            <div class="card cardshadow blue-border">
+                                <div class="card-header">
+                                    <h3>Does any of the members tobaco?</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-auto col-12">
+                                            <div class="ui form">
+                                                <div class="inline fields">
+                                                    <div class="field">
+                                                        <div class="ui radio checkbox">
+                                                            <input select-other-detail="other_field" type="radio"
+                                                                formControlName="membersdisease_tobaco" id="tobacoYes"
+                                                                value="tobacoYes"
+                                                                (click)="any_of_the_members_tobaco_yes()">
+                                                            <label for="tobacoYes">Yes</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="field">
+                                                        <div class="ui radio checkbox">
+                                                            <input select-other-detail="other_field" type="radio"
+                                                                formControlName="membersdisease_tobaco" id="tobacoNo"
+                                                                value="tobacoNo"
+                                                                (click)="any_of_the_members_tobaco_no()">
+                                                            <label for="tobacoNo">No</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div [ngClass]="{'d-none': any_of_the_members_tobaco }"
+                                        class="row align-items-center">
+                                        <div class="col-12">
+                                            <div class="ui form">
+                                                <div class="row">
+                                                    <div *ngFor="let row of relations_new"
+                                                        class="inline fields col-auto">
+                                                        <label class="ui label">{{row.name}}</label>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox"
+                                                                    formControlName="tobaco_{{ row.name }}"
+                                                                    value="{{ row.name }}" id="_{{ row.name }}">
+                                                                <label for="self"></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngFor="let row of insured_type_son_numarr; let i = index"
+                                                        class="inline fields col-auto">
+                                                        <label class="ui label">Son {{i + 1}}</label>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox"
+                                                                    formControlName="tobaco_son{{ i + 1 }}"
+                                                                    value="tobaco_son{{ i + 1 }}"
+                                                                    id="tobaco_son{{ i + 1 }}">
+                                                                <label for="tobaco_Son{{ i + 1 }}"></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngFor="let row of insured_type_daughter_numarr; let i = index"
+                                                        class="inline fields col-auto">
+                                                        <label class="ui label">Daughter {{i + 1}}</label>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox"
+                                                                    formControlName="tobaco_daughter{{ i + 1 }}"
+                                                                    value="tobaco_daughter{{ i + 1 }}"
+                                                                    id="tobaco_daughter{{ i + 1 }}">
+                                                                <label for="tobaco_daughter{{ i + 1 }}"></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="healthcheck6" class="row align-items-center justify-content-center">
+                        <div class="col-12">
+                            <div class="card cardshadow blue-border">
+                                <div class="card-header">
+                                    <h3>Does any of the members consume alcohol?</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-auto col-12">
+                                            <div class="ui form">
+                                                <div class="inline fields">
+                                                    <div class="field">
+                                                        <div class="ui radio checkbox">
+                                                            <input select-other-detail="other_field" type="radio"
+                                                                formControlName="alcohol" id="alcoholYes"
+                                                                value="alcoholYes"
+                                                                (click)="any_of_the_members_consume_alcohol_yes()">
+                                                            <label for="alcoholYes">Yes</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="field">
+                                                        <div class="ui radio checkbox">
+                                                            <input select-other-detail="other_field" type="radio"
+                                                                formControlName="alcohol" id="alcoholNo"
+                                                                value="alcoholNo"
+                                                                (click)="any_of_the_members_consume_alcohol_no()">
+                                                            <label for="alcoholNo">No</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div [ngClass]="{'d-none': any_of_the_members_consume_alcohol }"
+                                        class="row align-items-center">
+                                        <div class="col-12">
+                                            <div class="ui form">
+                                                <div class="row">
+                                                    <div *ngFor="let row of relations_new" class="inline fields col-12">
+                                                        <label class="ui label">{{row.name}}</label>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox"
+                                                                    value="selfliquor"
+                                                                    formControlName="liquor_{{ row.name }}" id="liquor">
+                                                                <label for="liquor">Liquor</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox"
+                                                                    value="selfwine"
+                                                                    formControlName="wine_{{ row.name }}" id="wine">
+                                                                <label for="wine">Wine</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox"
+                                                                    value="selfbeer"
+                                                                    formControlName="beer_{{ row.name }}" id="beer">
+                                                                <label for="beer">Beer</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox"
+                                                                    value="selfotheraddiction"
+                                                                    formControlName="otheraddiction_{{ row.name }}"
+                                                                    id="otheraddiction">
+                                                                <label for="otheraddiction">Any Other
+                                                                    addiction</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="field">
+                                                            <input select-other-detail="other_field" type="text"
+                                                                formControlName="otheraddiction_remark_{{ row.name }}"
+                                                                id="otheraddiction_remark_{{ row.name }}"
+                                                                class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div *ngFor="let row of insured_type_son_numarr; let i = index"
+                                                        class="inline fields col-12">
+                                                        <label class="ui label">Son {{ i + 1}}</label>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox"
+                                                                    value="selfliquor_son{{i + 1}}"
+                                                                    formControlName="liquor_son{{ i + 1 }}"
+                                                                    id="liquor_son{{i + 1}}">
+                                                                <label for="liquor_son{{i + 1}}">Liquor</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox"
+                                                                    value="selfwine_son{{i + 1}}"
+                                                                    formControlName="wine_son{{ i + 1 }}" id="wine">
+                                                                <label for="wine_son{{ i + 1 }}">Wine</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox"
+                                                                    value="selfbeer_son{{i + 1}}"
+                                                                    formControlName="beer_son{{ i + 1 }}" id="beer">
+                                                                <label for="beer_son{{ i + 1 }}">Beer</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox"
+                                                                    value="selfotheraddiction_son{{i + 1}}"
+                                                                    formControlName="otheraddiction_son{{i + 1}}"
+                                                                    id="otheraddiction">
+                                                                <label for="otheraddiction_son{{i + 1}}">Any Other
+                                                                    addiction</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="field">
+                                                            <input select-other-detail="other_field" type="text"
+                                                                formControlName="otheraddiction_remark_son{{ i + 1 }}"
+                                                                id="otheraddiction_remark_son{{ i + 1 }}"
+                                                                class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div *ngFor="let row of insured_type_daughter_numarr; let i = index"
+                                                        class="inline fields col-12">
+                                                        <label class="ui label">daughter {{ i + 1}}</label>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox"
+                                                                    value="selfliquor_daughter{{i + 1}}"
+                                                                    formControlName="liquor_daughter{{ i + 1 }}"
+                                                                    id="liquor_daughter{{i + 1}}">
+                                                                <label for="liquor_daughter{{i + 1}}">Liquor</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox"
+                                                                    value="selfwine_daughter_{{i + 1}}"
+                                                                    formControlName="wine_daughter{{ i + 1 }}"
+                                                                    id="wine">
+                                                                <label for="wine_daughter_{{ i + 1 }}">Wine</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox"
+                                                                    value="selfbeer_daughter_{{i + 1}}"
+                                                                    formControlName="beer_daughter{{ i + 1 }}"
+                                                                    id="beer">
+                                                                <label for="beer_daughter_{{ i + 1 }}">Beer</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="field">
+                                                            <div class="ui checkbox">
+                                                                <input select-other-detail="other_field" type="checkbox"
+                                                                    value="selfotheraddiction_daughter_{{i + 1}}"
+                                                                    formControlName="otheraddiction_daughter{{i + 1}}"
+                                                                    id="otheraddiction">
+                                                                <label for="otheraddiction_daughter{{i + 1}}">Any
+                                                                    Other addiction</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="field">
+                                                            <input select-other-detail="other_field" type="text"
+                                                                formControlName="otheraddiction_remark_daughter{{ i + 1 }}"
+                                                                id="otheraddiction_remark_daughter{{ i + 1 }}"
+                                                                class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="healthcheck7" class="row align-items-center justify-content-center">
+                        <div class="col-12">
+                            <div class="card cardshadow blue-border">
+                                <div class="card-header">
+                                    <h3>What is your pincode?</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="ui form">
+                                        <div class="row align-items-center">
+                                            <div class="col-lg-3 col-md-4 col-12">
+                                                <div class="field"
+                                                    [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.pincode.invalid && (formQuoteDetails.controls.pincode.dirty || formQuoteDetails.controls.pincode.touched)) && formQuoteDetails.controls.pincode.errors}">
+                                                    <div class="form-group form-focus mb-0"
+                                                        [ngClass]="{'focused': formQuoteDetails.controls.pincode.value}">
+                                                        <input  select-other-detail="other_field" type="text"
+                                                            class="form-control floating" maxlength="6" formControlName="pincode">
+                                                            <!--(keyup)="changeOwnerPincode($event)"-->
+                                                        <label class="focus-label req">Your PIN Code</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-9 col-md-8 col-12">
+                                                <p>Health insurance premium might differ based on your location of
+                                                    residence.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="healthcheck8" class="row align-items-center justify-content-center">
+                        <div class="col-12">
+                            <div class="card cardshadow blue-border">
+                                <div class="card-header">
+                                    <h3>What is your Sum Insured and Tenure?</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="ui form">
+                                        <div class="row align-items-center">
+                                            <div class="col-lg-3 col-md-4 col-12">
+                                                <div class="field"
+                                                    [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.selected_suminsured.invalid && (formQuoteDetails.controls.selected_suminsured.dirty || formQuoteDetails.controls.selected_suminsured.touched)) && formQuoteDetails.controls.selected_suminsured.errors}">
+                                                    <div class="form-group form-focus select-focus">
+                                                        <label class="focus-label req">Sum Insured</label>
+                                                        <select select-other-detail="other_field"
+                                                            class="ui search dropdown"
+                                                            formControlName="selected_suminsured">
+                                                            <option value="" selected="selected">Select Sum Insured
+                                                            </option>
+                                                            <option *ngFor="let row of suminsured"
+                                                                value="{{row.amount}}">
+                                                                {{row.label}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-9 col-md-8 col-12">
+                                                <div class="field"
+                                                    [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.tenure.invalid && (formQuoteDetails.controls.tenure.dirty || formQuoteDetails.controls.tenure.touched)) && formQuoteDetails.controls.tenure.errors}">
+                                                    <div class="ui form">
+                                                        <div class="inline fields">
+                                                            <label class="ui label req">Tenure</label>
+                                                            <div *ngFor="let row of tenures" class="field">
+                                                                <div class="ui radio checkbox">
+                                                                    <input select-other-detail="other_field"
+                                                                        type="radio" formControlName="tenure"
+                                                                        id="tenure{{row.id}}" value="{{row.id}}">
+                                                                    <label
+                                                                        for="tenure{{row.id}}">{{row.tenure_name}}</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div id="healthcheck9" class="row align-items-center justify-content-center" *ngIf="showTopup">
+                        <div class="col-12">
+                            <div class="card cardshadow blue-border">
+                                <div class="card-header">
+                                    <h3>Select Deductible</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="ui form">
+                                        <div class="row align-items-center">
+                                            <div class="col-lg-3 col-md-4 col-12">
+                                                <div class="field"
+                                                    [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.selected_suminsured.invalid && (formQuoteDetails.controls.selected_suminsured.dirty || formQuoteDetails.controls.selected_suminsured.touched)) && formQuoteDetails.controls.selected_suminsured.errors}">
+                                                    <div class="form-group form-focus select-focus">
+                                                        <label class="focus-label req">Deductible</label>
+                                                        <select select-other-detail="other_field"
+                                                            class="ui search dropdown"
+                                                            formControlName="selected_deductible">
+                                                            <option value="" selected="selected">Select Deductible
+                                                            </option>
+                                                            <option *ngFor="let row of deductible"
+                                                                value="{{row.amount}}">
+                                                                {{row.label}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+ 
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-12 text-center">
+                            <button class="btn btn-custom green quotebtn" type="submit"> Get Quote </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+<app-loader [loaderActive]="loaderActive"></app-loader>

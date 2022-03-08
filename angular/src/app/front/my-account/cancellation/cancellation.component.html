@@ -1,0 +1,510 @@
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content container-fluid">
+        <app-tickers></app-tickers>
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Policy Cancellation</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="['/my-account/dashboard']" href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Policy Cancellation</li>
+                    </ul>
+                </div>
+
+                <div [ngClass]="{'d-none': div_show_cancellation_new }" class="col-md-4 float-right ml-auto dashboard-search">
+                    <form [formGroup]="formchFilterDetails" (ngSubmit)="submitFormFilterDetails()">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Enter Policy Number,Chassis No, Engine No" formControlName="policy_number">
+                            <div class="input-group-append">
+                                <button class="btn btn-custom blue" type="submit"><i class="fa fa-search"></i> Search</button>
+                            </div>
+                        </div>
+                        <div *ngIf="submittedSearch && formchFilterDetails.controls.policy_number.errors">
+                            <small *ngIf="submittedSearch && formchFilterDetails.controls.policy_number.errors" class="text-danger">
+                                Policy Enter Valid Policy Number,Chassis No or Engine No.
+                            </small>
+                            <!-- <small *ngIf="submittedSearch && formchFilterDetails.controls.policy_number.errors.cannotContainSpace" class="text-danger">
+                                Policy number could not contain space.
+                            </small>
+                            <small *ngIf="submittedSearch && formchFilterDetails.controls.policy_number.errors.cannotContainZero" class="text-danger">
+                                Policy number could not contain only zeros.
+                            </small> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" [ngClass]="{'d-none': div_show_cancellation_status }">
+            <div class="col-md-12">
+                <div class="card shadowbox">
+                    <div class="card-body pb-0">
+                        <form class="form-horizontal" [formGroup]="formRecodEdit">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-3">
+                                    <div class="form-group">
+                                        <label>Policy/Regi/Engine/Chassis No:</label>
+                                        <input type="text"  formControlName="filter_policy_no" class="form-control" placeholder="Policy/Registration/Engine/Chassis Number" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-3">
+                                    <div class="form-group">
+                                        <label>From Date:</label>
+                                        <div class="cal-icon">
+                                            <input select-other-detail="other_field" (click)="e.toggle()" class="form-control" placeholder="yyyy-mm-dd" formControlName="policy_from" [(ngModel)]="date_picker_policy_from" ngbDatepicker #e="ngbDatepicker" placeholder="yyyy-mm-dd" autocomplete="off"
+                                                readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-3">
+                                    <div class="form-group">
+                                        <label>To Date:</label>
+                                        <div class="cal-icon">
+                                            <input select-other-detail="other_field" (click)="f.toggle()" class="form-control" placeholder="yyyy-mm-dd" formControlName="policy_to" [(ngModel)]="date_picker_policy_to" ngbDatepicker #f="ngbDatepicker" placeholder="yyyy-mm-dd" autocomplete="off" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4">
+                                    <div class="form-group">
+                                        <label>Insurance Name :</label>
+                                        <ng-select placeholder="Select IC" (clear)="clearValue('insurance_name',$event)" (change)="changeSelectBox('insurance_name',$event)" [(ngModel)]="selectedInsurance_name" [ngModelOptions]="{standalone: true}">
+                                            <ng-option *ngFor="let row of icList" [value]="row.id">{{row.code}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4">
+                                    <div class="form-group">
+                                        <label>Product Type :</label>
+                                        <ng-select placeholder="Select Product Type" (clear)="clearValue('product_name',$event)" (change)="changeSelectBox('product_name',$event)" [(ngModel)]="selectedProduct_name" [ngModelOptions]="{standalone: true}">
+                                            <ng-option *ngFor="let row of productList" [value]="row.product_type_id">{{row.label}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4">
+                                    <div class="form-group">
+                                        <label>Cancellation Type :</label>
+                                        <ng-select placeholder="Select Cancellation Type" (clear)="clearValue('cancellation_type',$event)" (change)="changeSelectBox('cancellation_type',$event)" [(ngModel)]="selectedCancellation_type" [ngModelOptions]="{standalone: true}">
+                                            <ng-option *ngFor="let row of cancellationTypeList" [value]="row.policy_cancellation_reason_id">{{row.lable}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="d-block">&nbsp;</label>
+                                    <button (click)="submitFormFilter()" type="submit" class="btn btn-custom green w-43" title="Search"><i class="fa fa-search"></i></button> &nbsp;
+                                </div>
+                                <div>
+                                    <label class="d-block">&nbsp;</label>
+                                    <button type="button" (click)="resetFilterForm()" class="btn btn-custom yellow w-43" title="Reset"><i class="fa fa-refresh"></i></button>&nbsp;
+                                </div>
+                                <div>
+                                    <label class="d-block">&nbsp;</label>
+                                    <button type="button" (click)="exportDataForm()" class="btn btn-custom blue w-43" title="Export"><i class="fa fa-download"></i></button>&nbsp;
+                                </div>
+                                <div class="col-lg-2 col-md-3">
+                                    <!-- <button (click)="exportAsXLSX()" class="btn btn-custom green w-43 pull-left" title="Export To Excel">Export <i class="fa fa-download"></i></button> -->
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadowbox">
+                    <div class="card-header">
+                        <div class="form-group ui form mb-0">
+                            <div class="row align-items-center justify-content-center inline fields mb-0">
+
+                                <div *ngIf="loginUserType != 5" class="col-auto px-4 field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="searchbreakinbystatus" id="searchbreakinbystatus-new" value="searchbreakinbystatus-new" checked="" (click)="showHideNewCancellation();">
+                                        <label class="mb-0" for="searchbreakinbystatus-new">New</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-auto px-4 field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="searchbreakinbystatus" id="searchbreakinbystatus-pending" value="searchbreakinbystatus-pending" checked="" (click)="showHideStatusCancellation(1);">
+                                        <label class="mb-0" for="searchbreakinbystatus-pending">Pending</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-auto px-4 field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="searchbreakinbystatus" id="searchbreakinbystatus-rejected" value="searchbreakinbystatus-rejected" (click)="showHideStatusCancellation(3);">
+                                        <label class="mb-0" for="searchbreakinbystatus-rejected">Rejected</label>
+                                    </div>
+                                </div>
+                                <div class="col-auto px-4 field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="searchbreakinbystatus" id="searchbreakinbystatus-referback" value="searchbreakinbystatus-referback" (click)="showHideStatusCancellation(4);">
+                                        <label class="mb-0" for="searchbreakinbystatus-referback">Referback</label>
+                                    </div>
+                                </div>
+                                <div class="col-auto px-4 field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="searchbreakinbystatus" id="searchbreakinbystatus-approved" value="searchbreakinbystatus-approved" (click)="showHideStatusCancellation(2);">
+                                        <label class="mb-0" for="searchbreakinbystatus-approved">Approved</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body" [ngClass]="{'d-none': div_show_cancellation_new }">
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered custom-table srn datatable w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Sr.No</th>
+                                        <th>Policy Number</th>
+                                        <th>Product Type</th>
+                                        <th>Reg. No.</th>
+                                        <th>Insured Name</th>
+                                        <th>Insured Mobile No</th>
+                                        <th>Ins. Company</th>
+                                        <th>Final premium(inc. GST)</th>
+                                        <th>Created Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="result">
+                                    <tr *ngFor="let row of result let i = index">
+                                        <td>1.</td>
+                                        <td>{{row.policy_no}}</td>
+                                        <td>{{row.product_type}}</td>
+                                        <td>{{row.reg_no}}</td>
+                                        <td>{{row.proposer_first_name}} {{row.proposer_middle_name}} {{row.proposer_last_name}}</td>
+                                        <td>+91 {{row.proposer_mobile_no}}</td>
+                                        <td>{{row.ic_name}}</td>
+                                        <td>Rs. {{row.gross_premium}}</td>
+                                        <td>{{row.policy_created_at}}</td>
+                                        <td class="action-btns" *ngIf="show_cancel_button">
+                                            <a class="btn btn-custom btn-sm green" href="javascript:void(0);" (click)="policyCancellation(row)"> Request To Cancel </a>
+                                        </td>
+                                        <td *ngIf="endorsement_status">
+                                            <span class='text-danger'><b>Endorsement is in process, please wait until endorsement process completed</b></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card-body" [ngClass]="{'d-none': div_show_cancellation_status }">
+                        <div class="table-responsive">
+                            <table datatable *ngIf="dtRendered" [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn datatable w-100"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /Page Content -->
+    <div id="bank_details" class="modal custom-modal fade" role="dialog" [ngStyle]="{'display':displayBankDetail}">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ popupTitle }}</h5>
+                    <button #closebutton type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content">
+
+                        <div class="tab-pane show active" id="sendmessage-tab3">
+                            <form [formGroup]="formCustomerBankDetail" method="post" (ngSubmit)="submitformCustomerBankDetail()">
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <div *ngIf="success_message" class="alert alert-success" role="alert">
+                                                {{ success_message }}
+                                            </div>
+
+                                            <div *ngIf="error_message" class="alert alert-danger" role="alert">
+                                                {{ error_message }}
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-sm">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="align-middle">Payment Refund To</td>
+                                                            <td>
+                                                                {{ payment_refund_to | uppercase }}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-middle">Payee Account Holder Name</td>
+                                                            <td>
+                                                                <input formControlName="refund_payee_account_name" type="text" class="form-control" maxlength="50">
+                                                                <div class="error" *ngIf="submittedCustomerBankDetail && formCustomerBankDetail.controls.refund_payee_account_name.errors">
+                                                                    <div *ngIf="submittedCustomerBankDetail && formCustomerBankDetail.controls.refund_payee_account_name.errors.required">
+                                                                        Please enter payee acoount holder name
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-middle">Account Number</td>
+                                                            <td>
+                                                                <input maxlength="21" formControlName="refund_payee_account_no" type="text" class="form-control">
+                                                                <div class="error" *ngIf="submittedCustomerBankDetail && formCustomerBankDetail.controls.refund_payee_account_no.errors">
+                                                                    <!--div *ngIf="submittedCustomerBankDetail && formCustomerBankDetail.controls.refund_payee_account_no.errors.required">
+                                                                        Please enter Account No
+                                                                    </div-->
+                                                                    <div *ngIf="submittedCustomerBankDetail && formCustomerBankDetail.controls.refund_payee_account_no.errors">
+                                                                        Please enter valid acoount number
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-middle">Bank IFSC Code</td>
+                                                            <td>
+                                                                <input formControlName="refund_payee_bank_ifsc_code" type="text" #input [value]="input.value.toUpperCase()" class="form-control" (change)="getBankDetails($event.target.value)" (keyup)="getBankDetails($event.target.value)" maxlength="20">
+                                                                <div class="error" *ngIf="submittedCustomerBankDetail && formCustomerBankDetail.controls.refund_payee_bank_ifsc_code.errors">
+                                                                    <!--div *ngIf="submittedCustomerBankDetail && formCustomerBankDetail.controls.ifsc_code.errors.required">
+                                                                        Please enter IFSC Code
+                                                                    </div-->
+                                                                    <div *ngIf="submittedCustomerBankDetail && formCustomerBankDetail.controls.refund_payee_bank_ifsc_code.errors">
+                                                                        Please enter valid IFSC code
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-middle">Bank Name</td>
+                                                            <td>
+                                                                <!--select class="form-control" formControlName="bank_id" (change)="setBankId($event.target.value)">
+                                                                  <option value="">Select Bank</option>
+                                                                  <option value="{{ row.bank_id }}" *ngFor="let row of bankData">{{ row.name }}</option>
+                                                                </select-->
+                                                                <input readonly formControlName="refund_payee_bank_name" type="text" class="form-control">
+                                                                <div class="error" *ngIf="submittedCustomerBankDetail && formCustomerBankDetail.controls.refund_payee_bank_name.errors">
+                                                                    <div *ngIf="submittedCustomerBankDetail && formCustomerBankDetail.controls.refund_payee_bank_name.errors.required">
+                                                                        Bank Name is required.
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-middle">Bank Branch</td>
+                                                            <td>
+                                                                <input readonly formControlName="refund_payee_bank_branch" type="text" class="form-control">
+                                                                <div class="error" *ngIf="submittedCustomerBankDetail && formCustomerBankDetail.controls.refund_payee_bank_branch.errors">
+                                                                    <div *ngIf="submittedCustomerBankDetail && formCustomerBankDetail.controls.refund_payee_bank_branch.errors.required">
+                                                                        Bank Branch is required.
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <input formControlName="cancellation_id" type="hidden" class="form-control">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <button type="submit" class="btn btn btn-custom green submit-btn">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="viewPaymentDetailsModal" class="modal custom-modal fade" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ popupPyDetailsTitle }}</h4>
+                    <button #closebutton (click)="closePopup()" type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card shadowbox">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered custom-table srn" style="text-align: center;">
+                                            <tbody>
+                                                <tr>
+                                                    <th style="width:30%!important;">Payment Refund To</th>
+                                                    <td style="width:70%!important;">{{ detail_refund | uppercase }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:30%!important;">Account No</th>
+                                                    <td style="width:70%!important;">{{ detail_account_no }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:30%!important;">Account Holder Name</th>
+                                                    <td style="width:70%!important;">{{ detail_account_name | uppercase }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:30%!important;">Bank Name</th>
+                                                    <td style="width:70%!important;">{{ detail_bank_name | uppercase }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:30%!important;">Branch Name</th>
+                                                    <td style="width:70%!important;">{{ detail_bank_branch | uppercase }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:30%!important;">Bank IFSC Code</th>
+                                                    <td style="width:70%!important;">{{ detail_bank_ifsc_code | uppercase }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:30%!important;">Refund Amount</th>
+                                                    <td style="width:70%!important;">{{ detail_refund_amount }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="payment_done_status" class="modal custom-modal fade" role="dialog" [ngStyle]="{'display':display}">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Payments Paid Info</h5>
+                    <button #closebutton type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content">
+
+                        <div class="tab-pane show active" id="sendmessage-tab3">
+
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-sm">
+                                                <tbody>
+                                                    <tr>
+                                                        <th colspan="2" class="align-middle">REFUND PAYEE DETAILS</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="align-middle">Payment To</th>
+                                                        <td>
+                                                            {{ payment_refund_to_paid | uppercase }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="align-middle">Account Holder Name</th>
+                                                        <td>
+                                                            {{ payment_refund_payee_account_name_paid | uppercase }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="align-middle">Account Number</th>
+                                                        <td>
+                                                            {{ payment_refund_payee_account_no_paid }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="align-middle">IFSC Code</th>
+                                                        <td>
+                                                            {{ payment_refund_payee_bank_ifsc_code_paid | uppercase }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="align-middle">Bank Name</th>
+                                                        <td>
+                                                            {{ payment_refund_payee_bank_name_paid | uppercase }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="align-middle">Bank Branch</th>
+                                                        <td>
+                                                            {{ payment_refund_payee_bank_branch_paid | uppercase }}
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-sm">
+                                                <tbody>
+                                                    <tr>
+                                                        <th colspan="2" class="align-middle">PAYMENT DETAILS</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="align-middle">Transaction/Cheque Number</th>
+                                                        <td>
+                                                            {{ transaction_no_paid }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="align-middle">Remark</th>
+                                                        <td>
+                                                            {{ payment_remark_paid }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="align-middle">Refrence Document</th>
+                                                        <td>
+                                                            <a href="{{public_path}}cancel_policy/payment_doc/{{payment_doc_paid}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            <div class="uploaded-img">
+                                                                <img src="{{public_path}}cancel_policy/payment_doc/{{payment_doc_paid}}" alt="">
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="align-middle">Date</th>
+                                                        <td>
+                                                            {{ payment_date_paid }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="align-middle">Updated By</th>
+                                                        <td>
+                                                            {{ payment_status_update_by }}
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

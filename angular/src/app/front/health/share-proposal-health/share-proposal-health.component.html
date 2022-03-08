@@ -1,0 +1,821 @@
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content">
+        <section class="py-0">                  
+            <div class="container">
+                <div class="row">  
+                    <div class="container">
+                        <div class="row mb-4 align-items-center justify-content-center">
+                            <div class="col-12 text-center text-md-left">
+                                <img src="assets/front/img/hib-logo.png" alt="" width="160">
+                            </div>
+                        </div>
+                    </div>
+                     <div class="col-12 proposal-page mt-3">
+                        <div class="border proposal-infobar shadowbox py-2">
+                            <div class="container">
+                                <div class="row py-2">
+                                    <div class="col-lg-2 col-md-3 col-sm-4 col-12  proposaldetail-box">
+                                        <div class="selectedinsurer">
+                                            <img src="assets/front/img/partners-logos/{{policylogo}}" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-10 col-md-9 col-sm-8 col-12 proposaldetail-box">
+                                        <h3 class="mb-2">{{plan_comp_code}}</h3>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-12 proposaldetail-box" style="float: left;">    
+                                            <h4 class="mb-0">Policy Name: {{policyList.plan_name}} Policy</h4>
+                                            <h5 class="mb-0">Policy Start: {{proposal_start_date}}</h5>
+                                            <h5 class="mb-0">Policy End: {{proposal_end_date}}</h5>
+                                        </div> 
+                                        <div class="col-lg-5 col-md-5 col-sm-5 col-12 proposaldetail-box" style="float: left;">  
+                                            <h5 class="mb-0">Sum Insured: <i class="fa fa-inr"></i> {{policyList.sum_insured}}</h5>  
+                                            <h5 class="mb-0">Basic Premium : {{policyList.BasicPremium}}</h5>
+                                            <h5 class="mb-0">Service Tax: {{policyList.ServiceTax}}</h5>
+                                            <h5 class="mb-0">Gross Premium: <i class="fa fa-inr"></i> {{policyList.FinalPremium}}.00</h5>
+                                        </div>  
+                                    </div>
+                                                                                                                
+                                </div>
+                            </div>
+                        </div>
+                        <div class="customerdetailform-stepbox">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card shadowbox completeddetailsbox filled-ownerdetails">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <h3>Owner Details</h3>
+                                                    <ul class="filledinfo">
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-3 col-sm-6 col-12" *ngIf="is_error =='0'">
+                                                                    <div class="title">Proposal Number</div>
+                                                                    <div class="text">{{proposalno}}</div>
+                                                                </div>
+                                                                <div class="col-md-3 col-sm-6 col-12" *ngIf="is_error =='0'">
+                                                                    <div class="title">Proposal Date</div>
+                                                                    <div class="text"> {{proposaldate | date:'dd-MM-yyyy'}}</div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6 col-12" *ngIf="is_error =='1'">
+                                                                    <div class="title">Proposal Message</div>
+                                                                    <div class="text"> {{error_message}}</div>
+                                                                </div>
+                                                                <div class="col-md-3 col-sm-6 col-12">
+                                                                    <div class="title">Period Of Insurance</div>
+                                                                    <div class="text">Start Date: {{proposal_start_date}} <br> End Date: {{proposal_end_date}}</div>
+                                                                </div>
+                                                                <div class="col-md-3 col-sm-6 col-12">
+                                                                    <div class="title">Tenure</div>
+                                                                    <div class="text">{{tenure}} Year</div>
+                                                                </div>                                                                  
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-3 col-sm-6 col-12">
+                                                                    <div class="title">Name (Age)</div>
+                                                                    <div class="text">{{customerDetails.buyer_salutation}} {{customerDetails.buyer_first_name}} {{customerDetails.buyer_middle_name}} {{customerDetails.buyer_last_name}} ({{userQuotedetails.insured_type_self_age}})</div>
+                                                                </div>
+                                                                <div class="col-md-3 col-sm-6 col-12">
+                                                                    <div class="title">Email</div>
+                                                                    <div class="text">{{customerDetails.buyer_email_id}}</div>
+                                                                </div>
+                                                                <div class="col-md-3 col-sm-6 col-12">
+                                                                    <div class="title">Gender</div>
+                                                                    <div class="text">{{customerDetails.buyer_gender}}</div>
+                                                                </div>
+                                                                <div class="col-md-3 col-sm-6 col-12">
+                                                                    <div class="title">Phone Number</div>
+                                                                    <div class="text">{{customerDetails.buyer_mobile}}</div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-12">
+                                                                    <div class="title">Proposer Address</div>
+                                                                    <div class="text">{{customerDetails.buyer_address1}},{{customerDetails.buyer_address2}}, {{customerDetails.buyer_address3}},, {{customer_dist}}, {{customer_city}}-{{customerDetails.buyer_pincode}}, {{customer_state}} (India)</div>
+                                                                </div>
+                                                                <div class="col-md-3 col-sm-6 col-12">
+                                                                    <div class="title">Proposer Aadhaar Number</div>
+                                                                    <div class="text">{{customerDetails.buyer_adhar}}</div>
+                                                                </div>
+                                                                <div class="col-md-3 col-sm-6 col-12">
+                                                                    <div class="title">Proposer Pin Number</div>
+                                                                    <div class="text">{{customerDetails.buyer_pan}}</div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="row">
+                                                                
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="card shadowbox completeddetailsbox filled-vehicledetails">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12 proposal-premium">
+                                                    <h3>Member Details</h3>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>No.</th>
+                                                                    <th>Member Name</th>
+                                                                    <th>Member DOB</th>
+                                                                    <th>Member Relationship</th>
+                                                                    <th>Height (CM)</th>
+                                                                    <th>Weight (KG)</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngIf="userQuotedetails.insured_type_self =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberself_salutation}} {{customerDetails.memberself_firstname}} {{customerDetails.memberself_middlename}} {{customerDetails.memberself_lastname}}</td>
+                                                                    <td>{{customerDetails.memberself_dob}}</td>
+                                                                    <td>Self</td>
+                                                                    <td>{{userQuotedetails.insured_type_self_height}}</td>
+                                                                    <td>{{userQuotedetails.insured_type_self_weight}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_spouse =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberspouse_salutation}} {{customerDetails.memberspouse_firstname}} {{customerDetails.memberspouse_middlename}} {{customerDetails.memberspouse_lastname}}</td>
+                                                                    <td>{{customerDetails.memberspouse_dob}}</td>
+                                                                    <td>Spouse</td>
+                                                                    <td>{{userQuotedetails.insured_type_spouse_height}}</td>
+                                                                    <td>{{userQuotedetails.insured_type_spouse_weight}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_father =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberfather_salutation}} {{customerDetails.memberfather_firstname}} {{customerDetails.memberfather_middlename}} {{customerDetails.memberfather_lastname}}</td>
+                                                                    <td>{{customerDetails.memberfather_dob}}</td>
+                                                                    <td>Father</td>
+                                                                    <td>{{userQuotedetails.insured_type_father_height}}</td>
+                                                                    <td>{{userQuotedetails.insured_type_father_weight}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_mother =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.membermother_salutation}} {{customerDetails.membermother_firstname}} {{customerDetails.membermother_middlename}} {{customerDetails.membermother_lastname}}</td>
+                                                                    <td>{{customerDetails.membermother_dob}}</td>
+                                                                    <td>Mother</td>
+                                                                    <td>{{userQuotedetails.insured_type_mother_height}}</td>
+                                                                    <td>{{userQuotedetails.insured_type_mother_weight}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_son1 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberson1_salutation}} {{customerDetails.memberson1_firstname}} {{customerDetails.memberson1_middlename}} {{customerDetails.memberson1_lastname}}</td>
+                                                                    <td>{{customerDetails.memberson1_dob}}</td>
+                                                                    <td>Son1</td>
+                                                                    <td>{{userQuotedetails.insured_type_son1_height}}</td>
+                                                                    <td>{{userQuotedetails.insured_type_son1_weight}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_son2 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberson2_salutation}} {{customerDetails.memberson2_firstname}} {{customerDetails.memberson2_middlename}} {{customerDetails.memberson2_lastname}}</td>
+                                                                    <td>{{customerDetails.memberson2_dob}}</td>
+                                                                    <td>Son2</td>
+                                                                    <td>{{userQuotedetails.insured_type_son2_height}}</td>
+                                                                    <td>{{userQuotedetails.insured_type_son2_weight}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_son3 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberson3_salutation}} {{customerDetails.memberson3_firstname}} {{customerDetails.memberson3_middlename}} {{customerDetails.memberson3_lastname}}</td>
+                                                                    <td>{{customerDetails.memberson3_dob}}</td>
+                                                                    <td>Son3</td>
+                                                                    <td>{{userQuotedetails.insured_type_son3_height}}</td>
+                                                                    <td>{{userQuotedetails.insured_type_son3_weight}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_son4 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberson4_salutation}} {{customerDetails.memberson4_firstname}} {{customerDetails.memberson4_middlename}} {{customerDetails.memberson4_lastname}}</td>
+                                                                    <td>{{customerDetails.memberson4_dob}}</td>
+                                                                    <td>Son4</td>
+                                                                    <td>{{userQuotedetails.insured_type_son4_height}}</td>
+                                                                    <td>{{userQuotedetails.insured_type_son4_weight}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_daughter1 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberdaughter1_salutation}} {{customerDetails.memberdaughter1_firstname}} {{customerDetails.memberdaughter1_middlename}} {{customerDetails.memberdaughter1_lastname}}</td>
+                                                                    <td>{{customerDetails.memberdaughter1_dob}}</td>
+                                                                    <td>Daughter1</td>
+                                                                    <td>{{userQuotedetails.insured_type_daughter1_height}}</td>
+                                                                    <td>{{userQuotedetails.insured_type_daughter1_weight}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_daughter2 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberdaughter2_salutation}} {{customerDetails.memberdaughter2_firstname}} {{customerDetails.memberdaughter2_middlename}} {{customerDetails.memberdaughter2_lastname}}</td>
+                                                                    <td>{{customerDetails.memberdaughter2_dob}}</td>
+                                                                    <td>Daughter2</td>
+                                                                    <td>{{userQuotedetails.insured_type_daughter2_height}}</td>
+                                                                    <td>{{userQuotedetails.insured_type_daughter2_weight}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_daughter3 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberdaughter3_salutation}} {{customerDetails.memberdaughter3_firstname}} {{customerDetails.memberdaughter3_middlename}} {{customerDetails.memberdaughter3_lastname}}</td>
+                                                                    <td>{{customerDetails.memberdaughter3_dob}}</td>
+                                                                    <td>Daughter3</td>
+                                                                    <td>{{userQuotedetails.insured_type_daughter3_height}}</td>
+                                                                    <td>{{userQuotedetails.insured_type_daughter3_weight}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_daughter4 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberdaughter4_salutation}} {{customerDetails.memberdaughter4_firstname}} {{customerDetails.memberdaughter4_middlename}} {{customerDetails.memberdaughter4_lastname}}</td>
+                                                                    <td>{{customerDetails.memberdaughter4_dob}}</td>
+                                                                    <td>Daughter4</td>
+                                                                    <td>{{userQuotedetails.insured_type_daughter4_height}}</td>
+                                                                    <td>{{userQuotedetails.insured_type_daughter4_weight}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card shadowbox completeddetailsbox filled-vehicledetails">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12 proposal-premium">
+                                                    <h3>Nominee Details</h3>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>No.</th>
+                                                                    <th>Nominee Name</th>
+                                                                    <th>Nominee DOB</th>
+                                                                    <th>Nominee Age</th>
+                                                                    <th>Nominee Marital</th>
+                                                                    <th>Nominee Relationship</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody *ngIf="is_ic_multiple_nominee == '1'">
+                                                                <tr *ngIf="userQuotedetails.insured_type_self =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.nomineeself_salutation}} {{customerDetails.nomineeself_firstname}} {{customerDetails.nomineeself_middlename}} {{customerDetails.nomineeself_lastname}}</td>
+                                                                    <td>{{customerDetails.nomineeself_dob}}</td>
+                                                                    <td>{{customerage.nomineeself_age}}</td>
+                                                                    <td>{{customerDetails.nomineeself_marital}}</td>
+                                                                    <td>{{customerDetails.nomineeself_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_spouse =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.nomineespouse_salutation}} {{customerDetails.nomineespouse_firstname}} {{customerDetails.nomineespouse_middlename}} {{customerDetails.nomineespouse_lastname}}</td>
+                                                                    <td>{{customerDetails.nomineespouse_dob}}</td>
+                                                                    <td>{{customerage.nomineespouse_age}}</td>
+                                                                    <td>{{customerDetails.nomineespouse_marital}}</td>
+                                                                    <td>{{customerDetails.nomineespouse_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_father =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.nomineefather_salutation}} {{customerDetails.nomineefather_firstname}} {{customerDetails.nomineefather_middlename}} {{customerDetails.nominefather_lastname}}</td>
+                                                                    <td>{{customerDetails.nomineefather_dob}}</td>
+                                                                    <td>{{customerage.nomineefather_age}}</td>
+                                                                    <td>{{customerDetails.nomineefather_marital}}</td>
+                                                                    <td>{{customerDetails.nomineefather_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_mother =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.nomineemother_salutation}} {{customerDetails.nomineemother_firstname}} {{customerDetails.nomineemother_middlename}} {{customerDetails.nomineemother_lastname}}</td>
+                                                                    <td>{{customerDetails.nomineemother_dob}}</td>
+                                                                    <td>{{customerage.nomineemother_age}}</td>
+                                                                    <td>{{customerDetails.nomineemother_marital}}</td>
+                                                                    <td>{{customerDetails.nomineemother_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_son1 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.nomineeson1_salutation}} {{customerDetails.nomineeson1_firstname}} {{customerDetails.nomineeson1_middlename}} {{customerDetails.nomineeson1_lastname}}</td>
+                                                                    <td>{{customerDetails.nomineeson1_dob}}</td>
+                                                                    <td>{{customerage.nomineeson1_age}}</td>
+                                                                    <td>{{customerDetails.nomineeson1_marital}}</td>
+                                                                    <td>{{customerDetails.nomineeson1_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_son2 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.nomineeson2_salutation}} {{customerDetails.nomineeson2_firstname}} {{customerDetails.nomineeson2_middlename}} {{customerDetails.nomineeson2_lastname}}</td>
+                                                                    <td>{{customerDetails.nomineeson2_dob}}</td>
+                                                                    <td>{{customerage.nomineeson2_age}}</td>
+                                                                    <td>{{customerDetails.nomineeson2_marital}}</td>
+                                                                    <td>{{customerDetails.nomineeson2_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_son3 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.nomineeson3_salutation}} {{customerDetails.nomineeson3_firstname}} {{customerDetails.nomineeson3_middlename}} {{customerDetails.nomineeson3_lastname}}</td>
+                                                                    <td>{{customerDetails.nomineeson3_dob}}</td>
+                                                                    <td>{{customerage.nomineeson3_age}}</td>
+                                                                    <td>{{customerDetails.nomineeson3_marital}}</td>
+                                                                    <td>{{customerDetails.nomineeson3_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_son4 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.nomineeson4_salutation}} {{customerDetails.nomineeson4_firstname}} {{customerDetails.nomineeson4_middlename}} {{customerDetails.nomineeson4_lastname}}</td>
+                                                                    <td>{{customerDetails.nomineeson4_dob}}</td>
+                                                                    <td>{{customerage.nomineeson4_age}}</td>
+                                                                    <td>{{customerDetails.nomineeson4_marital}}</td>
+                                                                    <td>{{customerDetails.nomineeson4_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_daughter1 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.nomineedaughter1_salutation}} {{customerDetails.nomineedaughter1_firstname}} {{customerDetails.nomineedaughter1_middlename}} {{customerDetails.nomineedaughter1_lastname}}</td>
+                                                                    <td>{{customerDetails.nomineedaughter1_dob}}</td>
+                                                                    <td>{{customerage.nomineedaughter1_age}}</td>
+                                                                    <td>{{customerDetails.nomineedaughter1_marital}}</td>
+                                                                    <td>{{customerDetails.nomineedaughter1_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_daughter2 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.nomineedaughter2_salutation}} {{customerDetails.nomineedaughter2_firstname}} {{customerDetails.nomineedaughter2_middlename}} {{customerDetails.nomineedaughter2_lastname}}</td>
+                                                                    <td>{{customerDetails.nomineedaughter2_dob}}</td>
+                                                                    <td>{{customerage.nomineedaughter2_age}}</td>
+                                                                    <td>{{customerDetails.nomineedaughter2_marital}}</td>
+                                                                    <td>{{customerDetails.nomineedaughter2_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_daughter3 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.nomineedaughter3_salutation}} {{customerDetails.nomineedaughter3_firstname}} {{customerDetails.nomineedaughter3_middlename}} {{customerDetails.nomineedaughter3_lastname}}</td>
+                                                                    <td>{{customerDetails.nomineedaughter3_dob}}</td>
+                                                                    <td>{{customerage.nomineedaughter3_age}}</td>
+                                                                    <td>{{customerDetails.nomineedaughter3_marital}}</td>
+                                                                    <td>{{customerDetails.nomineedaughter3_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_daughter4 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.nomineedaughter4_salutation}} {{customerDetails.nomineedaughter4_firstname}} {{customerDetails.nomineedaughter4_middlename}} {{customerDetails.nomineedaughter4_lastname}}</td>
+                                                                    <td>{{customerDetails.nomineedaughter4_dob}}</td>
+                                                                    <td>{{customerage.nomineedaughter4_age}}</td>
+                                                                    <td>{{customerDetails.nomineedaughter4_marital}}</td>
+                                                                    <td>{{customerDetails.nomineedaughter4_relationship}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                            <tbody *ngIf="is_ic_multiple_nominee == '0'">
+                                                                <tr>
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.nominee_salutation}} {{customerDetails.nominee_firstname}} {{customerDetails.nominee_middlename}} {{customerDetails.nominee_lastname}}</td>
+                                                                    <td>{{customerDetails.nominee_dob}}</td>
+                                                                    <td>{{customerage.nominee_age}}</td>
+                                                                    <td>{{customerDetails.nominee_marital}}</td>
+                                                                    <td>{{customerDetails.nominee_relationship}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card shadowbox completeddetailsbox filled-vehicledetails">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12 proposal-premium">
+                                                    <h3>Appointee Details</h3>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>No.</th>
+                                                                    <th>Appointee Name</th>
+                                                                    <th>Appointee DOB</th>
+                                                                    <th>Appointee Age</th>
+                                                                    <th>Appointee Marital</th>
+                                                                    <th>Appointee Relationship</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody *ngIf="is_ic_multiple_appointee == '1'">
+                                                                <tr *ngIf="userQuotedetails.insured_type_self =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.appointeeself_salutation}} {{customerDetails.appointeeself_firstname}} {{customerDetails.appointeeself_middlename}} {{customerDetails.appointeeself_lastname}}</td>
+                                                                    <td>{{customerDetails.appointeeself_dob}}</td>
+                                                                    <td>{{customerage.appointeeself_age}}</td>
+                                                                    <td>{{customerDetails.appointeeself_marital}}</td>
+                                                                    <td>{{customerDetails.appointeeself_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_spouse =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.appointeespouse_salutation}} {{customerDetails.appointeespouse_firstname}} {{customerDetails.appointeespouse_middlename}} {{customerDetails.appointeespouse_lastname}}</td>
+                                                                    <td>{{customerDetails.appointeespouse_dob}}</td>
+                                                                    <td>{{customerage.appointeespouse_age}}</td>
+                                                                    <td>{{customerDetails.appointeespouse_marital}}</td>
+                                                                    <td>{{customerDetails.appointeespouse_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_father =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.appointeefather_salutation}} {{customerDetails.appointeefather_firstname}} {{customerDetails.appointeefather_middlename}} {{customerDetails.nominefather_lastname}}</td>
+                                                                    <td>{{customerDetails.appointeefather_dob}}</td>
+                                                                    <td>{{customerage.appointeefather_age}}</td>
+                                                                    <td>{{customerDetails.appointeefather_marital}}</td>
+                                                                    <td>{{customerDetails.appointeefather_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_mother =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.appointeemother_salutation}} {{customerDetails.appointeemother_firstname}} {{customerDetails.appointeemother_middlename}} {{customerDetails.appointeemother_lastname}}</td>
+                                                                    <td>{{customerDetails.appointeemother_dob}}</td>
+                                                                    <td>{{customerage.appointeemother_age}}</td>
+                                                                    <td>{{customerDetails.appointeemother_marital}}</td>
+                                                                    <td>{{customerDetails.appointeemother_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_son1 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.appointeeson1_salutation}} {{customerDetails.appointeeson1_firstname}} {{customerDetails.appointeeson1_middlename}} {{customerDetails.appointeeson1_lastname}}</td>
+                                                                    <td>{{customerDetails.appointeeson1_dob}}</td>
+                                                                    <td>{{customerage.appointeeson1_age}}</td>
+                                                                    <td>{{customerDetails.appointeeson1_marital}}</td>
+                                                                    <td>{{customerDetails.appointeeson1_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_son2 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.appointeeson2_salutation}} {{customerDetails.appointeeson2_firstname}} {{customerDetails.appointeeson2_middlename}} {{customerDetails.appointeeson2_lastname}}</td>
+                                                                    <td>{{customerDetails.appointeeson2_dob}}</td>
+                                                                    <td>{{customerage.appointeeson2_age}}</td>
+                                                                    <td>{{customerDetails.appointeeson2_marital}}</td>
+                                                                    <td>{{customerDetails.appointeeson2_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_son3 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.appointeeson3_salutation}} {{customerDetails.appointeeson3_firstname}} {{customerDetails.appointeeson3_middlename}} {{customerDetails.appointeeson3_lastname}}</td>
+                                                                    <td>{{customerDetails.appointeeson3_dob}}</td>
+                                                                    <td>{{customerage.appointeeson3_age}}</td>
+                                                                    <td>{{customerDetails.appointeeson3_marital}}</td>
+                                                                    <td>{{customerDetails.appointeeson3_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_son4 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.appointeeson4_salutation}} {{customerDetails.appointeeson4_firstname}} {{customerDetails.appointeeson4_middlename}} {{customerDetails.appointeeson4_lastname}}</td>
+                                                                    <td>{{customerDetails.appointeeson4_dob}}</td>
+                                                                    <td>{{customerage.appointeeson4_age}}</td>
+                                                                    <td>{{customerDetails.appointeeson4_marital}}</td>
+                                                                    <td>{{customerDetails.appointeeson4_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_daughter1 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.appointeedaughter1_salutation}} {{customerDetails.appointeedaughter1_firstname}} {{customerDetails.appointeedaughter1_middlename}} {{customerDetails.appointeedaughter1_lastname}}</td>
+                                                                    <td>{{customerDetails.appointeedaughter1_dob}}</td>
+                                                                    <td>{{customerage.appointeedaughter1_age}}</td>
+                                                                    <td>{{customerDetails.appointeedaughter1_marital}}</td>
+                                                                    <td>{{customerDetails.appointeedaughter1_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_daughter2 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.appointeedaughter2_salutation}} {{customerDetails.appointeedaughter2_firstname}} {{customerDetails.appointeedaughter2_middlename}} {{customerDetails.appointeedaughter2_lastname}}</td>
+                                                                    <td>{{customerDetails.appointeedaughter2_dob}}</td>
+                                                                    <td>{{customerage.appointeedaughter2_age}}</td>
+                                                                    <td>{{customerDetails.appointeedaughter2_marital}}</td>
+                                                                    <td>{{customerDetails.appointeedaughter2_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_daughter3 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.appointeedaughter3_salutation}} {{customerDetails.appointeedaughter3_firstname}} {{customerDetails.appointeedaughter3_middlename}} {{customerDetails.appointeedaughter3_lastname}}</td>
+                                                                    <td>{{customerDetails.appointeedaughter3_dob}}</td>
+                                                                    <td>{{customerage.appointeedaughter3_age}}</td>
+                                                                    <td>{{customerDetails.appointeedaughter3_marital}}</td>
+                                                                    <td>{{customerDetails.appointeedaughter3_relationship}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_daughter4 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.appointeedaughter4_salutation}} {{customerDetails.appointeedaughter4_firstname}} {{customerDetails.appointeedaughter4_middlename}} {{customerDetails.appointeedaughter4_lastname}}</td>
+                                                                    <td>{{customerDetails.appointeedaughter4_dob}}</td>
+                                                                    <td>{{customerage.appointeedaughter4_age}}</td>
+                                                                    <td>{{customerDetails.appointeedaughter4_marital}}</td>
+                                                                    <td>{{customerDetails.appointeedaughter4_relationship}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                            <tbody *ngIf="is_ic_multiple_appointee == '0'">
+                                                                <tr>
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.appointee_salutation}} {{customerDetails.appointee_firstname}} {{customerDetails.appointee_middlename}} {{customerDetails.appointee_lastname}}</td>
+                                                                    <td>{{customerDetails.appointee_dob}}</td>
+                                                                    <td>{{customerage.appointee_age}}</td>
+                                                                    <td>{{customerDetails.appointee_marital}}</td>
+                                                                    <td>{{customerDetails.appointee_relationship}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card shadowbox completeddetailsbox filled-vehicledetails">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12 proposal-premium">
+                                                    <h3>Plan Details</h3>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Plan Name</th>
+                                                                    <th>Sum Insured</th>
+                                                                    <th>Total Premium</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>{{policyList.plan_name}} Policy</td>
+                                                                    <td>{{policyList.sum_insured}}</td>
+                                                                    <td>{{policyList.FinalPremium}}.00</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card shadowbox completeddetailsbox filled-vehicledetails">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12 proposal-premium">
+                                                    <h3>Personal Habit</h3>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>No.</th>
+                                                                    <th>Member Name</th>
+                                                                    <th>Member Relationship</th>
+                                                                    <th>Smoking Status</th>
+                                                                    <th>Alcohol Status</th>
+                                                                    <th>Tobaco Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngIf="userQuotedetails.insured_type_self =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberself_salutation}} {{customerDetails.memberself_firstname}} {{customerDetails.memberself_middlename}} {{customerDetails.memberself_lastname}}</td>
+                                                                    <td>Self</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_self =='1'">Yes</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_self =='0'">No</td>
+                                                                    <td>{{userQuotedetails.alcohol}}</td>
+                                                                    <td>{{userQuotedetails.membersdisease_tobaco}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_spouse =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberspouse_salutation}} {{customerDetails.memberspouse_firstname}} {{customerDetails.memberspouse_middlename}} {{customerDetails.memberspouse_lastname}}</td>
+                                                                    <td>Spouse</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_spouse =='1'">Yes</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_spouse =='0'">No</td>
+                                                                    <td>{{userQuotedetails.alcohol}}</td>
+                                                                    <td>{{userQuotedetails.membersdisease_tobaco}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_father =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberfather_salutation}} {{customerDetails.memberfather_firstname}} {{customerDetails.memberfather_middlename}} {{customerDetails.memberfather_lastname}}</td>
+                                                                    <td>Father</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_father =='1'">Yes</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_father =='0'">No</td>
+                                                                    <td>{{userQuotedetails.alcohol}}</td>
+                                                                    <td>{{userQuotedetails.membersdisease_tobaco}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_mother =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.membermother_salutation}} {{customerDetails.membermother_firstname}} {{customerDetails.membermother_middlename}} {{customerDetails.membermother_lastname}}</td>
+                                                                    <td>Mother</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_mother =='1'">Yes</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_mother =='0'">No</td>
+                                                                    <td>{{userQuotedetails.alcohol}}</td>
+                                                                    <td>{{userQuotedetails.membersdisease_tobaco}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_son1 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberson1_salutation}} {{customerDetails.memberson1_firstname}} {{customerDetails.memberson1_middlename}} {{customerDetails.memberson1_lastname}}</td>
+                                                                    <td>Son1</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_son1 =='1'">Yes</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_son1 =='0'">No</td>
+                                                                    <td>{{userQuotedetails.alcohol}}</td>
+                                                                    <td>{{userQuotedetails.membersdisease_tobaco}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_son2 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberson2_salutation}} {{customerDetails.memberson2_firstname}} {{customerDetails.memberson2_middlename}} {{customerDetails.memberson2_lastname}}</td>
+                                                                    <td>Self</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_son2 =='1'">Yes</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_son2 =='0'">No</td>
+                                                                    <td>{{userQuotedetails.alcohol}}</td>
+                                                                    <td>{{userQuotedetails.membersdisease_tobaco}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_son3 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberson3_salutation}} {{customerDetails.memberson3_firstname}} {{customerDetails.memberson3_middlename}} {{customerDetails.memberson3_lastname}}</td>
+                                                                    <td>Son3</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_son3 =='1'">Yes</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_son3 =='0'">No</td>
+                                                                    <td>{{userQuotedetails.alcohol}}</td>
+                                                                    <td>{{userQuotedetails.membersdisease_tobaco}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_son4 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberson4_salutation}} {{customerDetails.memberson4_firstname}} {{customerDetails.memberson4_middlename}} {{customerDetails.memberson4_lastname}}</td>
+                                                                    <td>Son4</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_son4 =='1'">Yes</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_son4 =='0'">No</td>
+                                                                    <td>{{userQuotedetails.alcohol}}</td>
+                                                                    <td>{{userQuotedetails.membersdisease_tobaco}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_daughter1 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberdaughter1_salutation}} {{customerDetails.memberdaughter1_firstname}} {{customerDetails.memberdaughter1_middlename}} {{customerDetails.memberdaughter1_lastname}}</td>
+                                                                    <td>Daughter1</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_daughter1 =='1'">Yes</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_daughter1 =='0'">No</td>
+                                                                    <td>{{userQuotedetails.alcohol}}</td>
+                                                                    <td>{{userQuotedetails.membersdisease_tobaco}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_daughter2 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberdaughter2_salutation}} {{customerDetails.memberdaughter2_firstname}} {{customerDetails.memberdaughter2_middlename}} {{customerDetails.memberdaughter2_lastname}}</td>
+                                                                    <td>Daughter2</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_daughter2 =='1'">Yes</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_daughter2 =='0'">No</td>
+                                                                    <td>{{userQuotedetails.alcohol}}</td>
+                                                                    <td>{{userQuotedetails.membersdisease_tobaco}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_daughter3 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberdaughter3_salutation}} {{customerDetails.memberdaughter3_firstname}} {{customerDetails.memberdaughter3_middlename}} {{customerDetails.memberdaughter3_lastname}}</td>
+                                                                    <td>Daughter3</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_daughter3 =='1'">Yes</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_daughter3 =='0'">No</td>
+                                                                    <td>{{userQuotedetails.alcohol}}</td>
+                                                                    <td>{{userQuotedetails.daughter3_tobaco}}</td>
+                                                                </tr>
+                                                                <tr *ngIf="userQuotedetails.insured_type_daughter4 =='1'">
+                                                                    <td>1</td>
+                                                                    <td>{{customerDetails.memberdaughter4_salutation}} {{customerDetails.memberdaughter4_firstname}} {{customerDetails.memberdaughter4_middlename}} {{customerDetails.memberdaughter4_lastname}}</td>
+                                                                    <td>Daughter4</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_daughter4 =='1'">Yes</td>
+                                                                    <td *ngIf="userQuotedetails.smoke_daughter4 =='0'">No</td>
+                                                                    <td>{{userQuotedetails.alcohol}}</td>
+                                                                    <td>{{userQuotedetails.daughter4_tobaco}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="card shadowbox">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6 declaration-box">
+                                                    <h4>Note</h4>
+                                                    <ul>
+                                                        <li>Policy insurance is subject to realization of cheque.</li>
+                                                        <li>Consolidated stamp duty paid to state exchequer.</li>
+                                                        <li>The policy is subject to compulsory deductible of Rs. 0.</li>
+                                                        <li>Geographical Area-India.</li>
+                                                        <li>You agree to receive the policy document (without enclosing the terms & conditions) from the company and the company will display terms & conditions on SBI GENERAL INSURANCE. website which can be accessed by you online. * Subject to IMT Endt. Nos. & Memorandum: .</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-6 declaration-box">
+                                                    <h4>Declaration</h4>
+                                                    <p>Declaration: /We hereby declare, on my behalf and on behalf of all persons proposed to be insured, that the above statements, answers and/or particulars given by me are true and complete in all respects to the best of my knowledge and that I/We am/are authorized to propose on behalf of these other persons.</p>
+                                                    <p>| understand that the information provided by me will form the basis of the insurance poliy, is subject to the Board approved underwriting policy of the insurance company and that the policy will come into force only afer full receipt of he premium chargeable.</p>
+                                                    <p>\/We further declare that I/we will notify in writing any change occurring in the occupation or general health of the life to be insured proposer after the proposal has been submitted but before communication of the risk acceptance by the Company.</p>
+                                                    <p>\/We declare that I/we consent to the Company seeking medical information from any doctor or hospital who/which at anytime has attended on the person to be in insured/proposer or from any past or present employer concerning anything which affects the physical or mental health of the person to be insured/proposer and seeking information from any insurer to whom an application for insurance on the person to be insured / proposer has been made for the purpose of underwriting the proposal and / or claim settlement.</p>
+                                                    <p>\/We authorize the company to share information pertaining to my/our proposal including the medical records of the insured/proposer for the sole purpose of proposal underwriting and / or claims settlement and with any Governmental and / or Regulatory authority.</p>
+                                                    <p>\/We hereby provide my/our consent in accordance with Aadhar Act. 2016 and Prevention of Money Laundering Act and rules/regulations made thereunder for validating/authenticating my/our Aadhar details and updating the same in all my polices held with the company.</p>
+                                                    <p>Brokers Name and Add.: Global-India Insurance Brokers Pvt. Ltd. 518, 05th Floor, The Summit - Business Bay, Behind Gurunanak Petrol Pump, Off Andheri Kurla Road, Andheri (£),Mumbai-400093, Maharashtra (India)</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2 pt-2 align-items-center proposal-groupbtns"  *ngIf="is_buy =='0'" >
+                                <div class="col-12 text-center">   
+                                    <span *ngIf="is_auth_otp_verified =='0'">                                     
+                                        <a href="javascript:void(0);" data-toggle="modal" (click)="send_otp(unique_ref_no)" class="btn btn-lg btn-custom green mx-2 "><i class="fa fa-check-square-o mr-1"></i> Authenticate</a>
+                                    </span>  
+                                    <span *ngIf="is_auth_otp_verified =='1'">
+                                        <a href="javascript:void(0);" *ngIf="is_buy =='0'" data-toggle="modal" (click)="buy_policy(unique_ref_no)"  class="btn btn-lg btn-custom green mx-2 "><i class="fa fa-file-text-o mr-1"></i> Buy Policy</a>
+                                        <a  *ngIf="is_buy =='1'"><b style="color: green;">This Policy already buyed</b></a>
+                                    </span>  
+                                </div>
+                            </div>
+                            <div class="row mt-2 pt-2 align-items-center proposal-groupbtns"  *ngIf="is_buy =='1'" >
+                                <div class="col-12 text-center"> 
+                                    <b style="color: green;">This Policy already buyed</b>
+                                </div>    
+                            </div>
+                            <div id="otpverification" class="modal custom-modal policydetails-modal fade" role="dialog">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Verify </h5>
+                                            <button type="button" class="close" (click)="closePopupOtpQuote()" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body py-0">
+                                            <div class="col-md-12 col-sm-12 col-12">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <h3 class="text-center text-brand-blue">Enter OTP</h3>
+                                                        <form class="digit-group text-center" data-group-name="digits" data-autosubmit="false" autocomplete="off"  [formGroup]="formOtpDetails" id="formOtpform" (ngSubmit)="submittedOtpQuote()" style="margin: auto;">
+                                                            <input type="text" id="otp_n_1" formControlName="otp_n_1" data-next="digit-2" />
+                                                            <input type="text" id="otp_n_2" formControlName="otp_n_2" data-next="digit-3" data-previous="digit-1" />
+                                                             <span class="splitter">&ndash;</span>
+                                                            <input type="text" id="otp_n_3" formControlName="otp_n_3" data-next="digit-4" data-previous="digit-3" />
+                                                            <input type="text" id="otp_n_4" formControlName="otp_n_4" data-previous="digit-3" />
+                                                            <div class="text-center my-2">
+                                                                <button type="submit" class="btn btn-lg btn-custom green "><i class="fa fa-check-square-o mr-1"></i> Confirm</button>
+                                                            </div>
+                                                            <div class="text-center my-2">
+                                                                <button (click)="resend_otp(unique_ref_no)" type="button" class="btn btn-lg btn-link">
+                                                                    Resend OTP
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>        
+                                </div>   
+                            </div>
+                            <div id="buypolicy" class="modal custom-modal policydetails-modal fade" role="dialog">
+                                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                    <div class="modal-content" style="width: 56%; margin: auto;">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Payments </h5>
+                                            <button type="button" class="close" (click)="closePopupBuypolicyQuote()">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body py-0">
+                                            <div class="col-md-12 col-sm-12 col-12">
+                                                <form [formGroup]="formPayment" (ngSubmit)="submitFormPayment()" class="ui form">
+                                                    <div class="card shadowbox">
+                                                        <div class="card-body">
+                                                            <h3 class="text-center text-brand-blue">Select Payment Option</h3>
+                                                            <ul class="paymentoption">
+                                                                <li>
+                                                                    <label>
+                                                                        <input  name="paymentoption" formControlName="payment_method_id" [value]="1" type="radio" />
+                                                                        <span>Online</span>
+                                                                    </label>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="paymentoption-text" >
+                                                                <div class="row">
+                                                                    <div class="col-12 finalpremium">
+                                                                        <h4>Final Premium <em class="d-lg-inline d-md-block d-inline">(Incl. GST)</em> <span><i class="fa fa-inr"></i> {{policyList.FinalPremium}}</span></h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="my-3 termstext">
+                                                                <ol class="ol-list">
+                                                                    <li>I/we agree this terms and conditions, I/we hereby agree that I/we have read, understand and agreed to these terms. I/we also agree that while making this cheque payment to the insurance company, I/we have sufficient funds in my/our bank account.</li>
+                                                                    <li>I/we further understand that if i/we do not have sufficient fund in my/our account then the cheque issued for the payment of the insurance premium will be dishonoured and in that cae insurance company has ll the rights to cancel the said policy issued to me.</li>
+                                                                </ol>
+                                                                <div class="ui checkbox">
+                                                                    <input type="checkbox" formControlName="terms_and_conditions" id="terms">
+                                                                    <label class="mt-2 mb-3" for="terms">I accept terms and conditions.</label>
+                                                                    <div *ngIf="submittedPayment && formPayment.controls.terms_and_conditions.errors">
+                                                                        <small *ngIf="submittedPayment && formPayment.controls.terms_and_conditions.errors" class="text-danger">
+                                                                                Please check terms and condition.
+                                                                        </small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="is_buy =='0'">
+                                                                <div *ngIf="!is_wallet_pay" class="text-center my-2 buynowbtn">
+                                                                    <button type="submit" class="btn btn-lg btn-custom green"><i class="fa fa-file-text-o mr-1"></i>Buy Now
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="is_buy =='1'">
+                                                                <p>This Proposal already converted policy please try another!</p>
+                                                            </div>
+                                                            <div class="text-center" *ngIf="is_wallet_pay">
+                                                                <h5 class="text-danger"><b>Note: </b>In Sufficient Wallet Balance</h5>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>    
+                                            </div>
+                                        </div>    
+                                    </div>
+                                </div>                                          
+                            </div>
+                        </div>
+                    </div>                                                  
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- /Page Content -->
+</div>
+<div id="div_class"></div>
+<app-loader [loaderActive]="loaderActive"></app-loader>

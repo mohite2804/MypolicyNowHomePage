@@ -1,0 +1,141 @@
+<!-- Header -->
+<div class="header">
+    <!-- Logo -->
+    <div class="header-left">
+        <a href="javascript:void(0);" (click)="goToHomePage()" class="logo">
+
+            <img *ngIf="!dynamicLogoUrl" class="logo-full" src="assets/front/img/mpn-logo.png " alt="">
+            <img *ngIf="!dynamicLogoUrl" class="logo-small" src="assets/front/img/mpn-logo-small.png" alt="">
+
+            <img *ngIf="dynamicLogoUrl" #set_theme_logo class="logo-full" [src]="[dynamicLogoUrl]" alt="">
+            <img *ngIf="dynamicLogoUrl" #set_theme_logo class="logo-small" [src]="[dynamicLogoUrl]" alt="">
+
+
+        </a>
+
+    </div>
+    <!-- /Logo -->
+
+    <a id="toggle_btn" href="javascript:void(0);">
+        <span class="bar-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+        </span>
+    </a>
+
+    <!-- Header Title -->
+    <div class="page-title-box">
+        <h3>Welcome {{ user_full_name }} <em>In</em> <em class="em"> Global-India Insurance Broker's Pvt. Ltd.</em></h3>
+    </div>
+    <!-- /Header Title -->
+
+    <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
+
+    <!-- Header Menu -->
+    <ul class="nav user-menu">
+
+        <li class="nav-item">
+            <a title="Notifications" class="nav-link" (click)="toggleNotificationWindow()">
+                <i class="fas fa-bell"> </i>
+                <span class="badge badge-pill">{{unread_notification_count}}</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+
+            <a *ngIf="loginUserType==1 || loginUserType==5 || loginUserType==2" href="my-account/wallet_setting" title="Wallet Balance" class="nav-link">
+                <i class="fas fa-wallet mr-2"> </i><b><i class="fas fa-inr mr-1"></i>{{wallet_balance /100 }}</b>
+            </a>
+            <!-- <a *ngIf="loginUserType==1" href="my-account/wallettransactions" title="Wallet Balance" class="nav-link">
+                <i class="fas fa-wallet mr-2"> </i><b><i class="fas fa-inr mr-1"></i>{{wallet_balance /100 }}</b>
+            </a> -->
+
+        </li>
+
+        <li class="nav-item">
+            <a href="javascript:void(0);" title="Home" [routerLink]="['/home']" class="nav-link"><i class="fa fa-home"></i></a>
+        </li>
+
+        <li class="nav-item dropdown has-arrow main-drop">
+            <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                <span class="user-img">
+                    <img src="{{public_path}}/profile_image/{{pro_image}}" >
+                </span>
+                <span></span>
+            </a>
+            <div class="dropdown-menu">
+                <!-- <a class="dropdown-item" href="javascript:void(0);" [routerLink]="['/my-account/dashboard']">Dashboard</a> -->
+                <!-- <a class="dropdown-item" href="javascript:void(0);" [routerLink]="['/my-account/dashboard']">Dashboard</a> -->
+                <a class="dropdown-item" href="{{dashboard_url}}">Dashboard</a>
+
+                <a class="dropdown-item" href="javascript:void(0);" [routerLink]="['/my-account/my-profile']">My Profile </a>
+                <!-- <a class="dropdown-item" href="javascript:void(0);" [routerLink]="['/my-account/wallet_setting']">Wallet Setting </a> -->
+                <a class="dropdown-item" href="javascript:void(0);" [routerLink]="['/my-account/profile']">Upload Profile</a>
+                <a class="dropdown-item" href="javascript:void(0);" [routerLink]="['/logout']">Sign Out</a>
+            </div>
+        </li>
+    </ul>
+    <!-- /Header Menu -->
+
+    <!-- Notification container -->
+    <div class='notification-popup-container-main' [ngStyle]="{'display':displayPopup}">
+
+        <div id='notification_yes' class="notification-popup-container" *ngIf="if_notificatons_found">
+            <table class="table table-bordered table-condensed">
+                <tr *ngFor="let row of recent_notofications">
+                    <th class="nt">{{row.notification_type}}</th>
+                    <td class="nm">{{row.notification_msg}}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <a [routerLink]="['/my-account/notification-list']" class='btn btn-sm btn-primary view_all_notifications_link'>View All</a>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+        <div id='notification_no' class="notification-popup-container" *ngIf="if_notificatons_not_found">
+            <table class="table table-bordered table-condensed">
+                <tr>
+                    <td colspan="2">You don't have notifications.</td>
+                </tr>
+            </table>
+        </div>
+        <!--
+        <div class='notification-popup-container' *ngFor="let row of recent_notofications">
+            <div class='notification-popup-body'>
+                <div class="notification-popup-title">{{row.notification_type}}</div>
+                <div class="notification-popup-message">{{row.notification_msg}}</div>
+            </div>
+        </div>
+        -->
+    </div>
+    <!-- Notification container -->
+</div>
+<!-- /Header -->
+
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar d-none">
+    <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
+            <ul>
+                <li class="menu-title">
+                    <span>Main</span>
+                </li>
+                <li class="active"><a href="index.php"><i class="la la-icons"></i> <span>Dashboard</span></a></li>
+                <li><a href="javascript:void(0);"><i class="las la-file-contract"></i> <span>SOLD Policy</span></a></li>
+                <li><a href="javascript:void(0);"><i class="la la-icons"></i> <span>Saved Quotation</span></a></li>
+                <li><a href="javascript:void(0);"><i class="la la-icons"></i> <span>Saved Proposal</span></a></li>
+                <li><a href="javascript:void(0);"><i class="la la-icons"></i> <span>Break In Case</span></a></li>
+                <li><a href="javascript:void(0);"><i class="la la-icons"></i> <span>Reports</span></a></li>
+                <li><a href="javascript:void(0);"><i class="la la-icons"></i> <span>Download Pay-In-Slip</span></a></li>
+                <li><a href="javascript:void(0);"><i class="la la-icons"></i> <span>Renewal Management System</span></a></li>
+                <li><a href="javascript:void(0);"><i class="la la-icons"></i> <span>Query Management System</span></a></li>
+                <li><a href="javascript:void(0);"><i class="la la-icons"></i> <span>Endorsements</span></a></li>
+                <li><a href="javascript:void(0);"><i class="la la-icons"></i> <span>Policy Cancellation</span></a></li>
+            </ul>
+        </div>
+    </div>
+</div>

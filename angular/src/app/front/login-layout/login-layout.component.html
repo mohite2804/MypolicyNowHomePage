@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/front/img/favicon.png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+
+    <link #set_login_theme rel="stylesheet" [href]="[theme_css]">
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-inner">
+            <div class="login-two-pane">
+                <div>
+                    <div class="login-form">
+                        <div class="mb-8 login-logo">
+
+                            <img *ngIf="login_result" [src]="login_result.theme_logo" alt="">
+                            <!-- <img *ngIf="!login_result" src="assets/front/img/mpn-logo.png" alt=""> -->
+
+
+
+                        </div>
+                        <router-outlet></router-outlet>
+                        <div class="text-center">
+                            <p class="mb-0 mt-3"><small>Copyright © 2020 Global-India Insurance Broker's Pvt. Ltd. </small></p>
+                            <p class="mb-0"><small>All Rights Reserved | Powered By <a href="http://indicosmic.com" target="_blank" title="ICPL">ICPL</a></small></p>
+                            <p class="mb-2"><small>Licence No.:538. IRDAI Direct Broker Code:IRDAI/DB 596/14. <br>Valid Till: 04-10-2024. CIN No.: U66000MH2014PTC318309. GST No.: 27AAFCG7680Q1ZQ</small></p>
+                            <p class="mb-2"><small><a href="javascript:void(0);" [routerLink]="['/terms-and-conditions']">Terms and Conditions</a> / <a href="javascript:void(0);" [routerLink]="['/pricing']">Pricing</a> / <a href="javascript:void(0);" [routerLink]="['/contact-us']">Contact</a></small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<app-loader [loaderActive]="loaderActive"></app-loader>
+
+</html>

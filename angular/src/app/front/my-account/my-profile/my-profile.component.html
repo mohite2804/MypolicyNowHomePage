@@ -1,0 +1,315 @@
+<!--Page Wrapper -->
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content container-fluid">
+        <app-tickers></app-tickers>
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">My Profile</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="my-account/dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active">My Profile</li>
+                    </ul>
+                </div>
+    		</div>
+
+    		<br>
+    		<div class="row align-items-center justify-content-center">
+                <div class="col-12">
+
+                    <div class="card cardshadow blue-border">
+                        <div class="card-header">
+                            <h3>Profile Info</h3>
+                        </div>
+                        <div class="card-body">
+                        	
+	                        <div class="row">
+	                            <div class="col-12">
+	                            	<ul class="row endorsement-infolist mx-0">
+	                                    <li class="col-md-6 col-12" [ngStyle]="{'display':display_misp_data}">
+	                                        <div class="title">MISP Name :</div>
+	                                        <div class="text">{{ result_misp_name }}</div>
+	                                    </li>
+                                        <li class="col-md-6 col-12" [ngStyle]="{'display':subid}">
+                                            <div class="title">DP Name</div>
+                                            <div class="text">{{ result_dp_name }}</div>
+                                        </li>
+                                        <li class="col-md-6 col-12">
+                                            <div class="title">Name :</div>
+                                            <div class="text">{{ result_full_name }}</div>
+                                        </li>
+                                        <li class="col-md-6 col-12">
+                                            <div class="title">Code :</div>
+                                            <div class="text">{{ result_misp_code }}</div>
+                                        </li>
+	                                    <li class="col-md-6 col-12">
+	                                        <div class="title">Email :</div>
+	                                        <div class="text">{{ result_email }}</div>
+	                                    </li>
+	                                    <li class="col-md-6 col-12">
+	                                        <div class="title">Mobile No:</div>
+	                                        <div class="text">{{ result_mobile_no }}</div>
+	                                    </li>
+	                                    <li class="col-md-6 col-12">
+	                                        <div class="title">PAN No:</div>
+	                                        <div class="text">{{ result_pan }}</div>
+	                                    </li>
+	                                    <li class="col-md-6 col-12">
+	                                        <div class="title">GST No:</div>
+	                                        <div class="text">{{ result_gst_no }}</div>
+	                                    </li>
+	                                    <li class="col-md-12 col-12">
+	                                        <div class="title">Address:</div>
+	                                        <div class="text">{{ result_address }}</div>
+	                                    </li>
+                                        <li class="col-md-6 col-12">
+                                            <div class="title">City:</div>
+                                            <div class="text">{{ result_city }}</div>
+                                        </li>
+	                                    <li class="col-md-6 col-12">
+	                                        <div class="title">State :</div>
+	                                        <div class="text">{{ result_state }}</div>
+	                                    </li>
+	                                    <li class="col-md-6 col-12">
+	                                        <div class="title">Status :</div>
+	                                        <div class="text">{{ result_status }}</div>
+	                                    </li>
+	                                </ul>
+	                        	</div>
+	                        </div>
+
+	                        <div class="row align-items-center justify-content-center">
+	                            <div class="col-3" [ngStyle]="{'display':display_subid}">
+                                    <button (click)="openModel()" data-toggle="modal" data-target="#AddDPUsers"  class="btn btn-custom green"><i class="fa fa-plus"></i> Add DP Sub User</button>
+                                </div>
+                        	</div>
+
+                            <div class="row align-items-center justify-content-center">
+                                <div class="col-3" [ngStyle]="{'display':edit_user}">
+                                    <button (click)="openEditModel()" data-toggle="modal" data-target="#EditUsersData" class="btn btn-custom green"><i class="fa fa-plus"></i> Edit Record</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+    		<br>
+            <div class="row"  [ngStyle]="{'display':display_dt}">
+                <div class="col-12">
+                    <div class="card shadowbox">
+                        <div class="card-header">
+                            <h3>{{ listTitle }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+    	</div>
+
+
+        <div id="AddDPUsers" class="modal custom-modal fade" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <form [formGroup]="formNewUser" method="post" (ngSubmit)="submitForm()">
+
+                        <div class="modal-header">
+                            <h4 class="modal-title">{{ popupTitle }}</h4>
+                            <button #closebutton (click)="closePopup()" type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Name  *</label>
+                                        <input type='text' class="form-control" formControlName="fullname" placeholder="Full Name *" maxlength="100">
+                                        <div class="error" *ngIf="submitted && formNewUser.controls.fullname.errors">
+                                            <div *ngIf="submitted && formNewUser.controls.fullname.errors">
+                                                Please enter valid name.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Email  *</label>
+                                        <input type='text' class="form-control" formControlName="email" placeholder="Email *" maxlength="50">
+                                        <div class="error" *ngIf="submitted && formNewUser.controls.email.errors">
+                                            <div *ngIf="submitted && formNewUser.controls.email.errors">
+                                                Please enter valid email.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Mobile No  *</label>
+                                        <input type='text' class="form-control" formControlName="mobile_no" placeholder="Mobile No*" OnlyNumber="true" maxlength="10">
+                                        <div class="error" *ngIf="submitted && formNewUser.controls.mobile_no.errors">
+                                            <div *ngIf="submitted && formNewUser.controls.mobile_no.errors">
+                                                Please enter valid mobile no.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Password  *</label>
+                                        <input type='password' class="form-control" formControlName="password" placeholder="Password *" OnlyNumber="true" maxlength="10">
+                                        <div class="error" *ngIf="submitted && formNewUser.controls.password.errors">
+                                            <div *ngIf="submitted && formNewUser.controls.password.errors">
+                                                Please enter valid password.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Status  *</label>
+                                        <select class="form-control" formControlName="dpstatus" placeholder="Select Status">
+                                            <option value=''>Select Status</option>
+                                            <option value='1'>Active</option>
+                                            <option value='0'>Inactive</option>
+                                        </select>
+                                        <div class="error" *ngIf="submitted && formNewUser.controls.dpstatus.errors">
+                                            <div *ngIf="submitted && formNewUser.controls.dpstatus.errors">
+                                                Status is Required.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+                                        <strong>{{responseMsg}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="submit-section">
+                                <input *ngIf="btnEditSubmit" class="btn btn-custom green btn-lg" type="submit" value="Submit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div id="EditUsersData" class="modal custom-modal fade" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <form [formGroup]="formEditUser" *ngIf="this.formEditUser" method="post" (ngSubmit)="updateForm()">
+                        <input type="hidden" formControlName="id" class="form-control" />
+
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit User Details</h4>
+                            <button #closebutton (click)="closePopup()" type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Name  *</label>
+                                        <input type='text' class="form-control" formControlName="fullname" placeholder="Full Name *" maxlength="100">
+                                        <div class="error" *ngIf="submitted && formEditUser.controls.fullname.errors">
+                                            <div *ngIf="submitted && formEditUser.controls.fullname.errors">
+                                                Please enter valid name.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Email  *</label>
+                                        <input type='text' class="form-control" formControlName="email" placeholder="Email *" maxlength="50">
+                                        <div class="error" *ngIf="submitted && formEditUser.controls.email.errors">
+                                            <div *ngIf="submitted && formEditUser.controls.email.errors">
+                                                Please enter valid email.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Mobile No  *</label>
+                                        <input type='text' class="form-control" formControlName="mobile_no" placeholder="Mobile No*" OnlyNumber="true" maxlength="10">
+                                        <div class="error" *ngIf="submitted && formEditUser.controls.mobile_no.errors">
+                                            <div *ngIf="submitted && formEditUser.controls.mobile_no.errors">
+                                                Please enter valid mobile no.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+                                        <strong>{{responseMsg}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="submit-section">
+                                <input *ngIf="btnEditSubmit" class="btn btn-custom green btn-lg" type="submit" value="Submit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<app-loader [loaderActive]="loaderActive"></app-loader>
+
+<!--
+API_TOKEN:674MCQQR985VZQ2Z
+MISP_NAME:ARAS MOTORS
+MISP_EMAIL:aras@gmail.com
+MISP_MOBILE_NUMBER:9094769312
+MISP_DEALER_CODE:TN60
+MISP_CODE:HIB/TVS/TN60
+MISP_PASSWORD:420e3e48a914937740036bef17b7e8c4
+MISP_STATE:TAMILNADU
+MISP_CITY:MADURAI
+MISP_PINCODE:625018
+MISP_PAN:QWEPR1234R
+MISP_GST:27AAAAA0987A1Z5
+DP_NAME:MUHIL SUGANTHAN M
+DP_EMAIL:m.muhilsuganthan@indicosmic.com
+DP_MOBILE_NUMBER:9094769312
+DP_PASSWORD:420e3e48a914937740036bef17b7e8c4
+DP_AADHAAR:111122223333
+DP_PAN:QWEPR1234R
+DP_STATE:TAMILNADU
+DP_CITY:MADURAI
+DP_PINCODE:625018
+DP_INTERNAL_CODE:HIB_0001
+DP_STATUS:active
+-->

@@ -1,0 +1,54 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { APP_BASE_HREF, Location } from '@angular/common';
+
+import { HttpClientModule ,HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FrontInterceptor } from './front/share/front.interceptor';
+
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AccessDeniedComponent } from './access-denied/access-denied.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+
+import { BnNgIdleService } from 'bn-ng-idle';
+import { ChartsModule } from 'ng2-charts';
+import { DatePipe } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { CommonModule } from "@angular/common";
+
+
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    PageNotFoundComponent,
+    AccessDeniedComponent,
+
+
+
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ChartsModule,
+    FormsModule,
+    ReactiveFormsModule,
+
+    SimpleNotificationsModule.forRoot()
+
+
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: FrontInterceptor, multi: true},
+
+    { provide: APP_BASE_HREF, useValue: window['_app_base'] || '/' },
+    BnNgIdleService,DatePipe
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

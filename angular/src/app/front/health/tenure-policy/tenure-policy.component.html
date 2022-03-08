@@ -1,0 +1,155 @@
+<div class="page-wrapper">
+
+    <!-- Page Content -->
+    <div class="content">
+
+        <section class="py-0">                    
+            <div class="row">
+                <div class="col-md-12 border quotes-topinfo shadowbox py-2">
+                    <div class="container">
+                        <div class="row py-2">
+                            <div class="col-md-1 col-sm-1 col-12 quotes-box d-block d-md-none">
+                                <div>
+                                    <a class="actionbtn edit-btn" href="#"><i class="fa fa-pencil"></i></a>
+                                </div>
+                            </div> 
+                            <div class="col-md-5 col-sm-4 col-12 quotes-box">
+                                <div class="font-style">
+                                    <i class="fa fa-male brand-text-2 title-large"></i>
+                                </div>
+                                <div style="margin-top:11px;">
+                                    <h4 class="mb-0"><span class="text-muted white">Policy:</span> {{policy_type_name}} ( {{policy_subtype_name}} )</h4>                                            
+                                    <h4 class="mb-0"><span class="text-muted white">Insured Members:</span> 
+                                        <span *ngIf="insured_type_self !=''">{{insured_type_self}} - ({{insured_type_self_age}})</span> 
+                                        <span *ngIf="insured_type_spouse !=''">, {{insured_type_spouse}} - ({{insured_type_spouse_age}})</span>
+                                        <span *ngIf="insured_type_mother !=''">, {{insured_type_mother}} - ({{insured_type_mother_age}})</span>
+                                        <span *ngIf="insured_type_father !=''">, {{insured_type_father}} - ({{insured_type_father_age}})</span>
+                                        <span *ngIf="insured_type_son1 !=''">, {{insured_type_son1}} - ({{insured_type_son1_age}})</span>
+                                        <span *ngIf="insured_type_son2 !=''">, {{insured_type_son2}} - ({{insured_type_son2_age}})</span>
+                                        <span *ngIf="insured_type_son3 !=''">, {{insured_type_son3}} - ({{insured_type_son3_age}})</span>
+                                        <span *ngIf="insured_type_son4 !=''">, {{insured_type_son4}} - ({{insured_type_son4_age}})</span>
+                                        <span *ngIf="insured_type_daughter1 !=''">, {{insured_type_daughter1}} - ({{insured_type_daughter1_age}})</span>
+                                        <span *ngIf="insured_type_daughter2 !=''">, {{insured_type_daughter2}} - ({{insured_type_daughter2_age}})</span>
+                                        <span *ngIf="insured_type_daughter3 !=''">, {{insured_type_daughter3}} - ({{insured_type_daughter3_age}})</span>
+                                        <span *ngIf="insured_type_daughter4 !=''">, {{insured_type_daughter4}} - ({{insured_type_daughter4_age}})</span>
+                                    </h4>                                            
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-12 quotes-box">
+                                <div>
+                                    <h4 class="mb-0"><span class="text-muted white">Child Planning:</span> {{childplanning}}</h4>
+                                    <h4 class="mb-0"><span class="text-muted white">Disease:</span> {{membersdisease}}</h4>
+                                    <h4 class="mb-0"><span class="text-muted white">Pincode:</span> {{pincode}}</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-12 quotes-box border-right-0">
+                                <div>
+                                    <h4 class="mb-0"><span class="text-muted white">SUM IN:</span> {{selected_suminsured}}</h4>
+                                    <h4 class="mb-0"><span class="text-muted white">Tenure:</span> {{tenure}} Year</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-12 quotes-box d-none d-md-block">
+                                <div>
+                                    <a  routerLink ="../quote" class="actionbtn edit-btn" href="javascript:void(0);"><i class="fa fa-pencil"></i></a>
+                                </div>
+                            </div>                                    
+                        </div>
+                        <div class="row py-2 d-md-none align-items-center">
+                            <div class="col-sm-6 col-12">
+                                <div class="quotes-editoption">
+                                    <div class="option-box covers-option-box">
+                                        <a id="slidecover" class="actionbtn edit-btn" href="javascript:void(0);"><i class="fa fa-pencil"></i></a>
+                                        <h4 class="mb-0">Select Rider's Option</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+            <div class="container">
+                <div class="row mx-0">  
+                    <div class="col-lg-8 col-md-8 quoteslistwrap">
+                        <div class="quoteslist">
+                            <div class="row">
+                                <div *ngFor="let row of policyList" class="col-md-12 col-sm-6 col-12 quoteitem border">
+                                    <div class="row align-items-center py-2">
+                                        <div class="col-lg-2 col-md-3 col-sm-5 col-5 quoteitembox insurer-box">
+                                            <img src="assets/front/img/partners-logos/{{row.logo}}" alt="">
+                                        </div>
+
+                                        <div class="col-lg-10 col-md-4 col-sm-7 col-7 quoteitembox idvdisc-box" *ngIf="row.is_error =='0'">
+                                            <h3 class="mb-0">{{row.plan_name}}</h3>
+                                            <h4><a href="javascript:void(0);" (click)="view_covragefeatures(row.plan_key)" style="color: green; font-weight: 700; text-decoration: none; padding-top: 10px;     text-transform: uppercase;"> View Features &nbsp; &nbsp;</a>
+                                                <a href="https://www.sbigeneral.in/portal/buy-online/uploads/policy_pdf/ArogyaPlusProductBrochure.pdf" target="_blank" style="color: green; font-weight: 700; text-decoration: none;padding-top: 10px; text-transform: uppercase;"> More Features &nbsp; &nbsp;</a>             </h4>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-6 col-12 quoteitem border" style="padding: 10px;">
+                                    <p style="font-size: 15px; color: #114984;"><b>Cover Amount</b><br>
+                                        Medical treatments are getting costlier every year. Higher the cover better it is.</p>
+                                        <ng-select placeholder="Select Sum Insured" (change)="suminsuredbypolicy($event)" style="width: 40%; font-size: 15px;">
+                                            <ng-option value="">Select Sum Insured</ng-option>
+                                            <ng-option *ngFor="let sum of summinsured" value="{{sum.amount}}">{{sum.label}}</ng-option>
+                                        </ng-select>
+                                       
+                                </div>
+                                <div id="accessoriesCovers" class="col-md-12 col-sm-6 col-12 quoteitem border">
+                                    <div class="card-body"> 
+                                        <p style="font-size: 15px; color: #114984;"><b>Policy Period</b><br>Choosing a multi-year plan saves your money and the trouble of remembering yearly renewals.</p>                           
+                                        <div class="row align-items-start">
+                                        <div class="col-xl-3 col-md-4 col-12" *ngFor="let tenure of tenureslist">
+                                            <div class="card shadowbox border">
+                                            <div class="card-body">
+                                                <div class="ui radio checkbox">
+                                                    <input type="radio" name="tanure" id="{{tenure.id}}">
+                                                    <label class="mb-0" for="{{tenure.id}}">{{tenure.tenure_name}}</label>
+                                                </div>
+                                            </div>
+                                            </div>                                
+                                        </div>
+                                        </div> 
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-8 quoteslistwrap">
+                        <div class="quoteslist">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-6 col-12 quoteitem border">
+                                    <div class="row align-items-center py-2">
+                                        <div class="col-lg-12 col-sm-6 col-6 quoteitembox premium-box">
+                                            <h2 class="premiumamt mb-0">Summary</h2><hr>
+                                            <div class="totalpremium-box" style="background: unset; border: unset; color:unset; box-shadow: none;">
+                                                <ul>
+                                                    <li class="paddingfont">Basic Premium: <span class="float-right"><i class="fa fa-inr"></i> {{policyList.BasicPremium}}.00</span></li>
+                                                    <li class="paddingfont">Tax Premium: <span class="float-right"> <i class="fa fa-inr"></i> {{policyList[0].OnlineDiscount}}.00</span></li>
+                                                    <li class="paddingfont">Discount Rate <span class="float-right"><i class="fa fa-inr"></i> {{policyList[0].TotalDiscountAmount}}.00</span></li>
+                                                    <li class="paddingfont">Premium <span class="float-right"><i class="fa fa-inr"></i> {{policyList[0].BasicPremium}}.00</span></li>
+                                                    <li class="paddingfont">GST @18% <span class="float-right"><i class="fa fa-inr"></i> {{policyList[0].ServiceTax}}.007</span></li>
+                                                    <!-- <li class="finalpremium"><h4>Final Premium <em class="d-lg-inline d-md-block d-inline">(Incl. GST)</em> <span class="float-right"><i class="fa fa-inr"></i> 16,122</span></h4></li> -->
+                                                </ul>
+                                            </div>
+                                            <div class="finalamt"><h4 style="font-size: 17px;">Final Premium <em class="d-lg-inline d-md-block d-inline">(Incl. GST)</em> <span class="float-right"><i class="fa fa-inr"></i> {{policyList[0].TotalPremium}}.00</span></h4></div>
+                                        </div>
+                                    </div>
+                                    <div  class="row border-top py-2">
+                                        <div class="col-xl-12 col-lg-3 col-md-12 text-lg-center">
+                                            <a href="javascript:void(0);" class="btn btn-custom green">Proceed to proposal</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                                                  
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <!-- /Page Content -->
+</div>
+<div id="div_class"></div>
+<app-loader [loaderActive]="loaderActive"></app-loader>

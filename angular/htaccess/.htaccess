@@ -1,0 +1,25 @@
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+
+		RewriteCond %{REQUEST_FILENAME} -f [OR]
+        RewriteCond %{REQUEST_FILENAME} -d
+        RewriteRule ^ - [L]
+
+        # Rewrite everything else to index.html to allow HTML5 state links
+        RewriteRule ^ index.html [L]	
+	
+	
+	
+ 	# -- REDIRECTION to https (optional):
+	# If you need this, uncomment the next two commands
+	# RewriteCond %{HTTPS} !on
+  	# RewriteRule (.*) http://%{HTTP_HOST}%{REQUEST_URI}
+	# --
+
+	#RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+	#RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+
+	#RewriteRule ^.*$ - [NC,L]
+	#RewriteRule ^(.*) index.html [NC,L]
+	Header set Access-Control-Allow-Origin "*"
+</IfModule>

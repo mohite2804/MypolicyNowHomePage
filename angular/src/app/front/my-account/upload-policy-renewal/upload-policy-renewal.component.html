@@ -1,0 +1,396 @@
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content container-fluid"><!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Upload Policy Renewal</h3>
+        </div>
+        <div class="col-auto float-right ml-auto">
+            <!-- <button (click)="openModel()" data-toggle="modal" data-target="#openmodal" class="btn btn-custom green"><i class="fa fa-plus"></i> Add Model Details</button> -->
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+<!--  *ngIf="access_permission == 'read_write'" -->
+<div class="row">
+    <div class="col-md-12">
+        <form [formGroup]="formUploadCsv" (ngSubmit)="submitFormUploadCsv()">
+            <div class="card shadowbox">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="my-2"><b>Select Product Type: <sup class="text-danger">*</sup></b></h5>
+                            <div class="col-md-6">
+                            <ng-select placeholder="Select Product" (clear)="clearValue('product',$event)" (change)="changeSelectBox('product',$event,ledata)" [(ngModel)]="selectedProducts" [ngModelOptions]="{standalone: true}">
+                                   <!--  <ng-option [value]=''>Select Product Type</ng-option> -->
+                                    <ng-option *ngFor="let row of product_list" [value]="row.renewal_code+'|'+row.renewal_label">{{row.renewal_label}}</ng-option>
+                            </ng-select>
+                            </div>
+                            <div *ngIf="submittedUploadCsv &&  formUploadCsv.controls.selectedProducts.errors">
+                                <small *ngIf="submittedUploadCsv && formUploadCsv.controls.selectedProducts.errors.required" class="text-danger">
+                                  Please select Product type.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <h5 class="my-2"><b>Upload Excel File: <sup class="text-danger">* (Note: Please upload selected Product data)</sup></b></h5>
+                            <label>{{ csv_filelabel }}</label>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="box fileuploadbox">
+                                <input #fileInput type="file" class="inputfile" id="csv-file-1" (click)="fileInput.value = null" value="" (change)="uploadCsvFile($event)">
+                                <label for="csv-file-1">
+
+
+
+                                <figure>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                  <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                              </svg>
+                                </figure>
+
+
+
+                                <span>{{csv_fileurl_label}}</span>
+                                </label>
+                            </div>
+                            <div *ngIf="submittedUploadCsv &&  formUploadCsv.controls.csv_file.errors">
+                                <small *ngIf="submittedUploadCsv && formUploadCsv.controls.csv_file.errors.required" class="text-danger">
+                      Please upload CSV File.
+                    </small>
+                                <small *ngIf="formUploadCsv.controls.csv_file.errors?.requiredFileType" class="text-danger">
+                      Allowed file type "csv"
+                    </small>
+                                <small *ngIf="formUploadCsv.controls.csv_file.errors?.fileSizeValidator" class="text-danger">
+                      Allowed file size is 5 MB.
+                    </small>
+                            </div>
+                        </div>
+
+                        <div class="col-2">
+                            <button type="submit" class="btn btn-custom green w-100" [ngStyle]="{'display':displayUpload}"> Submit</button>
+                        </div>
+                        <div class="col-2">
+                            <button type="button" class="btn btn-custom green w-100" (click)="processCsvData()" [ngStyle]="{'display':displayPD}"> Process Data</button>
+                        </div>
+                    </div>
+                    <br/><br/>
+                    <div class="row">
+                        <div class="col-8">
+                            <br/>
+                            <!-- <a _ngcontent-c7="" class="btn btn-xs btn-primary " download="" href="https://www.mypolicynow.com/uploads/GIIB - Insurance Import Formats.csv"> Download 64VB CSV Format</a>                   -->
+                            <a _ngcontent-c7="" class="btn btn-xs btn-primary " style="font-size: 147%;block-size: 30px;width: 74%;"
+                            download="" href="{{sample_csv_path}}sample_files/policy-renewal-sample.csv"> Download  Policy Sample File Format</a>
+                            <br/>
+                            <br/>
+                            <a _ngcontent-c7="" class="btn btn-xs btn-primary " style="font-size: 147%;block-size: 30px;width: 74%;"
+                            download="" href="{{baseurl}}uploads/sample_files/Valid-Data.xlsx"> Download  Valid Data File Format</a>
+                            <br/>
+                            <br/>
+                            <p style="font-size: 15px;">Please upload selected Product data</p>
+                            <p style="font-size: 15px;">The import files should be in CSV format.</p>
+                            <!-- <p style="font-size: 15px;">For Null or Blank values special character ¤ should be used. ASCII value of special character is 164.</p> -->
+                            <p style="font-size: 15px;">The Name of Import File can be any Name but should have .csv as file extension.</p>
+                            <p style="font-size: 15px;">Date field should be in YYYY-MM-DD, DD-MM-YYYY, DD-MM(text)-YYYY, YYYY-MM(text)-DD format.</p>
+                            <!-- <br/> -->
+                        </div>
+                    </div>
+
+                    <br/>
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="table-responsive"  *ngIf="process_data_result_display">
+                                <table class="table table-responsive table-striped table-bordered table-sm row-border hover" >
+                                   <thead>
+                                       <tr>
+                                            <td>Action</td>
+                                            <td>Duplicate</td>
+                                            <td>Status</td>
+                                            <td>RTO Name</td>
+                                            <td>Make</td>
+                                            <td>Model</td>
+                                            <td>Variant</td>
+                                            <td>CC(Cubic Capacity)</td>
+                                            <td>Seating Capacity</td>
+                                            <td>Car Color</td>
+                                            
+                                            <td>Policy Type</td>
+                                            <td>Product Type</td>
+                                            <td>Policy Package Type</td>
+                                            <td>Policy Holder Type</td>
+                                            <td>Insurance Compony</td>
+                                        </tr>
+                                   </thead>
+                                   <tbody>
+                                       <tr *ngFor="let ledata of view_table_data; let i = index"  [ngStyle]="{'color':ledata.status === '0' ? 'red' : 'green' }">
+                                            <td>
+                                                <ng-container
+                                                    *ngIf="(ledata.status===0 && ledata.is_duplicate === '0'); then ShowEdit; else HideEdit">
+                                                </ng-container>
+                                                <ng-template #ShowEdit>
+                                                    <button type="button"  data-toggle="modal" data-target="#openmodal" class="btn btn-primary" (click)="editDomain(ledata,ledata.product_type)" >Edit</button><br/>
+                                                    <!-- <button data-toggle="modal" data-target="#openmodel" title="Edit Record" view-edit-id="' . $main->model_id . '" class="btn btn-custom btn-sm green">
+                    <i class="fa fa-pencil-square-o" view-edit-id="' . $main->model_id . '"></i> Edit
+                    </button>'; -->
+                                                    <!-- <button type="button" class="btn btn-primary" (click)="saveDomain(ledata,i)" *ngIf="ledata.isVisible">Save </button> -->
+                                                </ng-template>
+                                                <ng-template #HideEdit>
+                                                </ng-template>
+                                            </td>
+                                            <td [ngStyle]="{'color':ledata.is_duplicate === '1' ? 'red' : 'green' }">
+                                                <div *ngIf="ledata.is_duplicate === '1'">Duplicate</div>
+                                             </td>
+                                            <td [ngStyle]="{'color':ledata.status === 0 ? 'red' : 'green' }">
+                                                <ng-container
+                                                    *ngIf="ledata.status===1; then Valid; else Invalid">
+                                                </ng-container>
+                                                <ng-template #Valid>
+                                                    Valid
+                                                </ng-template>
+                                                <ng-template #Invalid>
+                                                    Invalid
+                                                </ng-template>
+                                            </td>
+                                            <td [ngStyle]="{'color':ledata.status === 0 ? 'red' : 'green' }"><span>{{ ledata.rto_name }}</span>
+                                                <div *ngIf="ledata.rto_name_show" [formGroup]="formUpdateTable">
+                                                    <input type="hidden" formControlName="tmp_id" value="{{ ledata.id }}"/>
+                                                   <!--  <input type="text" formControlName="rto_name_value" [(ngModel)]="ledata.rto_name_value" value="{{ ledata.rto_name_value }}" *ngIf="ledata.isVisible" style="border-radius: 4px;border: 1px solid #ccc;padding: 5px 3px;"/> -->
+                                                </div>
+                                            </td>
+                                            <td [ngStyle]="{'color':ledata.status === 0 ? 'red' : 'green' }"><span>{{ ledata.make }}</span>
+                                                <div *ngIf="ledata.make_show" [formGroup]="formUpdateTable">
+                                                  
+                                                </div>
+                                            </td>
+                                            <td [ngStyle]="{'color':ledata.status === 0 ? 'red' : 'green' }"><span>{{ ledata.model }}</span>
+                                                <div *ngIf="ledata.model_show" [formGroup]="formUpdateTable">
+                                                   
+                                                </div>
+                                            </td>
+                                            <td [ngStyle]="{'color':ledata.status === 0 ? 'red' : 'green' }"><span>{{ ledata.variant }}</span>
+                                                <div  *ngIf="ledata.variant_show" [formGroup]="formUpdateTable">
+                                                   
+                                                </div>
+                                            </td>
+                                            <td [ngStyle]="{'color':ledata.status === 0 ? 'red' : 'green' }"><span>{{ ledata.cubiccapacity }}</span>
+                                                <div *ngIf="ledata.cubiccapacity_show" [formGroup]="formUpdateTable">
+                                                    
+                                                </div>
+                                            </td>
+                                            <td [ngStyle]="{'color':ledata.status === 0 ? 'red' : 'green' }"><span>{{ ledata.seatingcapacity }}</span>
+                                                <div *ngIf="ledata.seatingcapacity_show" [formGroup]="formUpdateTable">
+                                                  
+                                                </div>
+                                            </td>
+                                            <td [ngStyle]="{'color':ledata.status === 0 ? 'red' : 'green' }"><span>{{ ledata.car_color }}</span>
+                                                <div *ngIf="ledata.car_color_show" [formGroup]="formUpdateTable">
+                                                   
+                                                </div>
+                                            </td>
+                                            <td [ngStyle]="{'color':ledata.status === 0 ? 'red' : 'green' }"><span>{{ ledata.policy_type }}</span>
+                                                <div *ngIf="ledata.policy_type_show" [formGroup]="formUpdateTable">
+                                                   <!--  <input type="text" formControlName="policy_type_value" [(ngModel)]="ledata.policy_type_value" value="{{ ledata.policy_type_value }}" *ngIf="ledata.isVisible" style="border-radius: 4px;border: 1px solid #ccc;padding: 5px 3px;"/> -->
+                                                </div>
+                                            </td>
+                                            <td [ngStyle]="{'color':ledata.status === 0 ? 'red' : 'green' }"><span>{{ ledata.product_type }}</span>
+                                                <div *ngIf="ledata.product_type_show" [formGroup]="formUpdateTable">
+                                                    <!-- <input type="text" formControlName="product_type_value" [(ngModel)]="ledata.product_type_value" value="{{ ledata.product_type_value }}" *ngIf="ledata.isVisible" style="border-radius: 4px;border: 1px solid #ccc;padding: 5px 3px;"/> -->
+                                                   
+                                                </div>
+                                            </td>
+                                            <td [ngStyle]="{'color':ledata.status === 0 ? 'red' : 'green' }"><span>{{ ledata.policy_package_type }}</span>
+                                                <div *ngIf="ledata.policy_package_type_show" [formGroup]="formUpdateTable">
+                                                    <!-- <input type="text" formControlName="policy_package_type_value" [(ngModel)]="ledata.policy_package_type_value" value="{{ ledata.policy_package_type_value }}" *ngIf="ledata.isVisible" style="border-radius: 4px;border: 1px solid #ccc;padding: 5px 3px;"/> -->
+                                                </div>
+                                            </td>
+                                            <td [ngStyle]="{'color':ledata.status === 0 ? 'red' : 'green' }"><span>{{ ledata.policy_holder_type }}</span>
+                                                <div *ngIf="ledata.policy_holder_type_show" [formGroup]="formUpdateTable">
+                                                    <!-- <input type="text" formControlName="policy_holder_type_value" [(ngModel)]="ledata.policy_holder_type_value" value="{{ ledata.policy_holder_type_value }}" *ngIf="ledata.isVisible" style="border-radius: 4px;border: 1px solid #ccc;padding: 5px 3px;"/> -->
+                                                </div>
+                                            </td>
+                                            <td [ngStyle]="{'color':ledata.status === 0 ? 'red' : 'green' }"><span>{{ ledata.insurance_compony }}</span>
+                                                <div *ngIf="ledata.insurance_compony_show" [formGroup]="formUpdateTable">
+                                                   <!--  <input type="text" formControlName="insurance_compony_value" [(ngModel)]="ledata.insurance_compony_value" value="{{ ledata.insurance_compony_value }}" *ngIf="ledata.isVisible" style="border-radius: 4px;border: 1px solid #ccc;padding: 5px 3px;"/> -->
+                                                </div>
+                                            </td>
+                                             
+                                       </tr>
+                                   </tbody>
+                                </table>
+                                <div class="row">
+                                    <div class="col-6"></div>
+                                    <div class="col-6">
+                                        <div style="float:right;">
+                                            <button class="btn btn-primary" type="button" (click)="downloadPolicyData()">Download Data</button>&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-success" type="button" (click)="processPolicyData()">Process To Upload</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-4" *ngIf="is_success_record">
+                                    <h3>Success Policies</h3>
+                                    <ul class="b">
+                                        <li *ngFor="let row of success_policies">
+                                            {{row}}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-4" *ngIf="no_of_error_rcords">
+                                    <h3>Error Policies</h3>
+                                    <ul class="b">
+                                        <li *ngFor="let row3 of error_policies">
+                                            {{row3}}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-4" *ngIf="is_duplicate_record">
+                                    <h3>Duplicate Policies</h3>
+                                    <ul class="b">
+                                        <li *ngFor="let row2 of duplicae_policies">
+                                            {{row2}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+
+<div id="openmodal" class="modal custom-modal fade" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <form [formGroup]="formRecodEdit" method="post" (ngSubmit)="submitForm(formRecodEdit.value)">
+            <input formControlName="id" type="hidden" class="form-control">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ popupTitle }}</h4>
+                    <button (click)="closePopup()" type="button" class="close" data-dismiss="modal" #closeAddExpenseModal>&times;</button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label>RTO:</label>
+                                <ng-select placeholder="Select RTO" (clear)="clearValue('rto',$event)" (change)="changeSelectBox('rto',$event,ledata)" [(ngModel)]="selectedRto" [ngModelOptions]="{standalone: true}">
+                                    <ng-option *ngFor="let row of rtoData" [value]="row.code">{{row.label}}</ng-option>
+                                </ng-select>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Products:<span class="error"> *</span></label>
+                                <ng-select placeholder="Select Product" (clear)="clearValue('product',$event)" (change)="changeSelectBox('product',$event,ledata)" [(ngModel)]="selectedProduct" [ngModelOptions]="{standalone: true}">
+                                    <!-- <ng-option *ngFor="let row of productData" [value]="row.product_type_id">{{row.label}}</ng-option> -->
+                                    <ng-option *ngFor="let row of product_list" [value]="row.renewal_code+'|'+row.renewal_label">{{row.renewal_label}}</ng-option>
+                                </ng-select>
+
+                                <!-- <div class="error" *ngIf="submitted && formRecodEdit.controls.product.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.product.errors.required">
+                                        Product is required.
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Make:<span class="error"> *</span></label>
+                                <ng-select placeholder="Select Make" (clear)="clearValue('make',$event)" (change)="changeSelectBox('make',$event,ledata)"   [(ngModel)]="selectedMake" [ngModelOptions]="{standalone: true}">
+                                    <ng-option *ngFor="let row of result_makes" [value]="row.make_id+'|'+row.make">{{row.make}}</ng-option>
+                                </ng-select>
+
+                               <!--  <div class="error" *ngIf="submitted && formRecodEdit.controls.make.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.make.errors.required">
+                                        Make is required.
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Model:<span class="error"> *</span></label>
+                                <ng-select placeholder="Select Model" (clear)="clearValue('model',$event)"  (change)="changeSelectBox('model',$event,ledata)" [(ngModel)]="selectedModel" [ngModelOptions]="{standalone: true}" >
+                                <ng-option *ngFor="let row of result_models_changes" [value]="row.vehicle_model_id+'|'+row.model">{{row.model}}</ng-option>
+                            </ng-select>
+                            </div>
+                        </div>
+                         <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Variants:<span class="error"> *</span></label>
+                                    <ng-select placeholder="Select Variant" (clear)="clearValue('variants',$event)"  (change)="changeSelectBox('variants',$event,ledata)" [(ngModel)]="selectedVariants"[(ngModel)]="selectedVariants" [ngModelOptions]="{standalone: true}" >
+                                        <ng-option *ngFor="let row of result_variant" [value]="row.vehicle_master_id+'|'+row.variants">{{row.variants}}</ng-option>
+                                    </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>CC:<span class="error"> *</span></label>
+                                <input type="hidden" formControlName="selectedCc" [value]="selectedCc"/>
+                                <label  >{{selectedCc}}</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group" >
+                                <label>Seating Capacity:<span class="error"> *</span></label>
+                                 <input  type="hidden"formControlName="selectedSeatCapacity" [value]="selectedSeatCapacity" />
+                                 <label   >{{selectedSeatCapacity}}</label>
+                            </div>
+                         </div>
+                         <div class="col-sm-12">
+                            <div class="form-group" >
+                                <label>Car Color:<span class="error"> *</span></label>
+                           <!--  <input type="text" formControlName="selectedCarcolor"  [value]="selectedCarcolor" style="width: 50%;height: 30px;border-block-width: 1px;" /> -->
+                            <ng-select placeholder="Select color" (clear)="clearValue('color',$event)" (change)="changeSelectBox('color',$event,ledata)" [(ngModel)]="selectedCarcolor" [ngModelOptions]="{standalone: true}">
+                                <ng-option *ngFor="let row of colorData" [value]="row.name">{{row.name}}</ng-option>
+                            </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group" >
+                                   <label>Policy Holder Type :</label>
+                                <ng-select placeholder="Select Policy Holder Type" (clear)="clearValue('policy_holder_type_name',$event)"
+                                 (change)="changeSelectBox('policy_holder_type_name',$event,ledata)" [(ngModel)]="selectedPolicyHolderType_name" [ngModelOptions]="{standalone: true}">
+                                    <ng-option value="INDIVIDUAL">Individual</ng-option>
+                                    <ng-option value="CORPORATE">Corporate</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group" >
+                                     <label>Policy Package-Type :</label>
+                                <ng-select placeholder="Select Policy Sub Type" (clear)="clearValue('policy_sub_type_name',$event)"
+                                 (change)="changeSelectBox('policy_sub_type_name',$event,ledata)" [(ngModel)]="selectedPolicySubType_name" [ngModelOptions]="{standalone: true}">
+                                    <ng-option *ngFor="let row of policySubTypeList" [value]="row.label">{{row.label}}</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group" >
+                            <label>Insurance Name :</label>
+                              <ng-select placeholder="Select IC" (clear)="clearValue('insurance_name',$event)" (change)="changeSelectBox('insurance_name',$event,ledata)" [(ngModel)]="selectedInsurance_name" [ngModelOptions]="{standalone: true}">
+                                <ng-option *ngFor="let row of icList" [value]="row.code">{{row.code}}</ng-option>
+                              </ng-select>
+                          </div>
+                      </div>
+
+                    
+                    </div>
+                    <div class="submit-section">
+                        <input *ngIf="btnEditSubmit"  class="btn btn-custom green btn-lg" type="submit" value="Submit">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<app-loader [loaderActive]="loaderActive"></app-loader>
+                                                                  

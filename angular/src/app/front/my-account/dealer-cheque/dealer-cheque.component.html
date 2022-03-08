@@ -1,0 +1,95 @@
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <!-- Page Content -->
+
+
+    <div class="content container-fluid">
+        <app-tickers></app-tickers>
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Dealer Cheque</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="['/my-account/dashboard']" href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Dealer Cheque</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadowbox">
+                    <div class="card-body">
+                        <form class="form-horizontal" [formGroup]="formRecodEdit" *ngIf="showForm">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-3">
+                                    <div class="form-group">
+                                        <label>Cheque No</label>
+                                        <input type="text" formControlName="cheque_no" class="form-control" placeholder="Cheque No" autocomplete="off">
+                                        <div class="error" *ngIf="submitted_filter && formRecodEdit.controls.cheque_no.errors">
+                                            <div *ngIf="submitted_filter && formRecodEdit.controls.cheque_no.errors.required">
+                                                Cheque No is required.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-3">
+                                    <div class="form-group">
+                                        <label>Cheque Date</label>
+                                        <div class="cal-icon">
+                                            <input (click)="e.toggle()" (dateSelect)="selectDate('policy_from',$event)" class="cheque_date form-control" placeholder="yyyy-mm-dd" formControlName="cheque_date" [(ngModel)]="date_picker_policy_from" ngbDatepicker #e="ngbDatepicker" placeholder="yyyy-mm-dd" autocomplete="off"
+                                                readonly>
+                                        </div>
+                                        <!-- <input type="date" formControlName="cheque_date" class="form-control" placeholder="Cheque Date" autocomplete="off"> -->
+                                        <div class="error" *ngIf="submitted_filter && formRecodEdit.controls.cheque_date.errors">
+                                            <div *ngIf="submitted_filter && formRecodEdit.controls.cheque_date.errors.required">
+                                                Cheque Date is required.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4">
+                                    <div class="form-group">
+                                        <label>Bank Name</label>
+                                        <input type="text" formControlName="bank_name" class="form-control" placeholder="Bank Name" autocomplete="off">
+                                        <div class="error" *ngIf="submitted_filter && formRecodEdit.controls.bank_name.errors">
+                                            <div *ngIf="submitted_filter && formRecodEdit.controls.bank_name.errors.required">
+                                                Bank Acount No is required.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4">
+                                    <div class="form-group">
+                                        <label>Branch Name :</label>
+                                        <input type="text" formControlName="bank_branch" class="form-control" placeholder="Branch Name" autocomplete="off">
+                                        <div class="error" *ngIf="submitted_filter && formRecodEdit.controls.bank_branch.errors">
+                                            <div *ngIf="submitted_filter && formRecodEdit.controls.bank_branch.errors.required">
+                                                Bank Acount No is required.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4">
+                                    <div class="form-group">
+                                        <label>total Amount :</label>
+                                        <input type="text" readonly formControlName="total_amount" class="form-control" placeholder="Total Amount" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="d-block">&nbsp;</label>
+                                    <button (click)="submitFormFilter()" type="submit" class="btn btn-custom green w-43" title="Search">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Wrapper-->
+<app-loader [loaderActive]="loaderActive"></app-loader>

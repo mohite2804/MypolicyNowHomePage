@@ -1,0 +1,16 @@
+#lebal
+{
+    display: block;
+    margin: 0 0 0.28571429rem;
+    color:unset;
+    font-size: .92857143em;
+    font-weight: 700;
+    text-transform: none;
+}
+
+#gender_cla
+{
+    margin-left: 21px; 
+    font-size:17px; 
+    text-transform: uppercase;
+}

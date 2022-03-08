@@ -1,0 +1,408 @@
+<style>
+    a, a:hover {
+    color: #ffffff;
+}
+</style>
+<!--Page Wrapper -->
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content container-fluid">        
+        <app-tickers></app-tickers>        
+        <div class="page-header">
+            <form [formGroup]="formGetInvoiceByDate" method="post" (ngSubmit)="submitInvoiceDetails()">
+
+                <div class="row align-items-center">
+
+                    <div class="col">
+                        <h3 class="page-title">Invoice Report</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a [routerLink]="['/my-account/dashboard']" href="javascript:void(0)">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Invoice Report</li>
+                        </ul>
+                    </div>
+                   <!-- <ng-container *ngIf="loginUserType != 5">
+
+                        <div class="col-lg-2 col-md-4 float-right ml-auto">
+                            <div class="form-group form-focus mb-0">
+
+                                    <div class="error" *ngIf="submitted && formGetInvoiceByDate.controls.invoice_date.errors">
+                                        <div *ngIf="submitted && formGetInvoiceByDate.controls.invoice_date.errors.required">
+                                            Invoice date is required.
+                                        </div>
+                                    </div>
+                                    <div class="error" *ngIf="submitted && invoiceDateValidate">
+                                        Please select past month.
+                                    </div>
+
+                            </div>
+                        </div>
+                        <div class="col-auto float-right ml-auto dashboard-search">
+                            <button type="submit" class="btn btn-custom blue"><i class="la la-receipt"></i> Generate Invoice</button>
+                            <button type="button" id="openModalButton" [hidden]="true" data-toggle="modal" data-target="#invoice_pop">Open Modal</button>
+                        </div>
+                    
+
+                    </ng-container> -->
+
+                </div>
+            </form>
+        </div>
+        <div class="row justify-content-center generate-invoice-statsinfo">
+        <!-------------   (click)="showInvoiceList()"  ---------------------->
+            <div class="col-lg-2 col-md-4 col-12">
+                <div class="card dash-widget blue-gradient">
+                    <a href="my-account/invoice"> 
+                    <div class="card-body" style="background: #39b54a;color: white;">
+                        <div class="dash-widget-info">
+                            <h3>{{ total_invoice_count }}</h3>
+                            <span>Invoice Created</span>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+            </div>
+            <!------- (click)="showPendingPolicyList()" ----------->
+            <div class="col-lg-2 col-md-4 col-12">
+                <div class="card dash-widget blue-gradient">
+                    <a href="my-account/pending-policies"> 
+                    <div class="card-body">
+                        <div class="dash-widget-info">
+                            <h3>{{pending_policy_count}}</h3>
+                            <span>64V5 Pending Policies</span>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+            </div>
+            <!--<div class="col-lg-2 col-md-4 col-12" >
+                <div class="card dash-widget blue-gradient">
+                    <div class="card-body">
+                        <div class="dash-widget-info">
+                            <h3>{{total_premium_amount}}</h3>
+                            <span>Total Premium</span>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <!----------  (click)="showTotalComissionList()"   ----------->
+            <div class="col-lg-2 col-md-4 col-12">
+                <div class="card dash-widget blue-gradient">
+                    <a href="my-account/total-comission"> 
+                    <div class="card-body">
+                        <div class="dash-widget-info">
+                            <h3>{{total_commission_amount}}</h3>
+                            <span>Total Comission</span>
+                        </div>
+                    </div>
+                </a>
+                </div>
+            </div>
+            <!-----------------------    (click)="showPaymentDetailsList()"  ------------------------------>
+
+            <div class="col-lg-2 col-md-4 col-12">
+                <div class="card dash-widget blue-gradient">
+                <a href="my-account/payment-details"> 
+                    <div class="card-body">
+                        <div class="dash-widget-info">
+                            <h3>{{total_payment_amount}}</h3>
+                            <span>Payment Details</span>
+                        </div>
+                    </div>
+                </a>
+                </div>
+            </div>
+        </div>
+        <div class="row" [ngStyle]="{'display':displayInvoiceList}">
+            <div class="col-md-12">
+                <div class="card shadowbox">
+                    <div class="card-body">
+                        <div class="text-center py-3">
+                            <div class="col-md-2" style="margin-left: 85.5%;">
+ <a href="javascript:void(0);" (click)="exportInvoiceData()" class="" style="padding: 6px 5px;font-size: 1.2rem;font-size: 14px;border: 1px solid #c9c9c9;background: #dcdcdc;color: black;font-weight: bold;"><i class="fa fa-file-excel-o"></i>&nbsp;Export&nbsp;Data</a>
+                            <div class="col-md-4" style="float:left">
+                            <!--<input type="month" formControlName="invoice_date" outsideDays="collapsed" class="form-control floating datetimepicker-month datepicker-only-month-select" />-->
+                                 
+                            </div>
+
+                            <div class="col-md-3"  style="float:left;height: 37px;">
+                           
+
+                            </div>
+                            </div>
+
+
+
+
+                        <!--    <a href="javascript:void(0);" (click)="exportInvoiceData()" class="btn btn-custom btn-sm green"><i class="fa fa-download"></i> Download Invoice Data</a>-->
+                        </div>
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn datatable w-100"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="row" [ngStyle]="{'display':displayPendingPolicyList}">
+            <div class="col-md-12">
+                <div class="card shadowbox">
+                    <div class="card-body">
+                        <div class="text-center py-3">
+
+
+
+                            <div class="col-md-8" style="margin-left: 27%;">
+                            <div class="col-md-4" style="float:left">
+                        <input type="month" formControlName="invoice_date" outsideDays="collapsed" class="form-control floating datetimepicker-month datepicker-only-month-select" />
+                                 
+                            </div>
+
+                            <div class="col-md-4"  style="float:left;height: 37px;">
+                            <a href="javascript:void(0);" (click)="exportPendingPolicies()" class="form-control floating btn btn-custom btn-sm green" style="padding: 15px 5px;font-size: 1.2rem;font-size: 12px;"><i class="fa fa-download"></i>Download Pending Policies</a>
+
+                            </div>
+                            </div>
+
+
+
+
+                        </div>
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions2" class="table table-striped table-bordered custom-table srn datatable w-100"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+
+
+        <!--<div class="row" [ngStyle]="{'display':displayTotalComissionList}">
+            <div class="col-md-12">
+                <div class="card shadowbox">
+                    <div class="card-body">
+                        <div class="text-center py-3">
+
+
+
+                            <div class="col-md-8" style="margin-left: 27%;">
+                            <div class="col-md-4" style="float:left">
+                                 
+                            </div>
+
+                            <div class="col-md-4"  style="float:left;height: 37px;">
+                            <a href="javascript:void(0);" (click)="exportTotalComission()" class="form-control floating btn btn-custom btn-sm green" style="padding: 15px 5px;font-size: 1.2rem;font-size: 12px;"><i class="fa fa-download"></i>Download Total Comission</a>
+
+                            </div>
+                            </div>
+
+
+                        </div>
+                        <div class="table-responsive">
+                            <table datatable  [dtTrigger]="dtTrigger3" [dtOptions]="dtOptions3" class="table table-striped table-bordered custom-table srn datatable w-100"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+
+
+       <!-- <div class="row" [ngStyle]="{'display':displayPaymentDetailsList}">
+            <div class="col-md-12">
+                <div class="card shadowbox">
+                    <div class="card-body">
+                        <div class="text-center py-3">
+
+
+                            <div class="col-md-8" style="margin-left: 27%;">
+                            <div class="col-md-4" style="float:left">
+                            <input type="month" formControlName="invoice_date" outsideDays="collapsed" class="form-control floating datetimepicker-month datepicker-only-month-select" />
+                                 
+                            </div>
+
+                            <div class="col-md-4"  style="float:left;height: 37px;">
+                            <a href="javascript:void(0);" (click)="exportPaymentDetails()" class="form-control floating btn btn-custom btn-sm green" style="padding: 15px 5px;font-size: 1.2rem;font-size: 12px;"><i class="fa fa-download"></i>Download Payment Details</a>
+
+                            </div>
+                            </div>
+
+
+                        </div>
+                        <div class="table-responsive">
+                            <table datatable [dtOptions]="dtOptions4" class="table table-striped table-bordered custom-table srn datatable w-100"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+
+    </div>
+    <!-- /Page Content -->
+    <!--  Modal -->
+    <div id="invoice_pop" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content">
+                <form [formGroup]="formInvoiceDetailsData" method="post" (ngSubmit)="submitInvoiceFormDetails()">
+                    <input type="hidden" formControlName="tds_percentage" value="">
+                    <input type="hidden" formControlName="policy_raw_data" value="">
+                    <!-- <input type="hidden" formControlName="total_calculated_data" value=""> -->
+                    <div class="modal-header">
+                        <h5 class="modal-title">Invoice Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered custom-table  action-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr. No.</th>
+                                                <th>Product Type</th>
+                                                <th>Policy Type</th>
+                                                <th>Policy No.</th>
+                                                <th>Policy Premium</th>
+                                                <th>Commission</th>
+                                                <th>GST Amount</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngIf="invoiceDetailsData">
+                                            <tr *ngFor="let row of invoiceDetailsData; let i = index">
+                                                <td>{{ i+1 }}</td>
+                                                <td>{{ row.product_type }}</td>
+                                                <td>{{ row.policy_type }}</td>
+                                                <td>{{ row.policy_no }}</td>
+                                                <td>{{ row.policy_premium }}</td>
+                                                <td>{{ row.commission }}</td>
+                                                <td>{{ row.gst_commission }}</td>
+                                                <td>{{ row.total }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td><b>Total</b></td>
+                                                <td>{{ no_of_policy }}</td>
+                                                <td>{{ total_policy_premium }}</td>
+                                                <td>{{ total_policy_commission }}</td>
+                                                <td>{{ total_gst_on_commission }}</td>
+                                                <td>{{ grand_total }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center justify-content-center mt-3 mb-2">
+                            <div class="col-lg-3 col-md-4">
+                                <div class="form-group form-focus mb-0" [ngClass]="{'focused': formInvoiceDetailsData.value.invoice_number}">
+                                    <input maxlength="20" type="text" class="form-control floating" formControlName="invoice_number" (change)="checkInvoiceNumber($event)">
+                                    <div class="error" *ngIf="submittedInvoice && formInvoiceDetailsData.controls.invoice_number.errors">
+                                        <div *ngIf="submittedInvoice && formInvoiceDetailsData.controls.invoice_number.errors.required">
+                                            Invoice no is required.
+                                        </div>
+                                        <div *ngIf="submittedInvoice && formInvoiceDetailsData.controls.invoice_number.errors.pattern">
+                                            Please enter valid invoice no.
+                                        </div>
+                                    </div>
+                                    <label class="focus-label">Invoice No.</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4">
+                                <div class="form-group form-focus mb-0" [ngClass]="{'focused': formInvoiceDetailsData.value.invoice_update_date}">
+                                    <div class="cal-icon">
+                                        <input readonly type="text" formControlName="invoice_update_date" outsideDays="collapsed" class="form-control floating datetimepicker-month" (click)="u.toggle()" ngbDatepicker #u="ngbDatepicker">
+                                        <div class="error" *ngIf="submittedInvoice && formInvoiceDetailsData.controls.invoice_update_date.errors">
+                                            <div *ngIf="submittedInvoice && formInvoiceDetailsData.controls.invoice_update_date.errors.required">
+                                                Invoice date is required.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <label class="focus-label">Invoice Date</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-4">
+                                <button type="submit" class="btn btn-custom green w-100">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- / Modal -->
+
+    <!--  Upload Scanned Copy Modal -->
+    <div id="upload_scanned_copy_popup" [ngStyle]="{'display':displayInvoiceSignedBy}" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <form [formGroup]="formScannedCopyData" method="post" (ngSubmit)="submitScannedCopyDetails()">
+                    <input type="hidden" formControlName="scanned_copy_invoice_id" value="" />
+                    <div class="modal-header">
+                        <h5 class="modal-title">Upload Scanned Copy</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12 ui form text-center mb-2">
+                                <label class="ui label d-block border-0">Is invoice signed by ?</label>
+                                <div class="fields my-2 d-inline">  
+                                    <div class="field d-inline">                                  
+                                        <div class="ui radio checkbox">
+                                            <input class="form-check-input" type="radio" value="1" formControlName="invoiceSignedBy" id="invoiceSignedByManually" />
+                                            <label class="form-check-label" for="invoiceSignedByManually">Manually</label>
+                                        </div>
+                                    </div>
+                                    <div class="field d-inline">  
+                                        <div class="ui radio checkbox">
+                                            <input class="form-check-input" accept="image/*, application/pdf" type="radio" value="2"  formControlName="invoiceSignedBy" id="invoiceSignedByDigitally" />
+                                            <label class="form-check-label" for="invoiceSignedByDigitally">Digital</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="error" *ngIf="submittedScannedCopy && formScannedCopyData.controls.invoiceSignedBy.errors">
+                                    <div *ngIf="submittedScannedCopy && formScannedCopyData.controls.invoiceSignedBy.errors.required">
+                                        Select invoice signed by.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-12">
+                                <div class="box fileuploadbox">
+                                    <p><b>Note: </b>Allowed file type "jpg, jpeg, png, pdf"</p>
+                                    <input type="file" accept=".jpg, .jpeg, .png, .pdf" id="file-1" class="inputfile" (change)="uploadSacannedFile($event)">
+                                    <div class="error" *ngIf="submittedScannedCopy && formScannedCopyData.controls.scanned_file_upload.errors">
+                                        <div *ngIf="submittedScannedCopy && formScannedCopyData.controls.scanned_file_upload.errors.required">
+                                            Invoice signed file required.
+                                        </div>
+                                    </div>
+                                    <label for="file-1"><figure><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg></figure>
+                                        <span>{{sacnned_file_upload_label}}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="error" *ngIf="submittedScannedCopy && formScannedCopyData.controls.scanned_copy_invoice_id.errors">
+                            <div *ngIf="submittedScannedCopy && formScannedCopyData.controls.scanned_copy_invoice_id.errors.required" class="text-center">
+                                <h4>Required data can not be null.</h4>
+                            </div>
+                        </div>
+                        <div class="row align-items-center justify-content-center mt-3 mb-2">
+                            <div class="col-lg-2 col-md-4">
+                                <button type="submit" class="btn btn-custom green">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--  Upload Scanned Copy Modal -->
+
+
+</div>
+<!-- /Page Wrapper-->
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

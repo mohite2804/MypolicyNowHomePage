@@ -1,0 +1,192 @@
+<div id="sidebar" class="sidebar">
+    <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
+            <ul>
+                <li class="menu-title">
+                    <span>Main</span>
+                </li>
+
+                <li [routerLinkActive]="['active']">
+                    <a [routerLink]="['/my-account/dashboard']"><i class="la la-icons"></i> <span>Dashboard</span></a>
+                </li>
+
+                <li [routerLinkActive]="['active']">
+                    <a [routerLink]="['/my-account/reports']"><i class="la la-icons"></i> <span>Dashboard Reports</span></a>
+                </li>
+
+                <li [routerLinkActive]="['active']">
+                    <a [routerLink]="['/my-account/wallet_setting']"><i class="la la-icons"></i> <span>Wallet</span></a>
+                </li>
+
+                <ng-container *ngIf="loginUserType == 2">
+                    <li [routerLinkActive]="['active']">
+                        <a [routerLink]="['/my-account/withdraw-amount']"><i class="la la-icons"></i> <span>Withdraw Amount</span></a>
+                    </li>
+                </ng-container>
+
+
+
+                <li [routerLinkActive]="['active']">
+                    <a [routerLink]="['/my-account/quotes']"><i class="la la-file-alt"></i> <span>Quote List</span></a>
+                </li>
+
+                <li [routerLinkActive]="['active']">
+                    <a [routerLink]="['/my-account/quote-health']"><i class="la la-file-alt"></i> <span>Health Quote List</span></a>
+                </li>
+
+
+                <li [routerLinkActive]="['active']">
+                    <a [routerLink]="['/my-account/break-in-case']"><i class="la la-unlink"></i> <span>Break In Case</span></a>
+                </li>
+
+                <li [routerLinkActive]="['active']">
+                    <a [routerLink]="['/my-account/proposal']"><i class="la la-file-pdf"></i> <span>Proposal</span></a>
+                </li>
+
+                <li [routerLinkActive]="['active']">
+                    <a [routerLink]="['/my-account/health-proposal']"><i class="la la-file-pdf"></i> <span>Health Proposal</span></a>
+                </li>
+
+
+                <li class="submenu">
+                    <a href="javascript:void(0);"><i class="la la-file-invoice-dollar"></i>
+                      <span>Policy</span> <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li [routerLinkActive]="['active']">
+                            <a [routerLink]="['/my-account/sold-policies']"><span><i class="las la-angle-right"></i></span>Sold Policy</a>
+                        </li>
+
+                        <li [routerLinkActive]="['active']">
+                            <a [routerLink]="['/my-account/endorsement']"><span><i class="las la-angle-right"></i></span>Endorsement</a>
+                        </li>
+
+                        <li [routerLinkActive]="['active']">
+                            <a [routerLink]="['/my-account/cancellation']"><span><i class="las la-angle-right"></i></span>Cancellation</a>
+                        </li>
+                        <li [routerLinkActive]="['active']">
+                            <a [routerLink]="['/my-account/dealer-cheque']"><span><i class="las la-angle-right"></i></span>Dealer Cheque</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="submenu">
+                    <a href="javascript:void(0);"><i class="la la-file-invoice-dollar"></i>
+                      <span>Health Policy</span> <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li [routerLinkActive]="['active']">
+                            <a [routerLink]="['/my-account/sold-policies-health']"><span><i class="las la-angle-right"></i></span>Health Sold Policy</a>
+                        </li>
+
+                        <!-- <li [routerLinkActive]="['active']">
+                            <a [routerLink]="['/my-account/cancellation-health']"><span><i class="las la-angle-right"></i></span>Health Cancellation</a>
+                        </li> -->
+                    </ul>
+                </li>
+
+                <li [routerLinkActive]="['active']">
+                    <!--  <a [routerLink]="['/my-account/policy-renewal/'+renew_active_url_path]"> -->
+                    <a [routerLink]="['/my-account/policy-renewal']"><i class="la la-lock-open"></i> <span>Policy Renewal</span></a>
+                </li>
+
+
+                <li [routerLinkActive]="['active']">
+                    <a [routerLink]="['/my-account/query-management']"><i class="la la-sync"></i> <span>Query Management System</span></a>
+                </li>
+
+                <li [routerLinkActive]="['active']">
+                    <a [routerLink]="['/my-account/change-password']"><i class="la la-lock-open"></i> <span>Change Password</span></a>
+                </li>
+
+
+
+
+                <li class="submenu">
+                    <a href="javascript:void(0);"><i class="la la-file-invoice-dollar"></i>
+                    <span>Invoices & GST</span> <span class="menu-arrow"></span>
+                  </a>
+                    <ul>
+                        <li [routerLinkActive]="['active']">
+                            <a [routerLink]="['/my-account/invoice']"><span><i class="las la-angle-right"></i></span>Generate Invoice</a>
+                        </li>
+
+                        <li [routerLinkActive]="['active']">
+                            <a [routerLink]="['/my-account/gst']"><span><i class="las la-angle-right"></i></span>Upload GST File</a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="submenu">
+                    <a href="javascript:void(0);"><i class="la la-file-invoice-dollar"></i>
+                  <span>Transactions</span> <span class="menu-arrow"></span>
+                </a>
+                    <ul>
+                        <li [routerLinkActive]="['active']">
+                            <a [routerLink]="['/my-account/wallettransactions']"><span><i class="las la-angle-right"></i></span>Wallet Transactions</a>
+                        </li>
+
+                        <li [routerLinkActive]="['active']">
+                            <a [routerLink]="['/my-account/onlinetransactions']"><span><i class="las la-angle-right"></i></span>Online Transactions</a>
+                        </li>
+                        <li [routerLinkActive]="['active']">
+                            <a [routerLink]="['/my-account/policytransactions']"><span><i class="las la-angle-right"></i></span>Policy Transactions</a>
+                        </li>
+                        <li [routerLinkActive]="['active']">
+                            <a [routerLink]="['/my-account/razorpay-statement']"><span><i class="las la-angle-right"></i></span>Razorpay Wallet Transactions</a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li class="submenu">
+                    <a [routerLink]="['/my-account/wallettransactions']"><i class="la la-file-invoice-dollar"></i>
+                <span>Reports</span> <span class="menu-arrow"></span></a>
+                    <!--      <a href="javascript:void(0);"><i class="la la-file-invoice-dollar"></i>
+                <span>Reports</span> <span class="menu-arrow"></span>
+              </a> -->
+                    <!--  <ul>
+                        <li [routerLinkActive]="['active']">
+                            <a [routerLink]="['/my-account/wallettransactions']"><span><i class="las la-angle-right"></i></span>APD Transaction</a>
+                        </li>
+
+                        <li [routerLinkActive]="['active']">
+                            <a [routerLink]="['/my-account/cancellationreport']"><span><i class="las la-angle-right"></i></span>Cancellation</a>
+                        </li>
+
+                        <li [routerLinkActive]="['active']">
+                            <a [routerLink]="['/my-account/policytransactions']"><span><i class="las la-angle-right"></i></span>Claim Details</a>
+                        </li>
+
+
+                        <li [routerLinkActive]="['active']">
+                            <a [routerLink]="['/my-account/wallettransactions']"><span><i class="las la-angle-right"></i></span>Payment Gateway(PG)</a>
+                        </li>
+
+                        <li [routerLinkActive]="['active']">
+                            <a [routerLink]="['/my-account/onlinetransactions']"><span><i class="las la-angle-right"></i></span>Lost Data</a>
+                        </li>
+
+                        <li [routerLinkActive]="['active']">
+                            <a [routerLink]="['/my-account/policytransactions']"><span><i class="las la-angle-right"></i></span>Renewal Notice</a>
+                        </li>
+
+
+
+                    </ul> -->
+                </li>
+
+
+
+                <li [routerLinkActive]="['active']">
+                    <a [routerLink]="['/my-account/greetings']"><i class="la la-icons"></i> <span>Greetings</span></a>
+                </li>
+
+
+
+
+            </ul>
+        </div>
+    </div>
+</div>
