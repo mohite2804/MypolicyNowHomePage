@@ -1,0 +1,58 @@
+<!-- <br><br><br><br><br><br>
+
+<div class="page-wrapper">
+    <div class="content">
+        <section class="py-0">
+            <div class="row">
+
+                <ul>
+                    <li>
+                        <a [routerLink]="['/commercial-pccv-quote']">Commercial Threewheeler PCCV</a>
+                    </li>
+
+                    <li>
+                        <a [routerLink]="['/commercial-gccv-quote']">Commercial Threewheeler GCCV Public</a>
+                    </li>
+
+                    <li>
+                        <a [routerLink]="['/commercial-miscd-quote']">Commercial Misc D Public</a>
+                    </li>
+                </ul>
+
+            </div>
+        </section>
+    </div>
+</div> -->
+
+
+<div class="page-wrapper">
+    <div class="content home-conetnt">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-10 col-12">
+                    <div class="banner-text text-center mb-4">
+
+                    </div>
+
+
+                </div>
+                <div class="col-lg-9 col-md-12 col-12">
+                    <div class="product-row justify-content-center">
+                        <div class="display-box" *ngFor="let row of commercial_types ">
+                            <a href="javascript:void(0);" (click)="redirectUrl(row.product_type_id)">
+                                <div class="display-img">
+                                    <img src="{{ row.icon_image }}">
+                                </div>
+                                <div class="display-text">
+                                    <h3>{{ row.label }}</h3>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-loader [loaderActive]="loaderActive"></app-loader>
+    </div>
+</div>

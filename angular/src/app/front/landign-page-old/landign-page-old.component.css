@@ -1,0 +1,1695 @@
+/* ...............<  animations for cloud >.................. */
+
+.cloud_window {
+    overflow: hidden;
+    display: block;
+    padding: 0;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.cloud-1 {
+    width: 87px;
+    height: 54px;
+    top: 120px;
+}
+
+.cloud-2 {
+    width: 28px;
+    height: 18px;
+    top: 117px;
+}
+
+.cloud-3 {
+    width: 86px;
+    height: 55px;
+    top: 107px;
+}
+
+.cloud-4 {
+    width: 110px;
+    height: 70px;
+    top: 17px;
+}
+
+.cloud-5 {
+    width: 123px;
+    height: 88px;
+    top: 38px;
+}
+
+.cloud-6 {
+    width: 195px;
+    height: 96px;
+    top: 50px;
+}
+
+.cloud-7 {
+    width: 129px;
+    height: 78px;
+    top: 5px;
+}
+
+.cloud-8 {
+    width: 81px;
+    height: 53px;
+    top: 124px;
+}
+
+.cloud-9 {
+    width: 32px;
+    height: 24px;
+    top: 128px;
+}
+
+.cloud-10 {
+    width: 16px;
+    height: 13px;
+    top: 111px;
+}
+
+.cloud-11 {
+    width: 33px;
+    height: 21px;
+    top: 137px;
+}
+
+.cloud-12 {
+    width: 70px;
+    height: 52px;
+    top: 25px;
+}
+
+@-webkit-keyframes linemove {
+    from {
+        right: -200px;
+    }
+    to {
+        right: 1456px;
+    }
+}
+
+@-moz-keyframes linemove {
+    from {
+        right: -200px;
+    }
+    to {
+        right: 1456px;
+    }
+}
+
+
+/* @-ms-keyframes linemove {
+  from {
+      right: -200px;
+  }
+  to {
+      right: 1456px;
+  }
+} */
+
+@-o-keyframes linemove {
+    from {
+        right: -200px;
+    }
+    to {
+        right: 1456px;
+    }
+}
+
+@keyframes linemove {
+    from {
+        right: -200px;
+    }
+    to {
+        right: 1456px;
+    }
+}
+
+[data-speed="1"] {
+    animation: linemove 84.01936s;
+    -webkit-animation: linemove 84.01936s;
+}
+
+[data-speed="2"] {
+    animation: linemove 68.67113s;
+    -webkit-animation: linemove 68.67113s;
+}
+
+[data-speed="3"] {
+    animation: linemove 80.99853s;
+    -webkit-animation: linemove 80.99853s;
+}
+
+[data-speed="4"] {
+    animation: linemove 62.6682s;
+    -webkit-animation: linemove 62.6682s;
+}
+
+[data-speed="5"] {
+    animation: linemove 51.20363s;
+    -webkit-animation: linemove 51.20363s;
+}
+
+[data-speed="6"] {
+    animation: linemove 76.46404s;
+    -webkit-animation: linemove 76.46404s;
+}
+
+[data-speed="7"] {
+    animation: linemove 85.58272s;
+    -webkit-animation: linemove 85.58272s;
+}
+
+[data-speed="8"] {
+    animation: linemove 71.02697s;
+    -webkit-animation: linemove 71.02697s;
+}
+
+[data-speed="9"] {
+    animation: linemove 63.79332s;
+    -webkit-animation: linemove 63.79332s;
+}
+
+[data-speed="10"] {
+    animation: linemove 75.69691s;
+    -webkit-animation: linemove 75.69691s;
+}
+
+[data-speed="11"] {
+    animation: linemove 78.87823s;
+    -webkit-animation: linemove 78.87823s;
+}
+
+[data-speed="12"] {
+    animation: linemove 58.158s;
+    -webkit-animation: linemove 58.158s;
+}
+
+.cloud {
+    position: absolute;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    -webkit-animation-delay: -80s;
+}
+
+
+/* ...............<  animations for plane >.................. */
+
+.plane {
+    position: relative;
+    top: 80px;
+    left: -90%;
+    width: 170px;
+    height: 40px;
+}
+
+.plane {
+    animation-name: plane;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    /*firefox*/
+    -moz-animation-name: plane;
+    -moz-animation-duration: 20s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    /* wwebkit*/
+    -webkit-animation-name: plane;
+    -webkit-animation-duration: 20s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+}
+
+@keyframes plane {
+    from {
+        left: -10%;
+        opacity: 1
+    }
+    30% {
+        opacity: 1;
+    }
+    to {
+        left: 110%;
+    }
+}
+
+@-moz-keyframes plane {
+    from {
+        left: -10%;
+        opacity: 1
+    }
+    30% {
+        opacity: 1;
+    }
+    to {
+        left: 110%;
+    }
+}
+
+
+/*webkit*/
+
+@-webkit-keyframes plane {
+    from {
+        left: -10%
+    }
+    to {
+        left: 110%;
+    }
+}
+
+
+/* ...............<  animations for city >.................. */
+
+.city_window {
+    overflow: hidden;
+    display: block;
+    padding: 0;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+.roadbase {
+    background: #d4d4d4;
+    border-top: 5px solid #4e5359;
+    border-bottom: 5px solid #4e5359;
+    width: 100%;
+    height: 94px;
+    position: absolute;
+    bottom: 0;
+}
+
+.roadlamp {
+    background-image: url(../../../assets/front/img/homepage/roadlamp.png);
+    background-repeat: repeat-x;
+    width: 100%;
+    height: 110px;
+    position: absolute;
+    bottom: 0px;
+    z-index: 1;
+}
+
+.building {
+    width: 100%;
+    position: absolute;
+    bottom: 80px;
+}
+
+
+/* ...............<  animations for scooterboy >.................. */
+
+.scooterboy {
+    position: relative;
+    top: -28px;
+    right: 2%;
+    width: 44px;
+    height: 36px;
+}
+
+.scooterboy {
+    animation-name: scooterboy;
+    animation-duration: 55s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    /*firefox*/
+    -moz-animation-name: scooterboy;
+    -moz-animation-duration: 55s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    /* wwebkit*/
+    -webkit-animation-name: scooterboy;
+    -webkit-animation-duration: 55s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+}
+
+@keyframes scooterboy {
+    from {
+        right: 10%;
+        opacity: 1
+    }
+    30% {
+        opacity: 1;
+    }
+    to {
+        right: -110%;
+    }
+}
+
+@-moz-keyframes scooterboy {
+    from {
+        right: 10%;
+        opacity: 1
+    }
+    30% {
+        opacity: 1;
+    }
+    to {
+        right: -110%;
+    }
+}
+
+
+/*webkit*/
+
+@-webkit-keyframes scooterboy {
+    from {
+        right: 10%;
+    }
+    to {
+        right: -110%;
+    }
+}
+
+
+/* ...............<  animations for yellowcar >.................. */
+
+.yellowcar {
+    position: relative;
+    top: -38px;
+    right: 10%;
+    width: 73px;
+    height: 29px;
+}
+
+.yellowcar {
+    animation-name: yellowcar;
+    animation-duration: 40s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    /*firefox*/
+    -moz-animation-name: yellowcar;
+    -moz-animation-duration: 40s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    /* wwebkit*/
+    -webkit-animation-name: yellowcar;
+    -webkit-animation-duration: 40s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+}
+
+@keyframes yellowcar {
+    from {
+        right: 10%;
+        opacity: 1
+    }
+    30% {
+        opacity: 1;
+    }
+    to {
+        right: -110%;
+    }
+}
+
+@-moz-keyframes yellowcar {
+    from {
+        right: 10%;
+        opacity: 1
+    }
+    30% {
+        opacity: 1;
+    }
+    to {
+        right: -110%;
+    }
+}
+
+
+/*webkit*/
+
+@-webkit-keyframes yellowcar {
+    from {
+        right: 10%
+    }
+    to {
+        right: -110%;
+    }
+}
+
+
+/* ...............<  animations for ambulance >.................. */
+
+.ambulance {
+    position: relative;
+    top: -82px;
+    right: 15%;
+    width: 91px;
+    height: 48px;
+}
+
+.ambulance {
+    animation-name: ambulance;
+    animation-duration: 35s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    /*firefox*/
+    -moz-animation-name: ambulance;
+    -moz-animation-duration: 35s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    /* wwebkit*/
+    -webkit-animation-name: ambulance;
+    -webkit-animation-duration: 35s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+}
+
+@keyframes ambulance {
+    from {
+        right: 10%;
+        opacity: 1
+    }
+    30% {
+        opacity: 1;
+    }
+    to {
+        right: -110%;
+    }
+}
+
+@-moz-keyframes ambulance {
+    from {
+        right: 10%;
+        opacity: 1
+    }
+    30% {
+        opacity: 1;
+    }
+    to {
+        right: -110%;
+    }
+}
+
+
+/*webkit*/
+
+@-webkit-keyframes ambulance {
+    from {
+        right: 10%;
+    }
+    to {
+        right: -110%;
+    }
+}
+
+
+/* ...............<  animations for moverstempo >.................. */
+
+.moverstempo {
+    position: relative;
+    top: -135px;
+    right: 20%;
+    width: 129px;
+    height: 58px;
+}
+
+.moverstempo {
+    animation-name: moverstempo;
+    animation-duration: 60s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    /*firefox*/
+    -moz-animation-name: moverstempo;
+    -moz-animation-duration: 60s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    /* wwebkit*/
+    -webkit-animation-name: moverstempo;
+    -webkit-animation-duration: 60s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+}
+
+@keyframes moverstempo {
+    from {
+        right: 10%;
+        opacity: 1
+    }
+    30% {
+        opacity: 1;
+    }
+    to {
+        right: -110%;
+    }
+}
+
+@-moz-keyframes moverstempo {
+    from {
+        right: 10%;
+        opacity: 1
+    }
+    30% {
+        opacity: 1;
+    }
+    to {
+        right: -110%;
+    }
+}
+
+
+/*webkit*/
+
+@-webkit-keyframes moverstempo {
+    from {
+        right: 10%;
+    }
+    to {
+        right: -110%;
+    }
+}
+
+
+/* ...............<  animations for bikeboy >.................. */
+
+.bikeboy {
+    position: relative;
+    top: -158px;
+    left: -5%;
+    width: 51px;
+    height: 40px;
+    z-index: 9;
+}
+
+.bikeboy {
+    animation-name: bikeboy;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    /*firefox*/
+    -moz-animation-name: bikeboy;
+    -moz-animation-duration: 20s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    /* wwebkit*/
+    -webkit-animation-name: bikeboy;
+    -webkit-animation-duration: 20s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    animation-direction: reverse;
+    -moz-animation-direction: reverse;
+    -webkit-animation-direction: reverse;
+}
+
+@keyframes bikeboy {
+    from {
+        left: -10%;
+        opacity: 1
+    }
+    30% {
+        opacity: 1;
+    }
+    to {
+        left: 110%;
+    }
+}
+
+@-moz-keyframes bikeboy {
+    from {
+        left: -10%;
+        opacity: 1
+    }
+    30% {
+        opacity: 1;
+    }
+    to {
+        left: 110%;
+    }
+}
+
+
+/*webkit*/
+
+@-webkit-keyframes bikeboy {
+    from {
+        left: -10%;
+    }
+    to {
+        left: 110%;
+    }
+}
+
+
+/* ...............<  animations for red car >.................. */
+
+.redcar {
+    position: relative;
+    top: -180px;
+    left: -25%;
+    width: 90px;
+    height: 40px;
+    z-index: 9;
+}
+
+.redcar {
+    animation-name: redcar;
+    animation-duration: 25s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    /*firefox*/
+    -moz-animation-name: redcar;
+    -moz-animation-duration: 25s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    /* wwebkit*/
+    -webkit-animation-name: redcar;
+    -webkit-animation-duration: 25s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    animation-direction: reverse;
+    -moz-animation-direction: reverse;
+    -webkit-animation-direction: reverse;
+}
+
+@keyframes redcar {
+    from {
+        left: -10%;
+        opacity: 1
+    }
+    30% {
+        opacity: 1;
+    }
+    to {
+        left: 110%;
+    }
+}
+
+@-moz-keyframes redcar {
+    from {
+        left: -10%;
+        opacity: 1
+    }
+    30% {
+        opacity: 1;
+    }
+    to {
+        left: 110%;
+    }
+}
+
+
+/*webkit*/
+
+@-webkit-keyframes redcar {
+    from {
+        left: -10%;
+    }
+    to {
+        left: 110%;
+    }
+}
+
+
+/* ...............<  animations for red car >.................. */
+
+.scootergirl {
+    position: relative;
+    top: -215px;
+    left: -5%;
+    width: 45px;
+    height: 44px;
+    z-index: 9;
+}
+
+.scootergirl {
+    animation-name: scootergirl;
+    animation-duration: 40s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    /*firefox*/
+    -moz-animation-name: scootergirl;
+    -moz-animation-duration: 40s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    /* wwebkit*/
+    -webkit-animation-name: scootergirl;
+    -webkit-animation-duration: 40s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    animation-direction: reverse;
+    -moz-animation-direction: reverse;
+    -webkit-animation-direction: reverse;
+}
+
+@keyframes scootergirl {
+    from {
+        left: -10%;
+        opacity: 1
+    }
+    30% {
+        opacity: 1;
+    }
+    to {
+        left: 110%;
+    }
+}
+
+@-moz-keyframes scootergirl {
+    from {
+        left: -10%;
+        opacity: 1
+    }
+    30% {
+        opacity: 1;
+    }
+    to {
+        left: 110%;
+    }
+}
+
+
+/*webkit*/
+
+@-webkit-keyframes scootergirl {
+    from {
+        left: -10%;
+    }
+    to {
+        left: 110%;
+    }
+}
+
+
+/*-----------------
+  Header
+-----------------------*/
+
+.header {
+    border-bottom: 1px solid #dee2e6;
+    background: #fff;
+    height: 60px;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 100;
+}
+
+.header.sticky-header {
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-bottom: none;
+    z-index: 1002;
+}
+
+.homepage .header {
+    border-bottom: none;
+    background-color: transparent;
+    z-index: 1002;
+}
+
+.homepage .header.sticky-header {
+    background-color: #fff;
+}
+
+.header .header-left {
+    float: left;
+    height: 60px;
+    line-height: 56px;
+    padding: 0 20px 0 0;
+    position: relative;
+    text-align: center;
+    width: 250px;
+    z-index: 1;
+    transition: all 0.2s ease-in-out;
+}
+
+.header .header-left img {
+    width: 100%;
+}
+
+.header .header-left .logo {
+    display: inline-block;
+    line-height: 60px;
+}
+
+.header .main-menu {
+    float: left;
+}
+
+.main-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.main-menu ul li {
+    float: left;
+    position: relative;
+}
+
+.main-menu ul>li>a {
+    color: #000839;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 22px 0px;
+    text-transform: capitalize;
+    margin: 0px 20px;
+    position: relative;
+    display: block;
+    text-transform: uppercase;
+}
+
+.main-menu ul li a:hover {
+    color: #000839;
+}
+
+.main-menu ul li ul.sub-menu {
+    background: #fff;
+    border-top: 2px solid #fcb040;
+    left: 15px;
+    opacity: 0;
+    position: absolute;
+    top: 80%;
+    transition: all 0.3s ease 0s;
+    visibility: hidden;
+    width: 200px;
+    z-index: -99;
+    box-shadow: 0px 2px 25px 0px rgba(0, 0, 0, 0.12);
+}
+
+.main-menu ul li.login-btn ul.sub-menu {
+    width: 120px;
+    right: 0;
+}
+
+.main-menu ul li ul.sub-menu li {
+    border-bottom: 1px solid #ddd;
+    padding: 0;
+    position: relative;
+    width: 100%;
+}
+
+.main-menu ul li:hover ul.sub-menu {
+    top: 100%;
+    opacity: 1;
+    z-index: 999;
+    visibility: visible;
+}
+
+.header .main-menu ul li ul.sub-menu li a {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 12px 15px;
+    margin: 0;
+    text-transform: capitalize;
+}
+
+.main-menu ul li:hover ul.sub-menu li a:hover {
+    color: #fff;
+    background: #fcb040;
+}
+
+.header-right {
+    float: right;
+}
+
+.header-right ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.header-right ul>li {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 19px 10px;
+    font-size: 12px;
+    line-height: 21px;
+    font-weight: 600;
+    color: #000839;
+}
+
+.header-right ul>li>i.fa {
+    margin-right: 5px;
+    font-size: 16px;
+}
+
+.header-right ul li.login-btn {
+    margin: 0;
+    padding: 14px 0;
+}
+
+.header-right ul li.login-btn>a {
+    border: 1px solid #000839;
+    border-radius: 15px;
+    padding: 5px 20px;
+    transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    -ms-transition: all 0.4s ease;
+    -webkit-transition: all 0.4s ease;
+    color: #000839;
+    display: block;
+}
+
+.header-right ul li.login-btn>a:hover {
+    background-color: #000839;
+    color: #fff;
+}
+
+.header-right ul li.login-btn ul li {
+    margin: 0;
+}
+
+.mobile_btn {
+    display: none;
+    float: left;
+    color: #333;
+    font-size: 24px;
+    height: 60px;
+    left: 0;
+    line-height: 60px;
+    padding: 0 20px;
+    position: absolute;
+    top: 0;
+    width: 60px;
+    z-index: 10;
+}
+
+
+/*-----------------
+  Home Page
+-----------------------*/
+
+section {
+    padding: 40px 0;
+}
+
+section#homebanner {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    padding: 0;
+    margin-top: -60px;
+    background-color: rgba(0, 168, 204, 0.075);
+}
+
+.homeanimation-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #F7F7F9;
+    opacity: 0.1;
+    z-index: 99;
+}
+
+.homeanimation {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.quotebox {
+    position: relative;
+    z-index: 99;
+    height: 100vh;
+}
+
+.quotebox .container {
+    padding: 120px 0 100px;
+}
+
+.shadowbox {
+    box-shadow: 0 2px 22px 0 rgba(70, 90, 207, 0.16) !important;
+}
+
+.card {
+    border: 1px solid #ededed;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+.card.cardshadow {
+    box-shadow: 20px 24px 108px -20px rgba(0, 0, 0, 0.07), 0 0px 34px -10px rgba(195, 197, 212, 0.57), 0 2px 64px 0 rgba(70, 90, 207, 0.16)
+}
+
+.card-title {
+    color: #1f1f1f;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: #fff;
+}
+
+.card-footer {
+    background-color: #fff;
+}
+
+.banner-text {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 6%;
+}
+
+.banner-text h2 {
+    font-size: 2.4rem;
+    line-height: 3rem;
+    font-weight: 400;
+}
+
+.banner-text h2 span {
+    font-weight: 800;
+}
+
+.banner-text h2 em {
+    font-style: normal;
+    color: #fcb040;
+    font-weight: 800;
+}
+
+.banner-text h4 {
+    margin: 10px 0;
+    font-size: 1.6rem;
+    line-height: 2.2rem;
+    font-weight: 400;
+}
+
+.instabs [type="radio"]:checked,
+.instabs [type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+.checkbox-instab:checked+label,
+.checkbox-instab:not(:checked)+label {
+    position: relative;
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0 auto;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+    border-radius: 30px;
+    overflow: hidden;
+    cursor: pointer;
+    text-transform: uppercase;
+    -webkit-transition: all 300ms linear;
+    transition: all 300ms linear;
+    /*-webkit-text-stroke: 1px #fff;
+  text-stroke: 1px #fff;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  color: transparent;*/
+    color: #fcb040;
+    border: 1px solid #fcb040;
+}
+
+.checkbox-instab:not(:checked)+label {
+    background-color: #353746;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.checkbox-instab:checked+label {
+    background-color: #fcb040;
+    /*background:linear-gradient(  #fcb040, #d78101 );*/
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.checkbox-instab:not(:checked)+label:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.checkbox-instab:checked+label::before,
+.checkbox-instab:not(:checked)+label::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    background-color: #fcb040;
+    z-index: -1;
+}
+
+.checkbox-instab:checked+label span,
+.checkbox-instab:not(:checked)+label span {
+    position: relative;
+    display: block;
+}
+
+.checkbox-instab:checked+label span.instab-icon,
+.checkbox-instab:not(:checked)+label span.instab-icon {
+    display: none !important;
+}
+
+.checkbox-instab:checked+label span::before,
+.checkbox-instab:not(:checked)+label span::before {
+    position: absolute;
+    content: attr(data-hover);
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    -webkit-text-stroke: transparent;
+    text-stroke: transparent;
+    -webkit-text-fill-color: #fff;
+    text-fill-color: #fff;
+    color: #fff;
+    -webkit-transition: max-height 0.3s;
+    -moz-transition: max-height 0.3s;
+    transition: max-height 0.3s;
+}
+
+.checkbox-instab:not(:checked)+label span::before {
+    max-height: 0;
+}
+
+.checkbox-instab:checked+label span::before {
+    max-height: 100%;
+}
+
+.checkbox-instab:not(:checked)+label {
+    background-color: #fff;
+    /*-webkit-text-stroke: 1px #1f2029;
+  text-stroke: 1px #1f2029;*/
+    box-shadow: 0 1x 4px 0 rgba(0, 0, 0, 0.05);
+}
+
+
+/*.for-checkbox-instab .instab-text {
+  display: none;
+}*/
+
+.for-checkbox-instab .instab-icon {
+    width: 60px;
+    height: 60px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: none !important;
+}
+
+.for-checkbox-instab .car-icon {
+    background-image: url(../../../assets/front/img/homepage/icons/car.png);
+}
+
+.checkbox-instab:checked+label span.car-icon {
+    background-image: url(../../../assets/front/img/homepage/icons/car-white.png);
+}
+
+.for-checkbox-instab .bike-icon {
+    background-image: url(../../../assets/front/img/homepage/icons/bike.png);
+}
+
+.checkbox-instab:checked+label span.bike-icon {
+    background-image: url(../../../assets/front/img/homepage/icons/bike-white.png);
+}
+
+.for-checkbox-instab .commercial-icon {
+    background-image: url(../../../assets/front/img/homepage/icons/commercial.png);
+}
+
+.checkbox-instab:checked+label span.commercial-icon {
+    background-image: url(../../../assets/front/img/homepage/icons/commercial-white.png);
+}
+
+.for-checkbox-instab .travel-icon {
+    background-image: url(../../../assets/front/img/homepage/icons/travel.png);
+}
+
+.checkbox-instab:checked+label span.travel-icon {
+    background-image: url(../../../assets/front/img/homepage/icons/travel-white.png);
+}
+
+.for-checkbox-instab .life-icon {
+    background-image: url(../../../assets/front/img/homepage/icons/life.png);
+}
+
+.checkbox-instab:checked+label span.life-icon {
+    background-image: url(../../../assets/front/img/homepage/icons/life-white.png);
+}
+
+.for-checkbox-instab .health-icon {
+    background-image: url(../../../assets/front/img/homepage/icons/health.png);
+}
+
+.checkbox-instab:checked+label span.health-icon {
+    background-image: url(../../../assets/front/img/homepage/icons/health-white.png);
+}
+
+.for-checkbox-instab .home-icon {
+    background-image: url(../../../assets/front/img/homepage/icons/home.png);
+}
+
+.checkbox-instab:checked+label span.home-icon {
+    background-image: url(../../../assets/front/img/homepage/icons/home-white.png);
+}
+
+.quote-option {
+    border: 1px solid #dee2e6;
+    padding: 15px 0;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.quote-regioption {
+    width: 100%;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.quote-phoneoption {
+    width: 100%;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.quote-phoneoption .phonebox,
+.quote-phoneoption .otpbox {
+    border: 0;
+    margin-bottom: 0;
+}
+
+.quote-phoneoption .phonebox .form-focus input {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    height: 50px;
+}
+
+.quote-option .form-group {
+    margin-bottom: 0;
+}
+
+#carbox-step3 .quote-option .form-group,
+#bikebox-step3 .quote-option .form-group {
+    margin-bottom: 1rem;
+}
+
+.quote-option .ui.form .inline.fields .ui.checkbox label {
+    margin-bottom: 0;
+}
+
+.quotebox .quote-btn {
+    width: 100%;
+    max-width: 200px;
+    line-height: 2;
+}
+
+.quote-regioption .form-group input[type="text"] {
+    border-width: 0;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    height: 50px;
+    text-transform: uppercase;
+}
+
+
+/*.quote-option .form-focus.regino .focus-label {
+  top: -5px;
+}
+*/
+
+.quote-option .form-focus.regino .form-control:focus~.focus-label,
+.quote-option .form-focus.regino .form-control:-webkit-autofill~.focus-label {
+    top: -20px;
+}
+
+.or-text-content {
+    text-align: center;
+}
+
+.or-text-content a {
+    margin: 0 5px;
+}
+
+.or-text-content a:hover {
+    opacity: 0.8;
+}
+
+.or-text-content .badge {
+    font-size: 100%;
+    font-weight: 400;
+    padding: .3em .8em;
+}
+
+
+/*About Us*/
+
+section#aboutus {}
+
+
+/*Partners*/
+
+section#partners {
+    background-color: rgba(0, 168, 204, 0.075);
+}
+
+
+/*Testimonials*/
+
+section.testimonials {
+    background-image: url(../../../assets/front/img/bg/bg-3.jpg);
+    background-size: cover;
+    padding: 50px 0 40px;
+}
+
+.testimonials-carousel .owl-stage {
+    padding-top: 40px;
+}
+
+.owl-carousel .owl-item {
+    position: relative;
+    min-height: 1px;
+    float: left;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+.testimonials-carousel .owl-item {
+    opacity: .6;
+    transition: transform .3s ease;
+    transform: scale(.8);
+}
+
+.testimonials-carousel .owl-item.active.center {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.testimonial {
+    position: relative;
+    background-color: #fff;
+    border: 0;
+    box-shadow: 0 0 35px rgba(140, 152, 164, .2);
+    border-radius: .25rem;
+    padding: 25px;
+}
+
+.testi-image {
+    margin: -55px auto 0;
+    margin-bottom: 20px;
+    display: block;
+    width: 64px;
+    height: 64px
+}
+
+.testi-image img {
+    border-radius: 50%;
+    display: block;
+    width: 100%;
+    transform-style: preserve-3d;
+}
+
+.testi-content {
+    position: relative;
+    overflow: hidden;
+}
+
+.testi-content p {
+    text-align: center;
+    font-style: normal;
+}
+
+.testi-meta {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.testi-meta:before {
+    content: '\2013';
+}
+
+.testi-meta span {
+    display: block;
+    font-weight: 400;
+    color: #999;
+    font-size: 12px;
+    text-transform: none;
+    padding-left: 10px;
+}
+
+.owl-carousel .owl-dots .owl-dot,
+.owl-carousel .owl-nav [class*=owl-]:hover {
+    background-color: #fcb040 !important;
+}
+
+.faq-accordion .card {
+    border: 0;
+    border-bottom: 2px solid #ededed;
+    border-radius: 0;
+    box-shadow: none;
+    margin-bottom: 0;
+    padding: .50rem 0;
+}
+
+.faq-accordion .card .card-header {
+    border-bottom: 0;
+    position: relative;
+}
+
+.faq-accordion .card .card-header h5 a {
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.6rem;
+    color: #000839;
+    display: block;
+}
+
+.faq-accordion .card .card-header i.fa {
+    position: absolute;
+    top: 13px;
+    right: 20px;
+    text-align: center;
+    line-height: 24px;
+    display: block!important;
+    width: auto;
+    font-size: 20px;
+    transition: transform .3s ease;
+}
+
+.faq-accordion .card .card-header a:not(.collapsed) i.fa {
+    transform: rotate(45deg);
+    color: #fcb040;
+}
+
+
+/*-----------------
+  Footer
+-----------------------*/
+
+.footer {
+    border-top: 1px solid #dee2e6;
+    /*background-color: #F7F7F9;*/
+    position: relative;
+    z-index: 1;
+}
+
+.footer p {
+    margin: 0;
+    font-size: 0.750rem;
+}
+
+.footer p a {
+    color: #000839;
+    font-weight: 600;
+}
+
+.footer-logo {
+    width: 100%;
+    max-width: 250px;
+}
+
+.footer .widget {
+    position: relative;
+    margin-top: 50px;
+}
+
+.footer .widget:first-child {
+    margin-top: 0;
+}
+
+.footer .widget_links h5 {
+    font-weight: 600;
+}
+
+.footer .widget_links li {
+    line-height: 1.8;
+    padding: 3px 0;
+    font-weight: 500;
+}
+
+.footer .widget_links li a {
+    color: #000839;
+}
+
+.footer .widget_links li a:hover {
+    color: #fcb040;
+}
+
+.footer .widget_links li a::before {
+    content: "\f105";
+    font-family: FontAwesome;
+    margin-right: 8px;
+}
+
+.feature-box {
+    position: relative;
+    margin-top: 20px;
+    padding: 0px 0px 0px 70px;
+}
+
+.feature-box.fbox-right {
+    padding: 0 80px 0 0;
+    text-align: right;
+}
+
+.feature-box:first-child {
+    margin-top: 0px;
+}
+
+.feature-box h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #000839;
+}
+
+.feature-box .fbox-icon {
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 40px;
+    top: 0px;
+    left: 0px;
+    font-size: 28px;
+    text-align: center;
+}
+
+.feature-box.fbox-right .fbox-icon {
+    left: auto;
+    right: 0;
+}
+
+.feature-box .fbox-icon i {
+    line-height: 50px;
+    color: #000839;
+}
+
+.socialLinkswrap {
+    border-left: 1px solid #dee2e6;
+}
+
+.socialLinksbox {
+    padding-left: 40px;
+}
+
+.socialLinks li {
+    display: inline-block;
+    margin-right: 25px;
+}
+
+.socialLinks li:last-child {
+    margin-right: 0;
+}
+
+.socialLinks a {
+    color: #999;
+}
+
+.socialLinks i {
+    font-size: 28px;
+    line-height: 40px;
+}
+
+.socialLinks a.icon-facebook:hover {
+    color: #3b5998;
+}
+
+.socialLinks a.icon-twitter:hover {
+    color: #1da1f2;
+}
+
+.socialLinks a.icon-linkedin:hover {
+    color: #0077b5;
+}
+
+.socialLinks a.icon-youtube:hover {
+    color: #ff0000;
+}
+
+.socialLinks a.icon-instagram:hover {
+    color: #dd2a7b;
+}
+
+.copyright {
+    /*background: url(../../../assets/front/img/bg/footer-bg.svg) no-repeat top center;*/
+    background-size: cover;
+    background-color: #fcb040;
+    padding: 20px 0;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #fff;
+}
+
+.copyright p {
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.copyright p a {
+    color: #fff;
+}
+
+.copyright-links a {
+    display: inline-block;
+    margin: 0 5px;
+    color: #fff;
+    border-bottom: 1px dotted #fff;
+}
+
+.copyright p a:hover,
+.copyright-links a:hover {
+    color: #000839;
+}
+
+.copyright a:first-child {
+    margin-left: 0;
+}
+
+.copyrights-menu {
+    margin-bottom: 10px;
+}
+
+.copyrights-menu a {
+    font-size: 14px;
+    margin: 0 5px;
+    border-bottom: 0!important;
+}
+
+.quotebox .actionbtn {
+    position: absolute;
+    left: 15px;
+    bottom: 15px;
+}
+
+.paymentmod-icons {
+    width: 100%;
+    max-width: 180px;
+}

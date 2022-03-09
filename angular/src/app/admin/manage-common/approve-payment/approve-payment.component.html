@@ -1,0 +1,280 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Manage Payment</h3>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+<!-- Page Content -->
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadowbox">
+                <div class="card-header">
+                    <div class="text-center py-3">
+						<a href="javascript:void(0);" (click)="exportPaymentData()" class="btn btn-custom btn-sm green"><i class="fa fa-download"></i> Download Payment Data</a>&nbsp;
+                        <a href="javascript:void(0);" (click)="openModel()" data-toggle="modal" data-target="#openmodal" class="btn btn-custom btn-sm green"><i class="fa fa-upload"></i> Upload Payment Data</a>
+					</div>
+                    <div class="form-group ui form mb-0">
+                        <div class="row align-items-center justify-content-center inline fields mb-0">
+                            <div class="col-auto px-4 field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="searchpaymentbystatus" id="searchpaymentbystatus-approved" value="searchpaymentbystatus-approved" (click)="showHideStatusPayment('A');">
+                                    <label class="mb-0" for="searchpaymentbystatus-approved">Approved</label>
+                                </div>
+                            </div>
+                            <div class="col-auto px-4 field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="searchpaymentbystatus" id="searchpaymentbystatus-pending" value="searchpaymentbystatus-pending" checked (click)="showHideStatusPayment('P');">
+                                    <label class="mb-0" for="searchpaymentbystatus-pending">Pending</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" [ngClass]="{'d-none': div_show_payment_status }">
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn datatable"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="update_payment" class="modal custom-modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <form [formGroup]="formPaymentUpdate" method="post" (ngSubmit)="submitPaymentForm()">
+                <input formControlName="payment_id" type="hidden" class="form-control">
+                <div class="modal-header">
+                    <h4 class="modal-title">Update Payment Status</h4>
+                    <button (click)="closePopup()" type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>UTR No (<span style="color:red;">*</span>):</label>
+                                <input formControlName="utr_no" type="text" class="form-control" maxlength="21" />
+                                <div class="error" *ngIf="submitted && formPaymentUpdate.controls.utr_no.errors">
+                                    <!--div *ngIf="submitted && formPaymentUpdate.controls.utr_no.errors.required">
+                                        UTR No is required.
+                                    </div-->
+                                    <div *ngIf="submitted && formPaymentUpdate.controls.utr_no.errors">
+                                        Please enter valid UTR No.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Payment Date (<span style="color:red;">*</span>):</label>
+                                <div class="input-group">
+                                        <input formControlName="payment_date" type="text" outsideDays="collapsed" class="form-control" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="date" readonly />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="fas fa-calendar-alt fa-fw"></i></button>
+                                    </div>
+                                </div>
+                                <div class="error" *ngIf="submitted && formPaymentUpdate.controls.payment_date.errors">
+                                    <div *ngIf="submitted && formPaymentUpdate.controls.payment_date.errors.required">
+                                        Payment Date is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>IFSC Code (<span style="color:red;">*</span>):</label>
+                                <input formControlName="ifsc_code" type="text" class="form-control"  #input [value]="input.value.toUpperCase()" (change)="getBankDetails($event.target.value)" (keyup)="getBankDetails($event.target.value)" maxlength="20" />
+                                <div class="error" *ngIf="submitted && formPaymentUpdate.controls.ifsc_code.errors">
+                                    <div *ngIf="submitted && formPaymentUpdate.controls.ifsc_code.errors.required">
+                                        IFSC Code is required.
+                                    </div>
+                                    <div *ngIf="submitted && formPaymentUpdate.controls.ifsc_code.errors.pattern">
+                                        Please enter valid IFSC Code.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row"><br>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Bank Name (<span style="color:red;">*</span>):</label>
+                                <input readonly formControlName="bank_name" type="text" class="form-control">
+                                <div class="error" *ngIf="submitted && formPaymentUpdate.controls.bank_name.errors">
+                                    <div *ngIf="submitted && formPaymentUpdate.controls.bank_name.errors.required">
+                                        Bank is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Payment Amount:</label>
+                                <input formControlName="payment_amount" type="text" class="form-control" readonly />
+                                <div class="error" *ngIf="submitted && formPaymentUpdate.controls.payment_amount.errors">
+                                    <div *ngIf="submitted && formPaymentUpdate.controls.payment_amount.errors.required">
+                                        Payment Amount is required.
+                                    </div>
+                                    <div *ngIf="submitted && formPaymentUpdate.controls.payment_amount.errors.pattern">
+                                        Please enter valid payment amount.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Payment Status (<span style="color:red;">*</span>):</label>
+                                <select class="form-control" formControlName="payment_status">
+                					<option value="">Select Status</option>
+                					<option value="A">Approve</option>
+                					<option value="P">Pending</option>
+              					</select>
+                                <div class="error" *ngIf="submitted && formPaymentUpdate.controls.payment_status.errors">
+                                    <div *ngIf="submitted && formPaymentUpdate.controls.payment_status.errors.required">
+                                        Payment Status is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="submit-section"><br>
+                        <input class="btn btn-custom green btn-lg" type="submit" value="Update">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="openmodal" class="modal custom-modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ popupTitle }}</h5>
+                <button (click)="closePopup()"  type="button" class="close" data-dismiss="modal" #closeAddExpenseModal>&times;</button>
+            </div>
+            <form [formGroup]="formUploadCsv" (ngSubmit)="submitFormUploadCsv()">
+                <div class="card shadowbox">            
+                  <div class="card-body">              
+                      <div class="row">
+                        <div class="col-12">
+                            <p><b><b>Note : </b> Please read below instructions before uploading file.</b></p>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p>The imported files should be in CSV format.</p>                          
+                                    <p>The Name of Import File can be any Name but should have .csv as file extension.</p>
+                                    <p>Date field should be in YYYY-MM-DD format.(For eg., 2021-03-06)</p>
+                                    
+                                </div>    
+                                <div class="col-6">
+                                    <p>Possible values for Payment Status column in CSV file are:</p>
+                                        <ul>
+                                            <li>Use<b> P </b>for <b>Pending</b></li>
+                                            <li>Use<b> A </b>for <b>Approved</b></li>                                
+                                        </ul>
+                                    <p>After uploading a csv file, a pop up will come saying about file uploading status. After successful file upload, a <b>Process Data</b> button will be enablled to process data in uploaded csv file. After clicking on it, uploaded csv file will be processed and status of invoice numbers will be appeared.</p> 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <h5 class="my-2"><b>Upload CSV File: <sup class="text-danger">*</sup></b></h5>
+                            <label>{{ csv_filelabel }}</label>
+                        </div>
+
+                        <div class="col-6">
+                          <div class="box fileuploadbox">
+                              <input type="file" id="csv-file-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadCsvFile($event)">
+                              <label for="csv-file-1">
+                                  <figure>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                          <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                      </svg>
+                                  </figure>
+                                  <span>{{csv_fileurl_label}}</span>
+                              </label>
+                          </div>
+                          <div *ngIf="submittedUploadCsv &&  formUploadCsv.controls.csv_file.errors">
+                            <small *ngIf="submittedUploadCsv && formUploadCsv.controls.csv_file.errors.required" class="text-danger">
+                              Please upload CSV File.
+                            </small>
+                            <small *ngIf="formUploadCsv.controls.csv_file.errors?.requiredFileType" class="text-danger">
+                              Allowed file type "csv"
+                            </small>
+                            <small *ngIf="formUploadCsv.controls.csv_file.errors?.fileSizeValidator" class="text-danger">
+                              Allowed file size is 5 MB.
+                            </small>Insurance Import Formats
+                          </div>
+                          <br/>
+                          
+                        </div>
+
+                        <div class="col-2">
+                            <button type="submit" class="btn btn-custom green w-100" [ngStyle]="{'display':displayUpload}"> Submit</button>
+                        </div>
+                        <div class="col-2">
+                          <button type="button" class="btn btn-custom green w-100" (click)="processCsvData()" [ngStyle]="{'display':displayPD}"> Process Data</button>
+                        </div>                        
+                      </div>  
+                  </div>
+                </div>
+            </form>
+            <hr/>
+            <div class="row">
+                <div class="col-12" *ngIf="process_data_result_display">
+                    <div class="row">
+                        <table class="table table-bordered table-condensed">
+                            <tr>
+                                <th class="tot">Total Invoice</th>
+                                <th class="succ">Successful Invoices</th>
+                                <th class="dup">Duplicate Invoices</th>
+                                <th class="err">Invalid Invoices</th>
+                            </tr>
+                            <tr>
+                                <td>{{no_of_total_records}}</td>
+                                <td>{{no_of_success_rcords}}</td>
+                                <td>{{no_of_duplicate_rcords}}</td>
+                                <td>{{no_of_error_rcords}}</td>
+                            </tr>
+                        </table>
+                        <br/>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4 report_div" *ngIf="is_success_record">
+                            <h3>Successful Invoice Numbers</h3>
+                            <ul class="b">
+                                <li *ngFor="let row of success_policies">
+                                    {{row}}
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-4 report_div" *ngIf="no_of_error_rcords">
+                            <h3>Invalid Invoice Numbers</h3>
+                            <ul class="b">
+                                <li *ngFor="let row3 of error_policies">
+                                    {{row3}}
+                                </li>
+                            </ul> 
+                        </div>
+                        <div class="col-4 report_div" *ngIf="is_duplicate_record">
+                            <h3>Duplicate Invoice Numbers</h3>
+                            <ul class="b">
+                                <li *ngFor="let row2 of duplicae_policies">
+                                    {{row2}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>
+<!-- /Page Content -->
+<app-loader [loaderActive]="loaderActive"></app-loader>

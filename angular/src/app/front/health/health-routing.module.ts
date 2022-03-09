@@ -11,6 +11,7 @@ import { TenurePolicyComponent } from './tenure-policy/tenure-policy.component';
 import { ThankYouHealthComponent } from './thank-you-health/thank-you-health.component';
 import { ShareProposalHealthComponent } from './share-proposal-health/share-proposal-health.component';
 import { ShareLayoutComponent } from '../share-layout/share-layout.component';
+import { ComparePlanDetailsComponent } from './compare-plan-details/compare-plan-details.component';
 
 
 const routes: Routes = [
@@ -28,7 +29,8 @@ const routes: Routes = [
         { path: "policy-details", component:PolicyDetailsComponent},     
         { path: "proposal", component:ProposalComponent},
         { path: "thank-you-health", component:ThankYouHealthComponent},
-        { path: "share-proposal-health", component:ThankYouHealthComponent}
+        { path: "share-proposal-health", component:ThankYouHealthComponent},
+        { path: "compare-plan-details", component:ComparePlanDetailsComponent}
 
       ]
     }  

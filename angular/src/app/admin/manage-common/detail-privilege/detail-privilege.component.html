@@ -1,0 +1,109 @@
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">
+                Set <span *ngIf="!tab_hide_for_dp && !tab_hide_for_sdp"> {{ dp_name }}</span>
+                <span *ngIf="tab_hide_for_sdp"> SUB {{ dp_name }}</span>
+                <span *ngIf="tab_hide_for_dp">{{ misp_name }}</span> ( {{name}} ) Privilege
+            </h3>
+        </div>
+        <div class="col-md-4 float-right ml-auto text-right">
+            <!-- <button *ngIf="tab_hide_for_dp && !tab_hide_for_sdp" class="btn btn-custom green btn-sm mr-2" (click)="backToPOS()"><i class="fa fa-chevron-left mr-2"></i> Back to POS </button>
+
+            <button *ngIf="tab_hide_for_sdp" class="btn btn-custom green btn-sm mr-2" (click)="backToSUBPOS()"><i class="fa fa-chevron-left mr-2"></i>Back to SUB POS</button>
+
+            <button *ngIf="!tab_hide_for_dp" class="btn btn-custom green btn-sm mr-2" (click)="backToBusinessPartner()"><i class="fa fa-chevron-left mr-2"></i> Back to Business Partner</button> -->
+
+        </div>
+    </div>
+</div>
+
+<div class="row align-items-center justify-content-center">
+    <div class="col-lg-9 col-md-10 col-12">
+        <div class="card shadowbox">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <form [formGroup]="formDetails" (ngSubmit)="submitForm()">
+
+                            <div class="error text-center">
+                                <div class="errorbox" *ngIf="submittedForm  && selectedIc_error">
+                                    Please Select IC.
+                                </div>
+                                <div class="errorbox" *ngIf="submittedForm  && selectedPayment_error">
+                                    Please Select Payment.
+                                </div>
+                                <div class="errorbox" *ngIf="submittedForm  && selectedProduct_error">
+                                    Please Select Product.
+                                </div>
+                                <div class="errorbox" *ngIf="submittedForm  && selectedSubProduct_error">
+                                    Please Select Policy Type.
+                                </div>
+                                <div class="errorbox" *ngIf="submittedForm  && selectedSubSubProduct_error">
+                                    Please Select Policy Sub Type.
+                                </div>
+                                <div class="errorbox" *ngIf="submittedForm  && selectedSubSubProductval_error">
+                                    Please Enter commission.
+                                </div>
+                            </div>
+
+                            <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+                                <li class="nav-link"><a class="nav-link active" href="#privileges-tab6" data-toggle="tab">IC, Payment, Product, Commission</a></li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div class="tab-pane show active" id="privileges-tab6">
+                                    <div class="row align-items-center justify-content-center">
+                                        <div class="col-lg-9 col-md-10 col-12">
+                                            <div style="overflow-y: auto;height: 600px;" id="accordion">
+                                                <ul *ngFor="let row of result_bp_tree">
+                                                    <li>
+                                                        <label for="ic_{{row.value}}" class="lbl-cls f600">
+                                                        <input type="checkbox" value="{{ row.value }}" id="ic_{{row.value}}" class="mr5 parent" (click)="onICIDChange($event)" [checked]="row.checked" /> <a data-toggle="collapse" data-parent="#accordion" href="#pic_{{ row.value }}"><strong>{{ row.text }}</strong></a></label>
+                                                        <ul id="pic_{{ row.value }}" class="collapse in show vinit1 ml25">
+                                                            <li class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#payment_{{ row.value }}"><strong>Payment</strong></a></li>
+                                                            <div id="payment_{{ row.value }}" class="collapse in ">
+                                                                <li *ngFor="let pay of row.payment" class="ml15" >
+                                                                    <label for="ic_{{row.value}}_pay_{{pay.value}}" class="lbl-cls">
+                                                                    <input type="checkbox" id="ic_{{row.value}}_pay_{{pay.value}}" value="{{ pay.value }}"  class="mr5 child" (click)="onPaymentChange($event)"  [checked]="pay.checked" /> {{ pay.text }}</label>
+                                                                </li>
+                                                            </div>
+                                                            <li class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#product_{{ row.value }}"><strong>Product</strong></a></li>
+                                                            <div id="product_{{ row.value }}" class="collapse in ">
+                                                                <li *ngFor="let row1 of row.children" class="ml15">
+                                                                    <label for="ic_{{row.value}}_ch1_{{row1.value}}" class="lbl-cls">
+                                                                    <input type="checkbox" id="ic_{{row.value}}_ch1_{{row1.value}}" value="{{ row1.value }}"  class="mr5" (click)="onProductChange($event)" [checked]="row1.checked" /> {{ row1.text }}</label>
+                                                                    <ul class="vinit2 ml25" *ngIf="row1?.children">
+                                                                        <li  *ngFor="let row2 of row1.children">
+                                                                            <label for="ic_{{row.value}}_ch2_{{row2.value}}" class="lbl-cls">
+                                                                            <input id="ic_{{row.value}}_ch2_{{row2.value}}" type="checkbox" value="{{ row2.value }}"  class="mr5" (click)="onSubProductChange($event)" [checked]="row2.checked" /> {{ row2.text }}</label>
+                                                                            <ul class="vinit3 ml30" *ngIf="row2?.children">
+                                                                                <li *ngFor="let row3 of row2.children" style="padding: 0 0 0 5px;">
+                                                                                    <label for="ic_{{row.value}}_ch3_{{row3.value}}" class="lbl-cls">
+                                                                                    <input id="ic_{{row.value}}_ch3_{{row3.value}}"  type="checkbox" (click)="onSubSubProductChange($event)" value="{{ row3.value }}"  class="mr5"  [checked]="row3.checked" /><span style="width: 50%;">{{ row3.text }}</span>
+                                                                                    <input type="text" class="input-class" minlength="1" maxlength="2" (change)="onSubSubProductValChange($event)" value="{{ row3.input_value }}"/></label>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </div>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-custom green btn-lg">Set Privileges</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-loader [loaderActive]="loaderActive"></app-loader>

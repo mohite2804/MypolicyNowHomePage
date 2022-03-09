@@ -1,0 +1,143 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">USER TYPE</h3>
+        </div>
+        <div class="col-auto float-right ml-auto" *ngIf="access_permission == 'read_write'">
+            <button (click)="openModel()" data-toggle="modal" data-target="#openmodal" class="btn btn-custom green"><i class="fa fa-plus"></i> Add Type</button>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadowbox">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="openmodal" class="modal custom-modal fade" tabindex="-1" role="dialog" aria-hidden="true"
+data-backdrop="static"  data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form [formGroup]="formRecodEdit" method="post" (ngSubmit)="submitForm()">
+                <input formControlName="id" type="hidden" class="form-control">
+                <input formControlName="prev_status_id" type="hidden" class="form-control">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ popupTitle }}</h5>
+                    <button (click)="closePopup()" type="button" class="close" data-dismiss="modal" #closeAddExpenseModal>&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- <div class="col-sm-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Code:</label>
+                                <input formControlName="code" type="text" list="id-code" class="form-control">
+                                <datalist id="id-code">
+                  <option value="{{ row.code }}" *ngFor="let row of typeData | sortBy: 'asc':'code'">
+                    <option value="{{ row.code }}" *ngFor="let row of typeData">
+                    </datalist>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.code.errors">
+                                    div *ngIf="submitted && formRecodEdit.controls.code.errors.required">
+                        Code is required.
+                      </div
+                                    <div *ngIf="submitted && formRecodEdit.controls.code.errors">
+                                        Please enter valid Code.
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Label:</label>
+                                <input formControlName="label" type="text" list="id-label" class="form-control" minlength="2" maxlength="25">
+                                <datalist id="id-label">
+                      <!-- <option value="{{ row.label }}" *ngFor="let row of typeData | sortBy: 'asc':'label'"> -->
+                        <option value="{{ row.label }}" *ngFor="let row of typeData">
+                        </datalist>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.label.errors">
+                                    <!--div *ngIf="submitted && formRecodEdit.controls.label.errors.required">
+                            Label is required.
+                          </div-->
+                                    <div *ngIf="submitted && formRecodEdit.controls.label.errors">
+                                        Please enter valid Label.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.label.errors.minlength">
+                                        Please enter at least 2 characters.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.label.errors.maxlength">
+                                        Please enter no more than 25 characters..
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Is Level ?:</label>
+                                <select class="form-control" formControlName="is_level" (change)="showhideLevelDropdown($event.target.value)">
+                      <option value="">Select</option>
+                      <option value="1">YES</option>
+                      <option value="0">NO</option>
+                    </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.is_level.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.is_level.errors.required">
+                                        This field is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="col-sm-12" [ngStyle]="{'display':displayLevelDrodown}">
+                            <div class="form-group">
+                                <label>Level:</label>
+                                <select class="form-control" formControlName="level">
+                      <option value="">Select Level</option>
+                      <option value="{{ row.level_id }}" *ngFor="let row of levelData" >{{ row.level_label }}</option>
+                    </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.level.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.level.errors.required">
+                                        Level is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Status:</label>
+                                <select class="form-control" formControlName="status">
+                      <option value="">Select Status</option>
+                      <option value="{{ row.status_id }}" *ngFor="let row of statusData" >{{ row.lable }}</option>
+                    </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.status.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.status.errors.required">
+                                        Status is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+                                <strong>{{responseMsg}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <input *ngIf="btnEditSubmit" class="btn btn-custom green btn-lg" type="submit" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<app-loader [loaderActive]="loaderActive"></app-loader>

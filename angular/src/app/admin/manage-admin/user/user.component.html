@@ -1,0 +1,283 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">USER</h3>
+        </div>
+        <div class="col-auto float-right ml-auto"  *ngIf="access_permission == 'read_write'">
+            <button (click)="openModel()" data-toggle="modal" data-target="#openmodal" class="btn btn-custom green"><i
+          class="fa fa-plus"></i> Add More</button>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadowbox">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="openmodal" class="modal custom-modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <form [formGroup]="formRecodEdit" method="post" (ngSubmit)="submitForm()">
+                <input formControlName="id" type="hidden" class="form-control">
+                <input formControlName="prev_status_id" type="hidden" class="form-control">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ popupTitle }}</h5>
+                    <button (click)="closePopup()" type="button" class="close" data-dismiss="modal" #closeAddExpenseModal>&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>User Type:</label>
+                                <!-- <select class="form-control" formControlName="user_type" (click)="getAdminRoleSelection($event.target.value)" (change)="getAdminRoleSelection($event.target.value)"> -->
+                                <select class="form-control" formControlName="user_type" [(ngModel)]="selectedUserTypeData" (change)="getAdminRoleSelection($event)">
+                  <option value="" [attr.data-levels]="0">Select User Type</option>
+                  <option value="{{ row.admin_user_type_id }}" [attr.data-levels]="row.is_business_level_set"
+                    *ngFor="let row of typeDataSelection">{{ row.label }}</option>
+                </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.user_type.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.user_type.errors.required">
+                                        User Type is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.user_type.errors.pattern">
+                                        Only Alphabets accepts.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12" *ngIf="divBusinessNameMaster">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Business Name:</label>
+                                <select class="form-control" formControlName="business_partner_master_id" [(ngModel)]="selectedBusinessData" (change)="setBusinessSelection($event)">
+                  <option value="">Select Business Name</option>
+                  <option value="{{ row.business_partner_master_id }}" *ngFor="let row of businessDataSelection">
+                    {{ row.name }}</option>
+                </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.business_partner_master_id.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.business_partner_master_id.errors.required">
+                                        Business Name is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.business_partner_master_id.errors.pattern">
+                                        Please enter valid Business Name.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12" *ngIf="divicNameMaster">
+                            <div class="form-group">
+                                <label><span class="error">*</span>IC Name:</label>
+                                <select class="form-control" formControlName="ic_master_id" (change)="geticRole($event)">
+                  <option value="">Select IC Name</option>
+                  <option value="{{ row.id }}" *ngFor="let row of icDataSelection">{{ row.code }}</option>
+                </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.ic_master_id.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.ic_master_id.errors.required">
+                                        User Type is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.ic_master_id.errors.pattern">
+                                        Please enter valid Business Name.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12" *ngIf="divBusinessLavelMaster">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Business Level:</label>
+                                <select class="form-control" formControlName="level_id" (change)="getAdminParentSelection($event)">
+                  <option value="">Select Business Level</option>
+                  <option value="{{ row.level_id }}" *ngFor="let row of businessLevelDataSelection">
+                    {{ row.level_label }}</option>
+                </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.level_id.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.level_id.errors.required">
+                                        Business Level is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.level_id.errors.pattern">
+                                        Please enter valid Business Level.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12" *ngIf="divParentUserMaster">
+                            <div class="form-group">
+                                <label>Parent User:</label>
+                                <select class="form-control" formControlName="parent_user_id">
+                  <option value="">Select Parent User</option>
+                  <option value="{{ row.id }}" *ngFor="let row of parentData">{{ row.first_name }} {{ row.last_name }}
+                  </option>
+                </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.parent_user_id.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.parent_user_id.errors.required">
+                                        Parent User is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.parent_user_id.errors.pattern">
+                                        Please enter valid Parent User.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>User Role:</label>
+                                <select class="form-control" formControlName="user_role">
+                  <option value="">Select User Role</option>
+                  <option value="{{ row.admin_role_id }}" *ngFor="let row of roleData">{{ row.label }}</option>
+                </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.user_role.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.user_role.errors.required">
+                                        User Role is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.user_role.errors.pattern">
+                                        Only Alphabets accepts.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>First Name:</label>
+                                <input formControlName="first_name" type="text" class="form-control" minlength="2" maxlength="25">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.first_name.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.first_name.errors.required">
+                                        First Name is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.first_name.errors.pattern">
+                                        Only Alphabets accepts.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.first_name.errors.minlength">
+                                        Please enter at least 2 characters.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.first_name.errors.maxlength">
+                                        Please enter no more than 25 characters..
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Middle Name:</label>
+                                <input formControlName="middle_name" type="text" class="form-control" minlength="1" maxlength="25">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.middle_name.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.middle_name.errors.required">
+                                        Middle Name is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.middle_name.errors.pattern">
+                                        Only Alphabets accepts.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.first_name.errors.minlength">
+                                        Please enter at least 1 characters.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.first_name.errors.maxlength">
+                                        Please enter no more than 25 characters..
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Last Name:</label>
+                                <input formControlName="last_name" type="text" class="form-control" minlength="2" maxlength="25">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.last_name.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.last_name.errors.required">
+                                        Last Name is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.last_name.errors.pattern">
+                                        Only Alphabets accepts.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.first_name.errors.minlength">
+                                        Please enter at least 2 characters.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.first_name.errors.maxlength">
+                                        Please enter no more than 25 characters..
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Email: <span class="text-info"> This will be your
+                    Username</span></label>
+                                <input formControlName="email" type="text" class="form-control" minlength="3" maxlength="50">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.email.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.email.errors.required">
+                                        Email is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.email.errors.pattern">
+                                        Only Alphabets accepts.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.first_name.errors.minlength">
+                                        Please enter at least 3 characters.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.first_name.errors.maxlength">
+                                        Please enter no more than 50 characters..
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12" *ngIf="inNewEntery">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Password:</label>
+                                <input formControlName="password" type="password" class="form-control" minlength="2" maxlength="30">
+                                <label><span class="text-info" *ngIf="PasswordInfo"> If You want to change password, Then Use</span></label>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.password.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.password.errors.required">
+                                        Password is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.password.errors.pattern">
+                                       Password should be minimum 8 and maximum 14 characters Long, Lowercase letters, Uppercase letters, Numbers, Special characters e.g Demo$1234
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Mobile No:</label>
+                                <input formControlName="mobileNo" type="text" class="form-control" maxlength="10">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.mobileNo.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.mobileNo.errors.pattern">
+                                        Only number accepts.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Status:</label>
+                                <select class="form-control" formControlName="status">
+                  <option value="">Select Status</option>
+                  <option value="{{ row.status_id }}" *ngFor="let row of statusData">{{ row.lable }}</option>
+                </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.status.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.status.errors.required">
+                                        Status is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+                                <strong>{{responseMsg}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <input *ngIf="btnEditSubmit" class="btn btn-custom green btn-lg" type="submit" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+<app-loader [loaderActive]="loaderActive"></app-loader>

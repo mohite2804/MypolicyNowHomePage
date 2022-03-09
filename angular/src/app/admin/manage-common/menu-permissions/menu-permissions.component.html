@@ -1,0 +1,36 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Permission for {{ roleName }}</h3>
+        </div>
+        <div class="col-auto float-right ml-auto">
+
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<!-- <input (click)="backToUser()" class="btn btn-primary pull-right"  type="button" value="Back"> -->
+
+<div class="row justify-content-center">
+    <div class="col-lg-5 col-md-6">
+        <div class="card shadowbox">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <ngx-treeview [config]="config" [items]="items" (filterChange)="onFilterChange($event)" (selectedChange)="onSelectedChange($event)"></ngx-treeview>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer border-top">
+                <div class="text-center">
+                    <input class="btn btn-custom green" type="button" (click)="getSelectedValues()" value="Save Changes">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <ngx-treeview [config]="config" [items]="items" (filterChange)="onFilterChange($event)" (selectedChange)="onSelectedChange($event)"></ngx-treeview> -->

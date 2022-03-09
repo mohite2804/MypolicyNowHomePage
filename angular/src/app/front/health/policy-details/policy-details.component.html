@@ -10,20 +10,16 @@
                     <div class="insurer-idvncb option-box">
                         <span>Basic Premium:</span>
                         <h4><i class="fa fa-inr"></i> {{policyList[0].BasicPremium}}.00</h4>
-                        <span>Tax Premium</span>
-                        <h4 class="mb-0"><i class="fa fa-inr"></i> {{policyList[0].ServiceTax}}.00</h4>
                     </div>
-                    <div class="insurer-premium option-box">
-                        <span>Discount Rate:</span>
-                        <h4 class="mb-0"><i class="fa fa-inr"></i> {{policyList[0].TotalDiscountAmount}}.00</h4>
+                    <div class="insurer-premium option-box" *ngIf="policyList[0].discount !=''">
                         <span>Discount Premium:</span>
-                        <h2 class="mb-0"><i class="fa fa-inr"></i> {{policyList[0].OnlineDiscount}}.00</h2> 
+                        <h2 class="mb-0"><i class="fa fa-inr"></i> {{policyList[0].discount}}.00</h2> 
                     </div>
                     <div class="insurer-premium option-box">
                         <span>Premium:</span>
                         <h4 class="mb-0"><i class="fa fa-inr"></i> {{policyList[0].BasicPremium}}.00</h4>
-                        <span>GST @18%:</span>
-                        <h2 class="mb-0"><i class="fa fa-inr"></i> {{policyList[0].OnlineDiscount}}.00</h2> 
+                        <span>GST:</span>
+                        <h2 class="mb-0"><i class="fa fa-inr"></i> {{policyList[0].ServiceTax}}.00</h2> 
                     </div>
                     <div class="insurer-premium option-box">
                         <span>Final Premium (Incl. GST):</span>

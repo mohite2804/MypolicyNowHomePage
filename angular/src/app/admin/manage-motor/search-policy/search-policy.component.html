@@ -1,0 +1,282 @@
+<!-- Page Header -->
+<div class="page-header">
+  <div class="row align-items-center">
+    <div class="col">
+      <h3 class="page-title">Search Policies</h3>
+    </div>
+  </div>
+</div>
+<!-- /Page Header -->
+<div class="row">
+  <div class="col-md-12">
+    <div *ngIf="atLeastOneRequired" class="alert alert-danger">
+      <strong>{{atLeastOneRequired}}</strong>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="card shadowbox">
+      <div class="card-body pb-0">
+        <form class="form-horizontal" [formGroup]="formRecodEdit" >
+          <div class="row" >
+            <div class="col-lg-2 col-md-4" >
+              <div class="form-group">
+                <label>Enter Policy Number :</label>
+                <input formControlName="policy_no"  type="text" class="form-control" >
+                <div class="error" *ngIf="submitted && formRecodEdit.controls.policy_no.errors" >
+                  <div *ngIf="submitted && formRecodEdit.controls.policy_no.errors.required">
+                    Policy Number is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4" >
+              <div class="form-group">
+                <label>Enter Proposal Number :</label>
+                <input formControlName="proposal_no"  type="text" class="form-control" >
+                <div class="error" *ngIf="submitted && formRecodEdit.controls.proposal_no.errors" >
+                  <div *ngIf="submitted && formRecodEdit.controls.proposal_no.errors.required">
+                    Proposal Number is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4" >
+              <div class="form-group">
+                <label>Enter Vehicle Number :</label>
+                <input formControlName="vehicle_no"  type="text" class="form-control" >
+                <div class="error" *ngIf="submitted && formRecodEdit.controls.vehicle_no.errors" >
+                  <div *ngIf="submitted && formRecodEdit.controls.vehicle_no.errors.required">
+                    Vehicle Number is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4" >
+              <div class="form-group">
+                <label>Enter Insured Name :</label>
+                <input formControlName="insured_name"  type="text" class="form-control" >
+                <div class="error" *ngIf="submitted && formRecodEdit.controls.insured_name.errors" >
+                  <div *ngIf="submitted && formRecodEdit.controls.insured_name.errors.required">
+                    Insured Name is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4" >
+              <div class="form-group">
+                <label>Enter Insured Mobile Number :</label>
+                <input formControlName="insured_mobile_no"  type="text" class="form-control" >
+                <div class="error" *ngIf="submitted && formRecodEdit.controls.insured_mobile_no.errors" >
+                  <div *ngIf="submitted && formRecodEdit.controls.insured_mobile_no.errors.required">
+                    Insured Mobile Number is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4">
+              <label class="d-block">&nbsp;</label>
+              <input  (click)="submitForm()"  type="submit" value="Search" class="btn btn-custom green w-100"/>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card shadowbox">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table *ngIf="result" datatable [dtOptions]="dtOptions[0]" class="table table-striped table-bordered custom-table srn action-table datatable w-100">
+            <thead>
+              <tr>
+                <th>Policy No.</th>
+                <th>Proposal No.</th>
+                <!-- <th>OTP</th> -->
+                <th>Policy issue </th>
+                <th>Policy Effective </th>
+                <th>Policy Expire </th>
+                <th>IC Code</th>
+                <th>Payment Type Code</th>
+                <th>Insured Name</th>
+                <!-- <th>Insured Number</th>       -->
+                <th>64 VB Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="result">
+              <tr  *ngFor="let row of result; let i = index" >
+                <td>{{ row.policy_no }}</td>
+                <td>{{ row.proposal_no }}</td>
+                <!--  <td>{{ row.otp }}</td> -->
+                <!-- <td>{{ row.proposal_created_at | date :'medium' }} </td>  -->
+                <td>{{ row.issued_date | date :'medium' }} </td>
+                <td>{{ row.start_date | date :'medium' }} </td>
+                <td>{{ row.end_date | date :'medium' }} </td>
+                <td>{{ row.ic_short_code }}</td>
+                <td>{{ row.payment_code }}</td>
+                <td>{{ row.customer_name }}</td>
+                <!-- <td>{{ row.mobile_no }}</td> -->
+                <td>{{ row.sixty_four_vb | titlecase  }}</td>
+                
+                <td>
+                  <div>
+                    <button title="Download Policy" (click)="downloadPolicy(row.download_policy_url)" class="btn btn-success btn-sm">
+                    Download Policy
+                    </button>
+                  </div>
+                  <div *ngIf="row.download_proposal_url != ''">
+                    <br>
+                    <button title="Download Proposal" (click)="downloadProposal(row.download_proposal_url)" class="btn btn-success btn-sm">
+                    Download Proposal
+                    </button>
+                  </div>
+                  <div *ngIf="row.id != ''">
+                    <br>
+                    <button title="Download policy Summary" (click)="getPolicySummaryByPolicyId(row.id)" class="btn btn-success btn-sm">
+                    Download Policy Summary
+                    </button>
+                  </div>
+                  
+                  <div *ngIf="row.endorsement_id" >
+                    <br>
+                    <button title="Endosment" (click)="redirectEndosment(row.id,row.endorsement_id)" class="btn btn-success btn-sm">
+                    Endorsement
+                    </button>
+                  </div>
+                  
+                  <div *ngIf="row.download_feed_file_url != ''">
+                    <br>
+                    <button  title="Download Feed File" (click)="downloadFeedFile(row.download_feed_file_url)"  class="btn btn-success btn-sm">
+                    Download Feed File
+                    </button>
+                  </div>
+                  <div *ngIf="row.endorse_stack_url != ''">
+                    <br>
+                    <button  title="Show Endorsement" (click)="ShowEndorsement(row.id)"  class="btn btn-success btn-sm">
+                    Show Endorsement
+                    </button>
+                  </div>
+                  <div *ngIf="row.payment_method_name == 'CUSTOMER CHEQUE' || row.payment_method_name == 'DEALER CHEQUE' " >
+                    <br>
+                    <button  title="Cheque Endorsement" (click)="openModel(row.id)"  class="btn btn-success btn-sm">
+                    Cheque Endorsement
+                    </button>
+                  </div>
+                  <div *ngIf="row.previous_year_policy_url != ''">
+                    <br>
+                    <button title="Download Previous Policy" (click)="downloadOldPolicy(row.previous_year_policy_url)" class="btn btn-success btn-sm">
+                    Download Previous Policy
+                    </button>
+                  </div>
+                  <!-- <div *ngIf="row.ncb_doc_url != ''">
+                    <br><br>
+                    <button title="Download NCB Document " (click)="downloadNcbPolicy(row.ncb_doc_url)" class="btn btn-success btn-sm">
+                    Download NCB Document
+                    </button>
+                  </div> -->
+                  <!-- <div *ngIf="row.pa_cover_url != ''">
+                    <br><br>
+                    <button title="Download PA Cover" (click)="downloadPaCoverPolicy(row.pa_cover_url)" class="btn btn-success btn-sm">
+                    Download PA Cover
+                    </button>
+                  </div> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <app-loading [loaderActive]="loaderActive" ></app-loading> -->
+<div  class="modal custom-modal fade" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form [formGroup]="formRecodChequEndosment"  method="post" (ngSubmit)="submitChequeData()" >
+        <input formControlName="policy_id"  type="hidden" class="form-control" >
+        <div class="modal-header">
+          <h4 class="modal-title">Cheque Endorsement</h4>
+          <button (click)="closePopup()"  type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label *ngIf="resultCheque" >Policy Number: {{ resultCheque.policy_no }}</label>
+                
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label>Bank Name:</label>
+                <!-- <input formControlName="bank_name"  type="text" class="form-control" > -->
+                <select class="form-control" formControlName="bank_name">
+                  <option *ngFor="let row of bank_names" value="{{ row.BankName}}" >{{ row.BankName}}</option>
+                </select>
+                <div class="error" *ngIf="submittedCheque && formRecodChequEndosment.controls.bank_name.errors" >
+                  <div *ngIf="submittedCheque && formRecodChequEndosment.controls.bank_name.errors.required">
+                    Bank Name is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label>Branch City:</label>
+                <input formControlName="branch_city"  type="text" class="form-control" >
+                <div class="error" *ngIf="submittedCheque && formRecodChequEndosment.controls.branch_city.errors" >
+                  <div *ngIf="submittedCheque && formRecodChequEndosment.controls.branch_city.errors.required">
+                    Branch City is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label>Cheque Number:</label>
+                <input formControlName="cheque_number"  type="text" class="form-control" >
+                <div class="error" *ngIf="submittedCheque && formRecodChequEndosment.controls.cheque_number.errors" >
+                  <div *ngIf="submittedCheque && formRecodChequEndosment.controls.cheque_number.errors.required">
+                    Cheque Number is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label>Cheque Date:</label>
+                <input formControlName="cheque_date"  type="date" class="form-control" >
+                <div class="error" *ngIf="submittedCheque && formRecodChequEndosment.controls.cheque_date.errors" >
+                  <div *ngIf="submittedCheque && formRecodChequEndosment.controls.cheque_date.errors.required">
+                    Cheque Date is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label>Payment Method:</label>
+                <select formControlName="payment_method"  class="form-control">
+                  <option value="CUSTOMER CHEQUE" >CUSTOMER CHEQUE</option>
+                  <option value="DEALER CHEQUE" >DEALER CHEQUE</option>
+                  
+                </select>
+                <div class="error" *ngIf="submittedCheque && formRecodChequEndosment.controls.payment_method.errors" >
+                  <div *ngIf="submittedCheque && formRecodChequEndosment.controls.payment_method.errors.required">
+                    Payment Method is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="submit-section">
+          <input class="btn btn-custom green btn-lg" type="submit" value="Submit">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+
+<button (click)="openModel()" class="btn btn-primary pull-right" >
+  <i class="fa fa-plus-square" aria-hidden="true"></i>
+</button>
+
+<h2>Business Privilege</h2>
+<br><br><br>
+
+
+<table *ngIf="result" datatable [dtOptions]="dtOptions[0]" class="row-border hover">
+  <thead>
+    <tr>          
+      <th>Name</th> 
+      <th>Product</th>       
+      <th>Created</th>           
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="result?.length != 0">
+    <tr  *ngFor="let row of result; let i = index" >
+      	<td>{{ row.business_name }}</td>
+     	<td>{{ row.label }}</td>
+      	
+      
+      	<td>{{ row.created_at | date:'medium' }}</td>
+      	<td style="width:200px;">
+        
+
+
+        <button (click)="editModel(row)"  class="btn btn-primary btn-sm" >
+          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        </button>
+             
+      </td>
+
+
+    </tr>   
+  </tbody>
+  
+</table>
+
+<app-loading [loaderActive]="loaderActive" ></app-loading>

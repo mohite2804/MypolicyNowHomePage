@@ -1,0 +1,147 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Upload 64VB Data</h3>
+        </div>
+        <div class="col-auto float-right ml-auto">
+            <!-- <button (click)="openModel()" data-toggle="modal" data-target="#openmodal" class="btn btn-custom green"><i class="fa fa-plus"></i> Add Model Details</button> -->
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row"  *ngIf="access_permission == 'read_write'">
+    <div class="col-md-12">
+        <form [formGroup]="formUploadCsv" (ngSubmit)="submitFormUploadCsv()">
+            <div class="card shadowbox">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="my-2"><b>Upload CSV File: <sup class="text-danger">*</sup></b></h5>
+                            <label>{{ csv_filelabel }}</label>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="box fileuploadbox">
+                                <input #fileInput type="file" class="inputfile" id="csv-file-1" (click)="fileInput.value = null" value="" (change)="uploadCsvFile($event)">
+                                <label for="csv-file-1">
+
+
+
+                                <figure>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                  <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                              </svg>
+                                </figure>
+
+
+
+                                <span>{{csv_fileurl_label}}</span>
+                                </label>
+                            </div>
+                            <div *ngIf="submittedUploadCsv &&  formUploadCsv.controls.csv_file.errors">
+                                <small *ngIf="submittedUploadCsv && formUploadCsv.controls.csv_file.errors.required" class="text-danger">
+                      Please upload CSV File.
+                    </small>
+                                <small *ngIf="formUploadCsv.controls.csv_file.errors?.requiredFileType" class="text-danger">
+                      Allowed file type "csv"
+                    </small>
+                                <small *ngIf="formUploadCsv.controls.csv_file.errors?.fileSizeValidator" class="text-danger">
+                      Allowed file size is 5 MB.
+                    </small>Insurance Import Formats
+                            </div>
+                        </div>
+
+                        <div class="col-2">
+                            <button type="submit" class="btn btn-custom green w-100" [ngStyle]="{'display':displayUpload}"> Submit</button>
+                        </div>
+                        <div class="col-2">
+                            <button type="button" class="btn btn-custom green w-100" (click)="processCsvData()" [ngStyle]="{'display':displayPD}"> Process Data</button>
+                        </div>
+                    </div>
+                    <br/><br/>
+                    <div class="row">
+                        <div class="col-6">
+                            <br/>
+                            <!-- <a _ngcontent-c7="" class="btn btn-xs btn-primary " download="" href="https://www.mypolicynow.com/uploads/GIIB - Insurance Import Formats.csv"> Download 64VB CSV Format</a>                   -->
+                            <a _ngcontent-c7="" class="btn btn-xs btn-primary " download="" href="{{sample_csv_path}}sample_files/MPN-Insurance_Import_Formats.csv"> Download 64VB CSV Format</a>
+                            <br/>
+                            <br/>
+                            <p>The import files should be in CSV format.</p>
+                            <p>For Null or Blank values special character ¤ should be used. ASCII value of special character is 164.</p>
+                            <p>The Name of Import File can be any Name but should have .csv as file extension.</p>
+                            <p>Date field should be in YYYY-MM-DD format.</p>
+                            <p>Possible values for clr_dh column in excel are:</p>
+                            <ul>
+                                <li><b>p :</b>Pending/Not verified</li>
+                                <li><b>d :</b>Dishonoured</li>
+                                <li><b>c :</b>Cleared/Verifies</li>
+                            </ul>
+                            <p><b>Note : </b> After uploading a csv file, a pop up will come saying about file uploading status. After successful file upload, a <b>Process Data</b> button will be enablled to process data in uploaded csv file. After clicking
+                                on it, uploaded csv file will be processed and status of policy numbers will be appeared.</p>
+                            <!-- <br/> -->
+                        </div>
+                        <div class="col-6">
+                            <img _ngcontent-c7="" [ngStyle]="{'display':displayCSVPng}" src="{{sample_csv_path}}sample_files/csvformat.png">
+                        </div>
+                    </div>
+
+                    <br/>
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-12" *ngIf="process_data_result_display">
+                            <div class="row">
+                                <table class="table table-bordered table-condensed">
+                                    <tr>
+                                        <th class="tot">Total Policies</th>
+                                        <th class="succ">Success Policies</th>
+                                        <th class="dup">Duplicate Policies</th>
+                                        <th class="err">Error Policies</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{no_of_total_records}}</td>
+                                        <td>{{no_of_success_rcords}}</td>
+                                        <td>{{no_of_duplicate_rcords}}</td>
+                                        <td>{{no_of_error_rcords}}</td>
+                                    </tr>
+                                </table>
+                                <br/>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-4" *ngIf="is_success_record">
+                                    <h3>Success Policies</h3>
+                                    <ul class="b">
+                                        <li *ngFor="let row of success_policies">
+                                            {{row}}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-4" *ngIf="no_of_error_rcords">
+                                    <h3>Error Policies</h3>
+                                    <ul class="b">
+                                        <li *ngFor="let row3 of error_policies">
+                                            {{row3}}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-4" *ngIf="is_duplicate_record">
+                                    <h3>Duplicate Policies</h3>
+                                    <ul class="b">
+                                        <li *ngFor="let row2 of duplicae_policies">
+                                            {{row2}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

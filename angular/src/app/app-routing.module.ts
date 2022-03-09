@@ -8,6 +8,7 @@ const routes: Routes = [
 
   { path: '', loadChildren: () => import('./front/front.module').then(m => m.FrontModule)},
 
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
 
   {  path:  'page-not-found', component:  PageNotFoundComponent },
   {  path:  'access-denied', component:  AccessDeniedComponent },

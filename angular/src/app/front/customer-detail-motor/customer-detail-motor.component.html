@@ -1,0 +1,1369 @@
+<div class="page-wrapper">
+    <div class="content">
+        <section class="py-0">
+            <div class="row">
+                <div class="col-md-12 border proposal-infobar shadowbox py-2">
+                    <div class="container">
+                        <div *ngIf="result_selected_quote_data" class="row py-2">
+                            <div class="col-xl-12 col-lg-12 col-sm-12 col-12 customerdetail-box text-right">
+                                <a class="actionbtn edit-btn" (click)="editPage()" href="javascript:void(0)"><i class="fa fa-pencil"></i></a>
+                            </div>
+
+                            <div class="col-xl-4 col-lg-3 col-sm-6 col-12 customerdetail-box">
+                                <div>
+                                    <span class="text-white">Your Vehicle:</span>
+                                    <h3 class="mb-0">{{result_selected_quote_data.rto_label | uppercase }} {{result_selected_quote_data.registration_no_part_3 | uppercase}} {{result_selected_quote_data.registration_no_part_4 | uppercase}},</h3>
+                                    <h4 class="mb-0">
+                                        {{result_selected_quote_data.make | uppercase}} {{result_selected_quote_data.model | uppercase}} {{result_selected_quote_data.variant | uppercase}} ({{result_selected_quote_data.cc}} cc)
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-sm-6 col-12  customerdetail-box">
+                                <div>
+                                    <span class="text-white">Selected Insurer:</span>
+                                    <div class="row selectedinsurer align-items-center">
+                                        <div class="col-xl-2 col-lg-3 col-sm-3 col-3">
+                                            <img src="assets/front/img/partners-logos/{{result_selected_quote_data.ic_logo}}" alt="{{result_selected_quote_data.ic_code}}">
+                                        </div>
+
+                                        <div class="col-xl-10 col-lg-9 col-sm-9 col-9 ">
+                                            <h4 class="mb-0 ml-1">{{result_selected_quote_data.product_type}} Insurance Policy</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-sm-6 col-12 customerdetail-box">
+                                <div>
+                                    <span class="text-white">IDV & NCB:</span>
+                                    <h4 class="mb-0"><span class="text-white">IDV: </span>
+                                        <i class="fa fa-inr">
+                                    </i>{{result_selected_quote_data.idv}}</h4>
+                                    <h4 class="mb-0"><span class="text-white">New NCB:</span> {{result_selected_quote_data.current_ncb_per}} %</h4>
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-lg-3 col-sm-6 col-12 customerdetail-box">
+                                <div>
+                                    <span class="text-white">Policy Period:</span>
+                                    <h4 class="mb-0"><span class="text-white">Start Date:</span> {{result_selected_quote_data.proposal_start_date}}</h4>
+                                    <h4 class="mb-0"><span class="text-white">End Date:</span> {{result_selected_quote_data.proposal_end_date}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row mx-0">
+                    <div class="col-lg-3 col-md-4 proposalform-sidebar radius-10">
+                        <div *ngIf="result_selected_quote_data" class="totalpremium-box">
+                            <ul>
+                                <li>Own Damage Premium: <span class="float-right"><i class="fa fa-inr"></i> {{result_selected_quote_data.total_basic_od}}</span></li>
+                                <li>Addon Premium: <span class="float-right"><i class="fa fa-inr"></i> {{result_selected_quote_data.total_addon_premium}}  </span></li>
+                                <li>Third Party Premium: <span class="float-right"><i class="fa fa-inr"></i> {{result_selected_quote_data.net_liability_premium_b}}</span></li>
+                                <li>Discount: <span class="float-right"> - <i class="fa fa-inr"></i> {{result_selected_quote_data.total_discount}} </span></li>
+                                <li>
+                                    <h4>Premium <span class="float-right"><i class="fa fa-inr"></i> {{result_selected_quote_data.gross_premium_without_gst}}</span></h4>
+                                </li>
+                                <li>GST @18% <span class="float-right"><i class="fa fa-inr"></i> {{result_selected_quote_data.service_tax}}</span></li>
+
+                                <li *ngIf="result_selected_quote_data.cess_amt_1 > 0">
+                                    CESS @1% <span class="float-right"><i class="fa fa-inr"></i> {{result_selected_quote_data.cess_amt_1}}</span>
+                                </li>
+
+                                <li class="finalpremium">
+                                    <h4>Final Premium <em class="d-lg-inline d-md-block d-inline">(Incl. GST)</em> <span><i class="fa fa-inr"></i> {{result_selected_quote_data.gross_premium}}</span></h4>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8 proposalform">
+                        <div class="proposalform-container">
+                            <form #formQuoteDetailsId class="ui form" [formGroup]="formQuoteDetails" (ngSubmit)="submitFormQuoteDetails()">
+
+                                <div>
+
+                                    <div class="row align-items-center justify-content-center">
+                                        <div class="col-12">
+
+                                            <div class="card cardshadow blue-border">
+                                                <div class="card-header">
+                                                    <h3>Vehicle Info</h3>
+
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row align-items-center">
+
+                                                        <div class="col-lg-5 col-md-6">
+                                                            <div class="field" [ngClass]="{'error':(submittedQuoteDetails || formQuoteDetails.controls.engine_no.invalid && (formQuoteDetails.controls.engine_no.dirty || formQuoteDetails.controls.engine_no.touched)) && formQuoteDetails.controls.engine_no.errors}">
+                                                                <div *ngIf="url_engine_no == null" class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.engine_no}">
+                                                                    <input select-other-detail="other_field" formControlName="engine_no" type="text" class="form-control floating text-uppercase" (change)="checkIsPolicyExist($event)" maxlength="22">
+                                                                    <div *ngIf="formQuoteDetails.controls.engine_no.errors">
+                                                                        <small *ngIf="formQuoteDetails.controls.engine_no.errors.pattern" class="text-danger">
+                                                                        Please Enter Valid 5 to 22 Digit Engine Number.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">Enter the Engine Number.</label>
+                                                                </div>
+
+                                                                <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                    <label>Engine Number: </label>
+                                                                    <h4>{{result_selected_quote_data.engine_no}}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-5 col-md-6">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.chassis_no.invalid && (formQuoteDetails.controls.chassis_no.dirty || formQuoteDetails.controls.chassis_no.touched))  && formQuoteDetails.controls.chassis_no.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.chassis_no}">
+                                                                    <input select-other-detail="other_field" formControlName="chassis_no" type="text" class="form-control floating text-uppercase" (change)="checkIsPolicyExist($event)" maxlength="17">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.chassis_no.invalid && (formQuoteDetails.controls.chassis_no.dirty || formQuoteDetails.controls.chassis_no.touched)) && formQuoteDetails.controls.chassis_no.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.chassis_no.invalid && (formQuoteDetails.controls.chassis_no.dirty || formQuoteDetails.controls.chassis_no.touched)) && formQuoteDetails.controls.chassis_no.errors.pattern" class="text-danger">
+                                                                        Please Enter Valid 17 Digit Chassis Number.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">Enter the Chassis Number.</label>
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Chassis Number: </label>
+                                                                <h4>{{result_selected_quote_data.chassis_no}}</h4>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="col-md-4 col-sm-12">
+                                                            <div class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.rto.invalid && (formQuoteDetails.controls.rto.dirty || formQuoteDetails.controls.rto.touched)) && formQuoteDetails.controls.rto.errors}">
+                                                                <div class="form-group form-focus select-focus">
+                                                                    <label class="focus-label req">RTO</label>
+                                                                    <ng-select [disabled]="true" placeholder="Select RTO" (clear)="clearValue('rto',$event)" (change)="changeSelectBox('rto',$event)" [(ngModel)]="selectedRto" [ngModelOptions]="{standalone: true}">
+                                                                        <ng-option *ngFor="let row of result_rto" [value]="row.rto_id">{{row.label}}</ng-option>
+                                                                    </ng-select>
+
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>RTO: </label>
+                                                                <h4>{{result_selected_quote_data.registration_no_part_1}} {{result_selected_quote_data.registration_no_part_2}}</h4>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-3 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.reg_no_1.invalid && (formQuoteDetails.controls.reg_no_1.dirty || formQuoteDetails.controls.reg_no_1.touched)) && formQuoteDetails.controls.reg_no_1.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.reg_no_1}">
+                                                                    <input select-other-detail="other_field" formControlName="reg_no_1" type="text" class="form-control floating text-uppercase" maxlength="3">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.reg_no_1.invalid && (formQuoteDetails.controls.reg_no_1.dirty || formQuoteDetails.controls.reg_no_1.touched)) && formQuoteDetails.controls.reg_no_1.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.reg_no_1.invalid && (formQuoteDetails.controls.reg_no_1.dirty || formQuoteDetails.controls.reg_no_1.touched)) && formQuoteDetails.controls.reg_no_1.errors.pattern" class="text-danger">Please Enter Valid Registration Number
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label {{reg_no_required ? 'req1':''}}">Regn. Code (eg. AB)</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Regn. Code (eg. AB):</label>
+                                                                <h4>{{result_selected_quote_data.registration_no_part_3}}</h4>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-3 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.reg_no_2.invalid && (formQuoteDetails.controls.reg_no_2.dirty || formQuoteDetails.controls.reg_no_2.touched)) && formQuoteDetails.controls.reg_no_2.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.reg_no_2}">
+                                                                    <input select-other-detail="other_field" formControlName="reg_no_2" type="text" class="form-control floating text-uppercase" maxlength="4">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.reg_no_2.invalid && (formQuoteDetails.controls.reg_no_2.dirty || formQuoteDetails.controls.reg_no_2.touched)) && formQuoteDetails.controls.reg_no_2.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.reg_no_2.invalid && (formQuoteDetails.controls.reg_no_2.dirty || formQuoteDetails.controls.reg_no_2.touched)) && formQuoteDetails.controls.reg_no_2.errors.pattern" class="text-danger">Please Enter Valid Registration Number
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label {{reg_no_required ? 'req':''}}">Regn. No. (eg. 1234)</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Regn. No. (eg. 1234)</label>
+                                                                <h4>{{result_selected_quote_data.registration_no_part_4}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-5 col-md-6">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.vehicle_color.invalid && (formQuoteDetails.controls.vehicle_color.dirty || formQuoteDetails.controls.vehicle_color.touched))  && formQuoteDetails.controls.vehicle_color.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.vehicle_color}">
+
+                                                                    <ng-select placeholder="" (clear)="clearValue('vehicle_color',$event)" (change)="changeSelectBox('vehicle_color',$event)" [(ngModel)]="selected_vehicle_color" [ngModelOptions]="{standalone: true}">
+                                                                        <ng-option *ngFor="let row of result_vehicle_color" [value]="row.vehicle_color_id">{{row.name}}</ng-option>
+                                                                    </ng-select>
+
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.vehicle_color.invalid && (formQuoteDetails.controls.vehicle_color.dirty || formQuoteDetails.controls.vehicle_color.touched)) && formQuoteDetails.controls.vehicle_color.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.vehicle_color.invalid && (formQuoteDetails.controls.vehicle_color.dirty || formQuoteDetails.controls.vehicle_color.touched))" class="text-danger">
+                                                                          Please Select Vehicle Color.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">Vehicle Color.</label>
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Vehicle Color: </label>
+                                                                <h4>{{result_selected_quote_data.hypothecation_vehicle_color}}</h4>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div>
+                                    <!-- started -->
+                                    <div [ngClass]="{'d-none': div_previous_policy_details_section }" class="row align-items-center justify-content-center">
+                                        <div class="col-12">
+                                            <div class="card cardshadow blue-border">
+                                                <div class="card-header">
+                                                    <h3>Previous Policy Details</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row align-items-center">
+
+                                                        <div [ngClass]="{'d-none': div_previous_policy_TP }" class="col-md-5 col-sm-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.previose_policy_no_tp.invalid && (formQuoteDetails.controls.previose_policy_no_tp.dirty || formQuoteDetails.controls.previose_policy_no_tp.touched)) && formQuoteDetails.controls.previose_policy_no_tp.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.controls.previose_policy_no_tp.value}">
+                                                                    <input select-other-detail="other_field" maxlength="25" formControlName="previose_policy_no_tp" type="text" class="form-control floating">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.previose_policy_no_tp.invalid && (formQuoteDetails.controls.previose_policy_no_tp.dirty || formQuoteDetails.controls.previose_policy_no_tp.touched)) && formQuoteDetails.controls.previose_policy_no_tp.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.previose_policy_no_tp.invalid && (formQuoteDetails.controls.previose_policy_no_tp.dirty || formQuoteDetails.controls.previose_policy_no_tp.touched)) && formQuoteDetails.controls.previose_policy_no_tp.errors"
+                                                                            class="text-danger">
+                                                              Please Enter valid TP Previous Policy Number.
+                                                            </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">Enter TP Previous Policy No.</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>TP Previous Policy No.</label>
+                                                                <h4>{{result_selected_quote_data.other_tp_policy_no}}</h4>
+                                                            </div>
+                                                        </div>
+
+                                                        <div [ngClass]="{'d-none': div_previous_policy_TP }" class="col-md-5 col-sm-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.previose_insurance_company_tp.invalid && (formQuoteDetails.controls.previose_insurance_company_tp.dirty || formQuoteDetails.controls.previose_insurance_company_tp.touched)) && formQuoteDetails.controls.previose_insurance_company_tp.errors}">
+                                                                <div class="form-group form-focus select-focus">
+                                                                    <label class="focus-label req">Select TP Previous Insurance</label>
+                                                                    <select select-other-detail="other_field" formControlName="previose_insurance_company_tp">
+                                                            <option value="">Select</option>
+                                                             <option *ngFor="let row of result_ic_master"  value="{{ row.id }}">{{ row.code }}</option>
+                                                        </select>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>TP Previous Insurance</label>
+                                                                <h4>{{result_selected_quote_data.other_tp_code}}</h4>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-5 col-sm-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.previose_policy_no.invalid && (formQuoteDetails.controls.previose_policy_no.dirty || formQuoteDetails.controls.previose_policy_no.touched)) && formQuoteDetails.controls.previose_policy_no.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.controls.previose_policy_no.value}">
+                                                                    <input select-other-detail="other_field" maxlength="25" formControlName="previose_policy_no" type="text" class="form-control floating">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.previose_policy_no.invalid && (formQuoteDetails.controls.previose_policy_no.dirty || formQuoteDetails.controls.previose_policy_no.touched)) && formQuoteDetails.controls.previose_policy_no.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.previose_policy_no.invalid && (formQuoteDetails.controls.previose_policy_no.dirty || formQuoteDetails.controls.previose_policy_no.touched)) && formQuoteDetails.controls.previose_policy_no.errors"
+                                                                            class="text-danger">
+                                                                            Please Enter valid <span *ngIf="div_show_for_previous_policy_expiry_date_od==false">OD</span> Previous Policy Number.
+                                                                        </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">Enter <span *ngIf="div_show_for_previous_policy_expiry_date_od==false">OD</span> Previous Policy No.</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Previous Policy Number : </label>
+                                                                <h4>{{result_selected_quote_data.prev_policy_no}}</h4>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-5 col-sm-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.previose_insurance_company.invalid && (formQuoteDetails.controls.previose_insurance_company.dirty || formQuoteDetails.controls.previose_insurance_company.touched)) && formQuoteDetails.controls.previose_insurance_company.errors}">
+                                                                <div class="form-group form-focus select-focus">
+                                                                    <label class="focus-label req">Select <span *ngIf="div_show_for_previous_policy_expiry_date_od==false">OD</span> Previous Insurance</label>
+                                                                    <select select-other-detail="other_field" formControlName="previose_insurance_company">
+                                                              <option value="">Select</option>
+                                                               <option *ngFor="let row of result_ic_master"  value="{{ row.id }}">{{ row.code }}</option>
+                                                          </select>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label><span *ngIf="div_show_for_previous_policy_expiry_date_od==false">OD</span> Previous Insurance</label>
+                                                                <h4>{{result_selected_quote_data.pre_ic_code}}</h4>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-12" *ngIf="!div_previous_policy_TP">
+                                                            <div class="card shadowbox">
+                                                                <div class="card-body {{ submittedQuoteDetails && formQuoteDetails.controls.pre_year_tp_policy_pdf.errors ? 'bd-red':''}}">
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            <h5 class="my-2 {{ submittedQuoteDetails && formQuoteDetails.controls.pre_year_tp_policy_pdf.errors ? 'text-danger':''}}"><b>Upload Pre Year TP Policy: <sup *ngIf="upload_pre_policy_pdf" class="text-danger">*</sup></b></h5>
+                                                                        </div>
+                                                                        <div class="col-8">
+                                                                            <div class="box fileuploadbox">
+                                                                                <input type="file" id="file-2" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadTpPDF($event)" accept="image/jpeg,image/gif,image/png,application/pdf">
+                                                                                <label for="file-2">
+                                                                                <figure>
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                                                                    viewBox="0 0 20 17">
+                                                                                    <path
+                                                                                    d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                                                                    </path>
+                                                                                </svg>
+                                                                                </figure>
+                                                                                <span>{{upload_tp_pdf_url_label}}</span>
+                                                                            </label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-4">
+                                                                            <div class="uploaded-img tp">
+                                                                                <img src="{{upload_pdf_tp_upload_real_time}}" alt="">
+                                                                            </div>
+                                                                            <a *ngIf="is_set_from_api_for_upload_tp_pdf_url" [href]="upload_tp_pdf_url" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                        </div>
+                                                                        <div *ngIf="submittedQuoteDetails &&  formQuoteDetails.controls.pre_year_tp_policy_pdf.errors">
+                                                                            <small *ngIf="submittedQuoteDetails && formQuoteDetails.controls.pre_year_tp_policy_pdf.errors.required" class="text-danger">
+                                                                          Please upload pdf document.
+                                                                        </small>
+                                                                            <small *ngIf="formQuoteDetails.controls.pre_year_tp_policy_pdf.errors?.requiredFileType" class="text-danger">
+                                                                          Allowed file type "pdf"
+                                                                        </small>
+                                                                            <small *ngIf="formQuoteDetails.controls.pre_year_tp_policy_pdf.errors?.fileSizeValidator" class="text-danger">
+                                                                          Allowed file size is 5 MB.
+                                                                        </small>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-12">
+                                                            <div class="card shadowbox">
+                                                                <div class="card-body {{ submittedQuoteDetails && formQuoteDetails.controls.pre_policy_pdf.errors ? 'bd-red':''}}">
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            <h5 class="my-2 {{ submittedQuoteDetails && formQuoteDetails.controls.pre_policy_pdf.errors ? 'text-danger':''}}"><b>Upload Pre Year OD Policy: <sup *ngIf="upload_pre_policy_pdf"  class="text-danger">*</sup></b></h5>
+                                                                        </div>
+                                                                        <div class="col-8">
+                                                                            <div class="box fileuploadbox">
+                                                                                <input type="file" id="file-1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadPdf($event)" accept="image/jpeg,image/gif,image/png,application/pdf">
+                                                                                <label for="file-1">
+                                                                                <figure>
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                                                                    viewBox="0 0 20 17">
+                                                                                    <path
+                                                                                    d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                                                                    </path>
+                                                                                </svg>
+                                                                                </figure>
+                                                                                <span>{{upload_pdf_url_label}}</span>
+                                                                            </label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-4">
+                                                                            <div class="uploaded-img od">
+                                                                                <img src="{{upload_pdf_od_upload_real_time}}" alt="">
+                                                                            </div>
+                                                                            <a *ngIf="is_set_from_api_for_upload_pdf_url" [href]="upload_pdf_url" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                        </div>
+                                                                        <div *ngIf="submittedQuoteDetails &&  formQuoteDetails.controls.pre_policy_pdf.errors">
+                                                                            <small *ngIf="submittedQuoteDetails && formQuoteDetails.controls.pre_policy_pdf.errors.required" class="text-danger">
+                                                                          Please upload previous policy document.
+                                                                        </small>
+                                                                            <small *ngIf="formQuoteDetails.controls.pre_policy_pdf.errors?.requiredFileType" class="text-danger">
+                                                                          Allowed file type "pdf/png/jpeg"
+                                                                        </small>
+                                                                            <small *ngIf="formQuoteDetails.controls.pre_policy_pdf.errors?.fileSizeValidator" class="text-danger">
+                                                                          Allowed file size is 5 MB.
+                                                                        </small>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- End -->
+                                    <div [ngClass]="{'d-none': !div_show_owner_details }" class="row align-items-center justify-content-center">
+                                        <div class="col-12">
+                                            <div class="card cardshadow blue-border">
+                                                <div class="card-header">
+                                                    <h3>Owner Details</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-lg-2 col-md-3 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.owner_salutation.invalid && (formQuoteDetails.controls.owner_salutation.dirty || formQuoteDetails.controls.owner_salutation.touched)) && formQuoteDetails.controls.owner_salutation.errors}">
+                                                                <div class="form-group form-focus select-focus">
+                                                                    <label class="focus-label req">Salutation</label>
+
+                                                                    <select select-other-detail="other_field" formControlName="owner_salutation" (change)="changeSalutation($event.target.value); changeMaritalStatus($event.target.value)">
+                                                                    <option value="">Select</option>
+                                                                    <option *ngFor="let row of result_salutation"  value="{{ row.id }}">{{ row.name }}</option>
+                                                                  </select>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Salutation</label>
+                                                                <h4>{{result_selected_quote_data.proposer_salutation}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-9 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.owner_first_name.invalid && (formQuoteDetails.controls.owner_first_name.dirty || formQuoteDetails.controls.owner_first_name.touched)) && formQuoteDetails.controls.owner_first_name.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.owner_first_name}">
+                                                                    <input select-other-detail="other_field" formControlName="owner_first_name" type="text" class="form-control floating" maxlength="25">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_first_name.invalid && (formQuoteDetails.controls.owner_first_name.dirty || formQuoteDetails.controls.owner_first_name.touched)) && formQuoteDetails.controls.owner_first_name.errors">
+                                                                        <small *ngIf="formQuoteDetails.controls.owner_first_name.invalid && (formQuoteDetails.controls.owner_first_name.dirty || formQuoteDetails.controls.owner_first_name.touched) && formQuoteDetails.controls.owner_first_name" class="text-danger">
+                                                                        Please Enter valid First Name.
+                                                                      </small>
+
+                                                                    </div>
+                                                                    <label class="focus-label req">First Name</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>First Name</label>
+                                                                <h4>{{result_selected_quote_data.proposer_first_name}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.owner_middle_name.invalid && (formQuoteDetails.controls.owner_middle_name.dirty || formQuoteDetails.controls.owner_middle_name.touched)) && formQuoteDetails.controls.owner_middle_name.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.owner_middle_name}">
+                                                                    <input select-other-detail="other_field" formControlName="owner_middle_name" type="text" class="form-control floating" maxlength="25">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_middle_name.invalid && (formQuoteDetails.controls.owner_middle_name.dirty || formQuoteDetails.controls.owner_middle_name.touched)) && formQuoteDetails.controls.owner_middle_name.errors">
+                                                                        <small *ngIf="formQuoteDetails.controls.owner_middle_name.invalid && (formQuoteDetails.controls.owner_middle_name.dirty || formQuoteDetails.controls.owner_middle_name.touched) && formQuoteDetails.controls.owner_middle_name.errors" class="text-danger">
+                                                                        Please Enter valid Middle Name.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label">Middle Name</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Middle Name</label>
+                                                                <h4>{{(result_selected_quote_data.proposer_middle_name == "" || result_selected_quote_data.proposer_middle_name == null) ? "--" : result_selected_quote_data.proposer_middle_name}}</h4>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.owner_last_name.invalid && (formQuoteDetails.controls.owner_last_name.dirty || formQuoteDetails.controls.owner_last_name.touched)) && formQuoteDetails.controls.owner_last_name.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.owner_last_name}">
+                                                                    <input select-other-detail="other_field" formControlName="owner_last_name" type="text" class="form-control floating" maxlength="25">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_last_name.invalid && (formQuoteDetails.controls.owner_last_name.dirty || formQuoteDetails.controls.owner_last_name.touched)) && formQuoteDetails.controls.owner_last_name.errors">
+                                                                        <small *ngIf="formQuoteDetails.controls.owner_last_name.invalid && (formQuoteDetails.controls.owner_last_name.dirty || formQuoteDetails.controls.owner_last_name.touched) && formQuoteDetails.controls.owner_last_name.errors" class="text-danger">
+                                                                        Please Enter valid Last Name.
+                                                                      </small>
+
+                                                                    </div>
+                                                                    <label class="focus-label req">Last Name</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Last Name</label>
+                                                                <h4>{{result_selected_quote_data.proposer_last_name}}</h4>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-lg-4 col-md-6 col-12">
+                                                            <div class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.owner_email.invalid && (formQuoteDetails.controls.owner_email.dirty || formQuoteDetails.controls.owner_email.touched)) && formQuoteDetails.controls.owner_email.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.owner_email}">
+                                                                    <input select-other-detail="other_field" formControlName="owner_email" type="text" class="form-control floating" maxlength="50">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_email.invalid && (formQuoteDetails.controls.owner_email.dirty || formQuoteDetails.controls.owner_email.touched)) && formQuoteDetails.controls.owner_email.errors">
+
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_email.invalid && (formQuoteDetails.controls.owner_email.dirty || formQuoteDetails.controls.owner_email.touched)) && formQuoteDetails.controls.owner_email.errors.email" class="text-danger">
+                                                                        Please Enter Valid Email ID.
+                                                                      </small>
+
+                                                                    </div>
+                                                                    <label class="focus-label req">Email Id</label>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="col-lg-2 col-md-6 col-12">
+                                                            <div class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.owner_mobile.invalid && (formQuoteDetails.controls.owner_mobile.dirty || formQuoteDetails.controls.owner_mobile.touched)) && formQuoteDetails.controls.owner_mobile.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.owner_mobile}">
+                                                                    <input select-other-detail="other_field" formControlName="owner_mobile" type="text" class="form-control floating" maxlength="10">
+
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_mobile.invalid && (formQuoteDetails.controls.owner_mobile.dirty || formQuoteDetails.controls.owner_mobile.touched)) && formQuoteDetails.controls.owner_mobile.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_mobile.invalid && (formQuoteDetails.controls.owner_mobile.dirty || formQuoteDetails.controls.owner_mobile.touched)) && formQuoteDetails.controls.owner_mobile.errors.pattern" class="text-danger">
+                                                                        Please Enter Valid Mobile Number.
+                                                                      </small>
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_mobile.invalid && (formQuoteDetails.controls.owner_mobile.dirty || formQuoteDetails.controls.owner_mobile.touched)) && formQuoteDetails.controls.owner_mobile.errors.minlength" class="text-danger">
+                                                                        Please Enter Valid Mobile Number.
+                                                                      </small>
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_mobile.invalid && (formQuoteDetails.controls.owner_mobile.dirty || formQuoteDetails.controls.owner_mobile.touched)) && formQuoteDetails.controls.owner_mobile.errors.maxlength" class="text-danger">
+                                                                        Please Enter Valid Mobile Number.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">Mobile No.</label>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+
+
+                                                        <div *ngIf="is_elec==false" class="col-lg-2 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.owner_dob.invalid && (formQuoteDetails.controls.owner_dob.dirty || formQuoteDetails.controls.owner_dob.touched)) && formQuoteDetails.controls.owner_dob.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.controls.owner_dob.value}">
+                                                                    <div class="cal-icon">
+                                                                        <input readonly select-other-detail="other_field" [ngModelOptions]="{standalone: true}" (click)="h.toggle()" (dateSelect)="selectDate('owner_dob',$event)" class="form-control" placeholder="yyyy-mm-dd" name="dp" [minDate]="minDateForBirthdate" [maxDate]="maxDateForBirthdate"
+                                                                            [(ngModel)]="date_picker_owner_dob" ngbDatepicker #h="ngbDatepicker" placeholder="" autocomplete="off">
+                                                                    </div>
+                                                                    <label class="focus-label req">Date of Birth</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Date of Birth</label>
+                                                                <h4>{{result_selected_quote_data.proposer_dob}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="is_elec==true" class="col-lg-2 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.owner_dob.invalid && (formQuoteDetails.controls.owner_dob.dirty || formQuoteDetails.controls.owner_dob.touched)) && formQuoteDetails.controls.owner_dob.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.controls.owner_dob.value}">
+                                                                    <div class="cal-icon">
+                                                                        <input readonly select-other-detail="other_field" [ngModelOptions]="{standalone: true}" (click)="h.toggle()" (dateSelect)="selectDate('owner_dob',$event)" class="form-control" placeholder="yyyy-mm-dd" name="dp" [minDate]="minDateForBirthdate" [maxDate]="maxDateForBirthdateElec"
+                                                                            [(ngModel)]="date_picker_owner_dob" ngbDatepicker #h="ngbDatepicker" placeholder="" autocomplete="off">
+                                                                    </div>
+                                                                    <label class="focus-label req">Date of Birth</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Date of Birth</label>
+                                                                <h4>{{result_selected_quote_data.proposer_dob}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.owner_gender.invalid && (formQuoteDetails.controls.owner_gender.dirty || formQuoteDetails.controls.owner_gender.touched)) && formQuoteDetails.controls.owner_gender.errors}">
+                                                                <div class="form-group ui form">
+                                                                    <div class="inline fields">
+                                                                        <label class="ui label req">Gender</label>
+                                                                        <div class="field">
+                                                                            <div class="ui radio checkbox">
+                                                                                <input select-other-detail="other_field" formControlName="owner_gender" id="owner_gender_male" type="radio" value='male'>
+                                                                                <label class="mb-0" for="owner_gender_male">Male</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="field">
+                                                                            <div class="ui radio checkbox">
+                                                                                <input select-other-detail="other_field" formControlName="owner_gender" id="owner_gender_female" type="radio" value='female'>
+                                                                                <label class="mb-0" for="owner_gender_female">Female</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Gender</label>
+                                                                <h4>{{result_selected_quote_data.marital_status}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.owner_marital_status.invalid && (formQuoteDetails.controls.owner_marital_status.dirty || formQuoteDetails.controls.owner_marital_status.touched)) && formQuoteDetails.controls.owner_marital_status.errors}">
+                                                                <div class="form-group ui form">
+                                                                    <div class="inline fields">
+                                                                        <label class="ui label">Marital Status</label>
+                                                                        <div class="field">
+                                                                            <div class="ui radio checkbox">
+                                                                                <input select-other-detail="other_field" formControlName="owner_marital_status" id="owner_marital_status_single" type="radio" value='Single'>
+                                                                                <label class="mb-0" for="owner_marital_single">Single</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="field">
+                                                                            <div class="ui radio checkbox">
+                                                                                <input select-other-detail="other_field" formControlName="owner_marital_status" id="owner_marital_status_married" type="radio" value='Married'>
+                                                                                <label class="mb-0" for="owner_marital_married">Married</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Marital Status</label>
+                                                                <h4>{{result_selected_quote_data.proposer_marital_status}}</h4>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.owner_address_1.invalid && (formQuoteDetails.controls.owner_address_1.dirty || formQuoteDetails.controls.owner_address_1.touched)) && formQuoteDetails.controls.owner_address_1.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.owner_address_1}">
+                                                                    <input select-other-detail="other_field" formControlName="owner_address_1" type="text" class="form-control floating" maxlength="50">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_address_1.invalid && (formQuoteDetails.controls.owner_address_1.dirty || formQuoteDetails.controls.owner_address_1.touched)) && formQuoteDetails.controls.owner_address_1.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_address_1.invalid && (formQuoteDetails.controls.owner_address_1.dirty || formQuoteDetails.controls.owner_address_1.touched)) && formQuoteDetails.controls.owner_address_1.errors.pattern"
+                                                                            class="text-danger">
+                                                                        Please Enter Valid Address.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">Address 1 (H.no/building)</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Address 1 (H.no/building)</label>
+                                                                <h4>{{result_selected_quote_data.proposer_address1}}</h4>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.owner_address_2.invalid && (formQuoteDetails.controls.owner_address_2.dirty || formQuoteDetails.controls.owner_address_2.touched)) && formQuoteDetails.controls.owner_address_2.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.owner_address_2}">
+                                                                    <input select-other-detail="other_field" formControlName="owner_address_2" type="text" class="form-control floating" maxlength="50">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_address_2.invalid && (formQuoteDetails.controls.owner_address_2.dirty || formQuoteDetails.controls.owner_address_2.touched)) && formQuoteDetails.controls.owner_address_2.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_address_2.invalid && (formQuoteDetails.controls.owner_address_2.dirty || formQuoteDetails.controls.owner_address_2.touched)) && formQuoteDetails.controls.owner_address_2.errors.pattern"
+                                                                            class="text-danger">
+                                                                        Please Enter Valid Address.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">Address 2(Area/Town/Locality)</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Address 2(Area/Town/Locality)</label>
+                                                                <h4>{{result_selected_quote_data.proposer_address2}}</h4>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="col-lg-3 col-md-4 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.owner_pincode.invalid && (formQuoteDetails.controls.owner_pincode.dirty || formQuoteDetails.controls.owner_pincode.touched)) && formQuoteDetails.controls.owner_pincode.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.owner_pincode}">
+                                                                    <input select-other-detail="other_field" (keyup)="changeOwnerPincode($event)" formControlName="owner_pincode" maxlength="6" type="text" class="form-control floating">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_pincode.invalid && (formQuoteDetails.controls.owner_pincode.dirty || formQuoteDetails.controls.owner_pincode.touched)) && formQuoteDetails.controls.owner_pincode.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_pincode.invalid && (formQuoteDetails.controls.owner_pincode.dirty || formQuoteDetails.controls.owner_pincode.touched)) && formQuoteDetails.controls.owner_pincode.errors" class="text-danger">
+                                                                       Please Enter Valid Pin Code.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">Pin Code</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Pin Code</label>
+                                                                <h4>{{result_selected_quote_data.proposer_pincode}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-4 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.owner_city.invalid && (formQuoteDetails.controls.owner_city.dirty || formQuoteDetails.controls.owner_city.touched)) && formQuoteDetails.controls.owner_city.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.controls.owner_city.value}">
+                                                                    <input select-other-detail="other_field" formControlName="owner_city" type="text" class="form-control floating" disabled>
+                                                                    <label class="focus-label req">City</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>City</label>
+                                                                <h4>{{result_selected_quote_data.proposer_city}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-4 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.owner_state.invalid && (formQuoteDetails.controls.owner_state.dirty || formQuoteDetails.controls.owner_state.touched)) && formQuoteDetails.controls.owner_state.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.controls.owner_state.value}">
+                                                                    <input select-other-detail="other_field" formControlName="owner_state" type="text" class="form-control floating" disabled>
+                                                                    <label class="focus-label req">State</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>State</label>
+                                                                <h4>{{result_selected_quote_data.proposer_state}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.owner_pan.invalid && (formQuoteDetails.controls.owner_pan.dirty || formQuoteDetails.controls.owner_pan.touched)) && formQuoteDetails.controls.owner_pan.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.owner_pan}">
+                                                                    <input select-other-detail="other_field" formControlName="owner_pan" type="text" class="form-control floating text-uppercase" maxlength="10">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_pan.invalid && (formQuoteDetails.controls.owner_pan.dirty || formQuoteDetails.controls.owner_pan.touched)) && formQuoteDetails.controls.owner_pan.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_pan.invalid && (formQuoteDetails.controls.owner_pan.dirty || formQuoteDetails.controls.owner_pan.touched)) && formQuoteDetails.controls.owner_pan.errors.pattern" class="text-danger">
+                                                                        Please Enter Valid Pan Number.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label {{user_pan_no_required ? 'req':''}}">Pan Number</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Pan Number</label>
+                                                                <h4>{{result_selected_quote_data.proposer_dob}}</h4>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="col-lg-3 col-md-4 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.owner_aadhaar}">
+                                                                <input select-other-detail="other_field" formControlName="owner_aadhaar" type="text" class="form-control floating" maxlength="12">
+                                                                <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_aadhaar.invalid && (formQuoteDetails.controls.owner_aadhaar.dirty || formQuoteDetails.controls.owner_aadhaar.touched)) && formQuoteDetails.controls.owner_aadhaar.errors">
+                                                                    <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_aadhaar.invalid && (formQuoteDetails.controls.owner_aadhaar.dirty || formQuoteDetails.controls.owner_aadhaar.touched)) && formQuoteDetails.controls.owner_aadhaar" class="text-danger">
+                                                                    Please Enter Valid Aadhaar Number.
+                                                                  </small>
+                                                                </div>
+                                                                <label class="focus-label">Aadhaar Number</label>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Aadhaar Number</label>
+                                                                <h4>{{(result_selected_quote_data.proposer_adhaar_no == "" || result_selected_quote_data.proposer_adhaar_no == null) ? "--" : result_selected_quote_data.proposer_adhaar_no}}</h4>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-3 col-md-4 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.owner_gst}">
+                                                                <input select-other-detail="other_field" formControlName="owner_gst" type="text" class="form-control floating text-uppercase" maxlength="15">
+                                                                <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_gst.invalid && (formQuoteDetails.controls.owner_gst.dirty || formQuoteDetails.controls.owner_gst.touched)) && formQuoteDetails.controls.owner_gst.errors">
+                                                                    <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.owner_gst.invalid && (formQuoteDetails.controls.owner_gst.dirty || formQuoteDetails.controls.owner_gst.touched)) && formQuoteDetails.controls.owner_gst.errors.pattern" class="text-danger">
+                                                                    Please Enter Valid GST Number.
+                                                                  </small>
+                                                                </div>
+                                                                <label class="focus-label">GST Number</label>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>GST Number</label>
+                                                                <h4>{{(result_selected_quote_data.proposer_gst_no == "" || result_selected_quote_data.proposer_gst_no == null) ? "--" : result_selected_quote_data.proposer_gst_no}}</h4>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div [ngClass]="{'d-none': !div_show_nominee_details }" class="row align-items-center justify-content-center">
+                                        <div class="col-12">
+                                            <div class="card cardshadow blue-border">
+                                                <div class="card-header">
+                                                    <h3>Nominee Details</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-lg-2 col-md-4 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.nominee_salutation.invalid && (formQuoteDetails.controls.nominee_salutation.dirty || formQuoteDetails.controls.nominee_salutation.touched)) && formQuoteDetails.controls.nominee_salutation.errors}">
+                                                                <div class="form-group form-focus select-focus">
+                                                                    <label class="focus-label req">Salutation</label>
+                                                                    <select select-other-detail="other_field" formControlName="nominee_salutation" (change)="nomineeRelationType('nominee',$event.target.value)">
+                                                                    <option value="">Select</option>
+                                                                    <option *ngFor="let row of result_salutation"  value="{{ row.id }}">{{ row.name }}</option>
+                                                                  </select>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Salutation</label>
+                                                                <h4>{{result_selected_quote_data.nominee_salutation}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-8 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.nominee_first_name.invalid && (formQuoteDetails.controls.nominee_first_name.dirty || formQuoteDetails.controls.nominee_first_name.touched)) && formQuoteDetails.controls.nominee_first_name.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.nominee_first_name}">
+                                                                    <input select-other-detail="other_field" formControlName="nominee_first_name" type="text" class="form-control floating" maxlength="25">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.nominee_first_name.invalid && (formQuoteDetails.controls.nominee_first_name.dirty || formQuoteDetails.controls.nominee_first_name.touched)) && formQuoteDetails.controls.nominee_first_name.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.nominee_first_name.invalid && (formQuoteDetails.controls.nominee_first_name.dirty || formQuoteDetails.controls.nominee_first_name.touched)) && formQuoteDetails.controls.nominee_first_name.errors"
+                                                                            class="text-danger">
+                                                                        Please Enter Valid First Name.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">First Name</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>First Name</label>
+                                                                <h4>{{result_selected_quote_data.nominee_first_name}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.nominee_middle_name.invalid && (formQuoteDetails.controls.nominee_middle_name.dirty || formQuoteDetails.controls.nominee_middle_name.touched)) && formQuoteDetails.controls.nominee_middle_name.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.nominee_middle_name}">
+                                                                    <input select-other-detail="other_field" formControlName="nominee_middle_name" type="text" class="form-control floating" maxlength="25">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.nominee_middle_name.invalid && (formQuoteDetails.controls.nominee_middle_name.dirty || formQuoteDetails.controls.nominee_middle_name.touched)) && formQuoteDetails.controls.nominee_middle_name.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.nominee_middle_name.invalid && (formQuoteDetails.controls.nominee_middle_name.dirty || formQuoteDetails.controls.nominee_middle_name.touched)) && formQuoteDetails.controls.nominee_middle_name.errors"
+                                                                            class="text-danger">
+                                                                        Please Enter Valid Middle Name.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label">Middle Name</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Middle Name</label>
+                                                                <h4>{{(result_selected_quote_data.nominee_middle_name == "" || result_selected_quote_data.nominee_middle_name == null) ? "--" : result_selected_quote_data.nominee_middle_name}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.nominee_last_name.invalid && (formQuoteDetails.controls.nominee_last_name.dirty || formQuoteDetails.controls.nominee_last_name.touched)) && formQuoteDetails.controls.nominee_last_name.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.nominee_last_name}">
+                                                                    <input select-other-detail="other_field" formControlName="nominee_last_name" type="text" class="form-control floating" maxlength="25">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.nominee_last_name.invalid && (formQuoteDetails.controls.nominee_last_name.dirty || formQuoteDetails.controls.nominee_last_name.touched)) && formQuoteDetails.controls.nominee_last_name.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.nominee_last_name.invalid && (formQuoteDetails.controls.nominee_last_name.dirty || formQuoteDetails.controls.nominee_last_name.touched)) && formQuoteDetails.controls.nominee_last_name.errors"
+                                                                            class="text-danger">
+                                                                        Please Enter Valid Last Name.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">Last Name</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Middle Name</label>
+                                                                <h4>{{result_selected_quote_data.nominee_last_name}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="selected_ic_id !='22'" class="col-lg-2 col-md-4 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.nominee_age.invalid && (formQuoteDetails.controls.nominee_age.dirty || formQuoteDetails.controls.nominee_age.touched)) && formQuoteDetails.controls.nominee_age.errors}">
+                                                                <div *ngIf="selected_ic_id !='22'" class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.nominee_age}">
+                                                                    <input select-other-detail="other_field" minlength="1" maxlength="2" (keyup)="nomineeAge($event.target.value,'angular','1')" formControlName="nominee_age" type="text" class="form-control floating">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.nominee_age.invalid && (formQuoteDetails.controls.nominee_age.dirty || formQuoteDetails.controls.nominee_age.touched)) && formQuoteDetails.controls.nominee_age.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.nominee_age.invalid && (formQuoteDetails.controls.nominee_age.dirty || formQuoteDetails.controls.nominee_age.touched)) && formQuoteDetails.controls.nominee_age.errors.pattern" class="text-danger">
+                                                                        Please Enter Valid Age.
+                                                                      </small>
+
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.nominee_age.invalid && (formQuoteDetails.controls.nominee_age.dirty || formQuoteDetails.controls.nominee_age.touched)) && formQuoteDetails.controls.nominee_age.errors.nomineeAgeRange" class="text-danger">
+                                                                        <!-- Please Enter age between 01 to 99. -->
+                                                                        Age 01 - 99.
+                                                                      </small>
+
+                                                                    </div>
+                                                                    <label class="focus-label req">Age</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Age</label>
+                                                                <h4>{{result_selected_quote_data.nominee_age}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="selected_ic_id =='22'" class="col-lg-2 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.nominee_dob.invalid && (formQuoteDetails.controls.nominee_dob.dirty || formQuoteDetails.controls.nominee_dob.touched)) && formQuoteDetails.controls.nominee_dob.errors}">
+                                                                <div *ngIf="selected_ic_id =='22'" class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.controls.nominee_dob.value}">
+                                                                    <div class="cal-icon">
+                                                                        <input readonly select-other-detail="other_field" [ngModelOptions]="{standalone: true}" (click)="h.toggle()" (dateSelect)="selectDate('nominee_dob',$event)" class="form-control" placeholder="yyyy-mm-dd" name="dp" [minDate]="minDateForBirthdate" [maxDate]="maxDateForBirth"
+                                                                            [(ngModel)]="date_picker_nominee_dob" ngbDatepicker #h="ngbDatepicker" placeholder="" autocomplete="off">
+                                                                    </div>
+                                                                    <label class="focus-label req">Date of Birth</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Date of Birth</label>
+                                                                <h4>{{result_selected_quote_data.nominee_dob}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.nominee_relation.invalid && (formQuoteDetails.controls.nominee_relation.dirty || formQuoteDetails.controls.nominee_relation.touched)) && formQuoteDetails.controls.nominee_relation.errors}">
+                                                                <div class="form-group form-focus select-focus">
+                                                                    <label class="focus-label req">Relation</label>
+                                                                    <select select-other-detail="other_field" formControlName="nominee_relation">
+                                                                      <option value="">Select Relationship</option>
+                                                                      <option *ngFor="let row of result_relationsForNominee"  value="{{ row.nominee_relation_id }}">{{ row.name }}</option>
+                                                                  </select>
+                                                                    <small class="text-danger" *ngIf="formQuoteDetails.hasError('nomineeAgeRangeUsingRelation')">
+                                                                      Please Enter Valid Age for Selected Relation.
+                                                                  </small>
+
+
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Relation</label>
+                                                                <h4>{{result_selected_quote_data.nominee_relation}}</h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div [ngClass]="{'d-none': !div_show_for_appointee }" class="row align-items-center justify-content-center">
+                                        <div class="col-12">
+                                            <div class="card cardshadow blue-border">
+                                                <div class="card-header">
+                                                    <h3>Appointee Details</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-lg-2 col-md-4 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.appointee_salutation.invalid && (formQuoteDetails.controls.appointee_salutation.dirty || formQuoteDetails.controls.appointee_salutation.touched)) && formQuoteDetails.controls.appointee_salutation.errors}">
+                                                                <div class="form-group form-focus select-focus">
+                                                                    <label class="focus-label req">Salutation</label>
+                                                                    <select select-other-detail="other_field" formControlName="appointee_salutation" (change)="nomineeRelationType('appointee',$event.target.value)">
+                                                                    <option value="">Select</option>
+                                                                    <option *ngFor="let row of result_salutation"  value="{{ row.id }}">{{ row.name }}</option>
+                                                                  </select>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Relation</label>
+                                                                <h4>{{result_selected_quote_data.appointee_salutation}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-8 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.appointee_first_name.invalid && (formQuoteDetails.controls.appointee_first_name.dirty || formQuoteDetails.controls.appointee_first_name.touched)) && formQuoteDetails.controls.appointee_first_name.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.appointee_first_name}">
+                                                                    <input select-other-detail="other_field" formControlName="appointee_first_name" type="text" class="form-control floating" maxlength="25">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.appointee_first_name.invalid && (formQuoteDetails.controls.appointee_first_name.dirty || formQuoteDetails.controls.appointee_first_name.touched)) && formQuoteDetails.controls.appointee_first_name.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.appointee_first_name.invalid && (formQuoteDetails.controls.appointee_first_name.dirty || formQuoteDetails.controls.appointee_first_name.touched)) && formQuoteDetails.controls.appointee_first_name.errors"
+                                                                            class="text-danger">
+                                                                          Please Enter Valid First Name.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">First Name</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>First Name</label>
+                                                                <h4>{{result_selected_quote_data.appointee_first_name}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.appointee_middle_name.invalid && (formQuoteDetails.controls.appointee_middle_name.dirty || formQuoteDetails.controls.appointee_middle_name.touched)) && formQuoteDetails.controls.appointee_middle_name.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.appointee_middle_name}">
+                                                                    <input select-other-detail="other_field" formControlName="appointee_middle_name" type="text" class="form-control floating" maxlength="25">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.appointee_middle_name.invalid && (formQuoteDetails.controls.appointee_middle_name.dirty || formQuoteDetails.controls.appointee_middle_name.touched)) && formQuoteDetails.controls.appointee_middle_name.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.appointee_middle_name.invalid && (formQuoteDetails.controls.appointee_middle_name.dirty || formQuoteDetails.controls.appointee_middle_name.touched)) && formQuoteDetails.controls.appointee_middle_name.errors"
+                                                                            class="text-danger">
+                                                                          Please Enter Valid Middle Name.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label">Middle Name</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Middle Name</label>
+                                                                <h4>{{result_selected_quote_data.appointee_middle_name}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.appointee_last_name.invalid && (formQuoteDetails.controls.appointee_last_name.dirty || formQuoteDetails.controls.appointee_last_name.touched)) && formQuoteDetails.controls.appointee_last_name.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.appointee_last_name}">
+                                                                    <input select-other-detail="other_field" formControlName="appointee_last_name" type="text" class="form-control floating" maxlength="25">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.appointee_last_name.invalid && (formQuoteDetails.controls.appointee_last_name.dirty || formQuoteDetails.controls.appointee_last_name.touched)) && formQuoteDetails.controls.appointee_last_name.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.appointee_last_name.invalid && (formQuoteDetails.controls.appointee_last_name.dirty || formQuoteDetails.controls.appointee_last_name.touched)) && formQuoteDetails.controls.appointee_last_name.errors"
+                                                                            class="text-danger">
+                                                                       Please Enter Valid Last Name.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">Last Name</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Last Name</label>
+                                                                <h4>{{result_selected_quote_data.appointee_last_name}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="selected_ic_id !='22'" class="col-lg-2 col-md-4 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.appointee_age.invalid && (formQuoteDetails.controls.appointee_age.dirty || formQuoteDetails.controls.appointee_age.touched)) && formQuoteDetails.controls.appointee_age.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.appointee_age}">
+                                                                    <input select-other-detail="other_field" minlength="1" maxlength="2" formControlName="appointee_age" type="text" class="form-control floating">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.appointee_age.invalid && (formQuoteDetails.controls.appointee_age.dirty || formQuoteDetails.controls.appointee_age.touched)) && formQuoteDetails.controls.appointee_age.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.appointee_age.invalid && (formQuoteDetails.controls.appointee_age.dirty || formQuoteDetails.controls.appointee_age.touched)) && formQuoteDetails.controls.appointee_age.errors.pattern" class="text-danger">
+                                                                        Please Enter Valid Age.
+                                                                      </small>
+
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.appointee_age.invalid && (formQuoteDetails.controls.appointee_age.dirty || formQuoteDetails.controls.appointee_age.touched)) && formQuoteDetails.controls.appointee_age.errors.appointeeAgeRange"
+                                                                            class="text-danger">
+                                                                        Please Enter age between 18 to 99.
+                                                                      </small>
+
+                                                                    </div>
+
+                                                                    <label class="focus-label req">Age</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Age</label>
+                                                                <h4>{{result_selected_quote_data.appointee_age}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="selected_ic_id =='22'" class="col-lg-2 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.appointee_dob.invalid && (formQuoteDetails.controls.appointee_dob.dirty || formQuoteDetails.controls.appointee_dob.touched)) && formQuoteDetails.controls.appointee_dob.errors}">
+                                                                <div *ngIf="selected_ic_id =='22'" class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.controls.appointee_dob.value}">
+                                                                    <div class="cal-icon">
+                                                                        <input readonly select-other-detail="other_field" [ngModelOptions]="{standalone: true}" (click)="h.toggle()" (dateSelect)="selectDate('appointee_dob',$event)" class="form-control" placeholder="yyyy-mm-dd" name="dp" [minDate]="minDateForBirthdate" [maxDate]="maxDateForBirthdate"
+                                                                            [(ngModel)]="date_picker_appointee_dob" ngbDatepicker #h="ngbDatepicker" placeholder="" autocomplete="off">
+                                                                    </div>
+                                                                    <label class="focus-label req">Date of Birth</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Date of Birth</label>
+                                                                <h4>{{result_selected_quote_data.appointee_dob}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.appointee_relation.invalid && (formQuoteDetails.controls.appointee_relation.dirty || formQuoteDetails.controls.appointee_relation.touched)) && formQuoteDetails.controls.appointee_relation.errors}">
+                                                                <div class="form-group form-focus select-focus">
+                                                                    <label class="focus-label req">Relation</label>
+                                                                    <select select-other-detail="other_field" formControlName="appointee_relation">
+                                                                    <option value="">Select Relationship</option>
+                                                                      <option *ngFor="let row of result_relationsForAppoint"  value="{{ row.nominee_relation_id }}">{{ row.name }}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Age</label>
+                                                                <h4>{{result_selected_quote_data.appointee_relation}}</h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div [ngClass]="{'d-none': !div_show_company_details }" class="row align-items-center justify-content-center d-none">
+                                        <div class="col-12">
+                                            <div class="card cardshadow blue-border">
+                                                <div class="card-header">
+                                                    <h3>Company Details</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-lg-2 col-md-3 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.company_salutation.invalid && (formQuoteDetails.controls.company_salutation.dirty || formQuoteDetails.controls.company_salutation.touched)) && formQuoteDetails.controls.company_salutation.errors}">
+                                                                <div class="form-group form-focus select-focus">
+                                                                    <label class="focus-label req">Salutation</label>
+                                                                    <select select-other-detail="other_field" formControlName="company_salutation">
+                                                                    <option value="4">M/s.</option>
+                                                                  </select>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Age</label>
+                                                                <h4>{{result_selected_quote_data.company_own_salutation}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-9 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.company_name.invalid && (formQuoteDetails.controls.company_name.dirty || formQuoteDetails.controls.company_name.touched)) && formQuoteDetails.controls.company_name.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.company_name}">
+                                                                    <input select-other-detail="other_field" formControlName="company_name" type="text" class="form-control floating" maxlength="100">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_name.invalid && (formQuoteDetails.controls.company_name.dirty || formQuoteDetails.controls.company_name.touched)) && formQuoteDetails.controls.company_name.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_name.invalid && (formQuoteDetails.controls.company_name.dirty || formQuoteDetails.controls.company_name.touched)) && formQuoteDetails.controls.company_name.errors.pattern" class="text-danger">
+                                                                        Please Enter Valid Company Name.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">Company Name</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Age</label>
+                                                                <h4>{{result_selected_quote_data.company_name}}</h4>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-lg-3 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.company_gst_no.invalid && (formQuoteDetails.controls.company_gst_no.dirty || formQuoteDetails.controls.company_gst_no.touched)) && formQuoteDetails.controls.company_gst_no.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.company_gst_no}">
+                                                                    <input select-other-detail="other_field" formControlName="company_gst_no" type="text" class="form-control floating text-uppercase" maxlength="15">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_gst_no.invalid && (formQuoteDetails.controls.company_gst_no.dirty || formQuoteDetails.controls.company_gst_no.touched)) && formQuoteDetails.controls.company_gst_no.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_gst_no.invalid && (formQuoteDetails.controls.company_gst_no.dirty || formQuoteDetails.controls.company_gst_no.touched)) && formQuoteDetails.controls.company_gst_no.errors.pattern"
+                                                                            class="text-danger">
+                                                                      Please Enter Valid Company GST Number.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label">Company GST No.</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>GST Number</label>
+                                                                <h4>{{result_selected_quote_data.company_gst_no}}</h4>
+                                                            </div>
+                                                        </div>
+
+
+
+
+                                                        <div class="col-lg-3 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.company_pan_no.invalid && (formQuoteDetails.controls.company_pan_no.dirty || formQuoteDetails.controls.company_pan_no.touched)) && formQuoteDetails.controls.company_pan_no.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.company_pan_no}">
+                                                                    <input select-other-detail="other_field" formControlName="company_pan_no" type="text" class="form-control floating text-uppercase" maxlength="10">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_pan_no.invalid && (formQuoteDetails.controls.company_pan_no.dirty || formQuoteDetails.controls.company_pan_no.touched)) && formQuoteDetails.controls.company_pan_no.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_pan_no.invalid && (formQuoteDetails.controls.company_pan_no.dirty || formQuoteDetails.controls.company_pan_no.touched)) && formQuoteDetails.controls.company_pan_no.errors.pattern"
+                                                                            class="text-danger">
+                                                                        Please Enter Valid Company Pan Number.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label {{company_pan_no_required ? 'req':''}}">Company Pan No.</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Pan Number</label>
+                                                                <h4>{{result_selected_quote_data.company_pan_no}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-3 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.company_owner_salutation.invalid && (formQuoteDetails.controls.company_owner_salutation.dirty || formQuoteDetails.controls.company_owner_salutation.touched)) && formQuoteDetails.controls.company_owner_salutation.errors}">
+                                                                <div class="form-group form-focus select-focus">
+                                                                    <label class="focus-label req">Salutation</label>
+                                                                    <select select-other-detail="other_field" formControlName="company_owner_salutation">
+                                                                      <option value="">Select</option>
+                                                                      <option *ngFor="let row of result_salutation"  value="{{ row.id }}">{{ row.name }}</option>
+                                                                  </select>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Salutation</label>
+                                                                <h4>{{result_selected_quote_data.company_own_salutation}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-9 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.company_owner_fisrt_name.invalid && (formQuoteDetails.controls.company_owner_fisrt_name.dirty || formQuoteDetails.controls.company_owner_fisrt_name.touched)) && formQuoteDetails.controls.company_owner_fisrt_name.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.company_owner_fisrt_name}">
+                                                                    <input select-other-detail="other_field" formControlName="company_owner_fisrt_name" type="text" class="form-control floating" maxlength="25">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_owner_fisrt_name.invalid && (formQuoteDetails.controls.company_owner_fisrt_name.dirty || formQuoteDetails.controls.company_owner_fisrt_name.touched)) && formQuoteDetails.controls.company_owner_fisrt_name.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_owner_fisrt_name.invalid && (formQuoteDetails.controls.company_owner_fisrt_name.dirty || formQuoteDetails.controls.company_owner_fisrt_name.touched)) && formQuoteDetails.controls.company_owner_fisrt_name.errors.pattern"
+                                                                            class="text-danger">
+                                                                          Please Enter Valid First Name.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">First Name</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>First Name</label>
+                                                                <h4>{{result_selected_quote_data.company_owner_fisrt_name}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.company_owner_middle_name.invalid && (formQuoteDetails.controls.company_owner_middle_name.dirty || formQuoteDetails.controls.company_owner_middle_name.touched)) && formQuoteDetails.controls.company_owner_middle_name.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.company_owner_middle_name}">
+                                                                    <input select-other-detail="other_field" formControlName="company_owner_middle_name" type="text" class="form-control floating" maxlength="25">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_owner_middle_name.invalid && (formQuoteDetails.controls.company_owner_middle_name.dirty || formQuoteDetails.controls.company_owner_middle_name.touched)) && formQuoteDetails.controls.company_owner_middle_name.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_owner_middle_name.invalid && (formQuoteDetails.controls.company_owner_middle_name.dirty || formQuoteDetails.controls.company_owner_middle_name.touched)) && formQuoteDetails.controls.company_owner_middle_name.errors.pattern"
+                                                                            class="text-danger">
+                                                                        Please Enter Valid Middle Name.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label">Middle Name</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Middle Name</label>
+                                                                <h4>{{result_selected_quote_data.company_owner_middle_name}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.company_owner_last_name.invalid && (formQuoteDetails.controls.company_owner_last_name.dirty || formQuoteDetails.controls.company_owner_last_name.touched)) && formQuoteDetails.controls.company_owner_last_name.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.company_owner_last_name}">
+                                                                    <input select-other-detail="other_field" formControlName="company_owner_last_name" type="text" class="form-control floating" maxlength="25">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_owner_last_name.invalid && (formQuoteDetails.controls.company_owner_last_name.dirty || formQuoteDetails.controls.company_owner_last_name.touched)) && formQuoteDetails.controls.company_owner_last_name.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_owner_last_name.invalid && (formQuoteDetails.controls.company_owner_last_name.dirty || formQuoteDetails.controls.company_owner_last_name.touched)) && formQuoteDetails.controls.company_owner_last_name.errors.pattern"
+                                                                            class="text-danger">
+                                                                        Please Enter Valid Last Name.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">Last Name</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Middle Name</label>
+                                                                <h4>{{result_selected_quote_data.company_owner_last_name}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-5 col-md-6 col-12">
+                                                            <div class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.company_owner_email.invalid && (formQuoteDetails.controls.company_owner_email.dirty || formQuoteDetails.controls.company_owner_email.touched)) && formQuoteDetails.controls.company_owner_email.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.company_owner_email}">
+                                                                    <input select-other-detail="other_field" formControlName="company_owner_email" type="text" class="form-control floating" maxlength="50">
+
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_owner_email.invalid && (formQuoteDetails.controls.company_owner_email.dirty || formQuoteDetails.controls.company_owner_email.touched)) && formQuoteDetails.controls.company_owner_email.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_owner_email.invalid && (formQuoteDetails.controls.company_owner_email.dirty || formQuoteDetails.controls.company_owner_email.touched)) && formQuoteDetails.controls.company_owner_email.errors.email"
+                                                                            class="text-danger">
+                                                                        Please Enter Valid Email ID.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">Email Id</label>
+                                                                </div>
+                                                            </div>
+                                                            <!-- <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                              <label>Email ID</label>
+                                                              <h4>{{result_selected_quote_data.company_owner_email}}</h4>
+                                                          </div> -->
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-6 col-12">
+                                                            <div class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.company_owner_mobile.invalid && (formQuoteDetails.controls.company_owner_mobile.dirty || formQuoteDetails.controls.company_owner_mobile.touched)) && formQuoteDetails.controls.company_owner_mobile.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.company_owner_mobile}">
+                                                                    <input select-other-detail="other_field" formControlName="company_owner_mobile" type="text" class="form-control floating" maxlength="10">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_owner_mobile.invalid && (formQuoteDetails.controls.company_owner_mobile.dirty || formQuoteDetails.controls.company_owner_mobile.touched)) && formQuoteDetails.controls.company_owner_mobile.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_owner_mobile.invalid && (formQuoteDetails.controls.company_owner_mobile.dirty || formQuoteDetails.controls.company_owner_mobile.touched)) && formQuoteDetails.controls.company_owner_mobile.errors.pattern"
+                                                                            class="text-danger">
+                                                                        Please Enter Valid Mobile Number.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">Mobile No.</label>
+                                                                </div>
+                                                            </div>
+                                                            <!-- <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                              <label>Mobile Number</label>
+                                                              <h4>{{result_selected_quote_data.company_owner_mobile}}</h4>
+                                                          </div> -->
+                                                        </div>
+                                                        <div class="col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.company_owner_address_1.invalid && (formQuoteDetails.controls.company_owner_address_1.dirty || formQuoteDetails.controls.company_owner_address_1.touched)) && formQuoteDetails.controls.company_owner_address_1.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.company_owner_address_1}">
+                                                                    <input select-other-detail="other_field" formControlName="company_owner_address_1" type="text" class="form-control floating" maxlength="50">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_owner_address_1.invalid && (formQuoteDetails.controls.company_owner_address_1.dirty || formQuoteDetails.controls.company_owner_address_1.touched)) && formQuoteDetails.controls.company_owner_address_1.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_owner_address_1.invalid && (formQuoteDetails.controls.company_owner_address_1.dirty || formQuoteDetails.controls.company_owner_address_1.touched)) && formQuoteDetails.controls.company_owner_address_1.errors.pattern"
+                                                                            class="text-danger">
+                                                                        Please Enter Valid Address.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">Address 1 (H.no/building)</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Address 1 (H.no/building)</label>
+                                                                <h4>{{result_selected_quote_data.company_owner_address_1}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.company_owner_address_2.invalid && (formQuoteDetails.controls.company_owner_address_2.dirty || formQuoteDetails.controls.company_owner_address_2.touched)) && formQuoteDetails.controls.company_owner_address_2.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.company_owner_address_2}">
+                                                                    <input select-other-detail="other_field" formControlName="company_owner_address_2" type="text" class="form-control floating" maxlength="50">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_owner_address_2.invalid && (formQuoteDetails.controls.company_owner_address_2.dirty || formQuoteDetails.controls.company_owner_address_2.touched)) && formQuoteDetails.controls.company_owner_address_2.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_owner_address_2.invalid && (formQuoteDetails.controls.company_owner_address_2.dirty || formQuoteDetails.controls.company_owner_address_2.touched)) && formQuoteDetails.controls.company_owner_address_2.errors.pattern"
+                                                                            class="text-danger">
+                                                                          Please Enter Valid Address.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">Address 2(Area/Town/Locality)</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Address 2(Area/Town/Locality)</label>
+                                                                <h4>{{result_selected_quote_data.company_owner_address_2}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-4 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.company_owner_pincode.invalid && (formQuoteDetails.controls.company_owner_pincode.dirty || formQuoteDetails.controls.company_owner_pincode.touched)) && formQuoteDetails.controls.company_owner_pincode.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.company_owner_pincode}">
+                                                                    <input select-other-detail="other_field" (keyup)="changeCompanyPincode($event)" formControlName="company_owner_pincode" maxlength="6" type="text" class="form-control floating">
+                                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_owner_pincode.invalid && (formQuoteDetails.controls.company_owner_pincode.dirty || formQuoteDetails.controls.company_owner_pincode.touched)) && formQuoteDetails.controls.company_owner_pincode.errors">
+                                                                        <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.company_owner_pincode.invalid && (formQuoteDetails.controls.company_owner_pincode.dirty || formQuoteDetails.controls.company_owner_pincode.touched)) && formQuoteDetails.controls.company_owner_pincode.errors.pattern"
+                                                                            class="text-danger">
+                                                                        Please Enter Valid Pin Code.
+                                                                      </small>
+                                                                    </div>
+                                                                    <label class="focus-label req">Pin Code</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Pin Code</label>
+                                                                <h4>{{result_selected_quote_data.company_owner_pincode}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-4 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.company_owner_city.invalid && (formQuoteDetails.controls.company_owner_city.dirty || formQuoteDetails.controls.company_owner_city.touched)) && formQuoteDetails.controls.company_owner_city.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.controls.company_owner_city.value}">
+                                                                    <input select-other-detail="other_field" formControlName="company_owner_city" type="text" class="form-control floating" disabled>
+                                                                    <label class="focus-label req">City</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>City</label>
+                                                                <h4>{{result_selected_quote_data.company_owner_city}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-4 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.company_owner_state.invalid && (formQuoteDetails.controls.company_owner_state.dirty || formQuoteDetails.controls.company_owner_state.touched)) && formQuoteDetails.controls.company_owner_state.errors}">
+                                                                <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.controls.company_owner_state.value}">
+                                                                    <input select-other-detail="other_field" formControlName="company_owner_state" type="text" class="form-control floating" disabled>
+                                                                    <label class="focus-label req">State</label>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>State</label>
+                                                                <h4>{{result_selected_quote_data.company_owner_state}}</h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div [ngClass]="{'d-none': div_show_hypothecation_section }" class="row align-items-center justify-content-center">
+                                        <div class="col-12">
+                                            <div class="card cardshadow blue-border">
+                                                <div class="card-header">
+                                                    <h3>Hypothecation Details</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-lg-3 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.hypothecation_agrement.invalid && (formQuoteDetails.controls.hypothecation_agrement.dirty || formQuoteDetails.controls.hypothecation_agrement.touched)) && formQuoteDetails.controls.hypothecation_agrement.errors}">
+                                                                <div class="form-group form-focus select-focus">
+                                                                    <label class="focus-label">Select Agreement</label>
+
+                                                                    <ng-select placeholder="Select Agreement Type" (clear)="clearValue('hypothecation_agrement',$event)" (change)="changeSelectBox('hypothecation_agrement',$event)" [(ngModel)]="selectedHypothecation_agrement" [ngModelOptions]="{standalone: true}">
+                                                                        <ng-option *ngFor="let row of result_agreement_types" [value]="row.agreement_type_id">{{row.agreement_type}}</ng-option>
+                                                                    </ng-select>
+
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Agreement Type</label>
+                                                                <h4>{{(result_selected_quote_data.agreement_type == "" || result_selected_quote_data.agreement_type == null) ? "--" : result_selected_quote_data.agreement_type}}</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-5 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.hypothecation_bank.invalid && (formQuoteDetails.controls.hypothecation_bank.dirty || formQuoteDetails.controls.hypothecation_bank.touched)) && formQuoteDetails.controls.hypothecation_bank.errors}">
+                                                                <div class="form-group form-focus select-focus">
+                                                                    <label class="focus-label">Financier Details</label>
+                                                                    <ng-select placeholder="Financier Details" (clear)="clearValue('hypothecation_bank',$event)" (change)="changeSelectBox('hypothecation_bank',$event)" [(ngModel)]="selectedHypothecation_bank" [ngModelOptions]="{standalone: true}">
+                                                                        <ng-option *ngFor="let row of result_banks" [value]="row.bank_id">{{row.name}}</ng-option>
+                                                                    </ng-select>
+
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>Bank</label>
+                                                                <h4>{{(result_selected_quote_data.hypothecation_bank_name == "" || result_selected_quote_data.hypothecation_bank_name == null) ? "--" : result_selected_quote_data.hypothecation_bank_name}}</h4>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-4 col-12">
+                                                            <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.hypothecation_city_id.invalid && (formQuoteDetails.controls.hypothecation_city_id.dirty || formQuoteDetails.controls.hypothecation_city_id.touched)) && formQuoteDetails.controls.hypothecation_city_id.errors}">
+                                                                <div class="form-group form-focus select-focus">
+                                                                    <label class="focus-label">Select City</label>
+                                                                    <ng-select placeholder="Select City" (clear)="clearValue('hypothecation_city_id',$event)" (change)="changeSelectBox('hypothecation_city_id',$event)" [(ngModel)]="selectedHypothecation_city" [ngModelOptions]="{standalone: true}">
+                                                                        <ng-option *ngFor="let row of result_city" [value]="row.city_id">{{row.name}}</ng-option>
+                                                                    </ng-select>
+
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                <label>City</label>
+                                                                <h4>{{(result_selected_quote_data.hypothecation_city == "" || result_selected_quote_data.hypothecation_city == null) ? "--" : result_selected_quote_data.hypothecation_city}}</h4>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row align-items-center justify-content-center">
+                                    <div class="col-12 text-center">
+                                        <button type="submit" class="btn btn-custom green quotebtn"> Save and Continue</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

@@ -23,7 +23,7 @@ export class QuotationComponent implements OnInit {
   permissionDeniedMsg = environment.permissionDeniedMsg;  
   formQuoteDetails: FormGroup;
   submittedQuoteDetails: boolean = false;
-
+  compareFormDetails: FormGroup;
   loaderActive: boolean = false;
   loginUserId: any; 
   selectedproducttypeid: any;
@@ -64,12 +64,17 @@ export class QuotationComponent implements OnInit {
   unique_reference_no:any;
   quote_id:any;
   quote_data_health_id:any;
-
+  div_show_for_compare_policy:any;
+  div_show_for_compare_plan_1:any;
+  div_show_for_compare_plan_2:any;
+  div_show_for_compare_plan_3:any;
+  blank_quote_id_1:any;
+  blank_quote_id_2:any;
   formcovrageform : any;
   submittedCovrageQuote : boolean = false;
   displayCovrageQuote : any = 'none';
   all_result_data : any;
-  
+  compare_count:any;
   mem_dob: any;
   membersdisease: any;
   membersdisease_smoke: any;
@@ -81,6 +86,22 @@ export class QuotationComponent implements OnInit {
   deductible:any;
   addon_ids : any = [];
   showTopup: boolean;
+  compare_count_1:any;
+  compare_sum_insured_1:any;
+  compare_quote_id_1:any;
+  compare_plan_name_1:any;
+  compare_logo_1:any;
+  compare_count_2:any;
+  compare_sum_insured_2:any;
+  compare_quote_id_2:any;
+  compare_plan_name_2:any;
+  compare_logo_2:any;
+  compare_count_3:any;
+  compare_sum_insured_3:any;
+  compare_quote_id_3:any;
+  compare_plan_name_3:any;
+  compare_logo_3:any;
+  policy_type_name_div:any;
 
     constructor(
     private activatedRoute: ActivatedRoute,
@@ -94,6 +115,11 @@ export class QuotationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.policy_type_name_div = false;
+    this.div_show_for_compare_policy = false;
+    this.div_show_for_compare_plan_1 = false;
+    this.div_show_for_compare_plan_2 = false;
+    this.div_show_for_compare_plan_3 = false;
     console.log(sessionStorage);
     this.loginUserId = sessionStorage.getItem("user_id");
     this.selectedproducttypeid = sessionStorage.getItem(
@@ -103,6 +129,8 @@ export class QuotationComponent implements OnInit {
     this.unique_reference_no = sessionStorage.getItem("unique_reference_no");
     //this.validationFormQuoteDetails();
     this.getIndex();
+    this.compare_count = 0;
+    
   }
 
   getIndex() {
@@ -218,9 +246,8 @@ export class QuotationComponent implements OnInit {
       this.tenure = result.result.user_data.user_action_data.tenure;
       this.deductible = result.result.user_data.user_action_data.deductible;
       this.policyList = result.result.policy_list;
-      console.log(this.policyList);
       this.covrageList = result.result.policy_list[0].covrage_list;
-      
+      this.policy_type_name_div = true;
     });
 
   }
@@ -414,6 +441,123 @@ export class QuotationComponent implements OnInit {
   filter_policylist(value)
   {
     alert(value);
+  }
+
+  ToggleButton1(e, quote_id,plan_name,suminsured,logo) {
+    if (e.target.checked) {
+        this.compare_count++;
+        this.loaderActive = true;
+        if(this.compare_count < 4)
+        {
+          this.loaderActive = false;
+          if(this.compare_count == '1')
+          {
+            this.blank_quote_id_1 = true;
+            this.blank_quote_id_2 = true;
+            this.compare_count_1 = this.compare_count;
+            this.compare_quote_id_1 = quote_id;
+            this.compare_plan_name_1 = plan_name;
+            this.compare_sum_insured_1 = suminsured;
+            this.compare_logo_1 = logo;
+            this.div_show_for_compare_plan_1 = true;
+          }
+          else if(this.compare_count == '2')
+          {
+            this.blank_quote_id_1 = false;
+            this.blank_quote_id_2 = true;
+            this.compare_count_2 = this.compare_count;
+            this.compare_quote_id_2 = quote_id;
+            this.compare_plan_name_2 = plan_name;
+            this.compare_sum_insured_2 = suminsured;
+            this.compare_logo_2 = logo;
+            this.div_show_for_compare_plan_2 = true;
+          }
+          else if(this.compare_count == '3')
+          {
+            this.blank_quote_id_1 = false;
+            this.blank_quote_id_2 = false;
+            this.compare_count_3 = this.compare_count;
+            this.compare_quote_id_3 = quote_id;
+            this.compare_plan_name_3 = plan_name;
+            this.compare_sum_insured_3 = suminsured;
+            this.compare_logo_3 = logo;
+            this.div_show_for_compare_plan_3 = true;
+          }
+          this.div_show_for_compare_policy = true; 
+        }
+        else 
+        {
+          this.loaderActive = false;
+          $('#compare_'+quote_id).prop('checked', false);
+          this.div_show_for_compare_policy = true; 
+          Swal.fire('Compare Only 3 Plan Allowed', "", "error");
+          return;
+        }
+         
+    }
+    else 
+    {
+      this.loaderActive = false;
+      this.div_show_for_compare_policy = false;   
+    }
+
+  }
+  
+  getComparePlan(quote_id_1,quote_id_2,quote_id_3)
+  {
+    sessionStorage.setItem('quote_id_1', quote_id_1);
+    sessionStorage.setItem('quote_id_2', quote_id_2);
+    sessionStorage.setItem('quote_id_3', quote_id_3);
+    this.router.navigate(['health-insurance-quote/compare-plan-details']);  
+    
+  }
+
+  clocsecomparediv(compare_quote_id_1,compare_quote_id_2,compare_quote_id_3)
+  {
+    this.compare_count=0;
+    this.div_show_for_compare_plan_1 = false;
+    this.div_show_for_compare_plan_2 = false;
+    this.div_show_for_compare_plan_3 = false;
+    $('#compare_'+compare_quote_id_1).prop('checked', false);
+    $('#compare_'+compare_quote_id_2).prop('checked', false);
+    $('#compare_'+compare_quote_id_3).prop('checked', false);
+    this.div_show_for_compare_policy = false;   
+  }
+
+  removeComparePlan(quote_id, compare_count, totalcompare_count)
+  {
+    if(compare_count == 1)
+    {
+      if(totalcompare_count == 1)
+      {
+        this.compare_count=0;
+        $('#compare_'+quote_id).prop('checked', false);
+        this.div_show_for_compare_policy = false;
+      }
+      else 
+      {
+        this.compare_count=compare_count-1;
+        $('#compare_'+quote_id).prop('checked', false);
+        this.div_show_for_compare_plan_1 = false;
+        this.blank_quote_id_1 = true;
+      }
+      
+    }
+    else if(compare_count == 2)
+    {
+      this.compare_count=compare_count-1;
+      $('#compare_'+quote_id).prop('checked', false);
+      this.div_show_for_compare_plan_2 = false;
+      this.blank_quote_id_2 = true;
+    }
+    else if(compare_count == 3)
+    {
+      this.compare_count=compare_count-1;
+      $('#compare_'+quote_id).prop('checked', false);
+      this.div_show_for_compare_plan_3 = false;
+      this.blank_quote_id_1 = true;
+    }
+    
   }
 
 }

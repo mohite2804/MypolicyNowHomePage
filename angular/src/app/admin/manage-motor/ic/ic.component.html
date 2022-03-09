@@ -1,0 +1,599 @@
+<!-- Page Header -->
+<!-- <div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">IC Admin</h3>
+        </div>
+        <div class="col-auto float-right ml-auto">
+          <div [ngStyle]="{'display':displayRazorAccntBtn}">
+            <button type="button" class="btn btn-custom green w-100" (click)="create_razor_account()" >Create Razor Account</button>
+          </div>
+        </div>
+    </div>
+</div> -->
+<!-- /Page Header -->
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card shadowbox">
+
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h3 class="page-title">Razor Payable Account Detail :</h3>
+          </div>
+        </div>    
+      </div>  
+
+      <div class="card-body" *ngIf="access_permission == 'read_write'"> 
+        
+        <div class="row" [ngStyle]="{'display':displayIsRazorAccount}">
+          <div class="col-12">
+            <h3>Do you have a Razor Account ?</h3>
+
+            <div class="row align-items-left inline fields mb-0">
+
+              <div class="col-auto px-4 field">
+                  <div class="ui radio checkbox">
+                      <input type="radio" name="is_razor_account" id="razor_yes" value="razor_yes" (click)="checkRazorAccount(1);"  >
+                      <label class="mb-0" for="razor_yes">Yes</label>
+                  </div>
+              </div>
+
+              <div class="col-auto px-4 field">
+                  <div class="ui radio checkbox">
+                      <input type="radio" name="is_razor_account" id="razor_no" value="razor_no"  (click)="checkRazorAccount(2);">
+                      <label class="mb-0" for="razor_no">No</label>
+                  </div>
+              </div>
+
+            </div>    
+
+          </div>
+        </div>
+        <br/>
+        <div class="row">
+            <!-- Validate Razor Pay Account -->
+            <div class="col-12"  [ngStyle]="{'display':displayGetAccntDetails}">
+              <form [formGroup]="validate_razor_account_form"  method="post" (ngSubmit)="validate_razor_account()" >
+                
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label> Razor Account Id :</label>
+                      <input formControlName="razor_account_id" type="text" class="form-control">     
+                      <div class="error" *ngIf="submitted_va && validate_razor_account_form.controls.razor_account_id.errors">
+                          <div *ngIf="submitted_va && validate_razor_account_form.controls.razor_account_id.errors">
+                              Please enter valid Razor Account Id.
+                          </div>
+                      </div>                               
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <input *ngIf="btnEditSubmit" class="btn btn-custom green btn-md" type="submit" value="Submit">
+                  </div>
+                </div>
+
+              </form>               
+            </div>
+
+            <!-- Create Razor Pay Account -->
+            <div class="col-12"  [ngStyle]="{'display':displayCreateAccount}">
+              <form [formGroup]="create_razor_account_form"  method="post" (ngSubmit)="create_razor_account()" >
+                
+                <div class="row">
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label> Payable Email<span class="error"> *</span></label>
+                      <input formControlName="payable_email" type="email" class="form-control" >     
+                      <div class="error" *ngIf="submitted_ca && create_razor_account_form.controls.payable_email.errors">
+                          <div *ngIf="submitted_ca && create_razor_account_form.controls.payable_email.errors">
+                              Please enter valid email
+                          </div>
+                      </div>  
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label> Payable Beneficiary Name<span class="error"> *</span></label>
+                      <input formControlName="payable_beneficiary_name" type="text" class="form-control" >                           
+                      <div class="error" *ngIf="submitted_ca && create_razor_account_form.controls.payable_beneficiary_name.errors">
+                          <div *ngIf="submitted_ca && create_razor_account_form.controls.payable_beneficiary_name.errors">
+                              Please enter beneficiary name.
+                          </div>
+                      </div>                              
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">
+                      <label> Payable Business Type<span class="error"> *</span></label>
+                      <!-- <input formControlName="payable_business_type" type="text" class="form-control">     -->
+                      <select class="form-control" formControlName="payable_business_type">
+                        <option value="">Select Business Type</option>
+                        <option value="educational_institutes">Educational Institutes</option>  
+                        <option value="individual">Individual</option>
+                        <option value="llp">LLP</option>
+                        <option value="ngo">NGO</option>
+                        <option value="not_yet_registered">Not Yet Registered</option>  
+                        <option value="partnership">Partnership</option>
+                        <option value="private_limited">Private Limited</option>  
+                        <option value="proprietorship">Proprietorship</option>
+                        <option value="public_limited">Public Limited</option>  
+                        <option value="society">Society</option>  
+                        <option value="trust">Trust</option>  
+                        <option value="other">Other</option>
+                      </select>
+                      <div class="error" *ngIf="submitted_ca && create_razor_account_form.controls.payable_business_type.errors">
+                          <div *ngIf="submitted_ca && create_razor_account_form.controls.payable_business_type.errors">
+                               Please select business type.
+                          </div>
+                      </div>   
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">    
+                      <label>IFSC Code<span class="error"> *</span></label>         
+                      <input formControlName="ifsc_code" type="text" class="form-control" (change)="getBankDetails($event.target.value)" (keyup)="getBankDetails($event.target.value)">   
+                      <div class="error" *ngIf="submitted_ca && create_razor_account_form.controls.ifsc_code.errors">
+                        <div *ngIf="submitted_ca && create_razor_account_form.controls.ifsc_code.errors.required">
+                            Please enter valid IFSC code
+                        </div>
+                        <div *ngIf="submitted_ca && create_razor_account_form.controls.ifsc_code.errors.pattern">
+                            Please enter valid IFSC code.
+                        </div>
+                      </div>                                      
+                    </div>
+                  </div> 
+
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">    
+                      <label>Bank Name<span class="error"> *</span></label>         
+                      <input formControlName="bank_name" type="text" class="form-control"> 
+                      <div class="error" *ngIf="submitted_ca && create_razor_account_form.controls.bank_name.errors">
+                          <div *ngIf="submitted_ca && create_razor_account_form.controls.bank_name.errors">
+                              Please enter bank name.
+                          </div>
+                      </div>                                                                                                                     
+                    </div>
+                  </div> 
+
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">    
+                      <label>Bank Account No<span class="error"> *</span></label>         
+                      <input formControlName="bank_acc_no" type="number" class="form-control">  
+                      <div class="error" *ngIf="submitted_ca && create_razor_account_form.controls.bank_acc_no.errors">
+                        <div *ngIf="submitted_ca && create_razor_account_form.controls.bank_acc_no.errors">
+                            Please enter valid bank account no.
+                        </div>
+                    </div>                                       
+                    </div>
+                  </div> 
+
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">    
+                      <label>Bank Branch<span class="error"> *</span></label>         
+                      <input formControlName="bank_branch" type="text" class="form-control">  
+                      <div class="error" *ngIf="submitted_ca && create_razor_account_form.controls.bank_branch.errors">
+                          <div *ngIf="submitted_ca && create_razor_account_form.controls.bank_branch.errors">
+                              Please enter valid bank branch.
+                          </div>
+                      </div>                                       
+                    </div>
+                  </div> 
+
+                  <div class="col-md-4 col-12">
+                    <div class="form-group">    
+                      <label>Account Type<span class="error"> *</span></label>         
+                      <select class="form-control" formControlName="payable_account_type" >
+                        <option value="">Select Account Type</option>
+                        <option value="savings">Savings</option>
+                        <option value="current">Current</option>
+                      </select>
+                      <div class="error" *ngIf="submitted_ca && create_razor_account_form.controls.payable_account_type.errors">
+                          <div *ngIf="submitted_ca && create_razor_account_form.controls.payable_account_type.errors">
+                              Please enter valid bank branch.
+                          </div>
+                      </div>                                       
+                    </div>
+                  </div> 
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <input *ngIf="btnEditSubmit2" class="btn btn-custom green btn-md" type="submit" value="Submit">
+                  </div>
+                </div>
+
+              </form>     
+            </div>
+        </div>
+
+        </div> 
+      </div>  
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form [formGroup]="formUpdateIcDetails" (ngSubmit)="submitForm()" method="post" enctype="multipart/form-data">      
+        <div class="card shadowbox">   
+
+          <div class="card-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="page-title">Insurance Company Configuration :</h3>
+              </div>
+              <!-- <div class="col-auto float-right ml-auto">
+                <div [ngStyle]="{'display':displayRazorAccntBtn}">
+                  <button type="button" class="btn btn-custom green w-100" (click)="create_razor_account()" >Create Razor Account</button>
+                </div>
+              </div> -->
+            </div>    
+          </div> 
+
+
+          <div class="card-body" *ngIf="access_permission == 'read_write'">              
+              <div class="row">
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Razor Account Id :</label>         
+                    <input formControlName="razor_customer_id" type="text" class="form-control" readonly>                                         
+                  </div>
+                </div>  
+
+                <!-- <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Razor Test Account :</label>         
+                    <input formControlName="razor_test_account" type="text" class="form-control" readonly>                                         
+                  </div>
+                </div>  
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Razor Live Account :</label>         
+                    <input formControlName="razor_live_account" type="text" class="form-control" readonly>                                         
+                  </div>
+                </div> -->
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Razor Account Email:</label>         
+                    <input formControlName="razor_account_email" type="email" class="form-control" readonly>
+                  </div>
+                </div>  
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Bike Break In Days :</label>         
+                    <input formControlName="bike_breakin_days" type="number" class="form-control" readonly>                                         
+                  </div>
+                </div> 
+
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Code :</label>         
+                    <input formControlName="code" type="text" class="form-control" readonly>                                         
+                  </div>
+                </div>  
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Customer Service Address :</label>         
+                    <input formControlName="customer_service_address" type="text" class="form-control">                                         
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Corporate Address :</label>         
+                    <input formControlName="register_and_corrporate_address" type="text" class="form-control">                                         
+                  </div>
+                </div>  
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Stamp Duty Authorization No. :</label>         
+                    <input formControlName="stamp_duty_authorization_no" type="text" class="form-control" readonly>                                         
+                  </div>
+                </div> 
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Stamp Duty Authorization Date :</label>         
+                    <input formControlName="stamp_duty_authorization_date" type="text" class="form-control" readonly>                                         
+                  </div>
+                </div> 
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>CIN No :</label>         
+                    <input formControlName="cin_no" type="text" class="form-control" readonly>                                         
+                  </div>
+                </div> 
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Payinslip No. Generated By :</label>         
+                    <input formControlName="payingslip_no_generated_by" type="text" class="form-control" readonly>                                         
+                  </div>
+                </div> 
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Proposal No. Generated By :</label>         
+                    <input formControlName="proposal_no_generated_by" type="text" class="form-control" readonly>                                         
+                  </div>
+                </div> 
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Proposal Prefix :</label>         
+                    <input formControlName="proposal_prefix" type="text" class="form-control">                                         
+                    <div class="error" *ngIf="submitted && formUpdateIcDetails.controls.proposal_prefix.errors">
+                        <div *ngIf="submitted && formUpdateIcDetails.controls.proposal_prefix.errors.required">
+                            Proposal Prefix is required.
+                        </div>
+                        <div *ngIf="submitted && formUpdateIcDetails.controls.proposal_prefix.errors.pattern">
+                            Please enter valid prefix.
+                        </div>
+                    </div>
+                  </div>
+                </div> 
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>HSN No :</label>         
+                    <input formControlName="hsn_no" type="text" class="form-control" readonly>                                         
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Name :</label>         
+                    <input formControlName="name" type="text" class="form-control">    
+                    <div class="error" *ngIf="submitted && formUpdateIcDetails.controls.name.errors">
+                        <div *ngIf="submitted && formUpdateIcDetails.controls.name.errors">
+                            Please enter valid Name.
+                        </div>
+                    </div>                                     
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Address :</label>         
+                    <input formControlName="address" type="text" class="form-control">   
+                    <div class="error" *ngIf="submitted && formUpdateIcDetails.controls.address.errors">
+                      <div *ngIf="submitted && formUpdateIcDetails.controls.address.errors">
+                          Please enter valid address.
+                      </div>
+                    </div>                                      
+                  </div>
+                </div> 
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Sector :</label>         
+                    <input formControlName="sector" type="text" class="form-control" readonly>                                         
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Support Email :</label>         
+                    <input formControlName="support_email" type="email" class="form-control"> 
+                    <div class="error" *ngIf="submitted && formUpdateIcDetails.controls.support_email.errors">
+                        <div *ngIf="submitted && formUpdateIcDetails.controls.support_email.errors">
+                            Support is required.
+                        </div>
+                    </div>                                        
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Mobile :</label>         
+                    <input formControlName="mobile" type="number" class="form-control">    
+                    <div class="error" *ngIf="submitted && formUpdateIcDetails.controls.mobile.errors">
+                        <div *ngIf="submitted && formUpdateIcDetails.controls.mobile.errors">
+                            Please enter valid mobile.
+                        </div>
+                    </div>                                     
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Landline :</label>         
+                    <input formControlName="landline" type="number" class="form-control">  
+                    <div class="error" *ngIf="submitted && formUpdateIcDetails.controls.landline.errors">
+                        <div *ngIf="submitted && formUpdateIcDetails.controls.landline.errors">
+                            Landline is required.
+                        </div>
+                    </div>                                       
+                  </div>
+                </div> 
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>IRDAI Register No. :</label>         
+                    <input formControlName="irdai_register_no" type="number" class="form-control" readonly>                                         
+                  </div>
+                </div> 
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Toll Free No. :</label>         
+                    <input formControlName="tollfree" type="number" class="form-control"> 
+                     <div class="error" *ngIf="submitted && formUpdateIcDetails.controls.tollfree.errors">
+                        <div *ngIf="submitted && formUpdateIcDetails.controls.tollfree.errors">
+                            Please enter valid tollfree no.
+                        </div>          
+                    </div>
+                  </div> 
+                </div>
+                  
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>GSTIN  :</label>         
+                    <input formControlName="gstin_no" type="text" class="form-control">   
+
+                  </div>
+                </div> 
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Website URL  :</label>         
+                    <input formControlName="website_url" type="text" class="form-control">  
+                    <div class="error" *ngIf="submitted && formUpdateIcDetails.controls.website_url.errors">
+                        <div *ngIf="submitted && formUpdateIcDetails.controls.website_url.errors">
+                            Please enter valid website url.
+                        </div>
+                    </div>                                                                             
+                  </div>
+                </div> 
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Inspection Done By :</label>         
+                    <input formControlName="inspection_done_by" type="text" class="form-control" readonly>                                         
+                  </div>
+                </div> 
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Broker Code :</label>         
+                    <input formControlName="broker_code" type="text" class="form-control" readonly>                                         
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>IFSC Code :</label>         
+                    <input formControlName="ifsc_code" type="text" class="form-control" (change)="getBankDetails($event.target.value)" (keyup)="getBankDetails($event.target.value)">   
+                    <div class="error" *ngIf="submitted && formUpdateIcDetails.controls.ifsc_code.errors">
+                      <div *ngIf="submitted && formUpdateIcDetails.controls.ifsc_code.errors.required">
+                          Please enter valid IFSC code
+                      </div>
+                      <div *ngIf="submitted && formUpdateIcDetails.controls.ifsc_code.errors.pattern">
+                          Please enter valid IFSC code.
+                      </div>
+                    </div>                                      
+                  </div>
+                </div> 
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Bank Name :</label>         
+                    <input formControlName="bank_name" type="text" class="form-control"> 
+                    <div class="error" *ngIf="submitted && formUpdateIcDetails.controls.website_url.errors">
+                        <div *ngIf="submitted && formUpdateIcDetails.controls.bank_name.errors">
+                            Please enter bank name.
+                        </div>
+                    </div>                                                                                                                     
+                  </div>
+                </div> 
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Bank Account No. :</label>         
+                    <input formControlName="bank_acc_no" type="text" class="form-control">  
+                    <div class="error" *ngIf="submitted && formUpdateIcDetails.controls.bank_acc_no.errors">
+                      <div *ngIf="submitted && formUpdateIcDetails.controls.bank_acc_no.errors">
+                          Please enter valid bank account no.
+                      </div>
+                  </div>                                       
+                  </div>
+                </div> 
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Bank Branch :</label>         
+                    <input formControlName="bank_branch" type="text" class="form-control">  
+                    <div class="error" *ngIf="submitted && formUpdateIcDetails.controls.bank_branch.errors">
+                        <div *ngIf="submitted && formUpdateIcDetails.controls.bank_branch.errors">
+                            Please enter valid bank branch.
+                        </div>
+                    </div>                                       
+                  </div>
+                </div> 
+
+                
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>MICR Code :</label>         
+                    <input formControlName="micr_code" type="text" class="form-control" readonly>                                         
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Swift Code :</label>         
+                    <input formControlName="swift_code" type="text" class="form-control" readonly>                                         
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>Client Code :</label>         
+                    <input formControlName="client_code" type="text" class="form-control" readonly>                                         
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">    
+                    <label>UIN No :</label>         
+                    <input formControlName="uin_no" type="text" class="form-control" readonly>                                         
+                  </div>
+                </div> 
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">
+                      <label>Logo:</label>
+                      <input [ngModelOptions]="{standalone: true}" [(ngModel)]="selected_logo" accept="image/jpeg,image/png" type="file" (change)="uploadLogo($event)" class="form-control">
+                      <div><b>Note: </b>Allowed file type "jpg", "png", "jpeg"</div>
+                      <div class="error" *ngIf="submitted && formUpdateIcDetails.controls.logo.errors">
+                          <div *ngIf="submitted && formUpdateIcDetails.controls.logo.errors.required">
+                              Logo is required.
+                          </div>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-12">
+                  <div class="form-group">
+                      <label>Signature:</label>
+                      <input [ngModelOptions]="{standalone: true}" [(ngModel)]="selected_signature" accept="image/jpeg,image/png" type="file" (change)="uploadSignature($event)" class="form-control">
+                      <div><b>Note: </b>Allowed file type "jpg", "png", "jpeg"</div>
+                      <div class="error" *ngIf="submitted && formUpdateIcDetails.controls.signature.errors">
+                          <div *ngIf="submitted && formUpdateIcDetails.controls.signature.errors.required">
+                              Signature is required.
+                          </div>
+                      </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-2">
+                    <button type="submit" class="btn btn-custom green w-100" > Submit</button>
+                </div>
+              </div>  
+             
+          </div>
+        </div>
+    </form>
+  </div>
+</div>
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

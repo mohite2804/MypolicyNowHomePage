@@ -1,0 +1,1669 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center justify-content-center">
+        <div class="col-lg-9 col-md-10 col-12 mt-3">
+            <h3 class="page-title text-center">Endorsement Details</h3>
+            <p style="text-align: center;font-weight: 700;">IC Breakin ID: {{ endorsement_data?.ic_breakin_id }}</p>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+<div *ngIf="result" class="row align-items-center justify-content-center">
+    <div class="col-lg-10 col-md-11 col-12">
+        <div class="card shadowbox">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#endorsementdetails-tab1" data-toggle="tab">Customer Details</a>
+                            </li>
+                            <li class="nav-item" *ngIf="result.proposer_type_id == 1">
+                                <a class="nav-link" href="#endorsementdetails-tab2" data-toggle="tab">Nominee Details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#endorsementdetails-tab3" data-toggle="tab">Vehicle Details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#endorsementdetails-tab4" data-toggle="tab">Insured Details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#endorsementdetails-tab5" data-toggle="tab">Endorsement Details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#endorsementdetails-tab6" data-toggle="tab">Breakin Report</a>
+                            </li>
+                            <li class="nav-item">
+
+                                <a class="nav-link" href="#endorsementdetails-tab7" data-toggle="tab" *ngIf="endorsement_status_id==1">Policy Details</a>
+
+
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane show active" id="endorsementdetails-tab1">
+                                <ul class="row endorsement-infolist mx-0">
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Customer Name:</div>
+                                        <div class="text">{{result?.policy_holder_name}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Phone No.:</div>
+                                        <div class="text">{{result?.policy_holder_mobile_no}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Email Address:</div>
+                                        <div class="text">{{result?.policy_holder_email}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Adress Line 1:</div>
+                                        <div class="text">{{result?.proposer_address1}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Adress Line 2:</div>
+                                        <div class="text">{{result?.proposer_address2}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Pincode:</div>
+                                        <div class="text">{{result?.proposer_pincode}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">City:</div>
+                                        <div class="text">{{result?.proposer_city_name}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">State:</div>
+                                        <div class="text">{{result?.proposer_state_name}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane show" id="endorsementdetails-tab2">
+                                <ul class="row endorsement-infolist mx-0">
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Salutation:</div>
+                                        <div class="text">{{result?.nominee_salutation}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">First Name:</div>
+                                        <div class="text">{{result?.nominee_first_name}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Middle Name:</div>
+                                        <div class="text">{{result?.nominee_middle_name}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Last Name:</div>
+                                        <div class="text">{{result?.nominee_last_name}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Age:</div>
+                                        <div class="text">{{result?.nominee_age}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Relation:</div>
+                                        <div class="text">{{result?.nominee_relation}}</div>
+                                    </li>
+
+
+
+                                    <li class="col-md-6 col-12" *ngIf="(result?.nominee_age <= 18)">
+                                        <div class="title">Appointee Salutation:</div>
+                                        <div class="text">{{result?.appointee_salutation_name}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12" *ngIf="(result?.nominee_age <= 18)">
+                                        <div class="title">Appointee First Name:</div>
+                                        <div class="text">{{result?.appointee_first_name}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12" *ngIf="(result?.nominee_age <= 18)">
+                                        <div class="title">Appointee Middle Name:</div>
+                                        <div class="text">{{result?.appointee_middle_name}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12" *ngIf="(result?.nominee_age <= 18)">
+                                        <div class="title">Appointee Last Name:</div>
+                                        <div class="text">{{result?.appointee_last_name}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12" *ngIf="(result?.nominee_age <= 18)">
+                                        <div class="title">Appointee Age:</div>
+                                        <div class="text">{{result?.appointee_age}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12" *ngIf="(result?.nominee_age <= 18)">
+                                        <div class="title">Appointee Relation:</div>
+                                        <div class="text">{{result?.appointee_relation_name}}</div>
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                            <div class="tab-pane show" id="endorsementdetails-tab3">
+                                <ul class="row endorsement-infolist mx-0">
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Vehicle Registration No.:</div>
+                                        <div class="text">{{result?.rto_label}}-{{result?.registration_no_part_3}}-{{result?.registration_no_part_4}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Chassis No.:</div>
+                                        <div class="text">{{result?.chassis_no}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Engine No.:</div>
+                                        <div class="text">{{result?.engine_no}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Make:</div>
+                                        <div class="text">{{result?.make}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Varient:</div>
+                                        <div class="text">{{result?.model}} {{result?.variant}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Date Of Registration:</div>
+                                        <div class="text">{{result?.registration_date}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Year Of Manufacture:</div>
+                                        <div class="text">{{result?.manufacturing_year}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Color:</div>
+                                        <div class="text">{{result?.vehicle_color}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Fuel Type:</div>
+                                        <div class="text" Ngif>{{result?.vehicle_fuel}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane show" id="endorsementdetails-tab4">
+                                <ul class="row endorsement-infolist mx-0">
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Insurance Company:</div>
+                                        <div class="text">{{result?.ic_code}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Policy No.:</div>
+                                        <div class="text">{{result?.policy_no}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Policy Isuued Date:</div>
+                                        <div class="text">{{result?.policy_start_date}} {{result?.policy_start_time}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Policy Expiry Date:</div>
+                                        <div class="text">{{result?.policy_end_date}} {{result?.policy_end_time}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane show" id="endorsementdetails-tab5">
+                                <div class="row">
+                                    <div class="col-md-6 col-12 border-right">
+                                        <ul class="endorsement-infolist mx-0">
+                                            <li>
+                                                <div class="title">User Comment:</div>
+                                                <div class="text">{{endorsee_value?.remark}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Endorsement Type:</div>
+                                                <div class="text">{{endorsement_type}} ({{endorsement_item}})</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Endorsement Change:</div>
+                                                <div *ngIf="endorsement_item=='name' && endorsee_value?.ed_middle_name!=0" class="text">Salutation : {{endorsee_value?.ed_salutation}} <br> First Name : {{endorsee_value?.ed_first_name}} <br> Middle Name : {{endorsee_value?.ed_middle_name}} <br> Last Name : {{endorsee_value?.ed_last_name}}</div>
+                                                <div *ngIf="endorsement_item=='name' && endorsee_value?.ed_middle_name==0" class="text">Salutation : {{endorsee_value?.ed_salutation}} <br> First Name : {{endorsee_value?.ed_first_name}} <br> Last Name : {{endorsee_value?.ed_last_name}}</div>
+                                                <div *ngIf="endorsement_item=='ncb'" class="text"></div>
+                                                <div *ngIf="endorsement_item=='vehicle_engine'" class="text">Engine No. : {{endorsee_value?.engine_no}}</div>
+                                                <div *ngIf="endorsement_item=='vehicle_color'" class="text">Vehicle Color : {{endorsee_value?.vehicle_color}}</div>
+                                                <div *ngIf="endorsement_item=='address'" class="text">Address 1 : {{endorsee_value?.ed_address_1}} <br> Address 2 : {{endorsee_value?.ed_address_2}} <br> Pincode : {{endorsee_value?.ed_pincode}} <br> City : {{endorsee_value?.ed_city}} <br> State : {{endorsee_value?.ed_state}}</div>
+                                                <div *ngIf="endorsement_item=='nominee_age'" class="text">Nominee Age : {{endorsee_value?.nominee_age}}
+                                                    <div *ngIf="endorsed_value?.nominee_age<18 || endorsee_value?.nominee_age<18">
+                                                        <br> Appointee Salutation : {{endorsee_value?.appointee_salutation}}<br> Appointee First Name : {{endorsee_value?.appointee_first_name}}<br> Appointee Middle Name : <span *ngIf="endorsee_value?.appointee_middle_name!='0'">{{endorsee_value?.appointee_middle_name}}</span>
+                                                        <span *ngIf="endorsee_value?.appointee_middle_name=='0'">-</span><br> Appointee Last Name : {{endorsee_value?.appointee_last_name}}<br> Appointee Age : {{endorsee_value?.appointee_age}}<br> Appointee
+                                                        Relation : {{endorsee_value?.appointee_relation}}
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="endorsement_item=='contact'" class="text">Contact : {{endorsee_value?.ed_contact}} <br>Email : {{endorsee_value?.ed_email}}</div>
+                                                <div *ngIf="endorsement_item=='dob'" class="text">DOB : {{endorsee_value?.ed_dob}}</div>
+                                                <div *ngIf="endorsement_item=='vehicle_registration'" class="text">RTO : {{endorsee_value?.rto}} <br> Regn Code : {{endorsee_value?.reg_no_1}} <br> Regn No : {{endorsee_value?.reg_no_2}}</div>
+                                                <div *ngIf="endorsement_item=='financier_change'" class="text">Agreement Type : {{endorsee_value?.agreement}} <br> Bank : {{endorsee_value?.bank}}</div>
+                                                <div *ngIf="endorsement_item=='nominee_relationship'" class="text">Nominee Relation : {{endorsee_value?.nominee_relation}}</div>
+                                                <div *ngIf="endorsement_item=='transfer_policy'" class="text"></div>
+                                                <div *ngIf="endorsement_item=='nominee_name'" class="text">Nominee Salutation : {{endorsee_value?.nominee_salutation}} <br>Nominee First Name : {{endorsee_value?.nominee_first_name}} <br>Nominee Middle Name : {{endorsee_value?.nominee_middle_name}} <br>Nominee Last
+                                                    Name : {{endorsee_value?.nominee_last_name}}</div>
+                                                <div *ngIf="endorsement_item=='vehicle_chasis'" class="text">Chassis No : {{endorsee_value?.chassis_no}}</div>
+
+                                                <!--  NON NIL ENDORSEMENT  -->
+                                                <div *ngIf="endorsement_item=='bifuel'" class="text">Bifuel : {{endorsee_value?.bifuel}}</div>
+                                                <div *ngIf="endorsement_item=='idv'" class="text">IDV : {{endorsee_value?.ed_idv}}</div>
+                                                <div *ngIf="endorsement_item=='ncb'" class="text">NCB : {{endorsee_value?.ed_ncb}}%</div>
+                                                <div *ngIf="endorsement_item=='rto'" class="text">RTO : {{endorsee_value?.ed_rto | uppercase}}</div>
+                                                <div *ngIf="endorsement_item=='electrical_accessories'" class="text">Electrical Accessories : {{endorsee_value?.ed_electrical_accessories}}</div>
+                                                <div *ngIf="endorsement_item=='non_electrical_accessories'" class="text">Non Electrical Accessories : {{endorsee_value?.ed_non_electrical_accessories}}</div>
+                                                <div *ngIf="endorsement_item=='pa_unnamed_persons'" class="text">PA Unnamed Persons : {{endorsee_value?.ed_pa_unnamed_persons}}</div>
+                                                <div *ngIf="endorsement_item=='ll_paid_drivers'" class="text">LL Paid Driver : {{endorsee_value?.ed_ll_paid_drivers}}</div>
+                                            </li>
+
+                                            <li *ngIf="endorsement_item!='transfer_policy'">
+                                                <div class="title">Existing:</div>
+                                                <div *ngIf="endorsement_item=='name' && endorsee_value?.ed_middle_name!=0" class="text">Salutation : {{endorsed_value?.ed_salutation}} <br> First Name : {{endorsed_value?.ed_first_name}} <br> Middle Name : {{endorsed_value?.ed_middle_name}} <br> Last Name : {{endorsed_value?.ed_last_name}}</div>
+                                                <div *ngIf="endorsement_item=='name' && endorsed_value?.ed_middle_name==0" class="text">Salutation : {{endorsed_value?.ed_salutation}} <br> First Name : {{endorsed_value?.ed_first_name}} <br> Last Name : {{endorsed_value?.ed_last_name}}</div>
+                                                <div *ngIf="endorsement_item=='ncb'" class="text"></div>
+                                                <div *ngIf="endorsement_item=='vehicle_engine'" class="text">Engine No. : {{endorsed_value?.engine_no}}</div>
+                                                <div *ngIf="endorsement_item=='vehicle_color'" class="text">Vehicle Color : {{endorsed_value?.vehicle_color}}</div>
+                                                <div *ngIf="endorsement_item=='address'" class="text">Address 1 : {{endorsed_value?.ed_address_1}} <br> Address 2 : {{endorsed_value?.ed_address_2}} <br> Pincode : {{endorsed_value?.ed_pincode}} <br> City : {{endorsed_value?.ed_city}} <br> State : {{endorsed_value?.ed_state}}</div>
+                                                <div *ngIf="endorsement_item=='nominee_age'" class="text">Nominee Age : {{endorsed_value?.nominee_age}}
+                                                    <div *ngIf="endorsed_value?.nominee_age<18 || endorsee_value?.nominee_age<18">
+                                                        <br> Appointee Salutation :<span *ngIf="endorsed_value?.appointee_salutation!='null'">{{endorsed_value?.appointee_salutation}}</span>
+                                                        <span *ngIf="endorsed_value?.appointee_salutation=='null'">-</span><br> Appointee First Name :<span *ngIf="endorsed_value?.appointee_first_name!='0'">{{endorsed_value?.appointee_first_name}}</span>
+                                                        <span *ngIf="endorsed_value?.appointee_first_name=='0'">-</span> <br> Appointee Middle Name : <span *ngIf="endorsed_value?.appointee_middle_name!='0'">{{endorsed_value?.appointee_middle_name}}</span>
+                                                        <span *ngIf="endorsed_value?.appointee_middle_name=='0'">-</span><br> Appointee Last Name : <span *ngIf="endorsed_value?.appointee_last_name!='0'">{{endorsed_value?.appointee_last_name}}</span>
+                                                        <span *ngIf="endorsed_value?.appointee_last_name=='0'">-</span><br> Appointee Age : <span *ngIf="endorsed_value?.appointee_age!='0'">{{endorsed_value?.appointee_age}}</span>
+                                                        <span *ngIf="endorsed_value?.appointee_age=='0'">-</span><br> Appointee Relation : <span *ngIf="endorsed_value?.appointee_relation!='null'">{{endorsed_value?.appointee_relation}}</span>
+                                                        <span *ngIf="endorsed_value?.appointee_relation=='null'">-</span>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="endorsement_item=='contact'" class="text">Contact : {{endorsed_value?.ed_contact}} <br>Email : {{endorsed_value?.ed_email}}</div>
+                                                <div *ngIf="endorsement_item=='dob'" class="text">DOB : {{endorsed_value?.ed_dob}}</div>
+                                                <div *ngIf="endorsement_item=='vehicle_registration'" class="text">RTO : {{endorsed_value?.rto}} <br> Regn Code : {{endorsed_value?.reg_no_1}} <br> Regn No : {{endorsed_value?.reg_no_2}}</div>
+                                                <div *ngIf="endorsement_item=='financier_change'" class="text">Agreement Type : {{endorsed_value?.agreement}} <br> Bank : {{endorsed_value?.bank}}</div>
+                                                <div *ngIf="endorsement_item=='nominee_relationship'" class="text">Nominee Relation : {{endorsed_value?.nominee_relation}}</div>
+                                                <div *ngIf="endorsement_item=='transfer_policy'" class="text"></div>
+                                                <div *ngIf="endorsement_item=='nominee_name'" class="text">Nominee Salutation : {{endorsed_value?.nominee_salutation}} <br>Nominee First Name : {{endorsed_value?.nominee_first_name}} <br>Nominee Middle Name : {{endorsed_value?.nominee_middle_name}} <br>Nominee Last
+                                                    Name : {{endorsed_value?.nominee_last_name}}</div>
+                                                <div *ngIf="endorsement_item=='vehicle_chasis'" class="text">Chassis No : {{endorsed_value?.chassis_no}}</div>
+
+                                                <!--  NON NIL ENDORSEMENT  -->
+                                                <div *ngIf="endorsement_item=='idv'" class="text">IDV : {{endorsed_value?.ed_idv}}</div>
+                                                <div *ngIf="endorsement_item=='bifuel'" class="text">Bifuel : {{endorsed_value?.bifuel}}</div>
+                                                <div *ngIf="endorsement_item=='ncb'" class="text">NCB : {{endorsed_value?.ed_ncb}}%</div>
+                                                <div *ngIf="endorsement_item=='rto'" class="text">RTO : {{endorsed_value?.ed_rto | uppercase}}</div>
+                                                <div *ngIf="endorsement_item=='electrical_accessories'" class="text">Electrical Accessories : {{endorsed_value?.ed_electrical_accessories}}</div>
+                                                <div *ngIf="endorsement_item=='non_electrical_accessories'" class="text">Non Electrical Accessories : {{endorsed_value?.ed_non_electrical_accessories}}</div>
+                                                <div *ngIf="endorsement_item=='pa_unnamed_persons'" class="text">PA Unnamed Persons : {{endorsed_value?.ed_pa_unnamed_persons}}</div>
+                                                <div *ngIf="endorsement_item=='ll_paid_drivers'" class="text">LL Paid Driver : {{endorsed_value?.ed_ll_paid_drivers}}</div>
+                                            </li>
+
+                                            <!-- Transfer Endorsement -->
+                                            <li *ngIf="endorsement_item=='transfer_policy'">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-bordered custom-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th><b>Existing</b></th>
+                                                                <th><b>New</b></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><b>Proposer Type</b></td>
+                                                                <td>
+                                                                    {{ endorsed_value?.ed_policyholdertype }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ endorsee_value?.ed_policyholdertype }}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3"><b>PROPOSER DETAILS</b></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Salutation</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_salutation!=0">{{endorsed_value?.ed_salutation}}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_salutation!=0">{{endorsee_value?.ed_salutation}}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>First Name</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_first_name!=0">{{ endorsed_value?.ed_first_name }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_first_name!=0">{{ endorsee_value?.ed_first_name }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Middle Name</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_middle_name!=0">{{ endorsed_value?.ed_middle_name }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_middle_name!=0">{{ endorsee_value?.ed_middle_name }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Last Name</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_last_name!=0">{{ endorsed_value?.ed_last_name }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_last_name!=0">{{ endorsee_value?.ed_last_name }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Address 1</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_address1!=0">{{ endorsed_value?.ed_address1 }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_address1!=0">{{ endorsee_value?.ed_address1 }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Address 2</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_address2!=0">{{ endorsed_value?.ed_address2 }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_address2!=0">{{ endorsee_value?.ed_address2 }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>City</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_city!=0">{{ endorsed_value?.ed_city }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_city!=0">{{ endorsee_value?.ed_city }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>State</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_state!=0">{{ endorsed_value?.ed_state }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_state!=0">{{ endorsee_value?.ed_state }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Pincode</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_pincode!=0">{{ endorsed_value?.ed_pincode }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_pincode!=0">{{ endorsee_value?.ed_pincode }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Registration No</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_reg_no!=0">{{ endorsed_value?.ed_reg_no }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_reg_no!=0">{{ endorsee_value?.ed_reg_no }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Email</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_email!=0">{{ endorsed_value?.ed_email }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_email!=0">{{ endorsee_value?.ed_email }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Mobile</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_mobile!=0">{{ endorsed_value?.ed_mobile }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_mobile!=0">{{ endorsee_value?.ed_mobile }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>D.O.B.</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_dob!=0">{{ endorsed_value?.ed_dob }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_dob!=0">{{ endorsee_value?.ed_dob }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Gender</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_gender!=0">{{ endorsed_value?.ed_gender }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_gender!=0">{{ endorsee_value?.ed_gender }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>PAN No</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_pan_no!=0">{{ endorsed_value?.ed_pan_no }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_pan_no!=0">{{ endorsee_value?.ed_pan_no }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3"><b>NOMINEE DETAILS</b></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Salutation</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_nominee_salutation!=0">{{ endorsed_value?.ed_nominee_salutation }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_nominee_salutation!=0">{{ endorsee_value?.ed_nominee_salutation }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>First Name</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_nominee_first_name!=0">{{ endorsed_value?.ed_nominee_first_name }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_nominee_first_name!=0">{{ endorsee_value?.ed_nominee_first_name }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Middle Name</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_nominee_middle_name!=0">{{ endorsed_value?.ed_nominee_middle_name }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_nominee_middle_name!=0">{{ endorsee_value?.ed_nominee_middle_name }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Last Name</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_nominee_last_name!=0">{{ endorsed_value?.ed_nominee_last_name }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_nominee_last_name!=0">{{ endorsee_value?.ed_nominee_last_name }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Relation</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_nominee_relation!=0">{{ endorsed_value?.ed_nominee_relation }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_nominee_relation!=0">{{ endorsee_value?.ed_nominee_relation }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Age</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_nominee_age!=0">{{ endorsed_value?.ed_nominee_age }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_nominee_age!=0">{{ endorsee_value?.ed_nominee_age }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3"><b>APPOINTEE DETAILS</b></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Salutation</b></td>
+                                                                <td>
+                                                                    <span *ngIf="(endorsed_value?.ed_appointee_salutation!=0 && endorsed_value?.ed_appointee_salutation!='null')">{{ endorsed_value?.ed_appointee_salutation }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="(endorsee_value?.ed_appointee_salutation!=0 && endorsee_value?.ed_appointee_salutation!='null')">{{ endorsee_value?.ed_appointee_salutation }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>First Name</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_appointee_first_name!=0">{{ endorsed_value?.ed_appointee_first_name }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_appointee_first_name!=0">{{ endorsee_value?.ed_appointee_first_name }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Middle Name</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_nominee_middle_name!=0">{{ endorsed_value?.ed_nominee_middle_name }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_nominee_middle_name!=0">{{ endorsee_value?.ed_nominee_middle_name }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Last Name</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_appointee_last_name!=0">{{ endorsed_value?.ed_appointee_last_name }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_appointee_last_name!=0">{{ endorsee_value?.ed_appointee_last_name }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Relation</b></td>
+                                                                <td>
+                                                                    <span *ngIf="(endorsed_value?.ed_appointee_relation!=0 && endorsed_value?.ed_appointee_relation!='null')">{{ endorsed_value?.ed_appointee_relation }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="(endorsee_value?.ed_appointee_relation!=0 && endorsee_value?.ed_appointee_relation!='null')">{{ endorsee_value?.ed_appointee_relation }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Age</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_appointee_age!=0">{{ endorsed_value?.ed_appointee_age }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_appointee_age!=0">{{ endorsee_value?.ed_appointee_age }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3"><b>COMPANY DETAILS</b></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Salutation</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_company_salutation!=0">{{ endorsed_value?.ed_company_salutation }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_company_salutation!=0">{{ endorsee_value?.ed_company_salutation }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Company Name</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_company_name!=0">{{ endorsed_value?.ed_company_name }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_company_name!=0">{{ endorsee_value?.ed_company_name }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>GST No.</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_company_gst_no!=0">{{ endorsed_value?.ed_company_gst_no }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_company_gst_no!=0">{{ endorsee_value?.ed_company_gst_no }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>PAN No.</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_company_pan_no!=0">{{ endorsed_value?.ed_company_pan_no }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_company_pan_no!=0">{{ endorsee_value?.ed_company_pan_no }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Owner Salutation</b></td>
+                                                                <td>
+                                                                    <span *ngIf="(endorsed_value?.ed_company_own_salutation!=0 && endorsed_value?.ed_company_own_salutation!='null')">{{ endorsed_value?.ed_company_own_salutation }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="(endorsee_value?.ed_company_own_salutation!=0 && endorsee_value?.ed_company_own_salutation!='null')">{{ endorsee_value?.ed_company_own_salutation }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>First Name</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_company_owner_fisrt_name!=0">{{ endorsed_value?.ed_company_owner_fisrt_name }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_company_owner_fisrt_name!=0">{{ endorsee_value?.ed_company_owner_fisrt_name }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Middle Name</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_company_owner_middle_name!=0">{{ endorsed_value?.ed_company_owner_middle_name }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_company_owner_middle_name!=0">{{ endorsee_value?.ed_company_owner_middle_name }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Last Name</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_company_owner_last_name!=0">{{ endorsed_value?.ed_company_owner_last_name }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_company_owner_last_name!=0">{{ endorsee_value?.ed_company_owner_last_name }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Email</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_company_owner_email!=0">{{ endorsed_value?.ed_company_owner_email }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_company_owner_email!=0">{{ endorsee_value?.ed_company_owner_email }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Mobile</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_company_owner_mobile!=0">{{ endorsed_value?.ed_company_owner_mobile }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_company_owner_mobile!=0">{{ endorsee_value?.ed_company_owner_mobile }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Address 1</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_company_owner_address_1!=0">{{ endorsed_value?.ed_company_owner_address_1 }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_company_owner_address_1!=0">{{ endorsee_value?.ed_company_owner_address_1 }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Address 2</b></td>
+                                                                <td>
+                                                                    <span *ngIf="endorsed_value?.ed_company_owner_address_2!=0">{{ endorsed_value?.ed_company_owner_address_2 }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="endorsee_value?.ed_company_owner_address_2!=0">{{ endorsee_value?.ed_company_owner_address_2 }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>City</b></td>
+                                                                <td>
+                                                                    <span *ngIf="(endorsed_value?.ed_company_owner_city_name!=0 && endorsed_value?.ed_company_owner_city_name!='null')">{{ endorsed_value?.ed_company_owner_city_name }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="(endorsee_value?.ed_company_owner_city_name!=0 && endorsee_value?.ed_company_owner_city_name!='null')">{{ endorsee_value?.ed_company_owner_city_name }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>State</b></td>
+                                                                <td>
+                                                                    <span *ngIf="(endorsed_value?.ed_company_owner_state_name!=0 && endorsed_value?.ed_company_owner_state_name!='null')">{{ endorsed_value?.ed_company_owner_state_name }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="(endorsee_value?.ed_company_owner_state_name!=0 && endorsee_value?.ed_company_owner_state_name!='null')">{{ endorsee_value?.ed_company_owner_state_name }}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><b>Pincode</b></td>
+                                                                <td>
+                                                                    <span *ngIf="(endorsed_value?.ed_company_owner_pincode!=0 && endorsed_value?.ed_company_owner_pincode!='null')">{{ endorsed_value?.ed_company_owner_pincode }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="(endorsee_value?.ed_company_owner_pincode!=0 && endorsee_value?.ed_company_owner_pincode!='null')">{{ endorsee_value?.ed_company_owner_pincode }}</span>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </li>
+
+                                            <li *ngIf="(endorsement_type=='Non Nil' && endorsement_item!='rto')">
+                                                <div class="title"><b>Endorsement Charges</b></div>
+                                                <div class="text"></div>
+                                            </li>
+                                            <li *ngIf="(endorsement_type=='Non Nil' && endorsement_item!='rto')">
+                                                <div class="title">Net Premium:</div>
+                                                <div class="text">{{endorsee_value?.net_premium}}</div>
+                                            </li>
+                                            <li *ngIf="(endorsement_type=='Non Nil' && endorsement_item!='rto')">
+                                                <div class="title">GST:</div>
+                                                <div class="text">{{endorsee_value?.gst}}</div>
+                                            </li>
+                                            <li *ngIf="(endorsement_type=='Non Nil' && endorsement_item!='rto')">
+                                                <div class="title">Final Premium:</div>
+                                                <div class="text">{{endorsee_value?.final_premium}}</div>
+                                            </li>
+
+                                            <!-- Transfer endorsement charges -->
+                                            <li *ngIf="endorsement_type=='Transfer'">
+                                                <div class="title"><b>Endorsement Charges</b></div>
+                                                <div class="text"></div>
+                                            </li>
+                                            <li *ngIf="endorsement_type=='Transfer'">
+                                                <div class="title">Net Premium:</div>
+                                                <div class="text">{{endorsee_value?.net_premium}} [NCB Recovery + Endorsement Charge]</div>
+                                            </li>
+                                            <li *ngIf="endorsement_type=='Transfer'">
+                                                <div class="title">GST:</div>
+                                                <div class="text">{{endorsee_value?.gst}} [Applicable On Endorsement Charge]</div>
+                                            </li>
+                                            <li *ngIf="endorsement_type=='Transfer'">
+                                                <div class="title">Final Premium:</div>
+                                                <div class="text">{{endorsee_value?.final_premium}}</div>
+                                            </li>
+                                            <li *ngIf="endorsement_type=='Transfer'">
+                                                <span class="text-danger"><b>NOTE: </b> Endorsement Charges -> 50</span>
+                                            </li>
+
+                                            <!-- Refund details -->
+                                            <li *ngIf="(endorsement_type=='Non Nill' && (endorsee_value?.isRefund=='1' || endorsee_value?.isRefund==1))">
+                                                <div class="title"><b>Refund Details</b></div>
+                                                <div class="text"></div>
+                                            </li>
+                                            <li *ngIf="(endorsement_type=='Non Nill' && (endorsee_value?.isRefund=='1' || endorsee_value?.isRefund==1))">
+                                                <div class="title">Refund To:</div>
+                                                <div class="text">{{result?.refund_to}}</div>
+                                            </li>
+                                            <li *ngIf="(endorsement_type=='Non Nill' && (endorsee_value?.isRefund=='1' || endorsee_value?.isRefund==1))">
+                                                <div class="title">Account Holder Name:</div>
+                                                <div class="text">{{result?.refund_payee_account_name}}</div>
+                                            </li>
+                                            <li *ngIf="(endorsement_type=='Non Nill' && (endorsee_value?.isRefund=='1' || endorsee_value?.isRefund==1))">
+                                                <div class="title">Account Number:</div>
+                                                <div class="text">{{result?.refund_payee_account_no}}</div>
+                                            </li>
+                                            <li *ngIf="(endorsement_type=='Non Nill' && (endorsee_value?.isRefund=='1' || endorsee_value?.isRefund==1))">
+                                                <div class="title">Bank Name:</div>
+                                                <div class="text">{{result?.refund_payee_bank_name}}</div>
+                                            </li>
+                                            <li *ngIf="(endorsement_type=='Non Nill' && (endorsee_value?.isRefund=='1' || endorsee_value?.isRefund==1))">
+                                                <div class="title">Bank Nranch:</div>
+                                                <div class="text">{{result?.refund_payee_bank_branch}}</div>
+                                            </li>
+                                            <li *ngIf="(endorsement_type=='Non Nill' && (endorsee_value?.isRefund=='1' || endorsee_value?.isRefund==1))">
+                                                <div class="title">IFSC Code:</div>
+                                                <div class="text">{{result?.refund_payee_bank_ifsc_code}}</div>
+                                            </li>
+
+                                            <li *ngIf="(endorsement_type=='Non Nil' && (endorsee_value?.isRefund=='1' || endorsee_value?.isRefund==1))">
+                                                <span class="text-danger"><b>Refund is applicable & will be process after endorsement approval</b></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <ul class="endorsement-infolist mx-0">
+                                            <li>
+                                                <div class="title">Verified By:</div>
+                                                <div class="text">{{endorsement_data?.endorsement_approved_by_admin_name}} </div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Verified Date Time:</div>
+                                                <div class="text">{{endorsement_data?.endorsement_approval_date}} {{endorsement_data?.endorsement_approval_time}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Verified Comment:</div>
+                                                <div class="text">{{endorsement_data?.application_endorsement_remark}}</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12 border-top">
+                                        <div class="row align-items-center my-3">
+                                            <div class="col">
+                                                <h4>Uploaded Files</h4>
+                                            </div>
+                                            <!-- <div class="col-auto float-right ml-auto">
+                                                <a href="javascript:void(0);" class="btn btn-custom green"><i class="fa fa-download mr-1"></i> Download All Files</a>
+                                            </div> -->
+                                        </div>
+                                        <div class="float-right">
+
+                                        </div>
+                                        <div class="row align-items-center">
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.bifuel_customer_cancel_cheque_copy">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Customer Cancel Cheque Copy</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}endorsement/bifuel_customer_cancel_cheque_copy/{{endorsee_value?.bifuel_customer_cancel_cheque_copy}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                <!-- <a href="#" class="btn btn-secondary px-3 mr-2 btn-sm"><i class="fa fa-download mr-1"></i> Download</a> -->
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}endorsement/bifuel_customer_cancel_cheque_copy/{{endorsee_value?.bifuel_customer_cancel_cheque_copy}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.bifuel_customerletter">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Customer letter</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}endorsement/bifuel_customerletter/{{endorsee_value?.bifuel_customerletter}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                <!-- <a href="#" class="btn btn-secondary px-3 mr-2 btn-sm"><i class="fa fa-download mr-1"></i> Download</a> -->
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}endorsement/bifuel_customerletter/{{endorsee_value?.bifuel_customerletter}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.bifuel_previous_year_policy">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Previous Year Policy letter</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}endorsement/bifuel_previous_year_policy/{{endorsee_value?.bifuel_previous_year_policy}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                <!-- <a href="#" class="btn btn-secondary px-3 mr-2 btn-sm"><i class="fa fa-download mr-1"></i> Download</a> -->
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}endorsement/bifuel_previous_year_policy/{{endorsee_value?.bifuel_previous_year_policy}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.bifuel_inspection_image">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Inspection Image</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}endorsement/bifuel_inspection_image/{{endorsee_value?.bifuel_inspection_image}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                <!-- <a href="#" class="btn btn-secondary px-3 mr-2 btn-sm"><i class="fa fa-download mr-1"></i> Download</a> -->
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}endorsement/bifuel_inspection_image/{{endorsee_value?.bifuel_inspection_image}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.invoice_copy_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Invoice Copy</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}endorsement/invoice_copy/{{endorsee_value?.invoice_copy_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                <!-- <a href="#" class="btn btn-secondary px-3 mr-2 btn-sm"><i class="fa fa-download mr-1"></i> Download</a> -->
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}endorsement/invoice_copy/{{endorsee_value?.invoice_copy_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.customerletter_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Customer Request Letter</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}endorsement/customerletter/{{endorsee_value?.customerletter_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                <!-- <a href="#" class="btn btn-secondary px-3 mr-2 btn-sm"><i class="fa fa-download mr-1"></i> Download</a> -->
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}endorsement/customerletter/{{endorsee_value?.customerletter_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.nominee_proof_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Nominee Proof</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/nominee_proof/{{endorsee_value?.nominee_proof_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/nominee_proof/{{endorsee_value?.nominee_proof_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.financierletter_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Financier Letter</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/financierletter/{{endorsee_value?.financierletter_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/financierletter/{{endorsee_value?.financierletter_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.rccopy_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>RC Copy</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/rccopy/{{endorsee_value?.rccopy_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/rccopy/{{endorsee_value?.rccopy_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.dealer_letter_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Dealer Letter</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/dealer_letter/{{endorsee_value?.dealer_letter_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/dealer_letter/{{endorsee_value?.dealer_letter_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.prev_policy_copy_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Previous Policy Copy</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/prev_policy_copy/{{endorsee_value?.prev_policy_copy_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/prev_policy_copy/{{endorsee_value?.prev_policy_copy_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.ncb_letter_copy_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>NCB Letter Copy</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/ncb_letter_copy/{{endorsee_value?.ncb_letter_copy_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/ncb_letter_copy/{{endorsee_value?.ncb_letter_copy_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.vehicle_inspection_photo_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Vehicle Inspection Photo</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/vehicle_inspection_photo/{{endorsee_value?.vehicle_inspection_photo_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/vehicle_inspection_photo/{{endorsee_value?.vehicle_inspection_photo_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.idproof_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>File 3</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/idproof/{{endorsee_value?.idproof_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/idproof/{{endorsee_value?.idproof_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.oldfinancierletter">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>File 4</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/oldfinancierletter/{{endorsee_value?.oldfinancierletter}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/oldfinancierletter/{{endorsee_value?.oldfinancierletter}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.newfinancierletter">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>File 4</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/newfinancierletterendorsement/newfinancierletter/{{endorsee_value?.newfinancierletter}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/newfinancierletterendorsement/newfinancierletter/{{endorsee_value?.newfinancierletter}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Transfer Policy -->
+                                            <!-- NOC -->
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.noc_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>NOC Copy</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/noc_document/{{endorsee_value?.noc_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/noc_document/{{endorsee_value?.noc_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- invoice_rc_copy_document -->
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.invoice_rc_copy_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Invoice/RC Copy</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/rc_copy_document/{{endorsee_value?.invoice_rc_copy_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/rc_copy_document/{{endorsee_value?.invoice_rc_copy_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- form29_form30_document -->
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.form29_form30_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Form 29/Form 30</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/form29_form30_document/{{endorsee_value?.form29_form30_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/form29_form30_document/{{endorsee_value?.form29_form30_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- inpection_report_document -->
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.inpection_report_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Inspection Report</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/inpection_report_document/{{endorsee_value?.inpection_report_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/inpection_report_document/{{endorsee_value?.inpection_report_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- front_image_document -->
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.front_image_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Front Image</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/front_image_document/{{endorsee_value?.front_image_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/front_image_document/{{endorsee_value?.front_image_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- rear_image_document -->
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.rear_image_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Rear Image</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/rear_image_document/{{endorsee_value?.rear_image_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/rear_image_document/{{endorsee_value?.rear_image_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- left_image_document -->
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.left_image_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Left Image</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/left_image_document/{{endorsee_value?.left_image_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/left_image_document/{{endorsee_value?.left_image_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- right_image_document -->
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.right_image_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Right Image</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/right_image_document/{{endorsee_value?.right_image_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/right_image_document/{{endorsee_value?.right_image_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- windscreen_inside_document -->
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.windscreen_inside_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Windscreen Inside</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/windscreen_inside_outside_document/{{endorsee_value?.windscreen_inside_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/windscreen_inside_outside_document/{{endorsee_value?.windscreen_inside_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- windscreen_outside_document -->
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.windscreen_outside_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Windscreen Outside</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/windscreen_outside_inside_document/{{endorsee_value?.windscreen_outside_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/windscreen_outside_inside_document/{{endorsee_value?.windscreen_outside_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- autometer_with_engine_on_document -->
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.autometer_with_engine_on_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Autometer With Engine On</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/autometer_engine_document/{{endorsee_value?.autometer_with_engine_on_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/autometer_engine_document/{{endorsee_value?.autometer_with_engine_on_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- chassis_plate_print_document -->
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.chassis_plate_print_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Chassis Plate Print</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/car_chassis_print_document/{{endorsee_value?.chassis_plate_print_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/car_chassis_print_document/{{endorsee_value?.chassis_plate_print_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- previous_insurance_copy_document -->
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.previous_insurance_copy_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Prev Policy Copy</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/pervious_insurances_document/{{endorsee_value?.previous_insurance_copy_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/pervious_insurances_document/{{endorsee_value?.previous_insurance_copy_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- dicky_open_document -->
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.dicky_open_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Dicky Open</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/dicky_open_document/{{endorsee_value?.dicky_open_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/dicky_open_document/{{endorsee_value?.dicky_open_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- selfie_with_vehicle_document -->
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.puc_copy_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>PUC Copy</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/puc_copy_document/{{endorsee_value?.puc_copy_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/puc_copy_document/{{endorsee_value?.puc_copy_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- selfie_with_vehicle_document -->
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.dashboard_copy_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Dashboard Copy</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/dashboard_copy_document/{{endorsee_value?.dashboard_copy_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/dashboard_copy_document/{{endorsee_value?.dashboard_copy_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- selfie_with_vehicle_document -->
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.selfie_with_vehicle_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Selfie With Vehicle</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/selfie_with_car_document/{{endorsee_value?.selfie_with_vehicle_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/selfie_with_car_document/{{endorsee_value?.selfie_with_vehicle_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.open_engine_compartment_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Open Engine Compartment Document</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/open_engine_compartment_document/{{endorsee_value?.open_engine_compartment_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/open_engine_compartment_document/{{endorsee_value?.open_engine_compartment_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.under_the_chassis_embossed_chassis_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Under the Chassis Embossed</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/under_the_chassis_embossed_chassis_photo_document/{{endorsee_value?.under_the_chassis_embossed_chassis_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/under_the_chassis_embossed_chassis_photo_document/{{endorsee_value?.under_the_chassis_embossed_chassis_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.addtion1_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Addtion 1</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/addtion1_document/{{endorsee_value?.addtion1_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/addtion1_document/{{endorsee_value?.addtion1_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.addtion2_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Addtion 2</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/addtion2_document/{{endorsee_value?.addtion2_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/addtion2_document/{{endorsee_value?.addtion2_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="endorsee_value?.addtion3_document_path">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Addtion 3</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{public_path}}/endorsement/addtion3_document/{{endorsee_value?.addtion3_document_path}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}/endorsement/addtion3_document/{{endorsee_value?.addtion3_document_path}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngIf="breain_data?.video">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Inspection Video</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{breain_data.video}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <video width="100" height="100" controls>
+                                                                        <source src="movie.mp4" type="video/mp4">
+                                                                        <source src="{{breain_data.video}}" type="video/ogg">
+                                                                        Your browser does not support the video tag.
+                                                                      </video>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane show" id="endorsementdetails-tab6">
+                                <div class="row">
+                                    <div class="col-4"></div>
+                                    <div class="col-8">
+                                        <div class="float-right">
+                                            <a class="btn btn-primary" href="javascript:;" (click)="GetInspectionReport()">Inspection Report</a>
+                                            <a class="btn btn-primary ml-3" href="javascript:;" (click)="DownloadImages()">Download All</a>
+                                            <a class="btn btn-primary {{resultBreakinTransactionHistory?.breakin_approval_date  && !resultBreakinTransactionHistory.breakin_upload_date?'mt-2':'ml-3'}}" href="javascript:;" (click)="generateLink()">Inspection Link</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 offset-md-6" style="padding-top: 1%;" *ngIf="inspection_link">
+                                    <div class="alert-light" role="">
+                                        <a href="{{inspection_link_url}}">{{inspection_link_url}}</a>
+                                        <button type="button" class="close" (click)="closeGenerateLink()">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane show" id="endorsementdetails-tab7" *ngIf="endorsement_status_id==1">
+                                <form [formGroup]="formeditActionName" (ngSubmit)="submitFormActionName()" *ngIf="write_permission==1">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="row">
+                                                <div class="col-md-4 col-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Change Status</label>
+                                                        <select class="form-control" formControlName="ed_status" (change)="checkEndorsementCharges($event)">
+                                                        <option value="">Select Status</option>
+                                                        <option value="4">Approve</option>
+                                                        <option value="2">Reject</option>
+                                                        <option value="3">Referback</option>
+                                                    </select>
+                                                        <input type="hidden" formControlName="ed_id" [value]="endorsement_id">
+                                                    </div>
+                                                    <div *ngIf="submitFormActionStatus && formeditActionName.controls.ed_status.errors">
+                                                        <small *ngIf="submitFormActionStatus && formeditActionName.controls.ed_status.errors.required" class="text-danger">
+                                                    Please Select Status.
+                                                  </small>
+                                                    </div>
+
+                                                    <div class="form-group" *ngIf="is_rto_charges_show">
+                                                        <label class="form-label">Endorsement Charges</label>
+                                                        <input class="form-control" type="text" formControlName="rto_endorsement_charge">
+                                                        <span class='text-danger' *ngIf="is_refund"><b>Refund Applicable: </b>Please enter refund amount without including GST.</span>
+                                                    </div>
+                                                    <div *ngIf="submitFormActionStatus && formeditActionName.controls.rto_endorsement_charge.errors">
+                                                        <small *ngIf="submitFormActionStatus && formeditActionName.controls.rto_endorsement_charge.errors" class="text-danger">
+                                                            Please enter valid RTO endorsement charges.
+                                                        </small>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-8 col-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Add Comment</label>
+                                                        <textarea maxlength="300" type="text" class="form-control" formControlName="ed_status_comment" rows="3" placeholder="Enter your comment"></textarea>
+                                                    </div>
+                                                    <div *ngIf="submitFormActionStatus && formeditActionName.controls.ed_status_comment.errors">
+                                                        <small *ngIf="submitFormActionStatus && formeditActionName.controls.ed_status_comment.errors.required" class="text-danger">
+                                                    Please add comment.
+                                                  </small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 text-right">
+                                                    <button type="submit" class="btn btn-custom green"> Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

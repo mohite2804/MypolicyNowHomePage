@@ -2,13 +2,36 @@
 <!-- Add the slick-theme.css if you want default styling -->
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css" />
 <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.min.js"></script>
-
+<script>
+    $('.center').slick({
+        centerMode: true,
+        centerPadding: '60px',
+        slidesToShow: 3,
+        responsive: [{
+            breakpoint: 768,
+            settings: {
+                arrows: false,
+                centerMode: true,
+                centerPadding: '40px',
+                slidesToShow: 3
+            }
+        }, {
+            breakpoint: 480,
+            settings: {
+                arrows: false,
+                centerMode: true,
+                centerPadding: '40px',
+                slidesToShow: 1
+            }
+        }]
+    });
+</script>
 
 <nav class="grayBG">
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
-                <a href=""> <img src="images/mpn-logo.png"></a>
+                <a href=""> <img src="assets/front/landing_page/images/mpn-logo.png"></a>
             </div>
 
             <div class="col-sm-6 text-right">
@@ -115,57 +138,19 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="timeLine">
+
+
+
                         <ul>
-                            <li>
-                                <div class="icons"> <img src="assets/front/landing_page/images/s1.svg"> </div>
+                            <li *ngFor="let row of simplify_insurance">
+                                <div class="icons"> <img src="assets/front/landing_page/images/{{ row.icon }}"> </div>
                                 <div class="txt">
-                                    <h6>Technology takes <br> center-stage </h6>
-                                    <p> Driven by AI based technological innovations, we are your go-to insurance platform for simplified processes, risk-free transactions and convenient exchange. You are our priority, and technology helps us serve you better!</p>
+                                    <h6>{{ row.head }}</h6>
+                                    <p>{{ row.desc }}</p>
                                 </div>
                             </li>
 
-                            <li>
-                                <div class="icons"> <img src="assets/front/landing_page/images/s2.svg"> </div>
-                                <div class="txt">
-                                    <h6>Seamless and <br> effortless insurance </h6>
-                                    <p> Consumer-awareness is key to our services! This means that you will know every aspect of the transaction with the help of our user-friendly interface and obstacle-free processes.</p>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="icons"> <img src="assets/front/landing_page/images/s3.svg"> </div>
-                                <div class="txt">
-                                    <h6>Jargons, what’s <br> that? </h6>
-                                    <p> We promise to make every word count, so that you are well-versed with your decisions. All the plans are free of long and complicated definitions, so that you understand every bit of it before you make a final choice.</p>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="icons"> <img src="assets/front/landing_page/images/s4.svg"> </div>
-                                <div class="txt">
-                                    <h6>Round the clock <br> assistance </h6>
-                                    <p>Problems, questions and doubts arrive unannounced. That’s why we have decided to never take a break from our help desk. You can count on us to solve your problem. We have a team of expert insurance advisors at your
-                                        disposal.
-                                    </p>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="icons"> <img src="assets/front/landing_page/images/s5.svg"> </div>
-                                <div class="txt">
-                                    <h6>Always with you, <br> and for you! </h6>
-                                    <p> With physical presence in over 3000 pin codes, we are always round the curb! Additionally, our multilingual platforms ensure that we understand you in every language.</p>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="icons"> <img src="assets/front/landing_page/images/s6.svg"> </div>
-                                <div class="txt">
-                                    <h6>Not only are we light on our documentation, but also on your pocket! </h6>
-                                    <p>We offer a comprehensive range of products to meet every budget and every consumer. It has never been this affordable to avail insurance.</p>
-                                </div>
-                            </li>
-                        </ul>
+                           </ul>
                     </div>
                 </div>
             </div>
@@ -263,19 +248,11 @@
             <div class="row">
                 <div class="col-sm-11 offset-sm-1">
                     <ul>
-                        <li class="product"> <img src="assets/front/landing_page/images/product.svg">
-                            <p>Product 01</p>
+                        <li class="product" *ngFor="let row of product_lists"> 
+                            <img src="assets/front/landing_page/images/{{row.icon}}">
+                            <p>{{row.product_name}}</p>
                         </li>
-                        <li class="product"> <img src="assets/front/landing_page/images/product.svg">
-                            <p>Product 02</p>
-                        </li>
-                        <li class="product"> <img src="assets/front/landing_page/images/product.svg">
-                            <p>Product 03</p>
-                        </li>
-                        <li class="product"> <img src="assets/front/landing_page/images/product.svg">
-                            <p>Product 04</p>
-                        </li>
-
+                      
                     </ul>
                 </div>
             </div>
@@ -304,7 +281,7 @@
         </div>
     </section>
 
-    <section class="client_testi">
+<!--     <section class="client_testi">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 secHead">
@@ -321,6 +298,27 @@
 
 
             <div class="center">
+                <div class="clientSpeak">
+                    <h3>1</h3>
+                </div>
+                <div class="clientSpeak">
+                    <h3>2</h3>
+                </div>
+                <div class="clientSpeak">
+                    <h3>3</h3>
+                </div>
+                <div class="clientSpeak">
+                    <h3>4</h3>
+                </div>
+                <div class="clientSpeak">
+                    <h3>5</h3>
+                </div>
+                <div class="clientSpeak">
+                    <h3>6</h3>
+                </div>
+            </div>
+
+            <div class="center">
                 <div>
                     <div class="clientSpeak">
                         <img src="assets/front/landing_page/images/testi1.png">
@@ -329,6 +327,8 @@
                         <p class="speaker">Insurance Head <span>K S Motor Jaipur </span></p>
                     </div>
                 </div>
+
+
                 <div>
                     <div class="clientSpeak">
                         <img src="assets/front/landing_page/images/testi1.png">
@@ -372,11 +372,9 @@
                 </div>
             </div>
 
-
-
         </div>
 
-    </section>
+    </section> -->
 
     <section class="becomeAgent">
         <div class="container">
@@ -404,12 +402,9 @@
                 <div class="col-sm-9">
                     <p>We make lives better by streamlining the insurance broking ecosystem. We take pride in our multiple cross sell platform, and by becoming a myPolicynow Advisor, you can too! </p>
                     <ul>
-                        <li> Zero investment business opportunity </li>
-                        <li> Free POSP Certification under IRDAI guidelines</li>
-                        <li> Attractive Pay-outs </li>
-                        <li> Digital Passbook to track your business </li>
-                        <li> Dedicated Relationship manager support </li>
-                        <li> Attractive and scalable remuneration model </li>
+                    
+                    <li>Zero investment business opportunity</li>
+
                     </ul>
                 </div>
 
@@ -434,7 +429,7 @@
 </main>
 <!-- /.container -->
 
-<footer>
+<footer class="footer_landing_page">
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
@@ -461,8 +456,8 @@
                 <h3>Links</h3>
                 <ul>
 
-                    <li> <a [routerLink]="['/new-landing-page']"> HOME</a></li>
-                    <li> <a [routerLink]="['/aboutus-page']"> About</a></li>
+                    <li> <a href=""> HOME</a></li>
+                    <li> <a href=""> About</a></li>
                     <li> <a href="">WHY US </a></li>
                     <li> <a href="">Contact </a></li>
                     <li> <a href="">Problems </a></li>
@@ -497,7 +492,48 @@
     </div>
 </footer>
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $('.center').slick({
+            dots: true,
+            infinite: true,
+            speed: 300,
+            slidesToShow: 1,
+            centerMode: true,
+            centerPadding: '250px',
+            responsive: [{
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                        infinite: true,
+                        centerPadding: '20px',
+                        dots: true
+                    }
+                }, {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        centerPadding: '20px'
+                    }
+                }, {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        centerPadding: '0'
+                    }
+                }
+                // You can unslick at a given breakpoint now by adding:
+                // settings: "unslick"
+                // instead of a settings object
+            ]
+        });
+    });
+</script>

@@ -1,0 +1,180 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Manage States</h3>
+        </div>
+        <div class="col-auto float-right ml-auto">
+            <button (click)="openModel()" data-toggle="modal" data-target="#openmodal" class="btn btn-custom green" *ngIf="access_permission == 'read_write'"><i class="fa fa-plus"></i> Add State Details</button>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadowbox">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="openmodal" class="modal custom-modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form [formGroup]="formRecodEdit" method="post" (ngSubmit)="submitForm()">
+                <input formControlName="id" type="hidden" class="form-control">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ popupTitle }}</h4>
+                    <button (click)="closePopup()" type="button" class="close" data-dismiss="modal" #closeAddExpenseModal>&times;</button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>State:<span class="error"> *</span></label>
+                                <input maxlength="20" formControlName="name" type="text" list="state" class="form-control" (click)="checkState($event.target.value)" (change)="checkState($event.target.value)">
+                                <datalist id="state">
+              <option value="{{ row.name }}" *ngFor="let row of stateData | sortBy: 'asc':'name'">
+                </datalist>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.name.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.name.errors">
+                                        Please enter valid State.
+                                    </div>
+
+                                </div>
+                                <div class="text-danger py-1" [ngStyle]="{'display':displaystate}">
+                                    <strong>{{responseMsgstate}}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-sm-12">
+                  <div class="form-group">
+
+                  </div>
+                </div> -->
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>State Code:<span class="error"> *</span></label>
+                                <input maxlength="20" formControlName="code" type="text" list="code" class="form-control" (click)="checkCode($event.target.value)" (change)="checkCode($event.target.value)">
+                                <datalist id="code">
+                <option value="{{ row.code }}" *ngFor="let row of stateData | sortBy: 'asc':'code'">
+                  </datalist>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.code.errors">
+
+                                    <div *ngIf="submitted && formRecodEdit.controls.code.errors">
+                                        Please enter valid State code.
+                                    </div>
+                                </div>
+                                <div class="text-danger py-1" [ngStyle]="{'display':displaycode}">
+                                    <strong>{{responseMsgCode}}</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- (blur)="checkGSTCode($event.target.value)" -->
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>GST State Code:<span class="error"> *</span></label>
+                                <input maxlength="20" formControlName="gst_state_code" type="text" list="gst_state_code" class="form-control" (click)="checkGSTCode($event.target.value)" (change)="checkGSTCode($event.target.value)">
+                                <datalist id="gst_state_code">
+                  <option value="{{ row.gst_state_code }}" *ngFor="let row of stateData | sortBy: 'asc':'gst_state_code'">
+                    </datalist>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.gst_state_code.errors">
+
+                                    <div *ngIf="submitted && formRecodEdit.controls.gst_state_code.errors">
+                                        Please enter valid GST state code.
+                                    </div>
+                                </div>
+                                <div class="text-danger py-1" [ngStyle]="{'display':displaygstcode}">
+                                    <strong>{{responseMsgGstCode}}</strong>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>Region:<span class="error"> *</span></label>
+                                <!-- <select class="form-control" formControlName="region">
+                        <option value="">Select Region</option>
+                        <option value="East Region">East Region</option>
+                        <option value="West Region">West Region</option>
+                        <option value="North Region">North Region</option>
+                        <option value="South Region">South Region</option>
+                      </select> -->
+                      <ng-select placeholder="Select Region" (clear)="clearValue('region',$event)" (change)="changeSelectBox('region',$event)" [(ngModel)]="selectedregion" [ngModelOptions]="{standalone: true}">
+                        <ng-option value="East Region">East Region</ng-option>
+                        <ng-option value="West Region">West Region</ng-option>
+                        <ng-option value="North Region">North Region</ng-option>
+                        <ng-option value="South Region">South Region</ng-option>
+                    </ng-select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.region.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.region.errors.required">
+                                        Region is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>Country:<span class="error"> *</span></label>
+                                    <select class="form-control" formControlName="country_id" [(ngModel)]="selectedCountry">
+                                        <option value="">Select Country</option>
+                                        <option value="{{ row.country_id }}" *ngFor="let row of countryData"  >{{ row.name }}</option>
+                                    </select>
+                        <!-- <ng-select placeholder="Select Country" (clear)="clearValue('country',$event)" (change)="changeSelectBox('country',$event)" [(ngModel)]="selectedCountry" [ngModelOptions]="{standalone: true}">
+                            <ng-option *ngFor="let row of countryData" [value]="row.country_id">{{row.name}}</ng-option>
+                        </ng-select> -->
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.country_id.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.country_id.errors.required">
+                                        Country is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Status:<span class="error"> *</span></label>
+                                <select class="form-control" formControlName="status" [(ngModel)]="selectedStatus">
+                                <option value="">Select Status</option>
+                                <option value="{{ row.status_id }}" *ngFor="let row of statusData"  >{{ row.lable }}</option>
+                                </select>
+                            <!-- <ng-select placeholder="Select Status" (clear)="clearValue('status',$event)" (change)="changeSelectBox('status',$event)" [(ngModel)]="selectedStatus" [ngModelOptions]="{standalone: true}">
+                                <ng-option *ngFor="let row of statusData" [value]="row.status_id">{{row.lable}}</ng-option> 
+                            </ng-select> -->
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.status.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.status.errors.required">
+                                        Status is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+                                <strong>{{responseMsg}}</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="submit-section">
+                        <input *ngIf="btnEditSubmit" class="btn btn-custom green btn-lg" type="submit" value="Submit" [disabled]="isdisabled">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

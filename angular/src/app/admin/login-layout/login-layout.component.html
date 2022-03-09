@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/front/img/favicon.png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link #set_login_theme rel="stylesheet" [href]="[theme_css]">
+
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-inner">
+            <div class="login-two-pane">
+                <div>
+                    <div class="login-form">
+                        <div class="mb-8 login-logo">
+                            <img *ngIf="login_result" [src]="login_result.theme_logo" alt="">
+                            <!-- <img src="assets/front/img/mpn-logo.png" alt=""> -->
+                        </div>
+
+                        <router-outlet></router-outlet>
+
+                        <div class="resetform">
+                            <form>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery -->
+    <!-- <script src="assets/js/jquery.min.js"></script> -->
+    <!-- Bootstrap Core JS -->
+    <!-- <script src="assets/js/popper.min.js"></script> -->
+    <!-- <script src="assets/js/bootstrap.min.js"></script> -->
+    <!-- Semantic JS -->
+    <!-- <script src="assets/js/semantic.min.js"></script> -->
+    <!-- Login JS -->
+    <!-- <script src="assets/js/login.js"></script> -->
+</body>
+
+</html>

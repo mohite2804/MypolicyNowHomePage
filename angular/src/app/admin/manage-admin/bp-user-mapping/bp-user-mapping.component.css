@@ -1,0 +1,6 @@
+.ng-select, .ng-select div, .ng-select input, .ng-select span{
+    height: auto !important;
+}
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-optgroup{
+    background-color: #fff !important;
+}

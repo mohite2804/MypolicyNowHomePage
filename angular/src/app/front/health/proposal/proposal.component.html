@@ -558,11 +558,11 @@
                                                     <div class="card-body">
                                                         <h3 class="text-center text-brand-blue">Enter OTP</h3>
                                                         <form class="digit-group text-center" data-group-name="digits" data-autosubmit="false" autocomplete="off"  [formGroup]="formOtpDetails" id="formOtpform" (ngSubmit)="submittedOtpQuote()" style="margin: auto;">
-                                                            <input type="text" id="otp_n_1" formControlName="otp_n_1" data-next="digit-2" />
-                                                            <input type="text" id="otp_n_2" formControlName="otp_n_2" data-next="digit-3" data-previous="digit-1" />
-                                                             <span class="splitter">&ndash;</span>
-                                                            <input type="text" id="otp_n_3" formControlName="otp_n_3" data-next="digit-4" data-previous="digit-3" />
-                                                            <input type="text" id="otp_n_4" formControlName="otp_n_4" data-previous="digit-3" />
+                                                            <input maxlength="1" minlength="1" formControlName="digit_1" type="text" id="digit-1" onkeyup="onKeyUpEvent(1, event)" onfocus="onFocusEvent(1)" />
+                                                            <input maxlength="1" minlength="1" formControlName="digit_2" type="text" id="digit-2" onkeyup="onKeyUpEvent(2, event)" onfocus="onFocusEvent(2)" />
+                                                            <span class="splitter">&ndash;</span>
+                                                            <input maxlength="1" minlength="1" formControlName="digit_3" type="text" id="digit-3" onkeyup="onKeyUpEvent(3, event)" onfocus="onFocusEvent(3)" />
+                                                            <input maxlength="1" minlength="1" formControlName="digit_4" type="text" id="digit-4" onkeyup="onKeyUpEvent(4, event)" onfocus="onFocusEvent(4)" />
                                                             <div class="text-center my-2">
                                                                 <button type="submit" class="btn btn-lg btn-custom green "><i class="fa fa-check-square-o mr-1"></i> Confirm</button>
                                                             </div>

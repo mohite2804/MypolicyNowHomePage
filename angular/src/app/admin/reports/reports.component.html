@@ -1,0 +1,46 @@
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content container-fluid">
+        
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <h3 class="page-title">Welcome</h3>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card shadowbox">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <H3>{{ misp_name }} Report</H3>
+                                        <!-- <table  class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table> -->
+                                        <table class="table table-striped table-bordered  srn action-table  w-100">
+                                          <thead>
+                                            <tr >
+                                              <td rowspan="2" >{{ misp_name }}</td>
+                                              <td colspan="3">No. of Policy</td>
+                                          </tr>
+                                          <tr>
+                                                <td scope="col">FTD</td>
+                                                <td scope="col">MTD</td>
+                                                <td scope="col">YTD</td>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            <tr *ngFor="let business of business_data">
+                                                <td>{{ business.ic_name }}</td>
+                                                <td>{{ business.NOP_FTD }}</td>
+                                                <td>{{ business.NOP_MTD }}</td>
+                                                <td>{{ business.NOP_YTD }}</td>
+                                            </tr>
+                                      </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <app-loader [loaderActive]="loaderActive"></app-loader> -->

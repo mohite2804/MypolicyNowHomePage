@@ -1,0 +1,19 @@
+.dropdown_note{
+	color:#ff0000;
+}
+
+.misp_select_box{
+	height: 45px !important;
+}
+
+.dp_select_box{
+	height: 45px !important;
+}
+
+.ng-select-container{
+	border: 1px solid #fff !important;
+}
+
+.dp_div{
+	margin-top: 5% !important;
+}

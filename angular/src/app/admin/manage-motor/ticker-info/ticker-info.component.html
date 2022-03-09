@@ -1,0 +1,162 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Manage Ticker</h3>
+        </div>
+        <div class="col-auto float-right ml-auto" *ngIf="access_permission == 'read_write'">
+            <button data-toggle="modal" data-target="#openmodal" class="btn btn-custom green"><i class="fa fa-plus"></i> Add New Ticker</button>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadowbox">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="openmodal" class="modal custom-modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <form [formGroup]="formRecodEdit" method="post" (ngSubmit)="submitForm()" enctype="multipart/form-data">
+                <input formControlName="id"  type="hidden" class="form-control" >
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ popupTitle }}</h4>
+                    <button (click)="closePopup()" type="button" class="close" data-dismiss="modal" #closeAddExpenseModal>&times;</button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Ticker Name -->
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label>Ticker Name:<span class="error"> *</span></label>
+                                <input formControlName="ticker_name" type="text" class="form-control">                                
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.ticker_name.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.ticker_name.errors">
+                                        Please enter valid ticker name.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ticke Description -->
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label>Ticker Description:<span class="error"> *</span></label>
+                                <!-- <input maxlength="500" formControlName="ticker_description" type="text" class="form-control"> -->
+                                <textarea formControlName="ticker_description" class="form-control"></textarea>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.ticker_description.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.ticker_description.errors">
+                                        Please enter description.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+
+                        <!-- ticker_start_date -->
+                        <div class="col-md-6 col-12" >
+                            <div class="form-group">
+                                <label>Start Date :</label>
+                                <div class="cal-icon">
+                                    <input select-other-detail="other_field"  (click)="e.toggle()"  class="form-control" placeholder="yyyy-mm-dd" formControlName="ticker_start_date" [(ngModel)]="datepicker_start_date" ngbDatepicker #e="ngbDatepicker" placeholder="yyyy-mm-dd" autocomplete="off" readonly>
+                                </div>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.ticker_start_date.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.ticker_start_date.errors">
+                                        Please enter ticker start date
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ticker_end _date -->
+                        <div class="col-md-6 col-12" >
+                            <div class="form-group">
+                                <label>End Date :</label>
+                                <div class="cal-icon">
+                                    <input select-other-detail="other_field"  (click)="f.toggle()"  class="form-control" placeholder="yyyy-mm-dd" formControlName="ticker_end_date" [(ngModel)]="datepicker_end_date" ngbDatepicker #f="ngbDatepicker" placeholder="yyyy-mm-dd" autocomplete="off" readonly>
+                                </div>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.ticker_end_date.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.ticker_end_date.errors">
+                                        Please enter ticker end date
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- For User type -->
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <ul class="checkbox-items">
+                                    <li *ngFor="let item of usertype_list">
+                                        <label> 
+                                          <input type="checkbox" formControlName="usertype" [(ngModel)]="item.isChecked" (change)="changeSelection()">  {{item.label}}
+                                        </label>
+                                    </li>
+                                  </ul>
+                            </div>
+                            <div class="error" *ngIf="submitted && formRecodEdit.controls.usertype.errors">
+                                <div *ngIf="submitted && formRecodEdit.controls.usertype.errors">
+                                    Please select usertype.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ticker Attchemnt -->
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Ticker Attachment:</label>
+                                <input [ngModelOptions]="{standalone: true}" [(ngModel)]="selected_attachment" type="file" (change)="uploadAttachment($event)" class="form-control">
+                                <div><b>Note: </b>Allowed file type "jpg", "png", "jpeg", "xlsx","pdf","doc"</div>
+                                <!-- <div class="error" *ngIf="submitted && formRecodEdit.controls.attachment.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.logo.errors.required">
+                                        Attachment is required.
+                                    </div>
+                                </div> -->
+
+                            </div>
+                        </div>
+
+
+                        <!-- Status -->
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label>Status:</label>
+                                <select class="form-control" formControlName="status" >
+                                    <option value="">Select Status</option>
+                                    <option value="{{ row.status_type_id }}" *ngFor="let row of statusList" >{{ row.lable }}</option>
+                                </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.status.errors" >
+                                    <div *ngIf="submitted && formRecodEdit.controls.status.errors.required">
+                                        Status is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+                                <strong>{{responseMsg}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <input *ngIf="btnEditSubmit" class="btn btn-custom green btn-lg" type="submit" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<app-managemotor-loader  [loaderActive]="loaderActive"></app-managemotor-loader>

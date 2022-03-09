@@ -1,0 +1,92 @@
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Manage Menus</h1>
+      </div>
+      <div class="col-sm-6">
+        <button style="margin-left: 10px" (click)="downloadSampleExcel()" class="btn btn-primary pull-right" >Download Sample Excel</button>
+        <button style="margin-left: 10px" (click)="allDataDownloadExcel()" class="btn btn-primary pull-right" >Download Excel</button>
+        <button style="margin-left: 10px" (click)="uploadExcel()" class="btn btn-primary pull-right" >Upload Excel</button>
+        <!-- <input [(ngModel)]="fileUpload" type="file" class="pull-right" (change)="getExcelFile($event.target.files)" > -->
+      </div>
+    </div>
+  </div>
+</section>
+<section class="content">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title"></h3>
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+        <i class="fas fa-minus"></i></button>
+        <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+        <i class="fas fa-times"></i></button>
+        <button (click)="openMake()" class="btn btn-primary pull-right" >
+        <i class="fa fa-plus-square" aria-hidden="true"></i></button>
+      </div>
+    </div>
+    <div class="card-body">
+    <table datatable [dtOptions]="dtOptions" class="row-border hover"></table>
+  </div>
+  <div *ngIf="popupTitle" class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+    <div class="modal-dialog" role="document">
+      <form [formGroup]="formRecodEdit"  method="post" (ngSubmit)="submitForm()" >
+        <input formControlName="id"  type="hidden" class="form-control" >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">{{ popupTitle }}</h4>
+            <button (click)="closePopup()"  type="button" class="close" data-dismiss="modal">&times;</button>
+            
+          </div>
+          <div class="modal-body">
+            
+            <div class="form-group">
+              <label>Make:</label>
+              <input formControlName="make"  type="text" class="form-control" >
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.make.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.make.errors.required">
+                  Make is required.
+                </div>
+              </div>
+            </div>
+            
+            
+            
+            <div class="form-group">
+              <label>Status:</label>
+              <select class="form-control" formControlName="status" >
+                <option value="">Select Status</option>
+                <option value="{{ row.status_type_id }}" *ngFor="let row of statusData"  >{{ row.status_type }}</option>
+              </select>
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.status.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.status.errors.required">
+                  Status is required.
+                </div>
+              </div>
+            </div>            
+          </div>
+           <div class="col-sm-12">
+              <div class="form-group">
+                <div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+                  <strong>{{responseMsg}}</strong>
+                </div>
+              </div>
+            </div>
+          <div class="modal-footer">
+            <button (click)="closePopup()" type="button" class="btn btn-default" data-dismiss="modal">
+            Close
+            </button>
+            <input *ngIf="btnEditSubmit" class="btn btn-primary" type="submit" value="Submit">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <div class="card-footer">
+    
+  </div>
+  
+</div>
+</section>

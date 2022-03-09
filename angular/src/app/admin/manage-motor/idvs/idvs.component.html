@@ -1,0 +1,50 @@
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Manage IDVs</h1>
+      </div>
+      <!-- <div class="col-sm-6">
+
+<button style="margin-left: 10px" (click)="downloadSampleExcel()" class="btn btn-primary pull-right" >Download Sample Excel</button>         
+<button style="margin-left: 10px" (click)="allDataDownloadExcel()" class="btn btn-primary pull-right" >Download Excel</button> 
+
+
+<button style="margin-left: 10px" (click)="uploadExcel()" class="btn btn-primary pull-right" >Upload Excel</button>  -->
+<!-- <input [(ngModel)]="fileUpload" type="file" class="pull-right" (change)="getExcelFile($event.target.files)" > 
+
+
+
+      </div>-->
+    </div>
+  </div>
+</section>
+
+
+<section class="content">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title"></h3>
+
+      <div class="card-tools">
+
+        <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+          <i class="fas fa-minus"></i></button>
+        <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+          <i class="fas fa-times"></i></button>
+
+        <button (click)="openModel()" class="btn btn-primary pull-right" >
+          <i class="fa fa-plus-square" aria-hidden="true"></i></button>
+
+      </div>
+    </div>
+    <div class="card-body">
+          <table datatable [dtOptions]="dtOptions" class="row-border hover"></table>
+    </div>
+    
+    <div class="card-footer">
+      
+    </div>
+    
+  </div>
+</section>

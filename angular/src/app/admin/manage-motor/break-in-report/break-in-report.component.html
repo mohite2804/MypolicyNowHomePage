@@ -1,0 +1,305 @@
+<div class="row align-items-center justify-content-center" id="htmlData">
+    <div class="col-lg-10 col-md-11 col-12">
+        <div class="card shadowbox">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td style="
+                                width: 15%;
+                                text-align: center;
+                                padding: 15px 0 20px;
+                                font-family: Roboto Condensed, sans-serif;
+                                font-weight: bold;
+                                font-size: 20px;
+                                display: table-cell;
+                                line-height: 30px;
+                                vertical-align: middle;"> <img src="assets/front/img/mpn-logo.png" alt="" style="height: 50px;"></td>
+                                <td style="width: 70%; text-align:center"  colspan="2">
+                                <h3 style="text-align: center;
+                                font-weight:600;
+                                font-size:30px;
+                                padding:15px 0 20px;
+                                font-family: Roboto Condensed, sans-serif;
+                                font-weight: bold;
+                                display: block;
+                                line-height: 40px;
+                                text-align: center;">Breakin Inspection Report</h3></td>
+                                <td style="
+                                width: 15%;
+                                text-align: center;
+                                padding: 15px 0 10px;
+                                font-family: Roboto Condensed, sans-serif;
+                                font-weight: bold;
+                                font-size: 16px;
+                                display: table-cell;
+                                line-height: 30px;
+                                vertical-align: middle;">Date of assets : {{resultBreakinDetails?.created_at  |  date:'dd-MM-YYYY' }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"><b>Proposal Number : </b>{{resultProposalDetails?.proposal_no}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"><b>Breakin Reference No : </b>{{resultProposalDetails?.breakin_reference_no}}</td>
+                            </tr>
+                            <tr>
+                                <th>Customer Name</th>
+                                <td>{{ resultProposalDetails?.full_name}} {{resultProposalDetails?.company_full_name}}</td>
+                                <th>Hypothecation/Lease</th>
+                                <td>{{resultProposalDetails?.agreement_type}}</td>
+                            </tr>
+                            <tr>
+                                <th>Registration No.</th>
+                                <td>{{resultProposalDetails?.registration_no_part_1}}-{{resultProposalDetails?.registration_no_part_2}}-{{resultProposalDetails?.registration_no_part_3}}-{{resultProposalDetails?.registration_no_part_4}}</td>
+                                <th>Mfg. Month & Year</th>
+                                <td>{{resultProposalDetails?.manufacturing_month}}-{{resultProposalDetails?.manufacturing_year}}</td>
+                            </tr>
+                            <tr>
+                                <th>Make Model</th>
+                                <td>{{resultProposalDetails?.make}} / {{resultProposalDetails?.model}} </td>
+                                <th>Engine No</th>
+                                <td>{{resultProposalDetails?.engine_no}}</td>
+                            </tr>
+                            <tr>
+                                <th>Chassis No.</th>
+                                <td>{{resultProposalDetails?.chassis_no}}</td>
+                                <th>Vehicle fitted with LPG/CNG</th>
+                                <td>{{resultProposalDetails?.cng_lpg_tp_val}}</td>
+                            </tr>
+                            <tr>
+                                <th>Odometer Reading.</th>
+                                <td>{{resultBreakinDetails?.odometer_reading}}</td>
+                                <th>POS Name</th>
+                                <td>{{resultProposalDetails?.pos_fullname}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="text-center"><b>MY SURVEY NOW</b></h3>
+                        <section id="butterfly_image" style="background-color: #e2e2e2;padding:5px;">
+                            <div style="width: 900px;height: 378px; margin:0 auto;position: relative;" id="inspection_image">
+                                    <div style="position: absolute;top: 0px;left: 39%;" *ngIf="Itemscolor[17]">
+                                        <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[17] }}/17.png">
+                                    </div>
+                                    <div style="position: absolute;top: 30px;left: 34%;">
+                                        <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[13]}}/13.png">
+                                    </div>
+                                    <div style="position: absolute;top: 30px;left: 52%;">
+                                        <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[12]}}/12.png">
+                                    </div>
+                                    <div style="position: absolute;top: 118px;left: 40%;">
+                                        <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[15]}}/15.png">
+                                    </div>
+                                    <div style="position: absolute;top: 148px;left: 43%;">
+                                        <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[43]}}/43.png">
+                                    </div>
+                                    <div style="position: absolute;top: 235px;left: 40%;">
+                                        <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[36]}}/36.png">
+                                    </div>
+                                    <div style="position: absolute;top: 135px;left: 35%;">
+                                        <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[21]}}/21.png">
+                                    </div>
+                                    <div style="position: absolute;top: 128px;left: 57%;">
+                                        <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[42]}}/42.png">
+                                    </div>
+                                    <div style="position: absolute;top: 275px;left: 35%;">
+                                        <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[34]}}/34.png">
+                                    </div>
+                                    <div style="position: absolute;top: 275px;left: 52%;">
+                                        <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[33]}}/33.png">
+                                    </div>
+                                    <div style="position: absolute; top: 79px;left: 65%;">
+                                        <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[14]}}/14.png">
+                                    </div>
+                                    <div style="position: absolute;top: 29px;left: 71%;">
+                                        <div style="position: relative;">
+                                            <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[9]}}/9.png" style="position: absolute;left: 13px;top: 0px;">
+                                            <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[10]}}/10.png"><img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[8]}}/8.png" style="position: absolute;top: 1px;left: 58px;">
+                                        </div>
+                                    </div>
+                                    <div style="position: absolute;top: 73px;left: 87%;">
+                                        <div style="position: relative;">
+                                            <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[5]}}/5.png" style="position: absolute;top: 2px;">
+                                            <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[4]}}/4.png" style="position: absolute;top: 9px;left: 15px;">
+                                        </div>
+                                    </div>
+                                    <div style="position: absolute;top: 126px; left: 90%;">
+                                        <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[3]}}/3.png">
+                                    </div>
+                                    <div style="position: absolute; top: 126px;left: 85%;">
+                                        <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[1]}}/1.png">
+                                    </div>
+                                    <div style="position: absolute;top: 247px;left: 87%;">
+                                        <div style="position: relative;">
+                                            <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[25]}}/25.png" style="position: absolute;top: 1px;left: 15px;">
+                                            <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[26]}}/26.png" style="position: absolute;
+                                            top: 26px;left: 0px;">
+                                        </div>
+                                    </div>
+                                    <div style="position: absolute;
+                                    top: 120px;
+                                    left: 66%;">
+                                    <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[2]}}/2.png">
+                                </div>
+                                <div style="     position: absolute;
+                                top: 268px;
+                                left: 72%;">
+                                <div style="position: relative;">
+                                    <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[31]}}/31.png" style=" position:absolute;left: -11px;top: 10px;">
+                                    <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[29]}}/29.png" style="position:absolute;left: 49px;top: 20px;"><img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[30]}}/30.png" style="position: absolute;top: 45px;left: 3px;">
+                                </div>
+                            </div>
+                            <div style="position: absolute;top: 259px; left: 63%;">
+                                <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[35]}}/35.png">
+                            </div>
+                            <div style="position: absolute;bottom: 29px;left: 71%;">
+                                        <div style="position: relative;">
+                                            <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[30]}}/30.png" style="position: absolute;left: 13px;bottom: 0px;;">
+                                            <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[31]}}/31.png"><img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[29]}}/29.png" style="position: absolute;bottom: 1px;left: 58px;">
+                                        </div>
+                                    </div>
+                            
+                            <div style="position: absolute;top: 359px;left: 40%;">
+                                <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[38]}}/38.png">
+                            </div>
+                            <div style="position: absolute;top: 259px;left: 17%;">
+                                <div style="position: relative;">
+                                    <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[41]}}/41.png" style="    position: absolute;left: -11px;top: 22px;">
+                                    <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[37]}}/37.png" style="position: absolute;left: 60px;top: -8px;">
+                                </div>
+                            </div>
+                            <div style="position: absolute;top: 130px;left: 19%;">
+                                <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[23]}}/23.png">
+                            </div>
+                            <div style="position: absolute;top: 17px;left: 16%;">
+                                <div style="position: relative;">
+                                    <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[20]}}/20.png" style=" position: absolute;left: -11px;top: 10px;">
+                                    <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[16]}}/16.png" style="position: absolute; left: 59px;top: 80px;">
+                                </div>
+                            </div>
+                            <div style="position: absolute;top: 74px;left: 8%;">
+                                <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[19]}}/19.png">
+                            </div>
+                            <div style="position: absolute;top: 124px;left: 7%;">
+                                <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[22]}}/22.png">
+                            </div>
+                            <div style="position: absolute;top: 247px;left: 8%;">
+                                <img src="{{ public_path_n}}/images/revised-car-{{ Itemscolor[40]}}/40.png">
+                            </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="text-center"><b>MY SURVEY NOW</b></h3>
+                        <div class="row no-gutters">
+                            <div class="col-6" *ngFor="let item of ItemsTableArray">
+                                <div class="row no-gutters">
+                                   <div class="col-6" style="padding:10px;border:1px solid #333;text-transform: uppercase;">
+                                        {{ item.question }}
+                                   </div> 
+                                   <div class="col-6" style="padding:10px;border:1px solid #333;text-align: right;font-weight: 600;;text-transform: uppercase;">
+                                        {{ item.type }}
+                                   </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="text-center"><b>MY SURVEY NOW</b></h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4" *ngFor="let image of _albums; let i=index">
+                        <figure class="figure" *ngIf="image.caption!='Inspection Video'">
+                            <img [src]="image.thumb" class="img-fluid img-thumbnail cursor_change" alt="..." (click)="open(i)" >
+                            <figcaption class="figure-caption text-center"><b>{{ image.caption }}</b></figcaption>
+                        </figure>
+
+                        <figure class="figure" *ngIf="image.caption =='Inspection Video' && image.thumb ">
+                            <video width="225" height="225" controls>
+                                <source src="movie.mp4" type="video/mp4">
+                                <source src="{{image.thumb}}" type="video/ogg">
+                                Your browser does not support the video tag.
+                              </video>
+                              <figcaption class="figure-caption text-center"><b>{{ image.caption }}</b></figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body" *ngIf="is_form_show">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <h3 class="text-center"><b>Update Breakin Status</b></h3>
+                    </div>
+                </div>
+                <hr>
+                <div class="row mt-10">
+                    <div class="col-md-8 offset-md-2">
+                        <form [formGroup]="formSubmitBreakinApproval" (ngSubmit)="submitBreakinApproval()">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-md-4 col-12">
+                                                <div class="form-group">
+                                                    <label class="form-label">Change Status</label>
+                                                    <select class="form-control" formControlName="bim_status">
+                                                        <option value="">Select Status</option>
+                                                        <option value="4">Approve</option>
+                                                        <option value="2">Reject</option>
+                                                        <option value="3">Referback</option>
+                                                    </select>
+
+                                                </div>
+                                                <div *ngIf="submitFormActionStatus && formSubmitBreakinApproval.controls.bim_status.errors">
+                                                    <small *ngIf="submitFormActionStatus && formSubmitBreakinApproval.controls.bim_status.errors.required" class="text-danger">
+                                                        Please Select Status.
+                                                    </small>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-8 col-12">
+                                                <div class="form-group">
+                                                    <label class="form-label">Add Comment</label>
+                                                    <textarea maxlength="300" type="text" class="form-control" formControlName="bim_status_comment" rows="3" placeholder="Enter your comment"></textarea>
+                                                </div>
+                                                <div *ngIf="submitFormActionStatus && formSubmitBreakinApproval.controls.bim_status_comment.errors">
+                                                    <small *ngIf="submitFormActionStatus && formSubmitBreakinApproval.controls.bim_status_comment.errors.required" class="text-danger">
+                                                        Please add comment.
+                                                    </small>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 text-right">
+                                                <button type="button" class="btn btn-custom" (click)=hideSubmitForm()> Cancel</button>
+                                                <button type="submit" class="btn btn-custom green"> Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <a class="#" *ngIf="resultProposalDetails.proposal_id" class="btn btn-success" (click)=DownloadPDF(resultProposalDetails.proposal_id,resultProposalDetails.breaking_case_id) style="color: #fff;">Download PDF</a> -->
+
+        <button class="btn btn-primary ml-3" *ngIf="!is_form_show && resultProposalDetails.breakin_status_id==3 && isbreakinAction" (click)="showSubmitForm()">Update Breakin Status</button>
+
+        <span *ngIf="resultProposalDetails.breakin_status_id==4"> DOWNLOAD VIEW Breakin already <span class="text-success">approved</span></span>
+    </div>
+</div>
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

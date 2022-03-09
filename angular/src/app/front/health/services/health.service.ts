@@ -170,5 +170,9 @@ export class HealthService {
   getProposalDetails(sendData){
     return this.httpClient.post(this.base_url+'getProposalDetailsHealth',sendData);
   }
+
+  submitHealthquotePlancompareData(sendData){
+    return this.httpClient.post(this.base_url+'getHealthComparePlanData',sendData);
+  }
   
 }

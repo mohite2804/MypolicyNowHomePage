@@ -1,0 +1,63 @@
+<!-- Page Header -->
+<div class="page-header">
+  <div class="row align-items-center">
+    <div class="col">
+      <h3 class="page-title">Manage DPs</h3>
+    </div>
+    <!-- <div class="col-auto float-right ml-auto">
+      <button (click)="openModel()" data-toggle="modal" data-target="#openmodal" class="btn btn-custom green"><i class="fa fa-plus"></i> Add Misp Details</button>
+    </div> -->
+    <div class="col-md-12" *ngIf="access_permission == 'read_write'">
+        <div class="card shadowbox">
+            <div class="card-body pb-0">
+                <form class="form-horizontal" [formGroup] = formMispExport *ngIf="this.formMispExport">
+                    <div class="row" >
+                        
+                        <div class="col-lg-2 col-md-3" >
+                            <div class="form-group">
+                                <label>From Date:</label>
+                                <div class="cal-icon">
+                                    <input select-other-detail="other_field"  (click)="e.toggle()"  class="form-control" placeholder="yyyy-mm-dd" formControlName="from_date" [(ngModel)]="date_picker_from_date" ngbDatepicker #e="ngbDatepicker" placeholder="yyyy-mm-dd" autocomplete="off" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3" >
+                            <div class="form-group">
+                                <label>To Date:</label>
+                                <div class="cal-icon">
+                                    <input select-other-detail="other_field"  (click)="f.toggle()"  class="form-control" placeholder="yyyy-mm-dd" formControlName="to_date" [(ngModel)]="date_picker_to_date" ngbDatepicker #f="ngbDatepicker" placeholder="yyyy-mm-dd" autocomplete="off" readonly />
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div>
+                            <label class="d-block">&nbsp;</label>
+                            <button type="submit" (click)="submitDateFilterForm()" class="btn btn-custom green w-43" title="Search" *ngIf="access_permission == 'read_write'"><i class="fa fa-search"></i></button>&nbsp;
+                        </div>
+                        <div>
+                            <label class="d-block">&nbsp;</label>
+                            <button type="button" (click)="resetDateFilterForm()" class="btn btn-custom green w-43" title="Reset" *ngIf="access_permission == 'read_write'"><i class="fa fa-refresh"></i></button>&nbsp;
+                        </div>
+                        <div>
+                            <label class="d-block">&nbsp;</label>
+                            <button (click)="exportAsXLSX()" class="btn btn-custom green"  title="Export To Excel" *ngIf="access_permission == 'read_write'">Export <i class="fa fa-download"></i></button>  
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<!-- /Page Header -->
+<div class="row">
+  <div class="col-md-12">
+    <div class="card shadowbox">
+      <div class="card-body">
+        <div class="table-responsive">
+        <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

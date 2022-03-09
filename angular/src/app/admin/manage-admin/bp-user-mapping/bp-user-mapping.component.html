@@ -1,0 +1,173 @@
+<!-- Page Header -->
+
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">{{ bp_name }} User Mapping</h3>
+        </div>
+        <div class="col-auto float-right ml-auto" *ngIf="access_permission == 'read_write' && typeDataSelection">
+            <button (click)="openModel()" data-toggle="modal" data-target="#openmodal" class="btn btn-custom green"><i class="fa fa-plus"></i> Add More</button>
+        </div>
+
+    </div>
+</div>
+<!-- /Page Header -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadowbox">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="openmodal" class="modal custom-modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+
+
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <form [formGroup]="formRecodEdit" method="post" (ngSubmit)="submitForm()">
+                <input formControlName="id" type="hidden" class="form-control">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ popupTitle }}</h5>
+                    <button (click)="closePopup()" type="button" class="close" data-dismiss="modal" #closeAddExpenseModal>&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Admin User Type:</label>
+                                <select class="form-control" formControlName="user_type" (change)="getGIIBUserSelection($event)" [(ngModel)]="selected_user_type">
+                                    <option value="">Select Admin User Type</option>
+                                    <option value="{{ row.admin_user_type_id }}" *ngFor="let row of typeDataSelection">{{ row.label }}</option>
+                                </select>
+                                <input formControlName="hiddent_user_type" type="hidden" class="form-control">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.user_type.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.user_type.errors.required">
+                                        Admin User Type is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-12">
+                            <div class="form-group" *ngIf="showGIIBUserPanel">
+                                <label><span class="error">*</span>GIIB User:</label>
+                                <select class="form-control" formControlName="giib_user_id" (change)="SetUserSelection($event)">
+                                    <option value="">Select User</option>
+                                    <option value="{{ row.id }}" *ngFor="let row of GIIBUserDataSelection">{{ row.first_name }} {{ row.last_name }}</option>
+                                </select>
+                                <input formControlName="hiddent_giib_id" type="hidden" class="form-control">
+
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.giib_user_id.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.giib_user_id.errors.required">
+                                        User is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.giib_user_id.errors.pattern">
+                                        Please enter valid User.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-12" *ngIf="ShowGIIBBPDATa">
+                            <div class="form-group">
+                                <label><span class="error">*</span>GIIB BP Master LIST:</label>
+                                <ng-select clearAllText="Clear" class="form-control misp_select_box" formControlName="business_partner_master_id" [items]="GIIBBPUserDataSelection" [multiple]="true" bindLabel="name" placeholder="Select GIIB BP " appendTo="body" groupBy="user_type" [selectableGroup]="true"
+                                    [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="business_partner_master_id" (change)="getAdminMultiUserSelection()" [(ngModel)]="selectedGIIBBPDataSelection">
+                                    <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}" /> Select All
+                                    </ng-template>
+                                    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}" /> {{item.name | uppercase}}
+                                    </ng-template>
+                                </ng-select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.business_partner_master_id.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.business_partner_master_id.errors.required">
+                                        GIIB BP User is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.pos_id.errors.pattern">
+                                        Please enter valid GIIB User.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-12" *ngIf="showINDBP">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Business Name:</label>
+                                <select class="form-control" formControlName="business_partner_master_id" (change)="getAdminUserSelection($event)">
+                                  <option value="">Select Business Name</option>
+                                  <option value="{{ row.business_partner_master_id }}" *ngFor="let row of businessDataSelection">{{ row.name }}</option>
+                                </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.business_partner_master_id.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.business_partner_master_id.errors.required">
+                                        Business Name is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.business_partner_master_id.errors.pattern">
+                                        Please enter valid Business Name.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-12" *ngIf="showBPUserPanel">
+                            <div class="form-group">
+                                <label><span class="error">*</span>User:</label>
+                                <select class="form-control" formControlName="user_id">
+                                  <option value="">Select User</option>
+                                  <option value="{{ row.id }}" *ngFor="let row of UserDataSelection">{{ row.first_name }} {{ row.last_name }}</option>
+                                </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.user_id.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.user_id.errors.required">
+                                        User is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.user_id.errors.pattern">
+                                        Please enter valid User.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>{{ dp_name }} User:</label>
+
+                                <ng-select clearAllText="Clear" class="form-control misp_select_box" formControlName="pos_id" [items]="PosUserDataSelection" [multiple]="true" bindLabel="app_fullname" placeholder="Select POS User" appendTo="body" groupBy="pos_user_type" [selectableGroup]="true"
+                                    [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="pos_id" [(ngModel)]="selectedMisp">
+                                    <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}" /> {{ item.pos_user_type }}
+                                    </ng-template>
+                                    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}" /> {{item.app_fullname | uppercase}}
+                                    </ng-template>
+                                </ng-select>
+
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.pos_id.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.pos_id.errors.required">
+                                        {{ dp_name }} User is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.pos_id.errors.pattern">
+                                        Please enter valid {{ dp_name }} User.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+                                <strong>{{responseMsg}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <input *ngIf="btnEditSubmit" class="btn btn-custom green btn-lg" type="submit" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <app-loader [loaderActive]="loaderActive"></app-loader>

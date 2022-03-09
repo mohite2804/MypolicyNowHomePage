@@ -1,0 +1,79 @@
+<!-- Page Header -->
+<div class="page-header">
+  <div class="row align-items-center">
+      <div class="col">
+          <h3 class="page-title">Proposal Details</h3>
+      </div>
+      <!-- <div class="col-auto float-right ml-auto">
+    <button (click)="downloadExcel()" class="btn btn-custom green"><i class="fa fa-download"></i> Export All</button>
+  </div> -->
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+      <div *ngIf="atLeastOneRequired" class="alert alert-danger">
+          <strong>{{atLeastOneRequired}}</strong>
+      </div>
+  </div>
+  <div class="col-md-12">
+      <div class="card shadowbox">
+          <div class="card-body pb-0">
+              <form class="form-horizontal" [formGroup]="formRecodEdit">
+                  <div class="row">
+                      <div class="col-lg-2 col-md-4">
+                          <div class="form-group">
+                              <label>Enter Proposal Number :</label>
+                              <input formControlName="policy_no" type="text" class="form-control" placeholder="Enter Proposal No">
+                              <div class="error" *ngIf="submitted && formRecodEdit.controls.policy_no.errors">
+                                  <div *ngIf="submitted && formRecodEdit.controls.policy_no.errors">
+                                      Please enter valid Proposal Number.
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-2 col-md-4" >
+                        <div class="form-group">
+                          <label>Mobile Number :</label>
+                          <input formControlName="insured_mobile_no"  type="text" class="form-control" placeholder="Enter Insured Mobile Number" >
+                          <div class="error" *ngIf="submitted && formRecodEdit.controls.insured_mobile_no.errors" >
+                            <div *ngIf="submitted && formRecodEdit.controls.insured_mobile_no.errors.required">
+                              Insured Mobile Number is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-2 col-md-4" *ngIf="isIcListShow">
+                          <div class="form-group">
+                              <label>Insurance Name :</label>
+                              <ng-select placeholder="Select IC" (clear)="clearValue('insurance_name',$event)" (change)="changeSelectBox('insurance_name',$event)" [(ngModel)]="selectedInsurance_name" [ngModelOptions]="{standalone: true}">
+                                  <ng-option *ngFor="let row of icList" [value]="row.id">{{row.code}}</ng-option>
+                              </ng-select>
+                          </div>
+                      </div>
+                     
+                      <div class="col-lg-2 col-md-6">
+                          <label class="d-block">&nbsp;</label>
+                          <!-- <input  (click)="submitForm()"  type="submit" value="Search" class="btn btn-custom green w-60"/> -->
+                          <button (click)="submitForm()" type="submit" class="btn btn-custom green w-43" title="Search"><i class="fa fa-search"></i></button> &nbsp;
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- /Page Header -->
+<div class="row">
+  <div class="col-md-12">
+      <div class="card shadowbox">
+          <div class="card-body">
+              <div class="table-responsive">
+                  <!-- <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table action-table datatable w-100 my-dataTable"></table> -->
+                  <table datatable *ngIf="dtRendered" [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn datatable"></table>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- <app-loading [loaderActive]="loaderActive" ></app-loading> -->

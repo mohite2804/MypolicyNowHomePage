@@ -19,6 +19,7 @@ import { PolicyDetailsComponent } from './policy-details/policy-details.componen
 import { TenurePolicyComponent } from './tenure-policy/tenure-policy.component';
 import { ThankYouHealthComponent } from './thank-you-health/thank-you-health.component';
 import { ShareProposalHealthComponent } from './share-proposal-health/share-proposal-health.component';
+import { ComparePlanDetailsComponent } from './compare-plan-details/compare-plan-details.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ShareProposalHealthComponent } from './share-proposal-health/share-prop
     PolicyDetailsComponent,
     TenurePolicyComponent,
     ThankYouHealthComponent,
-    ShareProposalHealthComponent
+    ShareProposalHealthComponent,
+    ComparePlanDetailsComponent
     
 
   ],

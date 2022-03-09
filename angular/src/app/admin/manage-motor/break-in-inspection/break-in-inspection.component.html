@@ -1,0 +1,784 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center justify-content-center">
+        <div class="col-lg-9 col-md-10 col-12 mt-3">
+            <h3 class="page-title text-center">Breakin Inspection Details</h3>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+<div class="row align-items-center justify-content-center">
+    <div class="col-lg-10 col-md-11 col-12">
+        <div class="card shadowbox">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#endorsementdetails-tab1" data-toggle="tab">Customer Details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#endorsementdetails-tab3" data-toggle="tab">Vehicle Details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#endorsementdetails-tab4" data-toggle="tab">Insured Details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#endorsementdetails-tab5" data-toggle="tab">Inspection Details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#endorsementdetails-tab6" data-toggle="tab" *ngIf="resultProposalDetails?.breakin_status_id==3">Update Details</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane show active" id="endorsementdetails-tab1">
+                                <ul class="row endorsement-infolist mx-0">
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Customer Name:</div>
+                                        
+                                        <div class="text">{{ resultProposalDetails?.full_name}} {{resultProposalDetails?.company_full_name}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Phone No.:</div>
+                                        <div class="text">{{ resultProposalDetails?.proposer_mobile_no!=0 ? resultProposalDetails?.proposer_mobile_no: resultProposalDetails?.company_owner_mobile}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Email Address:</div>
+                                        <div class="text">{{ resultProposalDetails?.proposer_email!=0 ? resultProposalDetails?.proposer_email: resultProposalDetails?.company_owner_email }}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Adress Line 1:</div>                                        
+                                        <div class="text">{{resultProposalDetails?.proposer_address1!=0 ? resultProposalDetails?.proposer_address1: resultProposalDetails?.company_owner_address_1 }}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Adress Line 2:</div>
+                                        <div class="text">{{resultProposalDetails?.proposer_address2!=0 ? resultProposalDetails?.proposer_address2: resultProposalDetails?.company_owner_address_2 }}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Pincode:</div>
+                                        <div class="text">{{resultProposalDetails?.proposer_pincode!='' ? resultProposalDetails?.proposer_pincode : resultProposalDetails?.company_owner_pincode}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">City:</div>
+                                        <div class="text">{{resultProposalDetails?.user_city}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">State:</div>
+                                        <div class="text">{{resultProposalDetails?.user_state}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane show" id="endorsementdetails-tab3">
+                                <ul class="row endorsement-infolist mx-0">
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Vehicle Registration No.:</div>
+                                        <div class="text">{{resultProposalDetails?.registration_no_part_1}}{{resultProposalDetails?.registration_no_part_2}}{{resultProposalDetails?.registration_no_part_3}}{{resultProposalDetails?.registration_no_part_4}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Chassis No.:</div>
+                                        <div class="text">{{resultProposalDetails?.chassis_no}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Engine No.:</div>
+                                        <div class="text">{{resultProposalDetails?.engine_no}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Make:</div>
+                                        <div class="text">{{resultProposalDetails?.make}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Varient:</div>
+                                        <div class="text">{{resultProposalDetails?.variant}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Date Of Registration:</div>
+                                        <div class="text">{{resultProposalDetails?.registration_date}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Year Of Manufacture:</div>
+                                        <div class="text">{{resultProposalDetails?.manufacturing_year}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Color:</div>
+                                        <div class="text">{{resultProposalDetails?.vehicle_color}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Fuel Type:</div>
+                                        <div class="text">{{resultProposalDetails?.vehicle_fuel}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane show" id="endorsementdetails-tab4">
+                                <ul class="row endorsement-infolist mx-0">
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Insurance Company:</div>
+                                        <div class="text">{{resultProposalDetails?.ic_code}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Proposal No.:</div>
+                                        <div class="text">{{resultProposalDetails?.proposal_no}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Breakin Created Date:</div>
+                                        <div class="text">{{resultProposalDetails?.breakin_created_date}}</div>
+                                    </li>
+                                    <li class="col-md-6 col-12">
+                                        <div class="title">Breakin Expiry Date:</div>
+                                        <div class="text">{{resultProposalDetails?.breakin_expiry_date}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane show" id="endorsementdetails-tab5">
+
+                                <div class="row">
+                                    <div class="col-4" *ngIf="resultProposalDetails.breakin_reference_no">
+                                        <ul class="row endorsement-infolist mx-0">
+                                            <li class="col-md-12 col-12">
+                                                <div class="title">Breakin Reference No:</div>
+                                                <div class="text">{{resultProposalDetails.breakin_reference_no}}</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-4" *ngIf="resultBreakinDetails?.odometer_reading">
+                                        <ul class="row endorsement-infolist mx-0">
+                                            <li class="col-md-12 col-12">
+                                                <div class="title">Odometer Reading:</div>
+                                                <div class="text">{{resultBreakinDetails?.odometer_reading}}</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-4" *ngIf="resultBreakinTransactionHistory?.breakin_upload_date">
+                                        <ul class="row endorsement-infolist mx-0">
+                                            <li class="col-md-12 col-12">
+                                                <div class="title">Breakin Upload Date:</div>
+                                                <div class="text">{{resultBreakinTransactionHistory?.breakin_upload_date}}</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-4" *ngIf="resultBreakinTransactionHistory?.breakin_approval_date">
+                                        <ul class="row endorsement-infolist mx-0">
+                                            <li class="col-md-12 col-12">
+                                                <div class="title">Breakin Approve/Reject/Referback Date:</div>
+                                                <div class="text">{{resultBreakinTransactionHistory?.breakin_approval_date}}</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class=" {{resultBreakinTransactionHistory?.breakin_approval_date?'col-4':'col-8'}}" >
+                                        <div class="float-right">
+                                            <a class="btn btn-primary" href="javascript:;" (click)="GetInspectionReport()">Inspection Report</a><a class="btn btn-primary ml-3" href="javascript:;" (click)="DownloadImages(resultProposalDetails.proposal_id,resultProposalDetails.breaking_case_id)">Download All</a>
+                                            <a class="btn btn-primary {{resultBreakinTransactionHistory?.breakin_approval_date  && !resultBreakinTransactionHistory.breakin_upload_date?'mt-2':'ml-3'}}" href="javascript:;" (click)="generateLink()">Inspection Link</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 offset-md-6" *ngIf="inspection_link">
+                                        <div class="alert alert-light" role="alert">
+                                            <a href="{{inspection_link_url}}">{{inspection_link_url}}</a>
+                                            <button type="button" class="close" (click)="closeGenerateLink()">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 border-top">
+                                        <div class="row align-items-center my-3">
+                                            <div class="col">
+                                                <h4>Uploaded Files</h4>
+                                            </div>
+                                        </div>
+                                        <div class="row align-items-center">
+                                            <!-- <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.inspection_report_image">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Inspection Report Image</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.inspection_report_image}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.inspection_report_image}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+
+                                            <!--  Uploaded PDF -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.pdf_doc">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Uploaded PDF</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.pdf_doc}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{public_path}}pdf_image.png" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--  Front Image -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.front_image">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Front Image</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.front_image}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.front_image}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--  Rear Image -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.rear_image">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Rear Image</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.rear_image}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.rear_image}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--  Left Image -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.left_image">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Left Image</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.left_image}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.left_image}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--  Right Image -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.right_image">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Right Image</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.right_image}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.right_image}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--  Dicky Open -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.dicky_open">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Dicky Open</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.dicky_open}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.dicky_open}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--  Car CHassis Print -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.car_chassis_print">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Engraved Chassis</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.car_chassis_print}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.car_chassis_print}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--Open Engine Compartment-->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.open_engine_compartment">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Open Engine Compartment</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.open_engine_compartment}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.open_engine_compartment}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Under the Chassis Embossed Photo -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.under_the_chassis_embossed_chassis_photo">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Under Carriage Image</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.under_the_chassis_embossed_chassis_photo}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.under_the_chassis_embossed_chassis_photo}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- PUC Copy -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.puc_copy">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>PUC Copy</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.puc_copy}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.puc_copy}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Dashboard Copy -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.dashboard_copy">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Dashboard Copy</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.dashboard_copy}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.dashboard_copy}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--  RC Copy -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.rc_copy">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>RC Copy</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.rc_copy}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.rc_copy}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--  Previous Insurance -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.pervious_insurances">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Pervious Insurance Copy</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.pervious_insurances}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.pervious_insurances}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            
+
+                                            <!--  Selfie With Car -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.selfie_with_car">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Selfie with car</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.selfie_with_car}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.selfie_with_car}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--  Windscreen Inside/Outside -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.windscreen_inside_outside">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Windscreen Inside to Outside</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.windscreen_inside_outside}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.windscreen_inside_outside}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--  Windscreen Outside/Inside -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.windscreen_outside_inside">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Windscreen Outside to Inside</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.windscreen_outside_inside}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.windscreen_outside_inside}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--  Autometer Engine -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.autometer_engine">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Odometer with Engine</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.autometer_engine}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.autometer_engine}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--  Addition1 -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.addtion1">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Addition 1</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.addtion1}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.addtion1}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--  Addition2 -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.addtion2">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Addition 2</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.addtion2}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.addtion2}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--  Addition3 -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.addtion3">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Addition 3</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.addtion3}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.addtion3}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+											  <!--  Front Left Image -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.front_left_image">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Front Left Image</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.front_left_image}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.front_left_image}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+											  <!--  Front Right Image -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.front_right_image">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Front Right Image</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.front_right_image}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.front_right_image}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                              <!--  Rear Left Image -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.rear_left_image">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Rear Left Image</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.rear_left_image}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.rear_left_image}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+											<!--  Rear Right Image -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.rear_right_image">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Rear Right Image</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails?.rear_right_image}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <img src="{{resultBreakinDetails?.rear_right_image}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--  Video -->
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-12" *ngIf="resultBreakinDetails?.video">
+                                                <div class="card shadowbox">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-12">
+                                                                <h5 class="mb-2"><b>Inspection Video</b></h5>
+                                                            </div>
+                                                            <div class="col-8 text-center">
+                                                                <a href="{{resultBreakinDetails.video}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" download>Download</a>
+                                                                
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <div class="uploaded-img">
+                                                                    <video width="100" height="100" controls>
+                                                                        <source src="movie.mp4" type="video/mp4">
+                                                                        <source src="{{resultBreakinDetails.video}}" type="video/ogg">
+                                                                        Your browser does not support the video tag.
+                                                                      </video>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="tab-pane show" id="endorsementdetails-tab6" *ngIf="resultProposalDetails?.breakin_status_id==3">
+                                <form [formGroup]="formSubmitBreakinApproval" (ngSubmit)="submitBreakinApproval()">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="row">
+                                                <div class="col-md-4 col-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Change Status</label>
+                                                        <select class="form-control" formControlName="bim_status">
+                                                            <option value="">Select Status</option>
+                                                            <option value="4">Approve</option>
+                                                            <option value="2">Reject</option>
+                                                            <option value="3">Referback</option>
+                                                        </select>
+
+                                                    </div>
+                                                    <div *ngIf="submitFormActionStatus && formSubmitBreakinApproval.controls.bim_status.errors">
+                                                        <small *ngIf="submitFormActionStatus && formSubmitBreakinApproval.controls.bim_status.errors.required" class="text-danger">
+                                                            Please Select Status.
+                                                        </small>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-8 col-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Add Comment</label>
+                                                        <textarea maxlength="300" type="text" class="form-control" formControlName="bim_status_comment" rows="3" placeholder="Enter your comment"></textarea>
+                                                    </div>
+                                                    <div *ngIf="submitFormActionStatus && formSubmitBreakinApproval.controls.bim_status_comment.errors">
+                                                        <small *ngIf="submitFormActionStatus && formSubmitBreakinApproval.controls.bim_status_comment.errors.required" class="text-danger">
+                                                            Please add comment.
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 text-right">
+                                                    <button type="submit" class="btn btn-custom green"> Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <app-loader [loaderActive]="loaderActive"></app-loader>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+.multiple_select_dropdown{
+	height: 125px !important;
+}
+.model_list_div{
+	max-height: 500px;
+	overflow-y: auto;
+}

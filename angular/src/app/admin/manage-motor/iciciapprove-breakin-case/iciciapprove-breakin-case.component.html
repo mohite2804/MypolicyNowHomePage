@@ -1,0 +1,47 @@
+<!-- Page Header -->
+<div class="page-header">
+  <div class="row align-items-center">
+      <div class="col">
+          <h3 class="page-title">ICICI Approve Breakin Case</h3>
+      </div>
+      <!-- <div class="col-auto float-right ml-auto">
+    <button (click)="downloadExcel()" class="btn btn-custom green"><i class="fa fa-download"></i> Export All</button>
+  </div> -->
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+      <div *ngIf="atLeastOneRequired" class="alert alert-danger">
+          <strong>{{atLeastOneRequired}}</strong>
+      </div>
+  </div>
+  <div class="col-md-12">
+      <div class="card shadowbox">
+          <div class="card-body pb-0">
+              <form class="form-horizontal" [formGroup]="formRecodEdit">
+                  <div class="row">
+                      <div class="col-lg-6 col-md-6">
+                          <div class="form-group">
+                              <label>Enter Proposal Number :</label>
+                              <input formControlName="policy_no" type="text" class="form-control" placeholder="Enter Proposal Number">
+                            
+                              <div class="error" *ngIf="submitted && formRecodEdit.controls.policy_no.errors">
+                                  <div *ngIf="submitted && formRecodEdit.controls.policy_no.errors">
+                                      Please enter valid Proposal Number.
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-2 col-md-6">
+                          <label class="d-block">&nbsp;</label>
+                          <button (click)="submitForm()" type="submit" class="btn btn-custom green w-43" title="Submit"><i class="fa fa-arrow-circle-right fa-lg"></i></button> &nbsp;
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- /Page Header -->
+<app-loader [loaderActive]="loaderActive"></app-loader>

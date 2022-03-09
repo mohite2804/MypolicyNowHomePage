@@ -1,0 +1,473 @@
+<!-- Page Header -->
+<div class="page-header">
+  <div class="row align-items-center">
+    <div class="col">
+      <h3 class="page-title">Manage Users</h3>
+    </div>
+    <div class="col-auto float-right ml-auto">
+      <button (click)="openModel()" data-toggle="modal" data-target="#openmodal" class="btn btn-custom green" *ngIf="access_permission == 'read_write'"><i class="fa fa-plus"></i> Add User Details</button>
+    </div>
+  </div>
+</div>
+<!-- /Page Header -->
+<div class="row">
+  <div class="col-md-12">
+    <div class="card shadowbox">
+      <div class="card-body">
+        <div class="table-responsive">
+        <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="openmodal"  class="modal custom-modal fade" tabindex="-1" role="dialog" >
+<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+  <div class="modal-content">
+    <form [formGroup]="formRecodEdit"  method="post" (ngSubmit)="submitForm()" >
+      <input formControlName="id"  type="hidden" class="form-control" >
+      
+      <div class="modal-header">
+        <h4 class="modal-title">{{ popupTitle }}</h4>
+        <button (click)="closePopup()"  type="button" class="close" data-dismiss="modal" #closeAddExpenseModal>&times;</button>
+        
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Business Partner:</label>
+              <select class="form-control" formControlName="business_partner_id" >
+                <option value="">Select Business Partner</option>
+                <option value="{{ row.business_partner_id }}" *ngFor="let row of businesspartnerData | sortBy: 'asc':'name' "  >{{ row.name }}</option>
+              </select>
+              <!-- <ng-select placeholder="Select Business Partner" (clear)="clearValue('business_partner',$event)" (change)="changeSelectBox('business_partner',$event)" [(ngModel)]="selectedBusiness_partner" [ngModelOptions]="{standalone: true}">
+                <ng-option *ngFor="let row of businesspartnerData" [value]="row.business_partner_id">{{row.name}}</ng-option>
+            </ng-select> -->
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.business_partner_id.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.business_partner_id.errors.required">
+                  Business Partner is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>POS Name:</label>
+              <!-- <select class="form-control" formControlName="pos_master_id">
+                <option value="">Select POS</option>
+                <option value="{{ row.pos_id }}" *ngFor="let row of posData | sortBy: 'asc':'app_fullname'"  >{{ row.app_fullname }}</option>
+              </select> -->
+
+              <ng-select placeholder="Select POS" (clear)="clearValue('pos_master',$event)" (change)="changeSelectBox('pos_master',$event)" [(ngModel)]="selectedPos_master" [ngModelOptions]="{standalone: true}">
+                <ng-option *ngFor="let row of posData" [value]="row.pos_id">{{row.app_fullname}}</ng-option>
+            </ng-select>
+
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.pos_master_id.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.pos_master_id.errors.required">
+                  POS is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>User Type:</label>
+              <!-- <select class="form-control" formControlName="user_type_id">
+                <option value="">Select User Type</option>
+                <option value="{{ row.user_type_master_id }}" *ngFor="let row of userTypeData | sortBy: 'asc':'label'"  >{{ row.label }}</option>
+              </select> -->
+
+              <ng-select placeholder="Select User Type" (clear)="clearValue('user_type',$event)" (change)="changeSelectBox('user_type',$event)" [(ngModel)]="selectedUser_type" [ngModelOptions]="{standalone: true}">
+                <ng-option *ngFor="let row of userTypeData" [value]="row.user_type_master_id">{{row.label}}</ng-option>
+            </ng-select>
+
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.user_type_id.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.user_type_id.errors.required">
+                  User type is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Salutation:</label>
+              <select class="form-control" formControlName="salutation">
+                <option value="">Select Salutation</option>
+                <option value="{{ row.id }}" *ngFor="let row of salutationData | sortBy: 'asc':'name'"  >{{ row.name }}</option>
+              </select>
+
+              <!-- <ng-select placeholder="Select Salutation" (clear)="clearValue('salutation',$event)" (change)="changeSelectBox('salutation',$event)" [(ngModel)]="selectedSalutation" [ngModelOptions]="{standalone: true}">
+                <ng-option *ngFor="let row of salutationData" [value]="row.id">{{row.name}}</ng-option>
+            </ng-select> -->
+
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.salutation.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.salutation.errors.required">
+                  Salutation required.
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>First Name:</label>
+              <input formControlName="first_name"  type="text" class="form-control" >
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.first_name.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.first_name.errors.required">
+                  First name is required.
+                </div>
+                <div *ngIf="submitted && formRecodEdit.controls.first_name.errors.pattern">
+                    Please enter valid first name.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Middle Name:</label>
+              <input formControlName="middle_name"  type="text" class="form-control" >
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.middle_name.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.middle_name.errors.required">
+                  Middle name is required.
+                </div>
+                 <div *ngIf="submitted && formRecodEdit.controls.middle_name.errors.pattern">
+                    Please enter valid middle name.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Last Name:</label>
+              <input formControlName="last_name"  type="text" class="form-control" >
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.last_name.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.last_name.errors.required">
+                  Last name is required.
+                </div>
+                <div *ngIf="submitted && formRecodEdit.controls.first_name.errors.pattern">
+                    Please enter valid last name.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Gender:</label>
+              <!-- <select class="form-control" formControlName="gender">
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select> -->
+
+              <ng-select placeholder="Select Gender" (clear)="clearValue('gender',$event)" (change)="changeSelectBox('gender',$event)" [(ngModel)]="selectedGender" [ngModelOptions]="{standalone: true}">
+                <ng-option  value="male">Male</ng-option>
+                <ng-option value="female">Female</ng-option>
+            </ng-select>
+
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.gender.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.gender.errors.required">
+                  Gender is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Date Of Birth:</label>
+              <input formControlName="dob"  type="date" class="form-control" >
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.dob.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.dob.errors.required">
+                  Date Of Birth is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Email:</label>
+              <input formControlName="email"  type="text" class="form-control" >
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.email.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.email.errors.required">
+                  Email is required.
+                </div>
+                 <div *ngIf="submitted && formRecodEdit.controls.email.errors.pattern">
+                    Please enter valid email id.
+                </div>                 
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Mobile:</label>
+              <input formControlName="mobile_no"  type="text" class="form-control"  maxlength="10">
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.mobile_no.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.mobile_no.errors.required">
+                  Mobile no is required.
+                </div>
+                <div *ngIf="submitted && formRecodEdit.controls.mobile_no.errors.pattern">
+                    Please enter valid mobile no.
+                </div>  
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Alternate Mobile No:</label>
+              <input formControlName="alternate_no"  type="text" class="form-control" >
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.alternate_no.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.alternate_no.errors.required">
+                  Alternate Mobile is required.
+                </div>
+                 <div *ngIf="submitted && formRecodEdit.controls.alternate_no.errors.pattern">
+                    Please enter valid mobile no.
+                </div> 
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Password:</label>
+              <input formControlName="password"  type="password" class="form-control" >
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.password.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.password.errors.required">
+                  Password is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Company Name :</label>
+              <input formControlName="company_name"  type="text" class="form-control" >
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.company_name.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.company_name.errors.required">
+                  Company Name is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Company Domain:</label>
+              <input formControlName="company_domain"  type="text" class="form-control" >
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.company_domain.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.company_domain.errors.required">
+                  Company Domain is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Pan Card Number:</label>
+              <input formControlName="pan_card_no"  type="text" class="form-control" >
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.pan_card_no.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.pan_card_no.errors.required">
+                  Pan no is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Aadhar Card Number:</label>
+              <input formControlName="aadhar_card_no"  type="text" class="form-control" >
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.aadhar_card_no.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.aadhar_card_no.errors.required">
+                  Aadhar Card No is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>GSTN:</label>
+              <input formControlName="gstn"  type="text" class="form-control" >
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.gstn.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.gstn.errors.required">
+                  GSTN is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Marital Status:</label>
+              <!-- <select class="form-control" formControlName="marital_status" >
+                <option value="">Select Marital Status</option>
+                <option value="{{ row.marital_status_id }}" *ngFor="let row of maritalData | sortBy: 'asc':'lable'"  >{{ row.lable }}</option>
+              </select> -->
+
+              <ng-select placeholder="Select Marital Status" (clear)="clearValue('marital_status',$event)" (change)="changeSelectBox('marital_status',$event)" [(ngModel)]="selectedMarital_status" [ngModelOptions]="{standalone: true}">
+                <ng-option *ngFor="let row of maritalData" [value]="row.marital_status_id">{{row.lable}}</ng-option>
+            </ng-select>
+
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.marital_status.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.marital_status.errors.required">
+                  Marital Status is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Address 1:</label>
+              <input formControlName="address_1"  type="text" class="form-control" >
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.address_1.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.address_1.errors.required">
+                  Address 1 is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Address 2:</label>
+              <input formControlName="address_2"  type="text" class="form-control" >
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.address_2.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.address_2.errors.required">
+                  Address 2 is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Address 3:</label>
+              <input formControlName="address_3"  type="text" class="form-control" >
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.address_3.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.address_3.errors.required">
+                  Address 3 is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>State:</label>
+              <!-- <select class="form-control" formControlName="state_id" (change)="getCityDataByStateId($event.target.value)">
+                <option value="">Select State</option>
+                <option value="{{ row.state_id }}" *ngFor="let row of stateData | sortBy: 'asc':'name'" >{{ row.name }}</option>
+              </select> -->
+
+              <ng-select placeholder="Select State" (clear)="clearValue('state',$event)" (change)="changeSelectBox('state',$event)" [(ngModel)]="selectedState" [ngModelOptions]="{standalone: true}">
+                <ng-option *ngFor="let row of stateData" [value]="row.state_id">{{row.name}}</ng-option>
+            </ng-select>
+
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.state_id.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.state_id.errors.required">
+                  State is required.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>City:</label>
+              <!-- <select class="form-control" formControlName="city_id" (change)="getPincodeDataByCity($event.target.value)">
+                <option value="">Select City</option>
+                <option value="{{ row.city_id }}" *ngFor="let row of cityData | sortBy: 'asc':'name'"  >{{ row.name }}</option>
+              </select> -->
+
+              <ng-select placeholder="Select City" (clear)="clearValue('city',$event)" (change)="changeSelectBox('city',$event)" [(ngModel)]="selectedCity" [ngModelOptions]="{standalone: true}">
+                <ng-option *ngFor="let row of cityData" [value]="row.city_id">{{row.name}}</ng-option>
+            </ng-select>
+
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.city_id.errors">
+                <div *ngIf="submitted && formRecodEdit.controls.city_id.errors.required">
+                  City is required.
+                </div>
+              </div>
+            </div>
+          </div>
+      
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Pincode:</label>
+              <!-- <select class="form-control" formControlName="pincode_id">
+                <option value="">Select Pincode</option>
+                <option value="{{ row.pincode_id }}" *ngFor="let row of pincodeData | sortBy: 'asc':'pin_code'"  >{{ row.pin_code }}</option>
+              </select> -->
+
+              <ng-select placeholder="Select Pincode" (clear)="clearValue('pincode',$event)" (change)="changeSelectBox('pincode',$event)" [(ngModel)]="selectedPincode" [ngModelOptions]="{standalone: true}">
+                <ng-option *ngFor="let row of pincodeData" [value]="row.pincode_id">{{row.pin_code}}</ng-option>
+            </ng-select>
+
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.pincode_id.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.pincode_id.errors.required">
+                  Pincode is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Language:</label>
+              <!-- <select class="form-control" formControlName="language_id" >
+                <option value="">Select Language</option>
+                <option value="{{ row.language_id }}" *ngFor="let row of languageData | sortBy: 'asc':'lable'"  >{{ row.lable }}</option>
+              </select> -->
+
+              <ng-select placeholder="Select Language" (clear)="clearValue('language',$event)" (change)="changeSelectBox('language',$event)" [(ngModel)]="selectedLanguage" [ngModelOptions]="{standalone: true}">
+                <ng-option *ngFor="let row of languageData" [value]="row.language_id">{{row.lable}}</ng-option>
+            </ng-select>
+
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.language_id.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.language_id.errors.required">
+                  Language is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label>Status:</label>
+              <!-- <select class="form-control" formControlName="status" >
+                <option value="">Select Status</option>
+                <option value="{{ row.status_id }}" *ngFor="let row of statusData"  >{{ row.lable }}</option>
+              </select> -->
+              <ng-select placeholder="Select Status" (clear)="clearValue('status',$event)" (change)="changeSelectBox('status',$event)" [(ngModel)]="selectedStatus" [ngModelOptions]="{standalone: true}">
+                <ng-option *ngFor="let row of statusData" [value]="row.status_id">{{row.lable}}</ng-option>
+            </ng-select>
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.status.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.status.errors.required">
+                  Status is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <div class="ui checkbox">
+                <input formControlName="is_corporate"  type="checkbox" (change)="isCorporate($event)" id="is_corporate" >
+                <label class="mb-0" for="is_corporate">Is Corporate?</label>
+              </div>
+              <div class="error" *ngIf="submitted && formRecodEdit.controls.is_corporate.errors" >
+                <div *ngIf="submitted && formRecodEdit.controls.is_corporate.errors.required">
+                  Is Corporate is required.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+         <div class="col-sm-12">
+              <div class="form-group">
+                <div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+                  <strong>{{responseMsg}}</strong>
+                </div>
+              </div>
+            </div>
+        <div class="submit-section">
+          <input *ngIf="btnEditSubmit" class="btn btn-custom green btn-lg" type="submit" value="Submit">
+        </div>
+      </div>
+    </form>
+  </div>
+  
+</div>
+</div>
+<app-managemotor-loader  [loaderActive]="loaderActive"></app-managemotor-loader>

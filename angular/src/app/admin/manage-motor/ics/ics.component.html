@@ -1,0 +1,449 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Manage IC's</h3>
+        </div>
+        <div class="col-auto float-right ml-auto">
+
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+<div class="content container-fluid">
+    <div class="row" *ngIf="access_permission == 'read_write'">
+        <div class="col-md-12">
+            <div>
+                <strong>{{atLeastOneRequired}}</strong>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card shadowbox">
+                <div class="card-body pb-1">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-3">
+                            </div>
+                            <div class="col-lg-2 col-md-3">
+                            </div>
+                            <div class="col-lg-2 col-md-3">
+                            </div>
+                            <div class="col-lg-2 col-md-3">
+                            </div>
+                            <div class="text-right">
+                                <label class="d-block">&nbsp;</label>
+                                <button (click)="openModel()" data-toggle="modal" data-target="#openmodal" class="btn btn-custom green" *ngIf="access_permission == 'read_write'"><i class="fa fa-plus"></i> Add IC Details</button> &nbsp;
+                            </div>
+                            <div class="text-right">
+                                <label class="d-block">&nbsp;</label>
+                                <button (click)="exportAsXLSX()" class="btn btn-custom red w-43 pull-right" *ngIf="access_permission == 'read_write'"><i class="fa fa-download"></i> Export</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadowbox">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="openmodal" class="modal custom-modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <form [formGroup]="formRecodEdit" method="post" (ngSubmit)="submitForm()" enctype="multipart/form-data">
+                <input formControlName="id" type="hidden" class="form-control">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ popupTitle }}</h4>
+                    <button (click)="closePopup()" type="button" class="close" data-dismiss="modal" #closeAddExpenseModal>&times;</button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>IC Code :<span class="error"> *</span></label>
+                                <input formControlName="short_code" type="text" list="short_code" class="form-control">
+                                <datalist id="short_code">
+              <option value="{{ row.short_code }}" *ngFor="let row of icsData | sortBy: 'asc':'short_code'">
+              </datalist>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.short_code.errors">
+
+                                    <div *ngIf="submitted && formRecodEdit.controls.short_code.errors">
+                                        Please enter valid short name.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>IC Name:<span class="error"> *</span></label>
+                                <input formControlName="code" type="text" list="code" class="form-control">
+                                <datalist id="code">
+                                  <option value="{{ row.code }}" *ngFor="let row of icsData | sortBy: 'asc':'code'">
+                                </datalist>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.code.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.code.errors">
+                                        Please enter valid IC name.
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Proposal Prefix:</label>
+                                <input formControlName="proposal_prefix" type="text" class="form-control">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.proposal_prefix.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.proposal_prefix.errors.required">
+                                        Proposal Prefix is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.proposal_prefix.errors.pattern">
+                                        Please enter valid prefix.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Name:<span class="error"> *</span></label>
+                                <input maxlength="25" formControlName="name" type="text" class="form-control">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.name.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.name.errors">
+                                        Please enter valid Name.
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Address:<span class="error"> *</span></label>
+                                <input maxlength="500" formControlName="address" type="text" class="form-control">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.address.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.address.errors">
+                                        Please enter valid address.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Sector:<span class="error"> *</span></label>
+
+
+                                <ng-select placeholder="Select Sector" (clear)="clearValue('sector',$event)" (change)="changeSelectBox('sector',$event)" [(ngModel)]="selectedSector" [ngModelOptions]="{standalone: true}">
+                                    <ng-option value="public">PUBLIC</ng-option>
+                                    <ng-option value="private">PRIVATE</ng-option>
+                                </ng-select>
+
+
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.sector.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.sector.errors.required">
+                                        Sector is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.sector.errors.pattern">
+                                        Please enter valid sector.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Support Email:<span class="error"> *</span></label>
+                                <input formControlName="support_email" type="text" class="form-control">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.support_email.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.support_email.errors">
+                                        Support is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Mobile:</label>
+                                <input maxlength="10" formControlName="mobile" type="text" class="form-control">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.mobile.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.mobile.errors">
+                                        Please enter valid mobile.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Landline:</label>
+                                <input placeholder="0395-25950612 or 0395 25950612" formControlName="landline" type="text" class="form-control" maxlength="13">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.landline.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.landline.errors">
+                                        Landline is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Tollfree No:</label>
+                                <input placeholder="1800-333-4444 or 1800 333 4444" formControlName="tollfree" type="text" class="form-control" maxlength="13">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.tollfree.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.tollfree.errors">
+                                        Please enter valid tollfree no.
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Website URL:</label>
+                                <input formControlName="website_url" type="url" class="form-control">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.website_url.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.website_url.errors">
+                                        Please enter valid website url.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Is Break-In Waiver:<span class="error"> *</span></label>
+                                <select class="form-control" formControlName="is_breakin_waiver" (change)="isBreakInWaiver($event.target.value)">
+                                  <option value="">Select </option>
+                                  <option value="Yes">Yes</option>
+                                  <option value="No">No</option>
+                                </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.is_breakin_waiver.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.is_breakin_waiver.errors">
+                                        This field is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-12" [ngStyle]="{'display':displayBreakInWaiverDays}">
+                            <div class="form-group">
+                                <label>Break-in Waiver Days:<span class="error"> *</span></label>
+                                <input formControlName="breakin_waiver_days" type="number" class="form-control">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.breakin_waiver_days.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.breakin_waiver_days.errors">
+                                        Please enter Break-In Waiver Days.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4 col-12" [ngStyle]="{'display':displayInspectionDOneBy}">
+                            <div class="form-group">
+                                <label>Inspection Done By:</label>
+                                <!-- <select class="form-control" formControlName="inspection_done_by">
+                                  <option value="">Select Inspection Done By</option>
+                                  <option value="IC">IC</option>
+                                  <option value="HIB">HIB</option>
+                                </select> -->
+
+                                <ng-select placeholder="Select Inspection Done By" (clear)="clearValue('inspection_done_by',$event)" (change)="changeSelectBox('inspection_done_by',$event)" [(ngModel)]="selectedInspection_done_by" [ngModelOptions]="{standalone: true}">
+                                    <ng-option value="ic">IC</ng-option>
+                                    <ng-option value="gib">POSP</ng-option>
+                                </ng-select>
+
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.inspection_done_by.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.inspection_done_by.errors.required">
+                                        Inspection done by is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.inspection_done_by.errors.pattern">
+                                        Please enter valid website
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Broker Code:<span class="error"> *</span></label>
+                                <input maxlength="20" formControlName="broker_code" type="text" class="form-control">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.broker_code.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.broker_code.errors">
+                                        Please enter valid broker code.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>IFSC Code:<span class="error"> *</span></label>
+                                <input (change)="getBankDetails($event.target.value)" (keyup)="getBankDetails($event.target.value)" maxlength="11" formControlName="ifsc_code" type="text" class="form-control">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.ifsc_code.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.ifsc_code.errors.required">
+                                        Please enter valid IFSC code
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.ifsc_code.errors.pattern">
+                                        Please enter valid IFSC code.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Bank Branch:<span class="error"> *</span></label>
+                                <input readonly formControlName="bank_branch" type="text" class="form-control">
+                                <!-- <div class="error" *ngIf="submitted && formRecodEdit.controls.bank_branch.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.bank_branch.errors">
+                                        Please enter valid bank branch.
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Bank Account No:<span class="error"> *</span></label>
+                                <input maxlength="18" formControlName="bank_acc_no" type="text" class="form-control">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.bank_acc_no.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.bank_acc_no.errors">
+                                        Please enter valid bank account no.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Bank Name:<span class="error"> *</span></label>
+                                <input readonly formControlName="bank_name" type="text" class="form-control">
+                                <!-- <div class="error" *ngIf="submitted && formRecodEdit.controls.bank_name.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.bank_name.errors">
+                                        Please enter valid bank name.
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>CMS Client Code:</label>
+                                <input formControlName="client_code" type="text" class="form-control">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.client_code.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.client_code.errors">
+                                        Please enter valid cms client code.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>UIN No:</label>
+                                <input formControlName="uin_no" type="text" class="form-control" maxlength="15">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.uin_no.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.uin_no.errors">
+                                        Please enter valid UIN Number.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Status:<span class="error"> *</span></label>
+                                <!-- <select class="form-control" formControlName="status">
+                <option value="">Select Status</option>
+                <option value="{{ row.status_id }}" *ngFor="let row of statusData"  >{{ row.lable }}</option>
+              </select> -->
+                                <ng-select placeholder="Select Status" (clear)="clearValue('status',$event)" (change)="changeSelectBox('status',$event)" [(ngModel)]="selectedStatus" [ngModelOptions]="{standalone: true}">
+                                    <ng-option *ngFor="let row of statusData" [value]="row.status_id">{{row.lable}}</ng-option>
+                                </ng-select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.status.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.status.errors.required">
+                                        Status is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.status.errors.pattern">
+                                        Please enter valid status.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Logo:</label>
+                                <input [ngModelOptions]="{standalone: true}" [(ngModel)]="selected_logo" accept="image/jpeg,image/png" type="file" (change)="uploadLogo($event)" class="form-control">
+                                <div><b>Note: </b>Allowed file type "jpg", "png", "jpeg"</div>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.logo.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.logo.errors.required">
+                                        Logo is required.
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Signature:</label>
+                                <input [ngModelOptions]="{standalone: true}" [(ngModel)]="selected_signature" accept="image/jpeg,image/png" type="file" (change)="uploadSignature($event)" class="form-control">
+                                <div><b>Note: </b>Allowed file type "jpg", "png", "jpeg"</div>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.signature.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.signature.errors.required">
+                                        Signature is required.
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-md-5 col-12">
+                                <div class="form-group">
+                                    <label>Breakin Mobile No: <small class="text-warning">(<b>Note</b>:-Add multiple mobile no. with comma (,) separated)</small></label>
+                                    <input maxlength="10" formControlName="breakin_mobile_no" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-7 col-12">
+                                <div class="form-group">
+                                    <label>Breakin Email Address:     <small class="ml-5 text-warning">(<b>Note</b>:-Add multiple email address with comma (,) separated).</small></label>
+                                    <input formControlName="breakin_email" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-5 col-12">
+                                <div class="form-group">
+                                    <label>Endorsment Mobile No: <small class="ml-3 text-warning">(<b>Note</b>:-Add multiple mobile no with comma (,) separated)</small></label>
+                                    <input maxlength="10" formControlName="endorsment_mobile_no" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-7 col-12">
+                                <div class="form-group">
+                                    <label>Endorsment Email Address:     <small class="ml-3 text-warning">(<b>Note</b>:-Add multiple email address with comma (,) separated)</small></label>
+                                    <input formControlName="endorsment_email" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+                                <strong>{{responseMsg}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <input *ngIf="btnEditSubmit" class="btn btn-custom green btn-lg" type="submit" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<app-loader [loaderActive]="loaderActive"></app-loader>

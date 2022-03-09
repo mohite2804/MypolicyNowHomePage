@@ -940,8 +940,7 @@
                                                     <div class="form-group form-focus mb-0"
                                                         [ngClass]="{'focused': formQuoteDetails.controls.pincode.value}">
                                                         <input  select-other-detail="other_field" type="text"
-                                                            class="form-control floating" maxlength="6" formControlName="pincode">
-                                                            <!--(keyup)="changeOwnerPincode($event)"-->
+                                                            class="form-control floating" maxlength="6" (keyup)="changeOwnerPincode($event)" formControlName="pincode">
                                                         <label class="focus-label req">Your PIN Code</label>
                                                     </div>
                                                 </div>

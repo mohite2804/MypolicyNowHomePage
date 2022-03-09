@@ -1,0 +1,117 @@
+<!-- Page Header -->
+<div class="page-header">
+  <div class="row align-items-center">
+    <div class="col">
+      <h3 class="page-title">Manage Manufacture</h3>
+    </div>
+    <div class="col-auto float-right ml-auto">
+      <button (click)="openModel()" data-toggle="modal" data-target="#openmodal" class="btn btn-custom green" *ngIf="access_permission == 'read_write'"><i class="fa fa-plus"></i> Add Make Details</button>
+    </div>
+    <!-- <div class="col-auto float-right ml-auto">
+      <button (click)="getIndex()"   class="btn btn-custom blue"><i class="fa fa-download"></i>Export</button>
+    </div> -->
+  </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row" *ngIf="access_permission == 'read_write'">
+  <div class="col-md-12">
+    <div *ngIf="atLeastOneRequired" class="alert alert-danger">
+      <strong>{{atLeastOneRequired}}</strong>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="card shadowbox">
+      <div class="card-body pb-0">
+        <form class="form-horizontal" [formGroup]="formRecodEdit">
+          <div class="row" >
+              <div class="col-lg-4 col-md-4 pull-right">
+              </div>
+            <div class="col-lg-4 col-md-4 pull-right">
+              </div>
+            <div class="col-lg-4 col-md-4 pull-right">
+              <label class="d-block">&nbsp;</label>
+              <button (click)="exportAsXLSX()" class="btn btn-custom red w-43 pull-right" *ngIf="hide_export"><i class="fa fa-download"></i></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card shadowbox">
+      <div class="card-body">
+        <div class="table-responsive">
+        <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100" id="excel-table"></table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="openmodal" class="modal custom-modal fade" tabindex="-1" role="dialog">
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <form [formGroup]="formRecodEdit"  method="post" (ngSubmit)="submitForm()" >
+      <input formControlName="id"  type="hidden" class="form-control" >
+      <div class="modal-header">
+        <h5 class="modal-title">{{ popupTitle }}</h5>
+        <button (click)="closePopup()"  type="button" class="close" data-dismiss="modal" #closeAddExpenseModal>&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>*Make:</label>
+              <!-- <input formControlName="make"  type="text" list="id-make" class="form-control">
+              <datalist id="id-make">
+              <option value="{{ row.make }}" *ngFor="let row of makeData | sortBy: 'asc':'make'">
+                </datalist> -->
+                <!-- <select class="form-control" formControlName="make">
+                  <option value="">TVS</option> 
+                </select> -->
+                <input type="text" class="form-control" formControlName="make"/>
+
+                <div class="error" *ngIf="submitted && formRecodEdit.controls.make.errors" >
+                  <div *ngIf="submitted && formRecodEdit.controls.make.errors.required">
+                    Make is required.
+                  </div>
+                  <div *ngIf="submitted && formRecodEdit.controls.make.errors.pattern">
+                    Only Alphabets accepts.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Status:</label>
+                <select class="form-control" formControlName="status" >
+                  <option value="">Select Status</option>
+                  <option value="{{ row.status_id }}" *ngFor="let row of statusData" >{{ row.lable }}</option>
+                </select>
+                <div class="error" *ngIf="submitted && formRecodEdit.controls.status.errors" >
+                  <div *ngIf="submitted && formRecodEdit.controls.status.errors.required">
+                    Status is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+                <strong>{{responseMsg}}</strong>
+              </div>
+            </div>
+          </div>
+          <div class="submit-section">
+            <input *ngIf="btnEditSubmit" class="btn btn-custom green btn-lg" type="submit" value="Submit">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<app-managemotor-loader  [loaderActive]="loaderActive"></app-managemotor-loader>

@@ -1,0 +1,857 @@
+<div class="page-wrapper" *ngIf="quoteData">
+    <div class="content">
+        <section class="py-0">
+            <div class="row">
+                <div class="col-md-12 border quotes-topinfo shadowbox py-2">
+                    <div class="container">
+                        <div class="row py-2">
+                            <div class="col-md-1 col-sm-1 col-12 quotes-box d-block d-md-none">
+                                <div>
+                                    <a class="actionbtn edit-btn" [routerLink]="[quote_form_navigate_url]" href="javascript:void(0)"><i class="fa fa-pencil"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-sm-4 col-12 quotes-box">
+                                <div>
+                                    <h4 class="mb-0"><span class="text-muted white">Product:</span>{{first_record_quote_data.product_type | uppercase}} </h4>
+
+                                    <span class="text-muted white">Your Vehicle:</span>
+
+                                    <h4 class="mb-0">{{first_record_quote_data.rto_label | uppercase}} {{first_record_quote_data.registration_no_part_3 | uppercase}} {{first_record_quote_data.registration_no_part_4}}, {{first_record_quote_data.model | uppercase}} {{first_record_quote_data.variant
+                                        | uppercase}}</h4>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-12 quotes-box">
+                                <div>
+                                    <span class="text-muted white">Current Policy:</span>
+                                    <h4 class="mb-0"><span class="text-muted white">Type:</span> {{first_record_quote_data.policy_subtype_label}}</h4>
+
+                                    <h4 class="mb-0"><span class="text-muted white">Registered:</span>{{first_record_quote_data.registration_date}} </h4>
+                                    <h4 class="mb-0"><span class="text-muted white">Policy Holder Type:</span>{{ first_record_quote_data.proposer_type_id == 1 ? 'Individual' : 'Corporate' }} </h4>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-12 quotes-box border-right-0">
+                                <div *ngIf="first_record_quote_data.policy_type_id == 2 && first_record_quote_data.is_prev_policy_available == 1">
+                                    <span class="text-muted white">Previous Policy:</span>
+                                    <h4 class="mb-0">
+                                        <span class="text-muted white">Claim:</span>
+                                        <span *ngIf="first_record_quote_data.prev_policy_ncb_per">No</span>
+                                        <span *ngIf="!first_record_quote_data.prev_policy_ncb_per">Yes </span>
+                                    </h4>
+                                    <h4 class="mb-0"><span class="text-muted white">Expiry:</span> {{first_record_quote_data.prev_policy_expiry_date}}</h4>
+
+                                    <h4 class="mb-0"><span class="text-muted white">Previous NCB:</span> {{first_record_quote_data.prev_policy_ncb_per}}%, <span class="text-muted white">New NCB:</span> {{first_record_quote_data.current_ncb_per}}%</h4>
+                                </div>
+                            </div>
+
+                            <div *ngIf="is_dealer_url_with_login" class="col-md-1 col-sm-1 col-12 quotes-box d-none d-md-block">
+                                <div>
+                                    <a [routerLink]="[quote_form_navigate_url]" class="actionbtn edit-btn" href="javascript:void(0);">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div *ngIf="!is_dealer_url_with_login" class="col-md-1 col-sm-1 col-12 quotes-box d-none d-md-block">
+                                <div>
+                                    <button (click)="linkSendToCustomer(first_record_quote_data)" class="actionbtn"><i class="fa fa-share m-r-5"></i> Send to Customer</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row py-2 d-md-none align-items-center">
+                            <div class="col-sm-6 col-12">
+                                <div class="quotes-editoption">
+                                    <div class="option-box covers-option-box">
+                                        <a id="slidecover" class="actionbtn edit-btn" href="javascript:void(0);"><i class="fa fa-pencil"></i></a>
+                                        <h4 class="mb-0">More Accessories & Covers</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row mx-0">
+                    <div *ngIf="is_dealer_url_with_login" class="col-lg-3 col-md-4 quotes-editoption sidebar-quotes-editoption d-none d-md-block my-3">
+                        <div class="quotes-editoption-inner slimscroll">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="option-box idv-option-box pb-0" style="padding-bottom: 15px">
+                                        <h4 class="mb-3"><span>Ex Showroom Price :</span> {{first_record_quote_data.ex_showroom_price}}</h4><br>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <ng-container>
+                                <form [formGroup]="formchFilterDetails" (ngSubmit)="submitFormFilterDetails()">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <!-- [ngClass]="{'d-none': div_show_idv }" -->
+                                            <div *ngIf="first_record_quote_data.policy_subtype_label!='THIRDPARTY'" class="option-box idv-option-box pb-0 d-none">
+                                                <span>Insured Value (IDV):</span>
+                                                <h4 class="mb-0"><span>Lowest IDV:</span> (from {{first_record_quote_data.idvmin}})</h4>
+                                                <div class="row align-items-center idv-content">
+                                                    <div class="col-sm-3 col-12 min-value text-center">
+                                                        <i class="fa fa-arrow-down"></i> Min: <b>{{first_record_quote_data.idvmin}}</b>
+                                                    </div>
+                                                    <div class="col-sm-6 col-12 idv-value text-center px-0">
+                                                        <i class="fa fa-inr my-2 mx-1"></i>
+
+                                                        <input formControlName="idv" [(ngModel)]="idvValue" type="text" class="form-control idv-output" (keypress)="keyPress($event)">
+                                                    </div>
+
+                                                    <div class="col-sm-3 col-12 max-value text-center text-md-right">
+                                                        <i class="fa fa-arrow-up"></i> Max: <b class="font-weight-600">{{first_record_quote_data.idvmax}}</b>
+                                                    </div>
+                                                    <div class="col-md-12 mt-4 mb-2">
+                                                        <div class="position-relative">
+                                                            <input [(ngModel)]="idvValue" [ngModelOptions]="{standalone: true}" type="range" [min]="first_record_quote_data.idvmin" [max]="first_record_quote_data.idvmax" (change)="uploadPopupShow()">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+
+                                            <div [ngClass]="{'d-none': div_show_accessories_and_cover_section }" class="option-box covers-option-box">
+                                                <h4 class="mb-2">Accessories & Covers
+                                                    <a class="actionbtn edit-btn" data-toggle="collapse" href="#coversoptions" role="button" aria-expanded="false" aria-controls="coversoptions"></a>
+                                                </h4>
+                                                <div id="coversoptions" class="collapse">
+
+                                                    <div class="row align-items-start">
+
+                                                        <div *ngIf="first_record_quote_data.policy_subtype_label!='THIRDPARTY'" [ngClass]="{'d-none': div_show_accessories }" class="col-12">
+                                                            <div class="field" [ngClass]="{'error': submittedQuoteDetails && formchFilterDetails.controls.accessories.errors}">
+                                                                <div class="card shadowbox border">
+                                                                    <div class="card-body">
+                                                                        <div class="ui checkbox">
+                                                                            <input (change)="uploadPopupShow()" id="accessories" formControlName="accessories" (click)="selectAccessories($event.target.checked)" type="checkbox">
+                                                                            <label class="mb-0" for="accessories">Accessories</label>
+                                                                        </div>
+                                                                        <div [ngClass]="{'d-none': div_show_accessories_box }" class="row mt-3 pt-3 border-top">
+                                                                            <div class="col-12">
+                                                                                <div class="form-group form-focus d-block" [ngClass]="{'focused': formchFilterDetails.value.accessories_electrical}">
+                                                                                    <input maxlength="6" (change)="uploadPopupShow()" formControlName="accessories_electrical" type="text" class="form-control floating" placeholder="eg. 9999">
+
+                                                                                    <div *ngIf="(submittedQuoteDetails || formchFilterDetails.controls.accessories_electrical.invalid && (formchFilterDetails.controls.accessories_electrical.dirty || formchFilterDetails.controls.accessories_electrical.touched)) && formchFilterDetails.controls.accessories_electrical.errors">
+                                                                                        <small *ngIf="(submittedQuoteDetails || formchFilterDetails.controls.accessories_electrical.invalid && (formchFilterDetails.controls.accessories_electrical.dirty || formchFilterDetails.controls.accessories_electrical.touched)) && formchFilterDetails.controls.accessories_electrical.errors"
+                                                                                            class="text-danger">
+                                                                                Please Enter valid Electrical Amount.
+                                                                            </small>
+                                                                                    </div>
+
+
+                                                                                    <label class="focus-label">Electrical</label>
+                                                                                </div>
+                                                                                <div class="form-group form-focus mb-0 d-block" [ngClass]="{'focused': formchFilterDetails.value.accessories_non_electrical}">
+                                                                                    <input maxlength="6" (change)="uploadPopupShow()" formControlName="accessories_non_electrical" type="text" class="form-control floating" placeholder="eg. 9999">
+                                                                                    <div *ngIf="(submittedQuoteDetails || formchFilterDetails.controls.accessories_non_electrical.invalid && (formchFilterDetails.controls.accessories_non_electrical.dirty || formchFilterDetails.controls.accessories_non_electrical.touched)) && formchFilterDetails.controls.accessories_non_electrical.errors">
+                                                                                        <small *ngIf="(submittedQuoteDetails || formchFilterDetails.controls.accessories_non_electrical.invalid && (formchFilterDetails.controls.accessories_non_electrical.dirty || formchFilterDetails.controls.accessories_non_electrical.touched)) && formchFilterDetails.controls.accessories_non_electrical.errors"
+                                                                                            class="text-danger">
+                                                                                Please Enter valid Non Electrical Amount.
+                                                                          </small>
+                                                                                    </div>
+
+
+                                                                                    <label class="focus-label">Non Electrical</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div *ngIf="first_record_quote_data.policy_subtype_label!='THIRDPARTY'" [ngClass]="{'d-none': div_show_deductibles }" class="col-12">
+                                                            <div class="card shadowbox border">
+                                                                <div class="card-body">
+                                                                    <div class="ui checkbox">
+                                                                        <input (change)="uploadPopupShow()" id="deductibles" formControlName="deductibles" type="checkbox" (click)="selectDeductibles($event.target.checked)">
+                                                                        <label class="mb-0" for="deductibles">Deductibles</label>
+                                                                    </div>
+                                                                    <div [ngClass]="{'d-none': div_show_deductibles_box }" class="row mt-3 pt-3 border-top">
+                                                                        <div class="col-12">
+                                                                            <div class="ui checkbox form-group d-block">
+                                                                                <input (change)="uploadPopupShow()" id="deductibles_actitheft" formControlName="deductibles_actitheft" type="checkbox">
+                                                                                <label class="mb-0" for="deductibles_actitheft">Antitheft</label>
+                                                                            </div>
+                                                                            <div class="ui checkbox form-group d-block">
+                                                                                <input (change)="uploadPopupShow()" id="deductibles_automobile_association" formControlName="deductibles_automobile_association" (click)="selectAutomobileAssociation($event.target.checked)" type="checkbox">
+                                                                                <label class="mb-0" for="deductibles_automobile_association">Automobile Association</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div [ngClass]="{'d-none': div_show_automobile_association_box }" class="row">
+                                                                        <div class="col-12">
+                                                                            <label class="ui label mb-3">Automobile Association</label>
+                                                                            <div class="form-group form-focus d-block" [ngClass]="{'focused': formchFilterDetails.value.aa_membership_name}">
+                                                                                <input (change)="uploadPopupShow()" formControlName="aa_membership_name" type="text" class="form-control floating">
+
+
+
+                                                                                <div *ngIf="(submittedQuoteDetails || formchFilterDetails.controls.aa_membership_name.invalid && (formchFilterDetails.controls.aa_membership_name.dirty || formchFilterDetails.controls.aa_membership_name.touched)) && formchFilterDetails.controls.aa_membership_name.errors">
+                                                                                    <small *ngIf="(submittedQuoteDetails || formchFilterDetails.controls.aa_membership_name.invalid && (formchFilterDetails.controls.aa_membership_name.dirty || formchFilterDetails.controls.aa_membership_name.touched)) && formchFilterDetails.controls.aa_membership_name.errors"
+                                                                                        class="text-danger">Please Enter Valid Membership Name.
+                                                                                </small>
+                                                                                </div>
+
+                                                                                <label class="focus-label">AA Membership Name</label>
+
+                                                                            </div>
+
+
+                                                                            <div class="form-group form-focus d-block" [ngClass]="{'focused': formchFilterDetails.value.aa_membership_no}">
+                                                                                <input (change)="uploadPopupShow()" formControlName="aa_membership_no" type="text" class="form-control floating">
+
+                                                                                <div *ngIf="(submittedQuoteDetails || formchFilterDetails.controls.aa_membership_no.invalid && (formchFilterDetails.controls.aa_membership_no.dirty || formchFilterDetails.controls.aa_membership_no.touched)) && formchFilterDetails.controls.aa_membership_no.errors">
+                                                                                    <small *ngIf="(submittedQuoteDetails || formchFilterDetails.controls.aa_membership_no.invalid && (formchFilterDetails.controls.aa_membership_no.dirty || formchFilterDetails.controls.aa_membership_no.touched)) && formchFilterDetails.controls.aa_membership_no.errors"
+                                                                                        class="text-danger">Please Enter Valid Membership Number.
+                                                                                  </small>
+                                                                                </div>
+
+                                                                                <label class="focus-label">AA Membership No.</label>
+                                                                            </div>
+
+
+                                                                            <div class="form-group form-focus mb-0 d-block" [ngClass]="{'focused': formchFilterDetails.value.aa_membership_expiry_date}">
+                                                                                <div class="cal-icon">
+                                                                                    <!-- <input formControlName="aa_membership_expiry_date" type="text" class="form-control floating datetimepicker"> -->
+                                                                                    <input readonly [ngModelOptions]="{standalone: true}" (click)="z.toggle()" (dateSelect)="selectDate('aa_membership_expiry_date',$event)" class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="date_picker_aa_membership_expiry_date" ngbDatepicker
+                                                                                        #z="ngbDatepicker" placeholder="">
+                                                                                </div>
+                                                                                <label class="focus-label">AA Expiry Date</label>
+
+                                                                                <div *ngIf="(submittedQuoteDetails || formchFilterDetails.controls.aa_membership_expiry_date.invalid && (formchFilterDetails.controls.aa_membership_expiry_date.dirty || formchFilterDetails.controls.aa_membership_expiry_date.touched)) && formchFilterDetails.controls.aa_membership_expiry_date.errors">
+                                                                                    <small *ngIf="(submittedQuoteDetails || formchFilterDetails.controls.aa_membership_expiry_date.invalid && (formchFilterDetails.controls.aa_membership_expiry_date.dirty || formchFilterDetails.controls.aa_membership_expiry_date.touched)) && formchFilterDetails.controls.aa_membership_expiry_date.errors"
+                                                                                        class="text-danger">Please Select Valid AA Expiry Date.
+                                                                                </small>
+                                                                                </div>
+
+                                                                            </div>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div *ngIf="first_record_quote_data.policy_subtype_id != 4 && first_record_quote_data.policy_subtype_id !=20 " [ngClass]="{'d-none': div_show_pa_cover }" class="col-12">
+                                                            <div class="card shadowbox border">
+                                                                <div class="card-body">
+                                                                    <div class="ui checkbox">
+                                                                        <input (change)="uploadPopupShow()" formControlName="pa_cover" (click)="selectPaCovers($event.target.checked)" type="checkbox" id="pa_cover">
+                                                                        <label class="mb-0" for="pa_cover">PA Covers</label>
+                                                                    </div>
+
+                                                                    <div [ngClass]="{'d-none': div_show_pa_cover_box }" class="row mt-3 pt-3 border-top">
+
+                                                                        <div class="col-12">
+                                                                            <div class="ui checkbox form-group d-block">
+                                                                                <input (change)="uploadPopupShow()" id="pa_unnamed_persons" formControlName="pa_unnamed_persons" (click)="selectUnnamedPerson($event.target.checked)" type="checkbox">
+                                                                                <label class="mb-0" for="pa_unnamed_persons">PA Unnamed Persons</label>
+                                                                            </div>
+                                                                            <div [ngClass]="{'d-none': div_show_pa_unnamed_sum_insured_box }" class="form-group form-focus select-focus">
+                                                                                <label class="focus-label">Sum Insured (<i class="fa fa-inr"></i>)</label>
+                                                                                <select (change)="uploadPopupShow()" formControlName="pa_sum_insured" class="ui search dropdown">
+                                                                        <option value="">Select</option>
+                                                                        <option *ngFor="let row of result_pa_sum_insured"  value="{{ row.id }}">{{ row.name }}</option>
+
+                                                                    </select>
+                                                                            </div>
+                                                                            <div [ngClass]="{'d-none': div_show_ll_paid_driver }" class="ui checkbox form-group">
+                                                                                <input (change)="uploadPopupShow()" id="ll_paid_driver" formControlName="ll_paid_driver" type="checkbox">
+                                                                                <label class="mb-0" for="ll_paid_driver">LL Paid Driver (1)</label>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div *ngIf="first_record_quote_data.policy_subtype_label!='THIRDPARTY'" [ngClass]="{'d-none': div_show_imt }" class="col-12">
+                                                            <div class="card shadowbox border">
+                                                                <div class="card-body">
+                                                                    <div class="ui checkbox">
+                                                                        <input (change)="uploadPopupShow()" (click)="selectImt($event.target.checked)" formControlName="is_imt" type="checkbox" id="is_imt">
+                                                                        <label class="mb-0" for="is_imt">IMT</label>
+                                                                    </div>
+
+                                                                    <div [ngClass]="{'d-none': div_show_for_imt_box }" class="row mt-3 pt-3 border-top">
+
+                                                                        <div [ngClass]="{'d-none': div_show_for_imt_23 }" class="col-12">
+                                                                            <div class="ui checkbox form-group d-block">
+                                                                                <input (change)="uploadPopupShow()" formControlName="imt_23" type="checkbox" id="imt_23">
+                                                                                <label class="mb-0" for="imt_23">IMT - 23</label>
+                                                                            </div>
+                                                                            <div class="ui checkbox form-group d-block">
+                                                                                <input (change)="uploadPopupShow()" formControlName="imt_34" type="checkbox" name="imt-34" id="imt_34">
+                                                                                <label class="mb-0" for="imt_34">IMT - 34</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="first_record_quote_data.product_type_id == 1 && first_record_quote_data.is_show_cng_div == 1" id="askexternalCNGfittedvalue" class="option-box cng-option-box ui form">
+                                                <h4 class="mb-2">Is External CNG Fitted?</h4>
+                                                <div class="inline fields mb-0">
+                                                    <div class="field">
+                                                        <div class="ui radio checkbox">
+                                                            <input (change)="uploadPopupShow()" type="radio" name="externalCNGfitted" id="externalCNGfitted-yes" value="externalCNGfitted-yes">
+                                                            <label for="externalCNGfitted-yes">Yes</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="field">
+                                                        <div class="ui radio checkbox">
+                                                            <input (change)="uploadPopupShow()" type="radio" name="externalCNGfitted" id="externalCNGfitted-no" value="externalCNGfitted-no">
+                                                            <label for="externalCNGfitted-no">No</label>
+                                                        </div>
+                                                    </div>
+                                                    <div id="externalCNGfittedvalue" class="field pr-0 d-none">
+                                                        <div class="form-group form-focus">
+                                                            <input (change)="uploadPopupShow()" type="text" class="form-control floating" placeholder="eg. 9999">
+                                                            <label class="focus-label">Enter CNG value</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div *ngIf="first_record_quote_data.policy_subtype_label!='THIRDPARTY'" [ngClass]="{'d-none': div_show_geographical_extension_section }" class="option-box individualaddons-option-box">
+                                                <h4 class="mb-2">Geographical Extension
+                                                    <a class="actionbtn edit-btn" data-toggle="collapse" href="#div_geographical_extension_section" role="button" aria-expanded="false" aria-controls="div_geographical_extension_section"></a>
+                                                </h4>
+                                                <div id="div_geographical_extension_section" class="collapse">
+                                                    <div class="row align-items-start">
+                                                        <div class="col-12">
+                                                            <div *ngFor="let row of result_geographical_extension let i = index" class="col-12">
+                                                                <div class="ui checkbox">
+                                                                    <input [ngModelOptions]="{standalone: true}" id="geographical_extension_{{row.id}}" (click)="getGeographicalExtension($event,row)" [name]="'row'+i" [(ngModel)]="row.checked" value="{{row.id}}" type="checkbox">
+                                                                    <label class="mt-2 mb-3" for="geographical_extension_{{row.id}}">{{ row.name }}</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                            <div class="text-center mb-5">
+                                                <button type="submit" class="btn btn-custom green w-100">Update</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </ng-container>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-9 col-md-8 quoteslistwrap">
+
+                        <ng-container *ngIf="is_dealer_url_with_login">
+                            <div *ngIf="success_message" class="alert alert-success" role="alert">
+                                {{ success_message }}
+                            </div>
+
+                            <br>
+
+                            <ng-container *ngIf="first_record_quote_data.policy_subtype_label!='THIRDPARTY'">
+                                <div class="padding-one text-center margin-one no-margin-bottom border radius-10 text-small bg-gray red-text font-weight-500 " *ngIf="(this.first_record_quote_data.is_breakin && selected_product_type_id==2)">
+                                    <span class="bg-red padding-left-right-px white-text radius-10"> NOTE: </span>
+                                    <span class="padding-left-right-px"> Current policy has resulted in
+                                <span class="font-weight-800">
+                                  <strong>BREAK IN CASE</strong>
+                                </span> . Policy will start after number of days given by respective insurance company.
+                                    </span>
+
+                                </div>
+
+                                <div class="padding-one text-center margin-one no-margin-bottom border radius-10 text-small bg-gray red-text font-weight-500 " *ngIf="(this.first_record_quote_data.is_breakin && selected_product_type_id!=2)">
+                                    <span class="bg-red padding-left-right-px white-text radius-10"> NOTE: </span>
+                                    <span class="padding-left-right-px">
+                                Current policy has resulted in
+                                <span class="font-weight-800"><strong>BREAK IN CASE</strong>
+                                </span> . Inspection of your vehicle will be required before you can buy the policy.
+                                    </span>
+                                </div>
+                            </ng-container>
+
+
+                            <div *ngIf="success_message" class="alert alert-success" role="alert">
+                                {{ success_message }}
+                            </div>
+
+
+                            <div *ngIf="error_message" class="alert alert-danger" role="alert">
+                                {{ error_message }}
+                            </div>
+                        </ng-container>
+
+                        <div class="quoteslist">
+
+                            <div class="row updating-quoteslist-btns" *ngIf="popupdiv">
+                                <div class="col-md-6 text-center text-md-right">
+                                    <a href="javascript:void(0);" class="btn btn-custom green btn-lg" (click)="submitFormFilterDetails()">Update</a>
+                                </div>
+                                <div class="col-md-6 text-center text-md-left">
+                                    <a href="javascript:void(0);" class="btn btn-custom red btn-lg" (click)="uploadPopupHide()">Discard</a>
+                                </div>
+                            </div>
+
+                            <div class="{{popupClass}}">
+                                <div class="updating-quoteslist-overlay" *ngIf="popupdiv"></div>
+
+
+                                <div id="quoteitem_1" class="col-md-12 col-sm-6 col-12 quoteitem border" *ngFor="let row of quoteData let i = index; trackBy:trackByQuoteId">
+
+
+
+
+
+                                    <div class="row align-items-center py-2">
+                                        <div class="col-lg-2 col-md-3 col-sm-5 col-5 quoteitembox insurer-box">
+                                            <img src="assets/front/img/partners-logos/{{row.ic_logo}}" alt="">
+                                        </div>
+                                        <!-- <div class="col-lg-10 col-md-4 col-sm-7 col-7 quoteitembox idvdisc-box" *ngIf="row.errormsg!=''">
+                                          {{row.errormsg}}
+                                      </div> -->
+                                        <div class="col-lg-8 col-md-4 col-sm-7 col-7 quoteitembox idvdisc-box" *ngIf="row.is_error == 1">
+                                            <div class="text-danger"> {{row.message}}.</div>
+
+                                        </div>
+
+                                        <div class="col-lg-2 col-md-4 col-sm-7 col-7 quoteitembox idvdisc-box" *ngIf="row.is_error == 0">
+                                            <h4 class="mb-0"><span class="text-muted">IDV:</span> {{row.idv}}</h4>
+                                            <!-- <h4 class="mb-0" *ngIf="row.is_package_addon=='max'"><span class="text-muted">MaxODDisc:</span> ({{ row.max_available_od_discount }})%</h4> -->
+                                            <!-- <h4 class="mb-0" *ngIf="row.is_package_addon!='max'"><span class="text-muted">MaxODDisc:</span> ({{ row.selected_od_discount }})%</h4> -->
+                                        </div>
+                                        <div class="col-lg-3 col-md-5 col-sm-12 quoteitembox addons-box text-center text-md-center" *ngIf="row.is_error == 0">
+                                            <a *ngIf="row.gross_premium > 0" href="javascript:void(0);" data-toggle="modal" [attr.data-target]="'#quoteitem1_policydetails'+row.ic_id" class="btn btn-sm btn-success">
+                                                <i class="fa fa-eye mr-1"></i> Policy Details</a>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-6 col-6 quoteitembox premium-box" *ngIf="row.is_error == 0">
+                                            <span class="text-muted">Premium:</span>
+
+                                            <h2 *ngIf="row.is_set_gross_premium_zero == 0" class="premiumamt mb-0">
+                                                <i class="fa fa-inr"></i> {{row.gross_premium}} <span>(Incl. GST)</span>
+                                            </h2>
+                                            <h6 *ngIf="row.is_set_gross_premium_zero == 1" class="text-danger">{{row.gross_premium}}</h6>
+                                        </div>
+
+                                        <div *ngIf="row.is_error == 0" class="col-lg-2 col-sm-6 col-6 text-right quoteitembox buypolicy-box">
+                                            <a *ngIf="row.gross_premium > 0" href="javascript:void(0);" (click)="buypolicy(row)" class="btn btn-custom green">Buy Policy</a>
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="row border-top py-2" *ngIf="first_record_quote_data.policy_subtype_label!='THIRDPARTY'">
+
+
+                                        <ng-container *ngIf="row.ic_wise_addon_list.list">
+                                            <div class="col-xl-10 col-lg-9 col-md-12">
+                                                <span class="text-muted">{{row.ic_wise_addon_list.name}}:</span>
+
+                                                <ul class="selected-addons-list">
+                                                    <li *ngFor="let addon_row of row.ic_wise_addon_list.list let i = index;">
+
+                                                        <!-- <ng-container *ngIf="row.ic_wise_addon_list.is_package">
+
+                                                          <input *ngIf="row.ic_wise_addon_list.is_package" [checked]="addon_row.checked" (click)="getPackageAddons(addon_row,$event.target.checked,row.ic_wise_addon_list.list)" name="name_{{addon_row.ic_id}}" id="individual_addons_{{addon_row.addon_ids}}_{{i}}"
+                                                              type="radio" value="{{addon_row.addon_ids}}">
+
+                                                          <label class="mb-0" for="individual_addons_{{addon_row.addon_ids}}_{{i}}">{{addon_row.name}}
+                                                            <span *ngIf="row.ic_wise_addon_list.is_package"> ({{ addon_row.addon_names}})</span>
+                                                          </label>
+                                                      </ng-container> -->
+
+                                                        <ng-container *ngIf="!row.ic_wise_addon_list.is_package">
+                                                            <input *ngIf="!row.ic_wise_addon_list.is_package" [disabled]="addon_row.disabled" [checked]="addon_row.checked" (click)="getPackageAddons(addon_row,$event.target.checked,row.ic_wise_addon_list.list)" name="name_{{addon_row.ic_id}}" id="individual_addons_{{addon_row.addon_ids}}_{{i}}_{{addon_row.ic_id}}"
+                                                                type="checkbox" value="{{addon_row.addon_ids}}">
+
+                                                            <label class="mb-0" for="individual_addons_{{addon_row.addon_ids}}_{{i}}_{{addon_row.ic_id}}">{{addon_row.name}}
+                                                          <span *ngIf="row.ic_wise_addon_list.is_package"> ({{ addon_row.addon_names}})</span>
+                                                        </label>
+
+
+                                                        </ng-container>
+
+                                                    </li>
+                                                </ul>
+
+
+
+                                            </div>
+
+                                        </ng-container>
+
+
+
+
+                                    </div>
+
+
+
+
+
+                                    <div [attr.id]="'quoteitem1_policydetails'+row.ic_id" class="modal custom-modal policydetails-modal fade" role="dialog">
+                                        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Policy Details</h5>
+                                                    <button #closebutton type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                          </button>
+                                                </div>
+                                                <div class="modal-body py-0">
+                                                    <div class="policy-details">
+                                                        <div class="row">
+                                                            <div class="col-md-3 pd-leftinfo">
+                                                                <div class="insurer-box option-box">
+                                                                    <img src="assets/front/img/partners-logos/{{row.ic_logo}}" alt="">
+                                                                </div>
+                                                                <div class="insurer-idvncb option-box">
+                                                                    <span>Insured Value (IDV):</span>
+                                                                    <h4>{{row.idvValue}}</h4>
+                                                                    <span>New No Claim Bonus:</span>
+                                                                    <h4 class="mb-0">(NCB) {{row.current_ncb_per}}%</h4>
+                                                                </div>
+                                                                <div class="insurer-premium option-box" *ngIf="row.gross_premium > 0 && row.is_error == 0">
+                                                                    <span>Premium:</span>
+                                                                    <h2 class="premiumamt mb-0"><i class="fa fa-inr"></i> {{row.gross_premium_without_gst}}</h2>
+                                                                    <span>(Excl. GST)</span>
+                                                                    <a *ngIf="row.gross_premium > 0" href="javascript:void(0);" (click)="buypolicy(row)" class="btn btn-custom green buybtn">Buy Policy</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-9 pd-rightinfo">
+                                                                <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+                                                                    <li class="nav-item"><a class="nav-link active" href="#policy-details-tab1" data-toggle="tab">Premium Breakup</a></li>
+
+                                                                </ul>
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane show active" id="policy-details-tab1">
+                                                                        <div class="premium-breakup-content">
+                                                                            <ul *ngIf="policy_sub_id!=5">
+                                                                                <li>
+                                                                                    <h4>Own Damage Premium</h4>
+                                                                                </li>
+                                                                                <li class="sub"><span>Basic Own Damage premium </span><span class="float-right"><i class="fa fa-inr"></i>{{row.basic_od}}</span></li>
+                                                                                <li class="sub" *ngIf="row.electricacc_premium!=0 || row.electricacc_premium!=''"><span>Electrical premium</span><span class="float-right"><i class="fa fa-inr"></i>{{row.electricacc_premium}}</span></li>
+                                                                                <li class="sub" *ngIf="row.non_electricacc_premium!=0 || row.non_electricacc_premium!=''"><span>Non-Electrical premium</span><span class="float-right"><i class="fa fa-inr"></i>{{row.non_electricacc_premium}}</span></li>
+                                                                                <li class="sub" *ngIf="row.geographic_extn_premium!=0 || row.geographic_extn_premium!=''"><span>Geo Extension premium</span><span class="float-right"><i class="fa fa-inr"></i>{{row.geographic_extn_premium}}</span></li>
+                                                                                <li class="sub" *ngIf="row.is_imt23==1"><span>Imt 23 OD Premium</span><span class="float-right"><i class="fa fa-inr"></i>{{row.imt23_od_premium}}</span></li>
+                                                                                <li class="sub" *ngIf="row.is_imt34==1"><span>IMT 34 OD premium</span><span class="float-right"><i class="fa fa-inr"></i>{{row.imt34_od_premium}}</span></li>
+
+
+                                                                            </ul>
+                                                                            <ul *ngIf="policy_sub_id!=5">
+                                                                                <li>
+                                                                                    <h4>Addon Premium</h4>
+                                                                                </li>
+
+                                                                                <li *ngFor="let addon_row_list of row.ic_wise_addon_list.list let i = index;">
+                                                                                    <p *ngIf='addon_row_list.checked==1'>
+                                                                                        <span>{{addon_row_list.addon_names}} </span>
+                                                                                        <span class="float-right"><i class="fa fa-inr"></i> {{addon_row_list.amounts}}</span>
+                                                                                    </p>
+                                                                                </li>
+                                                                                <!-- <li class="sub" *ngIf="row.addon_consumables_amt!=0 || row.addon_consumables_amt!=''"><span>Consumables </span><span class="float-right"><i class="fa fa-inr"></i> {{row.addon_consumables_amt}}</span></li>
+                                                                              <li class="sub" *ngIf="row.addon_engine_protect_amt!=0 || row.addon_engine_protect_amt!=''"><span>Engine Protector </span><span class="float-right"><i class="fa fa-inr"></i> {{row.addon_engine_protect_amt}}</span></li>
+                                                                              <li class="sub" *ngIf="row.addon_rsa_amt!=0 || row.addon_rsa_amt!=''"><span>24x7 Roadside Assistance </span><span class="float-right"><i class="fa fa-inr"></i> {{row.addon_rsa_amt}}</span></li>
+                                                                              <li class="sub" *ngIf="row.addon_key_replacement_amt!=0 || row.addon_key_replacement_amt!=''"><span>Key Protection Cover </span><span class="float-right"><i class="fa fa-inr"></i> {{row.addon_key_replacement_amt}}</span></li>
+                                                                              <li class="sub" *ngIf="row.addon_tyre_cover_amt!=0 || row.addon_tyre_cover_amt!=''"><span>Tyre Protect </span><span class="float-right"><i class="fa fa-inr"></i> {{row.addon_tyre_cover_amt}}</span></li>
+                                                                              <li class="sub" *ngIf="row.addon_nildep_amt!=0 || row.addon_nildep_amt!=''"><span>Zero Depreciation</span><span class="float-right"><i class="fa fa-inr"></i> {{row.addon_nildep_amt}}</span></li>
+                                                                              <li class="sub" *ngIf="row.addon_rti_amt!=0 || row.addon_rti_amt!=''"><span>Return to invoice</span><span class="float-right"><i class="fa fa-inr"></i> {{row.addon_rti_amt}}</span></li>
+                                                                              <li class="sub" *ngIf="row.addon_add_towing_amt!=0 || row.addon_add_towing_amt!=''"><span>Extra Towing</span><span class="float-right"><i class="fa fa-inr"></i> {{row.addon_add_towing_amt}}</span></li> -->
+                                                                            </ul>
+                                                                            <ul *ngIf="policy_sub_id!=4">
+                                                                                <li>
+                                                                                    <h4>Third Party Premium</h4>
+                                                                                </li>
+                                                                                <li class="sub"><span>Basic Third party premium </span><span class="float-right"><i class="fa fa-inr"></i> {{row.basic_tp}}</span></li>
+                                                                                <li class="sub" *ngIf="row.ll_paid_drivpremium!=0 || row.ll_paid_drivpremium!=''"><span>Driver Cover premium (LL Dirver cover)</span><span class="float-right"><i class="fa fa-inr"></i> {{row.ll_paid_drivpremium}}</span></li>
+                                                                                <li class="sub" *ngIf="row.pa_unnamed_persons_premium!=0 || row.pa_unnamed_persons_premium!=''"><span>Passenger cover Premium</span><span class="float-right"><i class="fa fa-inr"></i> {{row.pa_unnamed_persons_premium}}</span></li>
+                                                                                <li class="sub" *ngIf="row.cng_lpg_tp_val!=0 || row.cng_lpg_tp_val!=''"><span>CNG/LPG Third party premium </span><span class="float-right"><i class="fa fa-inr"></i> {{row.cng_lpg_tp_val}}</span></li>
+                                                                                <li class="sub" *ngIf="row.geographicextn_tp_premium!=0 || row.geographicextn_tp_premium!=''"><span>Geo Extension TP premium</span><span class="float-right"><i class="fa fa-inr"></i>{{row.geographicextn_tp_premium}}</span></li>
+                                                                                <li class="sub" *ngIf="row.pa_cover_prem_owner_driver!=0 || row.pa_cover_prem_owner_driver!=''"><span>Personal Accident -Owner Driver Cover premium  </span><span class="float-right"><i class="fa fa-inr"></i> {{row.pa_cover_prem_owner_driver}}</span></li>
+                                                                                <li class="sub" *ngIf="row.imt_34_tp!=0 || row.imt_34_tp!=''"><span>IMT-34 TP Premium </span><span class="float-right"><i class="fa fa-inr"></i> {{row.imt_34_tp}}</span></li>
+
+                                                                            </ul>
+                                                                            <ul *ngIf="policy_sub_id!=5">
+                                                                                <li>
+                                                                                    <h4>Discount</h4>
+                                                                                </li>
+                                                                                <li class="sub" *ngIf="row.ncb_amount!=0 || row.ncb_amount!=''"><span>NCB </span><span class="float-right">- <i class="fa fa-inr"></i> {{row.ncb_amount}}</span></li>
+                                                                                <li class="sub" *ngIf="row.antitheft_disc_amount!=0 || row.antitheft_disc_amount!=''"><span>Antitheft discount</span><span class="float-right">- <i class="fa fa-inr"></i> {{row.antitheft_disc_amount}}</span></li>
+
+                                                                                <li class="sub" *ngIf="row.aa_disc_amount!=0 || row.aa_disc_amount!=''"><span>Automobile Association</span><span class="float-right">- <i class="fa fa-inr"></i> {{row.aa_disc_amount}}</span></li>
+                                                                            </ul>
+                                                                            <ul class="finalpremiumbox">
+                                                                                <li>
+                                                                                    <h4><span>Premium</span><span class="float-right"><i class="fa fa-inr"></i> {{row.gross_premium_without_gst}}</span></h4>
+                                                                                </li>
+
+                                                                                <li class="sub">
+                                                                                    <span>GST @18% </span>
+                                                                                    <span class="float-right"><i class="fa fa-inr"></i> {{row.service_tax}}</span>
+                                                                                </li>
+
+
+
+                                                                                <li class="sub" *ngIf="row.cess_amt_1 > 0">
+                                                                                    <span>CESS @1% </span><span class="float-right"><i class="fa fa-inr"></i> {{row.cess_amt_1}}</span>
+                                                                                </li>
+
+                                                                                <li>
+                                                                                    <h4><span>Final Premium (Incl. GST)</span> <span class="float-right finalpremium"><i class="fa fa-inr"></i> {{row.gross_premium}}</span></h4>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="tab-pane" id="policy-details-tab2">
+                                                                        <div class="coverage-details-content">
+                                                                            <div class="row">
+                                                                                <div class="col-md-6 border-right">
+                                                                                    <h4>What's Covered?</h4>
+                                                                                    <ul>
+                                                                                        <li><i class="fa fa-check text-success"></i> <b>Loss or damage to your vehicle against natural calamities -</b> Fire, explosion, self-ignition or lightning, earthquake,
+                                                                                            flood etc...</li>
+                                                                                        <li><i class="fa fa-check text-success"></i> <b>Personal Accident Cover -</b> Coverage of 15 lakhs for the individual driver of the vehicle while travelling, mounting
+                                                                                            or dismounting from the car.</li>
+                                                                                        <li><i class="fa fa-check text-success"></i> <b>Loss or damage to your vehicle against man-made calamities</b></li>
+                                                                                        <li><i class="fa fa-check text-success"></i> <b>Third Party Legal Liability</b></li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <h4>What's not covered?</h4>
+                                                                                    <ul>
+                                                                                        <li><i class="fa fa-times text-danger"></i> Normal wear and tear and general ageing of the vehicle</li>
+                                                                                        <li><i class="fa fa-times text-danger"></i> Depreciation or any consequential loss</li>
+                                                                                        <li><i class="fa fa-times text-danger"></i> Damage to/by a person driving any vehicles or cars without a valid license</li>
+                                                                                        <li><i class="fa fa-times text-danger"></i> Damage to/by a person driving the vehicle under the influence of drugs or liquor</li>
+                                                                                        <li><i class="fa fa-times text-danger"></i> Mechanical/ electrical breakdown</li>
+                                                                                        <li><i class="fa fa-times text-danger"></i> Loss/ damage due to war, mutiny or nuclear risk</li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                                <div class="col-md-12 border-top pt-2">
+                                                                                    <h4>Recomended covers</h4>
+                                                                                    <ul class="recomendedcovers-list">
+                                                                                        <li>
+                                                                                            <div class="ui checkbox">
+                                                                                                <input type="checkbox" name="recomendedcovers" id="recomendedcover-zerodep">
+                                                                                                <label for="recomendedcover-zerodep">Zero dep</label>
+                                                                                            </div>
+                                                                                            <div class="subtext">Zero dep insurance cover, also known as Zero Dep policy, is a type of insurance cover which offers complete coverage without factoring in depreciation value of
+                                                                                                the vehicle</div>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <div class="ui checkbox">
+                                                                                                <input type="checkbox" name="recomendedcovers" id="recomendedcover-engineprotect">
+                                                                                                <label for="recomendedcover-engineprotect">Engine protect</label>
+                                                                                            </div>
+                                                                                            <div class="subtext">An engine protection cover in car insurance keeps you financially protected against any repair cost in case of a damaged engine and/or its parts</div>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <div class="ui checkbox">
+                                                                                                <input type="checkbox" name="recomendedcovers" id="recomendedcover-rsa">
+                                                                                                <label for="recomendedcover-rsa">Roadside assistance</label>
+                                                                                            </div>
+                                                                                            <div class="subtext">What is Roadside Assistance? Roadside Assistance or a Breakdown cover is an add-on you can opt for in your comprehensive car insurance or two-wheeler insurance
+                                                                                                policy, to help you in times where you need roadside assistance, a.k.a need some help when you're stuck on the road.</div>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayForwardQuote}">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Send Quotes On Email</h5>
+                        <button (click)="closePopupForwardQuote()" type="button" class="close" data-dismiss="modal">&times;</button>
+                        <span aria-hidden="true">&times;</span>
+
+                    </div>
+                    <form [formGroup]="formForwardQuote" method="post" (ngSubmit)="submitFormForwardQuote()">
+
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="error" *ngIf="submittedForwardQuote && formForwardQuote.controls.quote_ids.errors">
+                                        <div *ngIf="submittedForwardQuote && formForwardQuote.controls.quote_ids.errors.required">
+                                            Please Select Quote
+                                        </div>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-sm">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="align-middle">Email 1</td>
+                                                    <td>
+                                                        <input formControlName="email_1" type="text" class="form-control">
+                                                        <div class="error" *ngIf="submittedForwardQuote && formForwardQuote.controls.email_1.errors">
+                                                            <div *ngIf="submittedForwardQuote && formForwardQuote.controls.email_1.errors.required">
+                                                                Please Enter Email address
+                                                            </div>
+                                                            <div *ngIf="submittedForwardQuote && formForwardQuote.controls.email_1.errors.pattern">
+                                                                Please enter valid email address
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-middle">Email 2</td>
+                                                    <td>
+                                                        <input formControlName="email_2" type="text" class="form-control">
+                                                        <div class="error" *ngIf="submittedForwardQuote && formForwardQuote.controls.email_2.errors">
+                                                            <div *ngIf="submittedForwardQuote && formForwardQuote.controls.email_2.errors.required">
+                                                                Please Enter Email address
+                                                            </div>
+                                                            <div *ngIf="submittedForwardQuote && formForwardQuote.controls.email_2.errors.pattern">
+                                                                Please enter valid email address
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn btn btn-custom green submit-btn">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayForwardQuoteSms}">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Send Quotes On SMS</h5>
+
+                        <button (click)="closePopupForwardQuote()" type="button" class="close" data-dismiss="modal">&times;</button>
+                        <span aria-hidden="true">&times;</span>
+                    </div>
+
+                    <form [formGroup]="formForwardQuoteSms" method="post" (ngSubmit)="submitFormForwardQuoteSms()">
+
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="error" *ngIf="submittedForwardQuoteSms && formForwardQuoteSms.controls.quote_ids.errors">
+                                        <div *ngIf="submittedForwardQuoteSms && formForwardQuoteSms.controls.quote_ids.errors.required">
+                                            Please Select Quote
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-sm">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="align-middle">Phone 1</td>
+                                                    <td>
+                                                        <input type="text" formControlName="mobile_1" class="form-control" maxlength="10">
+                                                        <div class="error" *ngIf="submittedForwardQuoteSms && formForwardQuoteSms.controls.mobile_1.errors">
+                                                            <div *ngIf="submittedForwardQuoteSms && formForwardQuoteSms.controls.mobile_1.errors.required">
+                                                                Please Enter mobile number
+                                                            </div>
+                                                            <div *ngIf="submittedForwardQuoteSms && formForwardQuoteSms.controls.mobile_1.errors.pattern">
+                                                                Please enter valid mobile number
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-middle">Phone 2</td>
+                                                    <td>
+                                                        <input formControlName="mobile_2" type="text" class="form-control" maxlength="10">
+                                                        <div class="error" *ngIf="submittedForwardQuoteSms && formForwardQuoteSms.controls.mobile_2.errors">
+                                                            <div *ngIf="submittedForwardQuoteSms && formForwardQuoteSms.controls.mobile_2.errors.required">
+                                                                Please Enter mobile number
+                                                            </div>
+                                                            <div *ngIf="submittedForwardQuoteSms && formForwardQuoteSms.controls.mobile_2.errors.pattern">
+                                                                Please enter valid mobile number
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn btn btn-custom green submit-btn">Send</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

@@ -1,0 +1,154 @@
+<div class="page-wrapper">
+
+    <!-- Page Content -->
+    <div class="content" *ngIf="result_proposal_details">
+
+        <app-proposal-middle-content (parentIsAuthenticate)='onParentIsAuthenticate($event)' [is_from_proposal_page]="is_from_proposal_page" [result_proposal_details]="result_proposal_details" [result_banks]="result_banks" [result_payment_types]="result_payment_types"
+            [result_is_free]="result_is_free" [is_error]="is_error" [is_error_message]="is_error_message"></app-proposal-middle-content>
+
+
+
+
+        <ul class="shareIcons proposal-shareIcons">
+
+
+            <ng-container *ngIf="is_dealer_url_with_login">
+                <li *ngIf="result_proposal_details.breakin_status_id != 4 " class="shareIcon edit">
+                    <a (click)="editProposal()" href="javascript:void(0)">Edit Proposal</a>
+                </li>
+                <li class="shareIcon cancel">
+                    <a (click)="cancelProposal()" href="javascript:void(0)">Cancel Proposal</a>
+                </li>
+            </ng-container>
+
+            <!-- <li class="shareIcon edit"> -->
+            <!-- <a (click)="editProposal()" href="javascript:void(0)">Edit Proposal</a> -->
+            <!-- </li> -->
+
+
+
+
+            <li class="shareIcon download">
+                <a (click)="downloadProposal()" href="javascript:void(0)">Download Proposal</a>
+            </li>
+
+            <li class="shareIcon forward">
+                <a (click)="openForwardProposalModal()" href="javascript:void(0)">Forward Proposal</a>
+            </li>
+        </ul>
+
+        <!--  Forward Proposal Modal -->
+        <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayForwardProposal}">
+            <!-- <div class="modal custom-modal fade" role="dialog"> -->
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Forward Proposal</h5>
+                        <button (click)="closePopupForwardProposal()" type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    </div>
+                    <form [formGroup]="formForwardProposal" method="post" (ngSubmit)="submitFormForwardProposal()">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div *ngIf="success_message" class="alert alert-success" role="alert">
+                                        {{ success_message }}
+                                    </div>
+
+                                    <div *ngIf="error_message" class="alert alert-danger" role="alert">
+                                        {{ error_message }}
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-sm">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="align-middle">Email 1</td>
+                                                    <td>
+                                                        <input formControlName="email_1" type="text" class="form-control" disabled="">
+                                                        <div class="error" *ngIf="submittedForwardProposal && formForwardProposal.controls.email_1.errors">
+                                                            <div *ngIf="submittedForwardProposal && formForwardProposal.controls.email_1.errors.required">
+                                                                Please enter email address
+                                                            </div>
+                                                            <div *ngIf="submittedForwardProposal && formForwardProposal.controls.email_1.errors.pattern">
+                                                                Please enter valid email address
+                                                            </div>
+                                                            <!-- <div *ngIf="submittedForwardProposal && formForwardProposal.controls.email_1.errors.email">
+                                                                Please enter valid email address
+                                                            </div> -->
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-middle">Email 2</td>
+                                                    <td>
+                                                        <input formControlName="email_2" type="text" class="form-control">
+                                                        <div class="error" *ngIf="submittedForwardProposal && formForwardProposal.controls.email_2.errors">
+                                                            <div *ngIf="submittedForwardProposal && formForwardProposal.controls.email_2.errors.required">
+                                                                Please enter email address
+                                                            </div>
+                                                            <div *ngIf="submittedForwardProposal && formForwardProposal.controls.email_2.errors.pattern">
+                                                                Please enter valid email address
+                                                            </div>
+                                                            <!-- <div *ngIf="submittedForwardProposal && formForwardProposal.controls.email_2.errors.email">
+                                                                Please enter valid email address
+                                                            </div> -->
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-middle">Mob 1</td>
+                                                    <td>
+                                                        <input formControlName="mob_1" type="text" class="form-control" disabled="">
+                                                        <div class="error" *ngIf="submittedForwardProposal && formForwardProposal.controls.mob_1.errors">
+                                                            <div *ngIf="submittedForwardProposal && formForwardProposal.controls.mob_1.errors.required">
+                                                                Please enter mobile number
+                                                            </div>
+                                                            <div *ngIf="submittedForwardProposal && formForwardProposal.controls.mob_1.errors.pattern">
+                                                                Please enter mobile number
+                                                            </div>
+                                                            <!-- <div *ngIf="submittedForwardProposal && formForwardProposal.controls.email_1.errors.email">
+                                                                Please enter valid email address
+                                                            </div> -->
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-middle">Mob 2</td>
+                                                    <td>
+                                                        <input formControlName="mob_2" type="text" class="form-control" maxlength="10">
+                                                        <div class="error" *ngIf="submittedForwardProposal && formForwardProposal.controls.mob_2.errors">
+                                                            <div *ngIf="submittedForwardProposal && formForwardProposal.controls.mob_2.errors.required">
+                                                                Please enter mobile number
+                                                            </div>
+                                                            <div *ngIf="submittedForwardProposal && formForwardProposal.controls.mob_2.errors.pattern">
+                                                                Please enter valid mobile number
+                                                            </div>
+                                                            <!-- <div *ngIf="submittedForwardProposal && formForwardProposal.controls.mob_2.errors.email">
+                                                                Please enter valid email address
+                                                            </div> -->
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn btn btn-custom green submit-btn">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- / Forward Proposal Modal -->
+
+    </div>
+    <!-- /Page Content -->
+</div>
+
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

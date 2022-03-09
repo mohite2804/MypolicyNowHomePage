@@ -1,0 +1,58 @@
+<div class="loginform">
+    <div>
+        <h4>Login into Admin</h4>
+        <p>Use your credentials to access your account.</p>
+    </div>
+
+    <div *ngIf="invalidLoginMessage" class="alert alert-danger" role="alert">
+        {{invalidLoginMessage}}
+    </div>
+
+
+
+    <form class="ui form" [formGroup]="submitForm" (ngSubmit)="submitLoginFormData()">
+
+        <div class="field">
+            <div class="ui left icon input">
+                <input formControlName="email" type="email" class="form-control" placeholder="Email" autocomplete="off">
+                <i class="icon user"></i>
+            </div>
+            <div *ngIf="submitted && submitForm.controls.email.errors">
+                <small *ngIf="submitForm.controls.email.errors.required" class="text-danger">Email is required</small>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="ui left icon input">
+                <input formControlName="password" type="password" class="form-control" placeholder="Password" autocomplete="off">
+                <i class="icon user"></i>
+            </div>
+            <div *ngIf="submitted && submitForm.controls.password.errors">
+                <small *ngIf="submitForm.controls.password.errors.required" class="text-danger">Password is required</small>
+            </div>
+        </div>
+
+        <div *ngIf="captchaRequired" class="row my-4">
+            <re-captcha formControlName="captcha_google"></re-captcha>
+            <div *ngIf="submitted && submitForm.controls.captcha_google.errors">
+                <div *ngIf="submitted && submitForm.controls.captcha_google.errors.required" class="text-danger"> I am human.</div>
+            </div>
+        </div>
+
+
+        <div class="rc-audiochallenge-tdownload"></div>
+
+        <div class="row my-4 align-items-center">
+            <!-- <div class="col-12 text-center my-2">
+             <a href="javascript:void(0);" [routerLink]="['/admin/forgot-password']">Forgot password?</a>
+         </div> -->
+        </div>
+
+        <input type="submit" class="btn btn-block btn-lg" value="Login here">
+
+    </form>
+
+
+
+</div>
+<app-loader [loaderActive]="loaderActive"></app-loader>

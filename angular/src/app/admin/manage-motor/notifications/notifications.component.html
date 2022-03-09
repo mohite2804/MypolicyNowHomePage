@@ -1,0 +1,175 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Notification Management </h3>
+        </div>
+        <div class="col-auto float-right ml-auto">
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row" *ngIf="access_permission == 'read_write'">
+	<div class="col-md-12">
+		<form [formGroup]="formNotification" (ngSubmit)="submitForm()" method="post">
+			<div class="card shadowbox">            
+				<div class="card-body">  
+
+					<div class="row">
+						<div class="col-md-5">
+							<div class="form-group">
+								<label>Notification Type:<span class="error"> *</span></label>
+								<input formControlName="notification_type"  type="text" list="id-notification_type" class="form-control" maxlength="300">							
+								<div class="error" *ngIf="submitted && formNotification.controls.notification_type.errors" >
+									<div *ngIf="submitted && formNotification.controls.notification_type.errors.required">
+										Notification Type is required.
+									</div>
+									<div *ngIf="submitted && formNotification.controls.notification_type.errors.pattern">
+										Only Alphabets accepts.
+									</div>
+								</div>		
+							</div>
+						</div>
+
+						<div class="col-md-7">
+							<div class="form-group">
+								<label>*Notification Message:<span class="error"> *</span></label>
+								<textarea formControlName="notification_msg"  type="text" list="id-notification_msg" class="form-control" maxlength="300"></textarea>						
+								<div class="error" *ngIf="submitted && formNotification.controls.notification_msg.errors" >
+									<div *ngIf="submitted && formNotification.controls.notification_msg.errors.required">
+										Notification Message is required.
+									</div>
+									<div *ngIf="submitted && formNotification.controls.notification_msg.errors.pattern">
+										Only Alphabets accepts.
+									</div>
+								</div>		
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6 col-12 ">
+							<div class="form-group">
+								<label>
+									<input type="radio" formControlName="reciever_type" value="1" (click)="showMisp($event.target.value)"> : {{ bp_label }}
+								</label>&nbsp;&nbsp;
+								<label>
+									<input type="radio" formControlName="reciever_type" value="2" (click)="showDp($event.target.value)"> : {{ pos_label }} 
+								</label>&nbsp;&nbsp;
+								<label>
+									<input type="radio" formControlName="reciever_type" value="3" (click)="showMispDp($event.target.value)"> : {{ bp_label }} & {{ pos_label }}
+								</label>
+								<div class="error" *ngIf="submitted && formNotification.controls.reciever_type.errors" >
+									<div *ngIf="submitted && formNotification.controls.reciever_type.errors.required">
+										This field is required.
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row" [ngStyle]="{'display':displayMispDrodown}">
+						<div class="col-md-12 col-12">
+							<div class="form-group">
+								<label>{{ bp_label }}s :<span class="error"> *</span> </label>
+								<!-- <select class="form-control" formControlName="misp_id" multiple  (change)="getFilterDp($event)">
+									<option value="">Select MISP</option>
+									<option value="ALL">Select All</option>
+									<option value="{{ row.user_master_id }}" *ngFor="let row of mispData" >{{ row.full_name }} <span *ngIf="row.dealer_code">({{row.dealer_code}})</span></option>
+								</select> -->
+								<!--<select class="form-control" formControlName="misp_id" (change)="getFilterDp($event)" multiple>
+									<option value="">Select MISP</option>
+									<option value="ALL">Select All</option>
+									<option value="{{ row.misp_id }}" *ngFor="let row of mispData" >{{ row.name_misp }}</option>
+								</select>-->
+									<ng-select class="form-control misp_select_box"  formControlName="misp_id"
+										[items]="mispData"
+							            [multiple]="true"
+									    bindLabel="bp_name"
+							            placeholder="Select {{ bp_label }}"
+							            appendTo="body"
+							            [selectableGroup]="true"
+							            [selectableGroupAsModel]="false"
+							            [closeOnSelect]="false"
+							            bindValue="business_partner_master_id"
+							            (change)="getFilterDp($event)"
+										groupBy="groupby"
+							            [(ngModel)]="selectedMisp">
+							            <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+									        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}"/> Select All
+									    </ng-template>
+									    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+									        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}"/> {{item.bp_name | uppercase}}
+									    </ng-template>
+								</ng-select>
+
+								
+								<div class="error" *ngIf="submitted && formNotification.controls.misp_id.errors" >
+									<div *ngIf="submitted && formNotification.controls.misp_id.errors.required">
+										Please select at least one {{ bp_label }}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row dp_div"   [ngStyle]="{'display':displayDpDrodown}">
+						<div class="col-md-12 col-12">
+							<div class="form-group">
+								<label>{{ pos_label }}s :<span class="error"> *</span></label>
+								<!--<select class="form-control" formControlName="dp_id" multiple>
+									<option value="">Select DP</option>
+									<option value="ALL">Select All</option>
+									<option value="{{ row.user_master_id }}" *ngFor="let row of dpData" >{{ row.full_name }} <span *ngIf="row.dealer_code">({{row.dealer_code}})</span></option>
+								</select>-->
+								<ng-select class="form-control dp_select_box"  formControlName="dp_id"
+										[items]="dpData"
+							            [multiple]="true"
+									    bindLabel="app_fullname"
+							            placeholder="Select Pos User"
+							            appendTo="body"
+										[selectableGroup]="true"
+							            [selectableGroupAsModel]="false"
+							            [closeOnSelect]="false"
+							            bindValue="pos_id"
+										groupBy="group_by_pos"
+							            [(ngModel)]="selectedDp">
+							            <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index" >
+									        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}"/> {{ item.group_by_pos }}
+									    </ng-template>
+									    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+									        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" [ngModelOptions]="{standalone: true}"/> {{item.app_fullname | uppercase}}
+									    </ng-template>
+								</ng-select>
+
+								<div class="error" *ngIf="submitted && formNotification.controls.dp_id.errors" >
+									<div *ngIf="submitted && formNotification.controls.dp_id.errors.required">
+										{{ pos_label }} is required.
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-group">
+							<div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+								<strong>{{responseMsg}}</strong>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="submit-section">
+							<input *ngIf="btnSubmit" class="btn btn-custom green btn-lg" type="submit" value="Submit">
+						</div>
+					</div>	
+
+				</div>	
+			</div>
+		</form>
+	</div>
+</div>
+
+<app-loader [loaderActive]="loaderActive"></app-loader>    	

@@ -1,0 +1,220 @@
+<div class="page-wrapper">
+    <div class="content"  *ngIf="policy_type_name_div">
+        <section class="py-0">                    
+            <div class="row">
+                <div class="col-md-12 border quotes-topinfo shadowbox py-2">
+                    <div class="container">
+                        <div class="row py-2">
+                            <div class="col-md-1 col-sm-1 col-12 quotes-box d-block d-md-none">
+                                <div>
+                                    <a class="actionbtn edit-btn" href="#"><i class="fa fa-pencil"></i></a>
+                                </div>
+                            </div> 
+                            <div class="col-md-5 col-sm-4 col-12 quotes-box">
+                                <div class="font-style">
+                                    <i class="fa fa-male brand-text-2 title-large"></i>
+                                </div>
+                                <div style="margin-top:11px;">
+                                    <h4 class="mb-0"><span class="text-muted white">Policy:</span> {{policy_type_name}} ( {{policy_subtype_name}} )</h4>                                            
+                                    <h4 class="mb-0"><span class="text-muted white">Insured Members:</span> 
+                                        <span *ngIf="insured_type_self !=''"> {{insured_type_self}} - ({{insured_type_self_age}})</span> 
+                                        <span *ngIf="insured_type_spouse !=''">, {{insured_type_spouse}} - ({{insured_type_spouse_age}})</span>
+                                        <span *ngIf="insured_type_mother !=''">, {{insured_type_mother}} - ({{insured_type_mother_age}})</span>
+                                        <span *ngIf="insured_type_father !=''">, {{insured_type_father}} - ({{insured_type_father_age}})</span>
+                                        <span *ngIf="insured_type_son1 !=''">, {{insured_type_son1}} - ({{insured_type_son1_age}})</span>
+                                        <span *ngIf="insured_type_son2 !=''">, {{insured_type_son2}} - ({{insured_type_son2_age}})</span>
+                                        <span *ngIf="insured_type_son3 !=''">, {{insured_type_son3}} - ({{insured_type_son3_age}})</span>
+                                        <span *ngIf="insured_type_son4 !=''">, {{insured_type_son4}} - ({{insured_type_son4_age}})</span>
+                                        <span *ngIf="insured_type_daughter1 !=''">, {{insured_type_daughter1}} - ({{insured_type_daughter1_age}})</span>
+                                        <span *ngIf="insured_type_daughter2 !=''">, {{insured_type_daughter2}} - ({{insured_type_daughter2_age}})</span>
+                                        <span *ngIf="insured_type_daughter3 !=''">, {{insured_type_daughter3}} - ({{insured_type_daughter3_age}})</span>
+                                        <span *ngIf="insured_type_daughter4 !=''">, {{insured_type_daughter4}} - ({{insured_type_daughter4_age}})</span>
+                                    </h4>                                            
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-12 quotes-box">
+                                <div>
+                                    <h4 class="mb-0"><span class="text-muted white">Child Planning:</span> No</h4>
+                                    <h4 class="mb-0" *ngIf="membersdisease == 'membersdiseaseNo'"><span class="text-muted white">Disease:</span> No</h4>
+                                    <h4 class="mb-0" *ngIf="membersdisease == 'membersdiseaseYes'"><span class="text-muted white">Disease:</span> Yes</h4>
+                                    <h4 class="mb-0"><span class="text-muted white">Pincode:</span> {{pincode}}</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-12 quotes-box border-right-0">
+                                <div>
+                                    <h4 class="mb-0"><span class="text-muted white">SUM IN:</span> {{selected_suminsured}}</h4>
+                                    <h4 class="mb-0"><span class="text-muted white">Tenure:</span> {{tenure}} Year</h4>
+                                    <h4 class="mb-0"><span class="text-muted white" *ngIf="showTopup">Deductible:</span> {{selected_deductible}} Year</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-12 quotes-box d-none d-md-block">
+                                <div>
+                                    <!-- <a  routerLink ="../quote" class="actionbtn edit-btn" href="javascript:void(0);"><i class="fa fa-pencil"></i></a> -->
+                                </div>
+                            </div>                                    
+                        </div>
+                        <div class="row py-2 d-md-none align-items-center">
+                            <div class="col-sm-6 col-12">
+                                <div class="quotes-editoption">
+                                    <div class="option-box covers-option-box">
+                                        <a id="slidecover" class="actionbtn edit-btn" href="javascript:void(0);"><i class="fa fa-pencil"></i></a>
+                                        <h4 class="mb-0">Select Rider's Option</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+            <div class="container">
+                <div class="row mx-0" style="background: #fff; margin-top: 20px;">  
+                    <div class="col-md-12"><p style="text-align:center; padding: 10px; color:#114f8f; font-size: 20px; font-weight: 600;">Compare Plans <span style="float: right;"><a routerLink="../quotation" style="text-decoration:none"><i class="fa fa-close"></i></a></span></p></div>
+                    <div class="col-md-12">
+                        <table width="100%" style="border: 1px solid #000;">
+                            <tr>
+                                <td  colspan="1"></td>
+                                <td *ngFor="let row of planArr" style="padding-top: 25px; width: 340px;">
+                                    <img src="assets/front/img/partners-logos/{{row.logo}}" style="width: 120px; border: 1px solid #cfcfcf; border-radius: 4px;">
+                                </td>
+                            </tr><br>
+                            <tr>
+                                <td  colspan="1"></td>
+                                <td *ngFor="let row of planArr">
+                                    <h4>{{row.plan_name}}</h4>
+                                </td>
+                            </tr><br>
+                            <tr>
+                                <td  colspan="1"></td>
+                                <td *ngFor="let row of planArr">
+                                    <tr>
+                                        <td style="width:150px;"><span>Sum Insured<br><b>₹{{row.sum_insured}}</b></span></td>
+                                        <td><span>Premium<br> <b>₹{{row.final_premium}}</b></span></td>
+                                    </tr>
+                                </td>
+                            </tr><br>
+                            <tr>
+                                <td  colspan="1"></td>
+                                <td *ngFor="let row of planArr">
+                                    <a href="javascript:void(0);" (click)="quote_customerDetails(row.id, row.unique_reference_no)" class="btn btn-custom green">Buy Policy</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  colspan="1"></td>
+                                <td  *ngFor="let row of planArr"><hr style="width: 297px; float: left;"></td>
+                            </tr>
+                            <p style="font-size: 22px; font-weight: 700; padding-left: 10px;">Policy Highlights</p>
+                            <tr  style="background: #f5f5f5;">
+                                <td><p style="font-size:18px; font-weight: 500; padding-left: 10px;">Hospitalization</p></td>
+                                <td  *ngFor="let row of planArr" style="padding: 14px;">
+                                    <p *ngIf="row.hospitalization !=null" style="font-size: 13px; font-weight: 500;">{{row.hospitalization}}</p>
+                                    <p *ngIf="row.hospitalization ==null" style="padding-left:50px; font-size: 13px; font-weight: 500;">No</p>
+                                 </td>
+                            </tr><br>
+                            <tr>
+                                <td><p style="font-size:18px; font-weight: 500; padding-left: 10px;">Pre Hospitalization</p></td>
+                                <td  *ngFor="let row of planArr" style="padding: 14px;">
+                                    <p *ngIf="row.pre_hospitalisation !=null" style="font-size: 13px; font-weight: 500;">{{row.pre_hospitalisation}}</p>
+                                    <p *ngIf="row.pre_hospitalisation ==null" style="padding-left:50px; font-size: 13px; font-weight: 500;">No</p>
+                                 </td>
+                            </tr><br>
+                            <tr  style="background: #f5f5f5;">
+                                <td><p style="font-size:18px; font-weight: 500; padding-left: 10px;">Post Hospitalization</p></td>
+                                <td  *ngFor="let row of planArr" style="padding: 14px;">
+                                    <p *ngIf="row.post_hospitalisation !=null" style="font-size: 13px; font-weight: 500;">{{row.post_hospitalisation}}</p>
+                                    <p *ngIf="row.post_hospitalisation ==null" style="padding-left:50px; font-size: 13px; font-weight: 500;">No</p>
+                                 </td>
+                            </tr><br>
+                            <tr>
+                                <td><p style="font-size:18px; font-weight: 500; padding-left: 10px;">Day Care Procedures</p></td>
+                                <td  *ngFor="let row of planArr" style="padding: 14px;">
+                                    <p *ngIf="row.day_care_procedures !=null" style="font-size: 13px; font-weight: 500;">{{row.day_care_procedures}}</p>
+                                    <p *ngIf="row.day_care_procedures ==null" style="padding-left:50px; font-size: 13px; font-weight: 500;">No</p>
+                                 </td>
+                            </tr><br>
+                            <tr  style="background: #f5f5f5;">
+                                <td><p style="font-size:18px; font-weight: 500; padding-left: 10px;">Ambulance</p></td>
+                                <td  *ngFor="let row of planArr" style="padding: 14px;">
+                                    <p *ngIf="row.ambulance !=null" style="font-size: 13px; font-weight: 500;">{{row.ambulance}}</p>
+                                    <p *ngIf="row.ambulance ==null" style="padding-left:50px; font-size: 13px; font-weight: 500;">No</p>
+                                 </td>
+                            </tr><br>
+                            <tr>
+                                <td><p style="font-size:18px; font-weight: 500; padding-left: 10px;">Ayush Coverage Treatment</p></td>
+                                <td  *ngFor="let row of planArr" style="padding: 14px;">
+                                    <p *ngIf="row.ayush_coverage_treatment !=null" style="font-size: 13px; font-weight: 500;">{{row.ayush_coverage_treatment}}</p>
+                                    <p *ngIf="row.ayush_coverage_treatment ==null" style="padding-left:50px; font-size: 13px; font-weight: 500;">No</p>
+                                 </td>
+                            </tr><br>
+                            <tr style="background: #f5f5f5;">
+                                <td><p style="font-size:18px; font-weight: 500; padding-left: 10px;">Cataract Coverage</p></td>
+                                <td  *ngFor="let row of planArr" style="padding: 14px;"> 
+                                    <p *ngIf="row.cataract_coverage !=null" style="font-size: 13px; font-weight: 500;">{{row.cataract_coverage}}</p>
+                                    <p *ngIf="row.cataract_coverage ==null" style="padding-left:50px; font-size: 13px; font-weight: 500;">No</p>
+                                 </td>
+                            </tr><br>
+                            <tr>
+                                <td><p style="font-size:18px; font-weight: 500; padding-left: 10px;">Dental Treatment</p></td>
+                                <td  *ngFor="let row of planArr" style="padding: 14px;">
+                                    <p *ngIf="row.dental_treatment !=null" style="font-size: 13px; font-weight: 500;">{{row.dental_treatment}}</p>
+                                    <p *ngIf="row.dental_treatment ==null" style="padding-left:50px; font-size: 13px; font-weight: 500;">No</p>
+                                 </td>
+                            </tr><br>
+                            <tr style="background: #f5f5f5;">
+                                <td><p style="font-size:18px; font-weight: 500; padding-left: 10px;">Plastic Surgery</p></td>
+                                <td  *ngFor="let row of planArr" style="padding: 14px;">
+                                    <p *ngIf="row.plastic_surgery !=null" style="font-size: 13px; font-weight: 500;">{{row.plastic_surgery}}</p>
+                                    <p *ngIf="row.plastic_surgery ==null" style="padding-left:50px; font-size: 13px; font-weight: 500;">No</p>
+                                 </td>
+                            </tr><br>
+                            <tr>
+                                <td><p style="font-size:18px; font-weight: 500; padding-left: 10px;">Dental Treatment</p></td>
+                                <td  *ngFor="let row of planArr" style="padding: 14px;">
+                                    <p *ngIf="row.dental_treatment !=null" style="font-size: 13px; font-weight: 500;">{{row.dental_treatment}}</p>
+                                    <p *ngIf="row.dental_treatment ==null" style="padding-left:50px; font-size: 13px; font-weight: 500;">No</p>
+                                 </td>
+                            </tr><br>
+                            <tr style="background: #f5f5f5;">
+                                <td><p style="font-size:18px; font-weight: 500; padding-left: 10px;">Preventive Care</p></td>
+                                <td  *ngFor="let row of planArr" style="padding: 14px;">
+                                    <p *ngIf="row.preventive_care !=null" style="font-size: 13px; font-weight: 500;">{{row.preventive_care}}</p>
+                                    <p *ngIf="row.preventive_care ==null" style="padding-left:50px; font-size: 13px; font-weight: 500;">No</p>
+                                 </td>
+                            </tr><br>
+                            <tr>
+                                <td><p style="font-size:18px; font-weight: 500; padding-left: 10px;">Reload of Sum Insured</p></td>
+                                <td  *ngFor="let row of planArr" style="padding: 14px;">
+                                    <p *ngIf="row.reload_of_sum_insured !=null" style="font-size: 13px; font-weight: 500;">{{row.reload_of_sum_insured}}</p>
+                                    <p *ngIf="row.reload_of_sum_insured ==null" style="padding-left:50px; font-size: 13px; font-weight: 500;">No</p>
+                                 </td>
+                            </tr><br>
+                            <tr style="background: #f5f5f5;">
+                                <td><p style="font-size:18px; font-weight: 500; padding-left: 10px;">World Wide Coverage</p></td>
+                                <td  *ngFor="let row of planArr" style="padding: 14px;">
+                                    <p *ngIf="row.world_wide_coverage !=null" style="font-size: 13px; font-weight: 500;">{{row.world_wide_coverage}}</p>
+                                    <p *ngIf="row.world_wide_coverage ==null" style="padding-left:50px; font-size: 13px; font-weight: 500;">No</p>
+                                 </td>
+                            </tr><br>
+                            <tr>
+                                <td><p style="font-size:18px; font-weight: 500; padding-left: 10px;">Wellness Assistance Program</p></td>
+                                <td  *ngFor="let row of planArr" style="padding: 14px;">
+                                    <p *ngIf="row.wellness_assistance_program !=null" style="font-size: 13px; font-weight: 500;">{{row.wellness_assistance_program}}</p>
+                                    <p *ngIf="row.wellness_assistance_program ==null" style="padding-left:50px; font-size: 13px; font-weight: 500;">No</p>
+                                 </td>
+                            </tr><br>
+                            <tr style="background: #f5f5f5;">
+                                <td><p style="font-size:18px; font-weight: 500; padding-left: 10px;">Loyalty Perk</p></td>
+                                <td  *ngFor="let row of planArr" style="padding: 14px;">
+                                    <p *ngIf="row.loyalty_perk !=null" style="font-size: 13px; font-weight: 500;">{{row.loyalty_perk}}</p>
+                                    <p *ngIf="row.loyalty_perk ==null" style="padding-left:50px; font-size: 13px; font-weight: 500;">No</p>
+                                 </td>
+                            </tr>
+                            <br><br>
+                        </table>
+                    </div>                                                
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div id="div_class"></div>
+<app-loader [loaderActive]="loaderActive"></app-loader>

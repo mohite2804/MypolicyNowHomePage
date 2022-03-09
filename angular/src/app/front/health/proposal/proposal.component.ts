@@ -639,10 +639,10 @@ export class ProposalComponent implements OnInit {
 
   validationformOtpDetails() {
     this.formOtpDetails = this.formBuilder.group({
-      otp_n_1: ["", [Validators.required]],
-      otp_n_2: ["", [Validators.required]],
-      otp_n_3: ["", [Validators.required]],
-      otp_n_4: ["", [Validators.required]],
+      digit_1: ["", [Validators.required]],
+      digit_2: ["", [Validators.required]],
+      digit_3: ["", [Validators.required]],
+      digit_4: ["", [Validators.required]],
      
     });
   }
@@ -651,7 +651,7 @@ export class ProposalComponent implements OnInit {
   setParameterForSubmitForm() {
     let uploadData = new FormData();
     uploadData.append("unique_ref_no", this.unique_ref_no);
-    uploadData.append('otp',this.formOtpDetails.value.otp_n_1+''+this.formOtpDetails.value.otp_n_2+''+this.formOtpDetails.value.otp_n_3+''+this.formOtpDetails.value.otp_n_4);
+    uploadData.append('otp',this.formOtpDetails.value.digit_1+''+this.formOtpDetails.value.digit_2+''+this.formOtpDetails.value.digit_3+''+this.formOtpDetails.value.digit_4);
     return uploadData;
   }
 

@@ -1,0 +1,964 @@
+<br>
+<br><br>
+<div *ngIf="result_proposal_details.proposal_status_id == 3" class="text-center">
+    <h5><b>Note: </b>Proposal is Canceled.
+        <a *ngIf="is_from_proposal_page" class='btn btn-sm green' href="javascript:void(0)" (click)="backToQuoteForm()"> <i class="fa fa-reply"></i> Back To Quote</a>
+    </h5>
+</div>
+
+<section *ngIf="result_proposal_details" class="py-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 proposal-page mt-3">
+                <div class="border proposal-infobar shadowbox py-2">
+                    <div class="container">
+
+                        <div class="row py-2">
+                            <div class="col-lg-2 col-md-3 col-sm-4 col-12  proposaldetail-box">
+                                <div class="selectedinsurer">
+                                    <img src="assets/front/img/partners-logos/{{result_proposal_details.ic_logo}}" alt="{{result_proposal_details.ic_code}}" />
+                                </div>
+                            </div>
+                            <div class="col-lg-10 col-md-9 col-sm-8 col-12 proposaldetail-box">
+                                <h3 class="mb-2">{{result_proposal_details.ic_code}}</h3>
+                                <h4 class="mb-0">{{result_proposal_details.product_type}} {{ result_proposal_details.policy_subtype_label}} Policy </h4>
+                                <h5 class="mb-0">{{result_proposal_details.policy_subtype_code}} </h5>
+                                <!-- <h5 class="mb-0">(Form 51 Of The Central Motor Vehicle Rules,1989)</h5> -->
+                                <h5 class="mb-0">GSTIN : {{result_proposal_details.ic_gstin_no}}</h5>
+                                <h5 class="mb-0">Toll-Free Number: {{result_proposal_details.ic_tollfree}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="padding-one text-center margin-one no-margin-bottom border radius-10 text-small bg-gray red-text font-weight-500 " *ngIf="(is_breakin && product_type_id==2)">
+                    <span class="bg-red padding-left-right-px white-text radius-10"> NOTE: </span>
+                    <span class="padding-left-right-px"> Current policy has resulted in
+                        <span class="font-weight-800"><strong>BREAK IN CASE</strong></span>. Policy will start after {{bike_breakin_days}} day(s).
+                    </span>
+                </div>
+
+                <div class="padding-one text-center margin-one no-margin-bottom border radius-10 text-small bg-gray red-text font-weight-500 " *ngIf="(is_breakin && product_type_id!=2)">
+                    <span class="bg-red padding-left-right-px white-text radius-10"> NOTE: </span>
+                    <span class="padding-left-right-px"> Current policy has resulted in
+                        <span class="font-weight-800"><strong>BREAK IN CASE</strong></span>. Inspection of your vehicle will be required before you can buy the policy.
+                    </span>
+                </div>
+
+                <div class="customerdetailform-stepbox">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card shadowbox completeddetailsbox filled-ownerdetails">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h3>Owner Details</h3>
+                                            <ul class="filledinfo">
+                                                <li>
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <div class="title">Proposal Number</div>
+                                                            <div class="text">{{result_proposal_details.proposal_no}}</div>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <div class="title">Period Of Insurance</div>
+                                                            <div class="text">Start Date: {{result_proposal_details.proposal_start_date}}
+                                                                <br> End Date: {{result_proposal_details.proposal_end_date}}</div>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <!-- <div class="title">Insured Declared Value</div>
+                                                            <div class="text">{{result_proposal_details.idv}}</div> -->
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <!-- <div class="title">Period Of Owner Driver Pa Cover</div>
+                                                            <div class="text">Start Date: {{result_proposal_details.idv}}
+                                                            <br> End Date: {{result_proposal_details.idv}}</div> -->
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                                <li *ngIf="result_proposal_details.proposer_type_id == 2">
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <div class="title">Company Name</div>
+                                                            <div class="text">{{result_proposal_details.company_name}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <div class="title">Company GST Number</div>
+                                                            <div class="text">{{result_proposal_details.company_gst_no}}</div>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <div class="title">Company PAN Number</div>
+                                                            <div class="text">{{result_proposal_details.company_pan_no}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <div class="title">Company Owner</div>
+                                                            <div class="text">{{result_proposal_details.company_full_name}}</div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                                <li *ngIf="result_proposal_details.proposer_type_id == 2">
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <div class="title">Company Owner Email</div>
+                                                            <div class="text">{{result_proposal_details.company_owner_email}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <div class="title">Company Owner Mobile Number</div>
+                                                            <div class="text">{{result_proposal_details.company_owner_mobile}}</div>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <div class="title">Company Owner Address</div>
+                                                            <div class="text">
+                                                                {{result_proposal_details.company_owner_address_1}} {{result_proposal_details.company_owner_address_2}} <br>City: {{ result_proposal_details.user_city }} Pin code : {{ result_proposal_details.user_pincode
+                                                                }} State : {{ result_proposal_details.user_state }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <!-- <div class="title">Company Owner</div>
+                                                            <div class="text">{{result_proposal_details.company_full_name}}</div> -->
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                                <li *ngIf="result_proposal_details.proposer_type_id == 1">
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <div class="title">Insured Name
+                                                                <!-- (Age) -->
+                                                            </div>
+                                                            <div class="text">{{result_proposal_details.full_name}}
+                                                                <!-- ({{result_proposal_details.proposer_age}}) -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <div class="title">Previous Policy Number</div>
+                                                            <div class="text">{{result_proposal_details.prev_policy_no}}</div>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <div class="title">Nominee Name
+                                                                <!-- (Age) -->
+                                                            </div>
+                                                            <div class="text">{{result_proposal_details.nominee_full_name}}
+                                                                <!-- ({{result_proposal_details.nominee_age}}) -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <div class="title">Relation With Nominee</div>
+                                                            <div class="text">{{result_proposal_details.nominee_relation}}</div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                                <li *ngIf="result_proposal_details.proposer_type_id == 1">
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <div class="title">Appointee Name
+                                                                <!-- (Age) -->
+                                                            </div>
+                                                            <div class="text">
+                                                                {{result_proposal_details.appointee_full_name}}
+                                                                <!-- {{ (result_proposal_details.appointee_full_name) ? result_proposal_details.appointee_full_name : '-'}} {{ (result_proposal_details.appointee_age) ? '('+result_proposal_details.appointee_age+')' : '-'}} -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <div class="title">Relation With Appointee</div>
+                                                            <div class="text"> {{ (result_proposal_details.appointee_relation) ? result_proposal_details.appointee_relation : '-'}} </div>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <div class="title">Insured Aadhaar Number</div>
+                                                            <div class="text">{{ (result_proposal_details.proposer_adhaar_no) ? result_proposal_details.proposer_adhaar_no : '-'}}</div>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6 col-12">
+                                                            <div class="title">GSTIN Number</div>
+                                                            <div class="text">{{ (result_proposal_details.proposer_gst_no) ? result_proposal_details.proposer_gst_no : '-'}} </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                                <li *ngIf="result_proposal_details.proposer_type_id == 1">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="title">Insured Address</div>
+                                                            <div class="text">{{ result_proposal_details.proposer_address1 }} {{ result_proposal_details.proposer_address2 }} <br>City: {{ result_proposal_details.user_city }} Pin code : {{ result_proposal_details.user_pincode
+                                                                }} State : {{ result_proposal_details.user_state }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="card shadowbox completeddetailsbox filled-vehicledetails">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-12 border-right vehicleinfowrap">
+                                            <h3>Vehicle Details</h3>
+                                            <div class="row">
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Make</span>
+                                                        <h5>{{ result_proposal_details.make }}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Model</span>
+                                                        <h5>{{ result_proposal_details.model }}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Variant</span>
+                                                        <h5>{{ result_proposal_details.variant }}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Cubic Capacity</span>
+                                                        <h5>{{ result_proposal_details.cc }} CC</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Color</span>
+                                                        <h5>{{ result_proposal_details.vehicle_color }}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Seating Capacity</span>
+                                                        <h5>{{ result_proposal_details.seating_capacity }}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Body Type</span>
+                                                        <h5>{{ (result_proposal_details.body_type) ? result_proposal_details.body_type : '-' }}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Registration Date</span>
+                                                        <h5>
+                                                            {{ (result_proposal_details.registration_date) ? result_proposal_details.registration_date : '-' }}
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Rto</span>
+                                                        <h5>{{ result_proposal_details.rto_label | uppercase }}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Registration No.</span>
+                                                        <h5>{{ result_proposal_details.rto_label | uppercase }} {{ result_proposal_details.registration_no_part_3 | uppercase}} {{ result_proposal_details.registration_no_part_4 | uppercase}}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Fuel Type</span>
+                                                        <h5>{{ result_proposal_details.vehicle_fuel | uppercase }}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Chassis No.</span>
+                                                        <h5>{{ result_proposal_details.chassis_no | uppercase}}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Elec.accessories</span>
+                                                        <h5>{{ result_proposal_details.electric_acc_idv != 0 ? result_proposal_details.electric_acc_idv : '-'}}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Non-elec.accs</span>
+                                                        <h5>{{ result_proposal_details.non_electric_acc_idv != 0 ? result_proposal_details.non_electric_acc_idv : '-'}}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Cng / Lpg</span>
+                                                        <h5>{{ result_proposal_details.bifuel_kit_idv != 0 ? result_proposal_details.bifuel_kit_idv : '-' }}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Carrier Type</span>
+                                                        <h5>
+                                                            {{ (result_proposal_details.carrier_type_name) ? result_proposal_details.carrier_type_name : '-' }}
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Cng/lpg Kit</span>
+                                                        <h5>
+                                                            {{ (result_proposal_details.is_bifuel || result_proposal_details.bifuel_kit_idv !='') ? 'Yes' : 'No' }}
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Engine No.</span>
+                                                        <h5>{{ result_proposal_details.engine_no }}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Mfg. Year</span>
+                                                        <h5>{{ result_proposal_details.manufacturing_year }}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Vehicle Idv</span>
+                                                        <h5>{{ result_proposal_details.idv }}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Hypothecation/lease/hp*</span>
+                                                        <h5> {{ (result_proposal_details.agreement_type) ? result_proposal_details.agreement_type : '-' }}
+                                                        </h5>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">Hypothecation Bank</span>
+                                                        <h5> {{ (result_proposal_details.hypothecation_bank_name) ? result_proposal_details.hypothecation_bank_name : '-' }}
+                                                        </h5>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6 col-12">
+                                                    <div class="vehicleinfo">
+                                                        <span class="text-muted">GVW</span>
+                                                        <h5>{{ result_proposal_details.gvw != 0 ? result_proposal_details.gvw : '-' }}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12 proposal-premium">
+                                            <h3>Schedule Of Premium (Amount In Rupees)</h3>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="premium-breakup-content">
+                                                        <ng-container *ngIf="div_show_for_od_premium">
+                                                            <ul *ngIf="div_show_for_addon">
+                                                                <li>
+                                                                    <h4>Own Damage Premium</h4>
+                                                                </li>
+                                                                <li class="sub" *ngIf="result_proposal_details.basic_od!=0 || result_proposal_details.basic_od!=''">
+                                                                    <span>Basic Own Damage premium: </span><span class="float-right">
+                                                                <i class="fa fa-inr"></i> {{ result_proposal_details.basic_od }}</span>
+
+                                                                    <li class="sub" *ngIf="result_proposal_details.bifuelkit_premium!=0 || result_proposal_details.bifuelkit_premium!=''">
+                                                                        <span>CNG premium: </span><span class="float-right">
+                                                                      <i class="fa fa-inr"></i> {{ result_proposal_details.bifuelkit_premium }}</span>
+
+                                                                    </li>
+                                                                    <li class="sub" *ngIf="result_proposal_details.electricacc_premium!=0 || result_proposal_details.electricacc_premium!=''">
+                                                                        <span>Electrical premium</span><span class="float-right">
+                                                                        <i class="fa fa-inr"></i> {{ result_proposal_details.electricacc_premium }}</span>
+                                                                    </li>
+                                                                    <li class="sub" *ngIf="result_proposal_details.non_electricacc_premium!=0 || result_proposal_details.non_electricacc_premium!=''">
+                                                                        <span>Non-Electrical premium</span><span class="float-right">
+                                                                        <i class="fa fa-inr"></i> {{ result_proposal_details.non_electricacc_premium }}</span>
+                                                                    </li>
+
+                                                                    <li class="sub" *ngIf="result_proposal_details.geographic_extn_premium!=0 || result_proposal_details.geographic_extn_premium!=''">
+                                                                        <span>Geo Extension premium</span><span class="float-right">
+                                                                        <i class="fa fa-inr"></i>{{result_proposal_details.geographic_extn_premium}}</span>
+                                                                    </li>
+                                                                    <li class="sub" *ngIf="result_proposal_details.imt23_od_premium!=0 || result_proposal_details.imt23_od_premium!=''">
+                                                                        <span>Imt 23 OD Premium</span><span class="float-right">
+                                                                        <i class="fa fa-inr"></i>{{result_proposal_details.imt23_od_premium}}</span>
+                                                                    </li>
+                                                                    <li class="sub" *ngIf="result_proposal_details.imt34_od_premium!=0 || result_proposal_details.imt34_od_premium!=''">
+                                                                        <span>IMT 34 OD premium</span><span class="float-right">
+                                                                        <i class="fa fa-inr"></i>{{result_proposal_details.imt34_od_premium}}</span>
+                                                                    </li>
+
+                                                                    <li class="sub" *ngIf="result_proposal_details.trailer_od!=0 || result_proposal_details.trailer_od!=''">
+                                                                        <span>Trailer OD Premium</span><span class="float-right">
+                                                                      <i class="fa fa-inr"></i>{{result_proposal_details.trailer_od}}</span>
+                                                                    </li>
+                                                            </ul>
+                                                        </ng-container>
+
+
+
+                                                        <ng-container *ngIf="div_show_for_addon">
+
+                                                            <ul *ngIf="result_proposal_details.is_addon_nildep == '1' || result_proposal_details.is_addon_engine_protect == '1' ||
+                                                          result_proposal_details.is_addon_rti == '1' || result_proposal_details.is_addon_consumables == '1' ||
+                                                          result_proposal_details.is_addon_key_replacement == '1' || result_proposal_details.is_addon_tyre_cover == '1' ||
+                                                          result_proposal_details.is_addon_rsa == '1' ">
+                                                                <li>
+                                                                    <h4>Addon Premium</h4>
+                                                                </li>
+
+                                                                <li *ngFor="let addon_row_list of result_proposal_details.ic_wise_addon_list.list let i = index;">
+                                                                    <p *ngIf='addon_row_list.checked==1'>
+                                                                        <span>{{addon_row_list.addon_names | titlecase }} </span>
+                                                                        <span class="float-right"><i class="fa fa-inr"></i> {{addon_row_list.amounts}}</span>
+                                                                    </p>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <p>
+                                                                        <span><b>Sub Total (Addons)</b></span>
+                                                                        <span class="float-right"><i class="fa fa-inr"></i>{{result_proposal_details.total_addon_premium}}</span>
+                                                                    </p>
+                                                                </li>
+
+                                                            </ul>
+
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf="div_show_for_third_party">
+
+                                                            <ul *ngIf="result_proposal_details.basic_tp!=0 || result_proposal_details.basic_tp!='' || result_proposal_details.ll_paid_drivpremium!=0
+                                                            || result_proposal_details.ll_paid_drivpremium!='' || result_proposal_details.pa_unnamed_persons_premium!=0 || result_proposal_details.pa_unnamed_persons_premium!='' ||
+                                                                result_proposal_details.cng_lpg_tp_val!=0 || result_proposal_details.cng_lpg_tp_val!='' || result_proposal_details.pa_cover_prem_owner_driver!=0 || result_proposal_details.pa_cover_prem_owner_driver!='' ||
+                                                                result_proposal_details.geographicextn_tp_premium!=0 || result_proposal_details.geographicextn_tp_premium!='' || result_proposal_details.imt_34_tp!=0 || result_proposal_details.imt_34_tp!=''">
+                                                                <li>
+                                                                    <h4>Third Party Premium</h4>
+                                                                </li>
+                                                                <li class="sub" *ngIf="result_proposal_details.basic_tp!=0 || result_proposal_details.basic_tp!=''">
+                                                                    <span>Basic Third party premium </span><span class="float-right">
+                                                                  <i class="fa fa-inr"></i> {{ result_proposal_details.basic_tp }}</span>
+                                                                </li>
+                                                                <li class="sub" *ngIf="result_proposal_details.ll_paid_drivpremium!=0 || result_proposal_details.ll_paid_drivpremium!=''">
+                                                                    <span>Driver Cover premium (LL Driver cover)</span><span class="float-right">
+                                                                  <i class="fa fa-inr"></i> {{ result_proposal_details.ll_paid_drivpremium }}</span>
+                                                                </li>
+                                                                <li class="sub" *ngIf="result_proposal_details.pa_unnamed_persons_premium!=0 || result_proposal_details.pa_unnamed_persons_premium!=''">
+                                                                    <span>Passenger cover Premium</span><span class="float-right">
+                                                                  <i class="fa fa-inr"></i> {{ result_proposal_details.pa_unnamed_persons_premium }}</span>
+                                                                </li>
+
+                                                                <li class="sub" *ngIf="result_proposal_details.bifuel_tp_premium!=0 || result_proposal_details.bifuel_tp_premium!= '0' || result_proposal_details.bifuel_tp_premium!=''">
+                                                                    <span>CNG/LPG Third party premium </span>
+                                                                    <span class="float-right"><i class="fa fa-inr"></i> {{result_proposal_details.bifuel_tp_premium}}</span>
+                                                                </li>
+
+                                                                <li class="sub" *ngIf="result_proposal_details.pa_cover_prem_owner_driver!=0 || result_proposal_details.pa_cover_prem_owner_driver!=''">
+                                                                    <span>Personal Accident -Owner Driver Cover premium  </span><span class="float-right">
+                                                                  <i class="fa fa-inr"></i> {{ result_proposal_details.pa_cover_prem_owner_driver }}</span>
+                                                                </li>
+
+                                                                <li class="sub" *ngIf="result_proposal_details.geographicextn_tp_premium!=0 || result_proposal_details.geographicextn_tp_premium!=''">
+                                                                    <span>Geo Extension TP premium</span>
+                                                                    <span class="float-right"><i class="fa fa-inr"></i>{{result_proposal_details.geographicextn_tp_premium}}</span>
+                                                                </li>
+
+                                                                <li class="sub" *ngIf="result_proposal_details.imt_34_tp!=0 || result_proposal_details.imt_34_tp!=''"><span>IMT-34 TP Premium </span>
+                                                                    <span class="float-right">
+                                                                    <i class="fa fa-inr"></i> {{result_proposal_details.imt_34_tp}}</span>
+                                                                </li>
+
+                                                                <li class="sub" *ngIf="result_proposal_details.trailer_tp!=0 || result_proposal_details.trailer_tp!=''">
+                                                                    <span>Trailer TP Premium </span>
+                                                                    <span class="float-right">
+                                                                  <i class="fa fa-inr"></i> {{result_proposal_details.trailer_tp}}</span>
+                                                                </li>
+
+                                                                <li class="sub" *ngIf="result_proposal_details.ll_conductor_premium!=0 || result_proposal_details.ll_conductor_premium!=''">
+                                                                    <span>LL PA Cover Premium</span>
+                                                                    <span class="float-right">
+                                                                    <i class="fa fa-inr"></i> {{result_proposal_details.ll_conductor_premium}}</span>
+                                                                </li>
+
+
+
+                                                            </ul>
+
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf="div_show_for_discount">
+
+                                                            <ul *ngIf="result_proposal_details.ncb_amount!=0 || result_proposal_details.ncb_amount!='' ||
+                                                          result_proposal_details.antitheft_disc_amount!=0 || result_proposal_details.antitheft_disc_amount!='' ||
+                                                          result_proposal_details.aa_disc_amount!=0 || result_proposal_details.aa_disc_amount!=''">
+                                                                <li>
+                                                                    <h4>Discount</h4>
+                                                                </li>
+                                                                <li class="sub" *ngIf="result_proposal_details.ncb_amount!=0 || result_proposal_details.ncb_amount!=''">
+                                                                    <span>NCB </span><span class="float-right">
+                                                                  <i class="fa fa-inr"></i>
+                                                                  <span *ngIf="result_proposal_details.antitheft_disc_amount">-</span> {{ result_proposal_details.ncb_amount }}</span>
+                                                                </li>
+                                                                <li class="sub" *ngIf="result_proposal_details.antitheft_disc_amount!=0 || result_proposal_details.antitheft_disc_amount!=''">
+                                                                    <span>Antitheft discount</span><span class="float-right">
+                                                                  <i class="fa fa-inr"></i>
+                                                                  <span *ngIf="result_proposal_details.antitheft_disc_amount">-</span> {{ result_proposal_details.antitheft_disc_amount }}</span>
+                                                                </li>
+
+                                                                <li class="sub" *ngIf="result_proposal_details.aa_disc_amount!=0 || result_proposal_details.aa_disc_amount!=''">
+                                                                    <span>Automobile Association</span>
+                                                                    <span class="float-right"><i class="fa fa-inr"></i>
+                                                                      <span *ngIf="result_proposal_details.antitheft_disc_amount">-</span> {{result_proposal_details.aa_disc_amount}}
+                                                                    </span>
+                                                                </li>
+                                                            </ul>
+
+                                                        </ng-container>
+
+                                                        <ul class="finalpremiumbox">
+                                                            <li>
+                                                                <h4><span>Premium</span><span class="float-right">
+                                                                <i class="fa fa-inr"></i>{{ result_proposal_details.gross_premium_without_gst }}</span></h4>
+                                                            </li>
+                                                            <li class="sub"><span>GST @18% </span><span class="float-right">
+                                                                <i class="fa fa-inr"></i> {{ result_proposal_details.service_tax }}</span>
+                                                            </li>
+
+                                                            <li *ngIf="result_proposal_details.cess_amt_1 > 0" class="sub"><span>CESS @1% </span><span class="float-right">
+                                                              <i class="fa fa-inr"></i> {{ result_proposal_details.cess_amt_1 }}</span>
+                                                            </li>
+
+                                                            <li>
+                                                                <h4><span>Final Premium (Incl. GST)</span> <span class="float-right finalpremium">
+                                                                <i class="fa fa-inr"></i> {{ result_proposal_details.gross_premium }}</span></h4>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="proposal-premium-notbox">
+                                                        <div class="row">
+                                                            <div class="col-sm-2 col-12">
+                                                                <h5>NOTE:</h5>
+                                                            </div>
+                                                            <div class="col-sm-10 col-12">
+                                                                <ul>
+                                                                    <li>Policy issuance is subject to realization of cheque.</li>
+                                                                    <li>Consolidated stamp duty paid to state exchequer.</li>
+                                                                    <li>The policy is subject to compulsory deductible of rs.1000.</li>
+                                                                    <li>Geographical area-india.</li>
+                                                                    <li>You agree to receive the policy document (without enclosing the terms & conditions) from the company and the company will display terms & conditions on its website which can be accessed
+                                                                        by you online. * subject to imt endt. Nos. & memorandum: 22, .</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="card shadowbox">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-12 proposal-posinfobox">
+
+                                            <h4>{{ result_proposal_details.pos_name_label }} Details</h4>
+                                            <ul class="proposal-posinfo">
+                                                <li>
+                                                    <div class="title">{{ result_proposal_details.pos_name_label }} Name</div>
+                                                    <div class="text">{{ result_proposal_details.pos_fullname }}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">{{ result_proposal_details.pos_name_label }} Email Id</div>
+                                                    <div class="text">{{ result_proposal_details.pos_email }}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">{{ result_proposal_details.pos_name_label }} Mobile Number</div>
+                                                    <div class="text">{{ result_proposal_details.pos_mobile_no }}</div>
+                                                </li>
+                                            </ul>
+                                            <h4>Broker Details</h4>
+                                            <ul class="proposal-posinfo">
+                                                <li>
+                                                    <div class="title">Broker Name</div>
+                                                    <div class="text">Global-India Insurance Broker's Pvt. Ltd.</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Broker Licence </div>
+                                                    <div class="text">538</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">IRDAI Direct Broker Code</div>
+                                                    <div class="text">IRDAI/DB 596/14</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Broker Email Id</div>
+                                                    <div class="text">info@giib.co.in</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Broker Contact Number</div>
+                                                    <div class="text">+91 22 26820489</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Broker Address</div>
+                                                    <div class="text">1018, 10th Floor, Summit-Business Bay, Behind Gurunanak Petrol Pump, Off Andheri Kurla Road, Beside Magic Bricks WEH metro stn., Andheri (E), Mumbai-400093, Maharashtra (India).</div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-sm-6 declaration-box">
+                                            <h4>Declaration</h4>
+                                            <p>I/ we hereby declare that the above statements made by me/ us are true and complete and no part of it is false. I/ we have selected the insurer of my/our choice out of multiple insurer’s quotation shown to me/us
+                                                by representative of Global India Insurance Brokers Private Limited and they have not forced me/us to select the insurer for providing insurance cover. I/ we desire to effect an insurance as describe herein
+                                                through Global-India Insurance Brokers Private Limited. and I/ we agree that this proposal and declarations shall be the basis of contract between me/ us and insurance company selected by me/us and I/ we
+                                                agree to accept the policy as per the terms and conditions of the Insurance Company.</p>
+                                            <p>I/ we agree to receive the policy document (without enclosing the terms and conditions of policy) from the insurance Company and authorize the company to display Terms and Conditions of the policy on its website
+                                                that enables access by me/us.</p>
+
+                                            <p><b>Section 41 in The Insurance Act, 1938 41. Prohibition of rebates.—</b></p>
+                                            <ul>
+                                                <li>No person shall allow or offer to allow, either directly or indirectly, as an inducement to any person to 1[take out or renew or continue] an insurance in respect of any kind of risk relating to lives or
+                                                    property in India, any rebate of the whole or part of the commission payable or any rebate of the premium shown on the policy, nor shall any person taking out or renewing 2[or continuing] a policy accept
+                                                    any rebate, except such rebate as may be allowed in accordance with the published prospectuses or tables of the insurer.</li>
+                                                <li>Any person making default in complying with the provisions of this section shall be punishable with fine which may extend to 3[five hundred rupees].</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div *ngIf="result_proposal_details.proposal_status_id==3" class="text-center">
+                        <h5><b>Note: </b>Proposal is Canceled.
+                            <a *ngIf="is_from_proposal_page" class='btn btn-sm green' href="javascript:void(0)" (click)="backToQuoteForm()"> <i class="fa fa-reply"></i> Back To Quote</a>
+                        </h5>
+                    </div>
+                    <div *ngIf="result_proposal_details.proposal_status_id==4">
+
+                        <div class="row mt-2 pt-2 align-items-center proposal-groupbtns">
+                            <div class="col-3 text-center">
+                            </div>
+                            <div class="col-6 text-center" [ngClass]="{ 'd-none': div_otp_message }">
+                                <div *ngIf="is_otp_send" class="alert alert-success" role="alert">
+                                    {{otp_send_message}}
+                                </div>
+                                <div *ngIf="!is_otp_send" class="alert alert-danger" role="alert">
+                                    {{otp_send_message}}
+                                </div>
+
+                                <!-- <div *ngIf="formPayment.controls.payment_method_id.errors" class="alert alert-danger" role="alert">
+
+                                </div> -->
+
+                            </div>
+                            <div class="col-12 text-center" *ngIf="!is_error">
+                                <a [ngClass]="{ 'd-none': div_show_for_authenticate }" *ngIf="!isAuthenticate && is_from_proposal_page && policy_generate_for_this_proposal" (click)="sendOtpForAuthenticate()" href="javascript:void(0);" class="btn
+                                                            btn-lg btn-custom green mx-2">
+                                    <i *ngIf="!div_show_for_authenticate" class="fa fa-check-square-o mr-1"></i>
+                                    <i *ngIf="div_show_for_authenticate" class="fa fa-square-o mr-1"></i> Authenticate OTP
+
+                                </a>
+                            </div>
+                            <div class="col-12 text-center" *ngIf="is_error">
+                                <h1 class="alert alert-danger">{{ is_error_message }}</h1>
+                            </div>
+                        </div>
+
+                        <div *ngIf="policy_generate_for_this_proposal">
+
+                            <div *ngIf="isAuthenticate" class="text-center">
+                                <h5><b>Note: </b>Proposal is already authenticated.</h5>
+                            </div>
+
+                            <div *ngIf="!isAuthenticate" [ngClass]="{ 'd-none': !div_show_for_authenticate }" class="row mt-4 pt-2 align-items-center justify-content-center otp-box">
+                                <div class="col-md-6 col-sm-12 col-12">
+                                    <div class="card shadowbox">
+                                        <div class="card-body">
+                                            <h4 class="text-center my-3" [ngClass]="{ 'd-none': div_show_for_timer }"><i class="fa fa-clock-o mr-1"></i> {{timer}}</h4>
+
+                                            <h3 class="text-center text-brand-blue">Enter OTP</h3>
+                                            <form [formGroup]="formAuthenticate" (ngSubmit)="submitFormAuthenticate()" class="digit-group text-center mb-0" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+
+                                                <input maxlength="1" minlength="1" formControlName="digit_1" type="text" id="digit-1" onkeyup="onKeyUpEvent(1, event)" onfocus="onFocusEvent(1)" />
+                                                <input maxlength="1" minlength="1" formControlName="digit_2" type="text" id="digit-2" onkeyup="onKeyUpEvent(2, event)" onfocus="onFocusEvent(2)" />
+                                                <span class="splitter">&ndash;</span>
+                                                <input maxlength="1" minlength="1" formControlName="digit_3" type="text" id="digit-3" onkeyup="onKeyUpEvent(3, event)" onfocus="onFocusEvent(3)" />
+                                                <input maxlength="1" minlength="1" formControlName="digit_4" type="text" id="digit-4" onkeyup="onKeyUpEvent(4, event)" onfocus="onFocusEvent(4)" />
+
+                                                <div class="text-center mt-4 mb-2">
+                                                    <button type="submit" class="btn btn-lg btn-custom green">
+                                                        <i class="fa fa-check-square-o mr-1"></i> Confirm
+                                                    </button>
+
+                                                </div>
+
+                                                <div class="text-center my-2">
+                                                    <button (click)="sendSms()" type="button" class="btn btn-lg btn-link">
+                                                        Resend OTP
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div *ngIf="isAuthenticate" class="container">
+                                <div class="row mt-4 pt-2 align-items-center justify-content-center paymentoption-box">
+                                    <div class="col-md-6 col-sm-12 col-12">
+                                        <form [formGroup]="formPayment" (ngSubmit)="submitFormPayment()" class="ui form">
+                                            <div class="card shadowbox">
+                                                <div class="card-body">
+                                                    <h3 class="text-center text-brand-blue" [ngStyle]="{'display':accessdisplay}">Select Payment Option</h3>
+                                                    <ul class="paymentoption" [ngStyle]="{'display':accessdisplay}">
+
+                                                        <li *ngFor="let row of result_payment_types_changes">
+                                                            <label>
+                                                                <input (click)="selectPaymentMethod(row.payment_method_id)" formControlName="payment_method_id" [value]="row.payment_method_id"   type="radio" checked="checked"/>
+                                                                <span>{{row.type}}</span>
+
+                                                                <span *ngIf="row.wallet">{{wallet_balance}}</span>
+
+                                                            </label>
+
+                                                        </li>
+                                                        <div *ngIf="(submittedPayment || formPayment.controls.payment_method_id.invalid && (formPayment.controls.payment_method_id.dirty || formPayment.controls.payment_method_id.touched)) && formPayment.controls.payment_method_id.errors">
+
+                                                            <small *ngIf="(submittedPayment || formPayment.controls.payment_method_id.invalid && (formPayment.controls.payment_method_id.dirty || formPayment.controls.payment_method_id.touched)) && formPayment.controls.payment_method_id.errors.required" class="text-danger">
+                                                                  Please select payment type.
+                                                                </small>
+
+                                                        </div>
+
+
+                                                    </ul>
+
+
+
+
+
+                                                    <div class="paymentoption-text">
+                                                        <div class="row">
+                                                            <div [ngClass]="{ 'd-none': div_show_for_cheque }" class="col-12 chequeform">
+                                                                <div class="row">
+                                                                    <div class="col-md-6 col-12">
+                                                                        <div class="field" [ngClass]="{ 'error': (submittedPayment || formPayment.controls.bank_id.invalid && (formPayment.controls.bank_id.dirty || formPayment.controls.bank_id.touched)) && formPayment.controls.bank_id.errors}">
+                                                                            <div class="form-group form-focus select-focus">
+                                                                                <label class="focus-label">Bank Name</label>
+                                                                                <select formControlName="bank_id" class="ui search dropdown">
+                                                                                    <option value="">Select Bank</option>
+                                                                                    <option *ngFor="let row of result_banks" [value]="row.bank_id">{{row.name}}</option>
+                                                                                </select>
+                                                                                <div *ngIf="(submittedPayment || formPayment.controls.bank_id.invalid && (formPayment.controls.bank_id.dirty || formPayment.controls.bank_id.touched)) && formPayment.controls.bank_id.errors">
+
+                                                                                    <small *ngIf="(submittedPayment || formPayment.controls.bank_id.invalid && (formPayment.controls.bank_id.dirty || formPayment.controls.bank_id.touched)) && formPayment.controls.bank_id.errors.required" class="text-danger">
+                                                                                        Please select bank.
+                                                                                      </small>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="col-md-6 col-12">
+                                                                        <div class="field" [ngClass]="{ 'error': (submittedPayment || formPayment.controls.bank_city.invalid && (formPayment.controls.bank_city.dirty || formPayment.controls.bank_city.touched)) && formPayment.controls.bank_city.errors}">
+                                                                            <div class="form-group form-focus" [ngClass]="{ 'focused': formPayment.value.bank_city}">
+                                                                                <input formControlName="bank_city" type="text" class="form-control floating">
+                                                                                <label class="focus-label req">Bank City</label>
+                                                                                <div *ngIf="(submittedPayment || formPayment.controls.bank_city.invalid && (formPayment.controls.bank_city.dirty || formPayment.controls.bank_city.touched)) && formPayment.controls.bank_city.errors">
+                                                                                    <small *ngIf="(submittedPayment || formPayment.controls.bank_city.invalid && (formPayment.controls.bank_city.dirty || formPayment.controls.bank_city.touched)) && formPayment.controls.bank_city.errors" class="text-danger">
+                                                                                          Please enter valid bank city.
+                                                                                        </small>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-12">
+                                                                        <div class="field" [ngClass]="{ 'error': (submittedPayment || formPayment.controls.cheque_number.invalid && (formPayment.controls.cheque_number.dirty || formPayment.controls.cheque_number.touched)) && formPayment.controls.cheque_number.errors}">
+                                                                            <div class="form-group form-focus" [ngClass]="{ 'focused': formPayment.value.cheque_number}">
+                                                                                <input formControlName="cheque_number" maxlength="6" type="text" class="form-control floating">
+                                                                                <label class="focus-label req">Cheque Number</label>
+                                                                                <div *ngIf="(submittedPayment || formPayment.controls.cheque_number.invalid && (formPayment.controls.cheque_number.dirty || formPayment.controls.cheque_number.touched)) && formPayment.controls.cheque_number.errors">
+
+
+                                                                                    <small *ngIf="(submittedPayment || formPayment.controls.cheque_number.invalid && (formPayment.controls.cheque_number.dirty || formPayment.controls.cheque_number.touched)) && formPayment.controls.cheque_number.errors" class="text-danger">
+                                                                                          Please enter valid cheque number.
+                                                                                    </small>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="col-md-6 col-12">
+                                                                        <div class="field" [ngClass]="{ 'error': (submittedPayment || formPayment.controls.cheque_date.invalid && (formPayment.controls.cheque_date.dirty || formPayment.controls.cheque_date.touched)) && formPayment.controls.cheque_date.errors}">
+                                                                            <div class="form-group form-focus" [ngClass]="{ 'focused': formPayment.controls.cheque_date.value}">
+                                                                                <div class="cal-icon">
+                                                                                    <input readonly [minDate]="minChequeDate" [maxDate]="maxChequeDate" [ngModelOptions]="{standalone: true}" (click)="d.toggle()" (dateSelect)="selectDate( 'cheque_date',$event)" class="form-control" name="dp" [(ngModel)]="date_picker_date_picker_cheque_date"
+                                                                                        ngbDatepicker #d="ngbDatepicker">
+                                                                                </div>
+                                                                                <label class="focus-label req">Cheque Date</label>
+                                                                                <div *ngIf="(submittedPayment || formPayment.controls.cheque_date.invalid && (formPayment.controls.cheque_date.dirty || formPayment.controls.cheque_date.touched)) && formPayment.controls.cheque_date.errors">
+
+                                                                                    <small *ngIf="(submittedPayment || formPayment.controls.cheque_date.invalid && (formPayment.controls.cheque_date.dirty || formPayment.controls.cheque_date.touched)) && formPayment.controls.cheque_date.errors.required" class="text-danger">
+                                                                                          Please enter cheque date.
+                                                                                    </small>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div [ngClass]="{ 'd-none': div_show_for_wallet }" class="col-12 walletbox">
+                                                                <div class="row justify-content-center">
+                                                                    <div class="col-lg-7 col-12">
+                                                                        <div class="card">
+                                                                            <div class="card-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-4 col-12 wallet-icon">
+                                                                                        <img src="assets/front/img/proposal/walleticon.svg" alt="" class="w-100">
+                                                                                    </div>
+                                                                                    <div class="col-sm-8 col-12 wallet-text">
+                                                                                        <h5>MY BALANCE</h5>
+                                                                                        <h2><i class="fa fa-inr"></i> {{wallet_balance /100}}</h2>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div [ngClass]="{ 'd-none': div_show_for_business_wallet }" class="col-12 walletbox">
+                                                                <div class="row justify-content-center">
+                                                                    <div class="col-lg-7 col-12">
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-12 finalpremium">
+                                                                <h4>Final Premium <em class="d-lg-inline d-md-block d-inline">(Incl. GST)</em>
+                                                                    <span><i class="fa fa-inr"></i> {{ result_proposal_details.gross_premium }} </span></h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="my-3 termstext">
+                                                        <ol class="ol-list">
+                                                            <li>I/we agree this terms and conditions, I/we hereby agree that I/we have read, understand and agreed to these terms. I/we also agree that while making this cheque payment to the insurance company,
+                                                                I/we have sufficient funds in my/our bank account.</li>
+                                                            <li>I/we further understand that if i/we do not have sufficient fund in my/our account then the cheque issued for the payment of the insurance premium will be dishonoured and in that cae insurance
+                                                                company has ll the rights to cancel the said policy issued to me.</li>
+                                                        </ol>
+                                                        <div class="ui checkbox">
+                                                            <input formControlName="terms_and_conditions" type="checkbox" id="terms">
+                                                            <label class="mt-2 mb-3" for="terms">I accept terms and conditions.</label>
+                                                            <div *ngIf="submittedPayment && formPayment.controls.terms_and_conditions.errors">
+
+                                                                <small *ngIf="submittedPayment && formPayment.controls.terms_and_conditions.errors" class="text-danger">
+                                                                        Please check terms and condition.
+                                                                    </small>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div *ngIf="result_proposal_details.is_error == '0' && !is_wallet_pay" class="text-center my-2 buynowbtn">
+                                                        <button type="submit" class="btn btn-lg btn-custom green"><i class="fa fa-file-text-o mr-1"></i> Buy Now
+                                                        </button>
+                                                    </div>
+                                                    <div class="text-center" *ngIf="is_wallet_pay">
+                                                        <h5 class="text-danger"><b>Note: </b>In Sufficient Wallet Balance</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- </div> -->
+
+
+                        </div>
+
+                        <div class="text-center" *ngIf="!policy_generate_for_this_proposal">
+                            <h5><b>Note: </b>Policy generated for this proposal.</h5>
+                        </div>
+
+
+                    </div>
+
+                    <div *ngIf="(result_proposal_details.proposal_status_id==8 && result_proposal_details.breakin_status_id==1)">
+
+                        <div class="row mt-2 pt-2 align-items-center proposal-groupbtns">
+                            <div class="col-3 text-center">
+                            </div>
+                            <div class="col-6 text-center" [ngClass]="{ 'd-none': div_otp_message }">
+                                <div *ngIf="is_otp_send" class="alert alert-success" role="alert">
+                                    {{otp_send_message}}
+                                </div>
+                                <div *ngIf="!is_otp_send" class="alert alert-danger" role="alert">
+                                    {{otp_send_message}}
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="col-12 text-center">
+                                <a [ngClass]="{ 'd-none': div_show_for_authenticate }" *ngIf="!isAuthenticate && is_from_proposal_page && policy_generate_for_this_proposal" (click)="breakinInitiate()" href="javascript:void(0);" class="btn
+                                                            btn-lg btn-custom green mx-2">
+                                    <i *ngIf="!div_show_for_authenticate" class="fa fa-check-square-o mr-1"></i>
+                                    <i *ngIf="div_show_for_authenticate" class="fa fa-square-o mr-1"></i> Breakin Initiate
+
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="padding-one text-center margin-one no-margin-bottom border radius-10 text-small bg-gray red-text font-weight-500 " *ngIf="(is_breakin && result_proposal_details.breakin_status_id==2)">
+                        <span class="padding-left-right-px">
+                            <b>Breakin Initiated.</b> Please upload breakin inspection images.
+                        </span>
+                    </div>
+
+                    <div class="padding-one text-center margin-one no-margin-bottom border radius-10 text-small bg-gray red-text font-weight-500 " *ngIf="(is_breakin && result_proposal_details.breakin_status_id==3)">
+                        <span class="padding-left-right-px">
+                            <b>Breakin Submitted.</b> Please wait for insurance company approval.
+                        </span>
+                    </div>
+
+                    <div class="padding-one text-center margin-one no-margin-bottom border radius-10 text-small bg-gray red-text font-weight-500 " *ngIf="(is_breakin && result_proposal_details.breakin_status_id==5)">
+                        <span class="padding-left-right-px">
+                            <b>Breakin Rejected.</b>
+                        </span>
+                    </div>
+
+                    <div class="padding-one text-center margin-one no-margin-bottom border radius-10 text-small bg-gray red-text font-weight-500 " *ngIf="(is_breakin && result_proposal_details.breakin_status_id==6)">
+                        <span class="padding-left-right-px">
+                            <b>Breakin Referback.</b> Please re-upload breakin inspection details.
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<app-loader [loaderActive]="loaderActive"></app-loader>

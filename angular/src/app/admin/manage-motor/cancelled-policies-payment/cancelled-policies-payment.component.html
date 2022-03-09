@@ -1,0 +1,217 @@
+<!--Page Header -->
+<div class="page-header">
+  <div class="row align-items-center">
+    <div class="col">
+      <h3 class="page-title">Cancelled Policies Payment</h3>
+    </div>
+   <!--  <div class="col-auto float-right ml-auto">
+      <button (click)="downloadExcel()" class="btn btn-custom green"><i class="fa fa-download"></i> Download</button>
+    </div> -->
+  </div>
+</div>
+<!-- /Page Header -->
+<div class="row">
+  <div class="col-md-12">
+    <div class="card shadowbox">
+      <div class="card-header">
+        <div class="form-group ui form mb-0">
+            <div class="row align-items-center justify-content-center inline fields mb-0">
+                <div class="col-auto px-4 field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="searchbreakinbystatus" id="searchbreakinbystatus-pending" value="searchbreakinbystatus-pending" checked="" (click)="showHideStatusCancellation(0);">
+                        <label class="mb-0" for="searchbreakinbystatus-pending">Pending</label>
+                    </div>
+                </div>
+               <!--  <div class="col-auto px-4 field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="searchbreakinbystatus" id="searchbreakinbystatus-rejected" value="searchbreakinbystatus-rejected" (click)="showHideStatusCancellation(3);">
+                        <label class="mb-0" for="searchbreakinbystatus-rejected">Rejected</label>
+                    </div>
+                </div> -->
+                <div class="col-auto px-4 field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="searchbreakinbystatus" id="searchbreakinbystatus-approved" value="searchbreakinbystatus-approved" (click)="showHideStatusCancellation(1);">
+                        <label class="mb-0" for="searchbreakinbystatus-approved">Approved</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <div class="card-body">
+        <div class="table-responsive">
+        <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table action-table datatable w-100 my-dataTable"></table>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="approval_status" class="modal custom-modal fade" role="dialog" [ngStyle]="{'display':displayCancellationStatus}">
+                <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Change Status</h5>
+                            <button #closebutton type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="tab-content">
+                                
+                        <div class="tab-pane show active" id="sendmessage-tab3">
+                        <form [formGroup]="formChangeStatus" method="post" (ngSubmit)="submitFormChangeStatus()">
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <div *ngIf="success_message" class="alert alert-success" role="alert">
+                                                {{ success_message }}
+                                            </div>
+
+                                            <div *ngIf="error_message" class="alert alert-danger" role="alert">
+                                                {{ error_message }}
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-sm">
+                                                    <tbody>
+                                                      <div id="collapseProposerOne">
+                                                         <div class="card-body">
+                                                            <div class="row">
+                                                                <!-- <div class="col-lg-5 col-md-6 border-right">
+                                                                    <h4>Existing Details</h4>
+                                                                    <ul class="endorsement-infolist">
+                                                                        <li>
+                                                                             <div class="title">Salutation:</div>
+                                                                             <div class="text">{{result?.salutation_name}}</div>
+                                                                        </li>
+                                                                        <li>
+                                                                             <div class="title">First Name:</div>
+                                                                             <div class="text">{{result?.proposer_first_name}}</div>
+                                                                        </li>
+                                                                        <li>
+                                                                             <div class="title">Middle Name:</div>
+                                                                             <div class="text">{{result?.proposer_middle_name}}</div>
+                                                                        </li>
+                                                                        <li>
+                                                                             <div class="title">Last Name:</div>
+                                                                             <div class="text">{{result?.proposer_last_name}}</div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div> -->
+                                                                <div class="col-lg-7 col-md-6">
+                                                                    <h4>Update Details</h4>
+                                                                    <div class="row align-items-center">
+                                                                        <div class="col-md-9 col-12">
+                                                                            <div class="form-group form-focus" [ngClass]="{'focused': formChangeStatus.value.status_id}">
+                                                                                <select class="form-control" formControlName="status_id" (change)="onChange($event.target.value)" [(ngModel)]="selectedValue">
+                                                                                    <option value="">Select Status</option>
+                                                                                    <option value="0" >Pending</option>
+                                                                                   <option value="1">Approved</option>
+                                                                                </select>
+                                                                                <div *ngIf="submittedChangeStatus && formChangeStatus.controls.status_id.errors">
+                                                                                  <small *ngIf="submittedChangeStatus && formChangeStatus.controls.status_id.errors.required" class="text-danger"> 
+                                                                                    Please Change Status.
+                                                                                  </small> 
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-9 col-12" *ngIf="selectedValue == 1">
+                                                                            <div class="form-group form-focus" [ngClass]="{'focused': formChangeStatus.value.transaction_no}">
+                                                                                <input formControlName="transaction_no"  type="text" class="form-control floating">
+                                                                                <label class="focus-label req">Transaction No</label>
+                                                                                <div *ngIf="submittedChangeStatus && formChangeStatus.controls.transaction_no.errors">
+                                                                                  <small *ngIf="submittedChangeStatus && formChangeStatus.controls.transaction_no.errors.required" class="text-danger"> 
+                                                                                    Please Enter Transaction No.
+                                                                                  </small> 
+                                                                                  <small *ngIf="submittedChangeStatus && formChangeStatus.controls.transaction_no.errors.pattern" class="text-danger">
+                                                                                          Please Enter Valid Transaction No.
+                                                                                      </small>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                    <input formControlName="cancellation_id" type="hidden" class="form-control" >
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <button type="submit" class="btn btn btn-custom green submit-btn">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="view_bank_detail" class="modal custom-modal fade" role="dialog" [ngStyle]="{'display':displayCancellationStatus}">
+                <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Customer Bank Detail</h5>
+                            <button #closebutton type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="tab-content">
+                                
+                        <div class="tab-pane show active" id="sendmessage-tab3">
+                       
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-sm">
+                                                    <tbody>
+                                                      <div id="collapseProposerOne">
+                                                         <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-5 col-md-12">
+                                                                    <h4>Bank Details</h4>
+                                                                    <ul class="endorsement-infolist">
+                                                                        <li>
+                                                                             <div class="title">Payee Name:</div>
+                                                                             <div class="text">{{payee_name}}</div>
+                                                                        </li>
+                                                                        <li>
+                                                                             <div class="title">Payee Account No:</div>
+                                                                             <div class="text">{{payee_account_no}}</div>
+                                                                        </li>
+                                                                        <li>
+                                                                             <div class="title">Payee Bank Name:</div>
+                                                                             <div class="text">{{payee_bank_name}}</div>
+                                                                        </li>
+                                                                        <li>
+                                                                             <div class="title">Payee Bank IFSC Code:</div>
+                                                                             <div class="text">{{payee_ifsc_code}}</div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+
+
+
+<!-- <app-loading [loaderActive]="loaderActive" ></app-loading> -->

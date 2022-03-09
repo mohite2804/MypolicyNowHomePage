@@ -1,0 +1,79 @@
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Profile</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a [routerLink]="['/admin/dashboard']" href="javascript:void(0)">Dashboard</a></li>     
+          <li class="breadcrumb-item active">Profile</li>
+                 
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content">
+  <div class="card">
+    <div class="card-body login-card-body">
+      <!-- <p class="login-box-msg">Profile</p> -->
+  
+      <form [formGroup] ="submitForm" (ngSubmit)="getFormData()" >
+      
+        <div class="input-group mb-3">
+          <input formControlName="name" type="text" class="form-control" placeholder="Name">
+        </div>  
+        <div class="input-group mb-3">
+          <div *ngIf="submitted && submitForm.controls.name.errors" class="error">
+            <div *ngIf="submitForm.controls.name.errors.required" class="font-11">Name is required</div>
+          </div>
+        </div>
+
+
+        <div class="input-group mb-3">
+            <input formControlName="mobile" type="text" class="form-control" placeholder="Mobile" maxlength="10">
+          </div>  
+          <div class="input-group mb-3">
+            <div *ngIf="submitted && submitForm.controls.mobile.errors" class="error">
+              <div *ngIf="submitForm.controls.mobile.errors.required" class="font-11">Mobile is required</div>
+            </div>
+          </div>
+
+
+          <div class="input-group mb-3">
+            <input formControlName="email" type="text" class="form-control" placeholder="Email">
+          </div>  
+          <div class="input-group mb-3">
+            <div *ngIf="submitted && submitForm.controls.email.errors" class="error">
+              <div *ngIf="submitForm.controls.email.errors.required" class="font-11">Email is required</div>
+            </div>
+          </div>
+
+
+          <div class="input-group mb-3">            
+            <textarea placeholder="Address" formControlName="address" class="form-control" ></textarea>
+          </div>  
+          <div class="input-group mb-3">
+            <div *ngIf="submitted && submitForm.controls.address.errors" class="error">
+              <div *ngIf="submitForm.controls.address.errors.required" class="font-11">Address is required</div>
+            </div>
+          </div>       
+  
+        <div class="input-group mb-3">
+          <input type="submit" class="form-control btn btn-primary" value="Submit">
+          
+        </div>
+        
+      </form>
+  
+   
+      
+    </div>
+    
+  </div>
+</section>
+
+
+  

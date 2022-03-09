@@ -1,0 +1,81 @@
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Policy Transactions</h3>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+	  	<div *ngIf="atLeastOneRequired" class="alert alert-danger">
+	    	<strong>{{atLeastOneRequired}}</strong>
+	  	</div>
+	</div>
+	<div class="col-md-12">
+      	<form class="form-horizontal" [formGroup]="formRecodEdit" >
+        	<div class="row ml-2" >
+
+                <div class="form-group">
+                    <input type="text" formControlName="filter_txt" class="form-control" placeholder="Proposal No, Policy No" (change)="getFilterTextResult($event)" />    
+                </div>
+
+                <div class="form-group ml-2">
+                    <select class="form-control" formControlName="filter_payment_method" (change)="getFilterpaymentMethodResult($event)">
+                        <option value="" selected="true">Select Payment Method</option>
+                        <option *ngFor="let row of result_pay_method"  value="{{ row.payment_method_id }}">{{ row.type }}</option>
+                    </select>         
+                </div>
+
+            	
+                <div class="form-group hidden">
+                    <div class="cal-icon">
+                        <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker" [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden" [startDate]="fromDate!" tabindex="-1">
+                        <ng-template #t let-date let-focused="focused">
+                            <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)" [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+                                  {{ date.day }}
+                                </span>
+                        </ng-template>
+                    </div>
+                </div>
+
+                <div class="form-group ml-2">
+                    <div class="cal-icon">
+                        <input readonly (click)="datepicker.toggle()" #dpFromDate formControlName="wallet_from" class="form-control" placeholder="yyyy-mm-dd" name="dpFromDate" [value]="formatter.format(fromDate)" (input)="fromDate = validateInput(fromDate, dpFromDate.value)">
+                    </div>
+                </div>
+
+                <div class="form-group ml-2">
+                    <div class="cal-icon">
+                        <input readonly (click)="datepicker.toggle()" #dpToDate formControlName="wallet_to" class="form-control" placeholder="yyyy-mm-dd" name="dpToDate" [value]="formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)">
+                    </div>
+                </div>
+
+                <div class="form-group ml-2">
+                    <button (click)="submitDateRange()" class="btn btn-custom green form-control" type="button">Submit</button>
+                </div>
+
+                <!--
+                <div class="form-group ml-2">
+                    <button (click)="exportAsXLSX()" class="btn btn-custom red form-control" type="button"><i class="fa fa-download"></i></button>
+                </div>
+                -->
+
+        	</div>
+      	</form>
+	</div>
+</div>
+
+<!-- /Page Header -->
+<div class="row">
+    <div class="col-md-12">
+        <!-- </div> -->
+        <div class="card shadowbox">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

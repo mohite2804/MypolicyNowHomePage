@@ -1,0 +1,42 @@
+<button style="float: left" class="btn btn-success" (click)="backToUser()" >Back</button> 
+
+
+ <form [formGroup]="formDetails" (ngSubmit)="submitForm()">
+
+
+
+<button style="float: right" type="submit" class="btn btn-success" >Set Privileges</button> 
+<br><br><br><br>
+
+<div class="error text-center" >
+  <p class="errorbox" *ngIf="submittedForm  && formDetails.controls.selectedMenuIds.errors && formDetails.controls.selectedMenuIds.errors.required">
+      Please select sidebar menus.
+  </p>
+</div>
+
+
+<ngb-tabset [justify]="currentJustify">
+
+    <h6>error msg</h6>
+
+    <ngb-tab>
+    <ng-template ngbTabTitle><b>SideBar Menus</b></ng-template>
+    <ng-template ngbTabContent>
+      <ngx-treeview 
+        [config]="config" 
+        [items]="result_menu" 
+        (selectedChange)="onSelectedMenuChange($event)">
+      </ngx-treeview>
+    </ng-template>
+  </ngb-tab>
+
+</ngb-tabset>
+
+<br><br><br><br>
+<button style="float: right"  type="submit"  class="btn btn-success text-right" >Set Privileges</button>
+
+</form>
+
+
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

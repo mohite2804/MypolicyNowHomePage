@@ -1,0 +1,20 @@
+<ng-container *ngIf="policy_subtype_label!='THIRDPARTY'">
+    <div class="padding-one text-center margin-one no-margin-bottom border radius-10 text-small bg-gray red-text font-weight-500 " *ngIf="(is_breakin && selected_product_type_id==2)">
+        <span class="bg-red padding-left-right-px white-text radius-10"> NOTE: </span>
+        <span class="padding-left-right-px"> Current policy has resulted in
+    <span class="font-weight-800">
+      <strong>BREAK IN CASE</strong>
+    </span> . Policy will start after number of days given by respective insurance company.
+        </span>
+
+    </div>
+
+    <div class="padding-one text-center margin-one no-margin-bottom border radius-10 text-small bg-gray red-text font-weight-500 " *ngIf="(is_breakin && selected_product_type_id!=2)">
+        <span class="bg-red padding-left-right-px white-text radius-10"> NOTE: </span>
+        <span class="padding-left-right-px">
+    Current policy has resulted in
+    <span class="font-weight-800"><strong>BREAK IN CASE</strong>
+    </span> . Inspection of your vehicle will be required before you can buy the policy.
+        </span>
+    </div>
+</ng-container>

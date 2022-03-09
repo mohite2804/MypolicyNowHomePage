@@ -1,0 +1,230 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Manage Products</h3>
+        </div>
+        <div class="col-auto float-right ml-auto">
+            <button (click)="openModel()" data-toggle="modal" data-target="#openmodal" class="btn btn-custom green" *ngIf="access_permission == 'read_write'"><i class="fa fa-plus"></i> Add Product Details</button>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="access_permission == 'read_write'">
+    <div class="col-md-12">
+      <div *ngIf="atLeastOneRequired" class="alert alert-danger">
+        <strong>{{atLeastOneRequired}}</strong>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="card shadowbox">
+        <div class="card-body pb-0">
+          <form class="form-horizontal" [formGroup]="formRecodEdit" >
+            <div class="row" >
+                <div class="col-lg-4 col-md-4 pull-right">
+                </div>
+              <div class="col-lg-4 col-md-4 pull-right">
+                </div>
+              <div class="col-lg-4 col-md-4 pull-right">
+                <label class="d-block">&nbsp;</label>
+                <button (click)="exportAsXLSX()" class="btn btn-custom red w-43 pull-right"><i class="fa fa-download"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- /Page Header -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadowbox">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="openmodal" class="modal custom-modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <form [formGroup]="formRecodEdit" method="post" (ngSubmit)="submitForm()">
+                <input formControlName="id" type="hidden" class="form-control">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ popupTitle }}</h4>
+                    <button (click)="closePopup()" type="button" class="close" data-dismiss="modal" #closeAddExpenseModal>&times;</button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Product Name:<span class="error"> *</span></label>
+                                <input maxlength="25" formControlName="label" type="text" list="label" class="form-control">
+                                <datalist id="label">
+                <option value="{{ row.label }}" *ngFor="let row of productData | sortBy: 'asc':'label'">
+              </datalist>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.label.errors">
+                                    <!-- <div *ngIf="submitted && formRecodEdit.controls.label.errors.required">
+                                        Product name is required.
+                                    </div> -->
+                                    <div *ngIf="submitted && formRecodEdit.controls.label.errors.pattern">
+                                        Please enter valid product name.
+                                    </div>
+
+                                    <div *ngIf="submitted && formRecodEdit.controls.label.errors.cannotContainSpace">
+                                        Product name is required.
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Sub Product:<span class="error"  [ngStyle]="{'display':accessdisplay}"> *</span></label>
+                                <input maxlength="25" formControlName="lable_code" type="text" list="label_code" class="form-control">
+                                <datalist id="label_code">
+                <option value="{{ row.lable_code }}" *ngFor="let row of productData | sortBy: 'asc':'lable_code'">
+              </datalist>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.lable_code.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.lable_code.errors.required">
+                                        Sub product is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Alias Product Type Id:<span class="error"> *</span></label>                                
+                                  <ng-select placeholder="Select Alias Product Type" (clear)="clearValue('alias_product',$event)" (change)="changeSelectBox('alias_product',$event)" [(ngModel)]="selectedAlias_product" [ngModelOptions]="{standalone: true}">
+                                    <ng-option *ngFor="let row of productAliasData" [value]="row.alias_product_type_id">{{row.label}}</ng-option>
+                                </ng-select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.alias_product_type_id.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.alias_product_type_id.errors.required">
+                                        Alias product type id is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Group Code:<span class="error"> *</span></label>
+                                <!-- <select class="form-control" formControlName="group_code">
+                <option value="">Select Group Code</option>
+                <option value="private_car">Private Car</option>
+                <option value="bike">Bike</option>
+                <option value="commercial">Commercial</option>
+              </select> -->
+
+              <ng-select placeholder="Select Group Code" (clear)="clearValue('group_code',$event)" (change)="changeSelectBox('group_code',$event)" [(ngModel)]="selectedGroup_code" [ngModelOptions]="{standalone: true}">
+                <ng-option  value="private_car">Private Car</ng-option>
+                <ng-option value="bike">Bike</ng-option>
+                <ng-option value="commercial">Commercial</ng-option>
+            </ng-select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.group_code.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.group_code.errors.required">
+                                        Group code is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Sub Group Code:<span class="error"> *</span></label>
+                                <!-- <select class="form-control" formControlName="sub_group_code">
+                <option value="">Select Sub Group Code</option>
+                <option value="private_car">Private Car</option>
+                <option value="bike">Bike</option>
+                <option value="commercial">Commercial</option>
+                <option value="three_wheeler">Three Wheeler</option>
+              </select> -->
+              <ng-select placeholder="Select Sub Group Code" (clear)="clearValue('sub_group_code',$event)" (change)="changeSelectBox('sub_group_code',$event)" [(ngModel)]="selectedSub_group_code" [ngModelOptions]="{standalone: true}">
+                <ng-option  value="private_car">Private Car</ng-option>
+                <ng-option value="bike">Bike</ng-option>
+                <ng-option value="commercial">Commercial</ng-option>
+                <ng-option value="three_wheeler">Three Wheeler</ng-option>
+            </ng-select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.sub_group_code.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.sub_group_code.errors.required">
+                                        Sub group code is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Group Label:<span class="error"> *</span></label>
+                                <!-- <select class="form-control" formControlName="group_lable">
+                <option value="">Select Group Label</option>
+                <option value="Car">Car</option>
+                <option value="Bike">Bike</option>
+                <option value="Commercial">Commercial</option>
+              </select> -->
+              <ng-select placeholder="Select Group Label" (clear)="clearValue('group_lable',$event)" (change)="changeSelectBox('group_lable',$event)" [(ngModel)]="selectedGroup_lable" [ngModelOptions]="{standalone: true}">
+                <ng-option  value="private_car">Private Car</ng-option>
+                <ng-option value="bike">Bike</ng-option>
+                <ng-option value="commercial">Commercial</ng-option>
+            </ng-select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.group_lable.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.group_lable.errors.required">
+                                        Group Label is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Status:<span class="error"> *</span></label>
+                                <!-- <select class="form-control" formControlName="status">
+                <option value="">Select Status</option>
+                <option value="{{ row.status_id }}" *ngFor="let row of statusData"  >{{ row.lable }}</option>
+              </select> -->
+              <ng-select placeholder="Select Status" (clear)="clearValue('status',$event)" (change)="changeSelectBox('status',$event)" [(ngModel)]="selectedStatus" [ngModelOptions]="{standalone: true}">
+                <ng-option *ngFor="let row of statusData" [value]="row.status_id">{{row.lable}}</ng-option>
+            </ng-select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.status.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.status.errors.required">
+                                        Status is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <div class="ui checkbox">
+                                    <input formControlName="is_motor_vehicle" type="checkbox" (change)="isMotorVehicle($event)" id="is_motor_vehicle">
+                                    <label class="mb-0" for="is_motor_vehicle">Is Motor Vehicle?:</label>
+                                </div>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.is_motor_vehicle.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.is_motor_vehicle.errors.required">
+                                        Is Motor Vehicle is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+                                <strong>{{responseMsg}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <input *ngIf="btnEditSubmit" class="btn btn-custom green btn-lg" type="submit" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<app-loader [loaderActive]="loaderActive"></app-loader>

@@ -4,6 +4,7 @@ import { APP_BASE_HREF, Location } from '@angular/common';
 
 import { HttpClientModule ,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FrontInterceptor } from './front/share/front.interceptor';
+import { AdminInterceptor } from './admin/share/admin.interceptor';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
@@ -16,6 +17,8 @@ import { BnNgIdleService } from 'bn-ng-idle';
 import { ChartsModule } from 'ng2-charts';
 import { DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { ReportsComponent } from './admin/reports/reports.component';
 
 import { CommonModule } from "@angular/common";
 
@@ -26,8 +29,9 @@ import { CommonModule } from "@angular/common";
     AppComponent,
     PageNotFoundComponent,
     AccessDeniedComponent,
-
-
+    DashboardComponent,
+    ReportsComponent
+  
 
   ],
   imports: [
@@ -45,7 +49,7 @@ import { CommonModule } from "@angular/common";
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: FrontInterceptor, multi: true},
-
+    { provide: HTTP_INTERCEPTORS, useClass: AdminInterceptor, multi: true},
     { provide: APP_BASE_HREF, useValue: window['_app_base'] || '/' },
     BnNgIdleService,DatePipe
   ],

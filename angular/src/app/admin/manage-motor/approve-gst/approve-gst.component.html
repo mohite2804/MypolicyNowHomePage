@@ -1,0 +1,108 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Manage GST</h3>
+        </div>
+        <!-- <div class="col-auto float-right ml-auto">
+              <button (click)="openModel()" data-toggle="modal"  data-target="#openmodal" class="btn btn-custom green"><i class="fa fa-plus"></i> Add Model Details</button>
+          </div> -->
+    </div>
+</div>
+<!-- /Page Header -->
+<!-- Page Content -->
+<div class="content container-fluid">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadowbox">
+                <div class="card-header">
+                    <div class="form-group ui form mb-0">
+                        <div class="row align-items-center justify-content-center inline fields mb-0">
+
+                            <div class="col-auto px-4 field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="searchGSTbystatus" id="searchGSTbystatus-pending" value="searchGSTbystatus-pending" (click)="showHideGST(0);" checked>
+                                    <label class="mb-0" for="searchGSTbystatus-pending">Pending</label>
+                                </div>
+                            </div>
+
+                            <div class="col-auto px-4 field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="searchGSTbystatus" id="searchGSTbystatus-approved" value="searchGSTbystatus-approved" (click)="showHideGST(1);">
+                                    <label class="mb-0" for="searchGSTbystatus-approved">Approved</label>
+                                </div>
+                            </div>
+
+                            <div class="col-auto px-4 field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="searchGSTbystatus" id="searchGSTbystatus-referback" value="searchGSTbystatus-referback" (click)="showHideGST(2);">
+                                    <label class="mb-0" for="searchGSTbystatus-referback">Refer Back</label>
+                                </div>
+                            </div>
+                            <div class="col-auto px-4 field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="searchGSTbystatus" id="searchGSTbystatus-rejected" value="searchGSTbystatus-rejected" (click)="showHideGST(4);">
+                                    <label class="mb-0" for="searchGSTbystatus-rejected">Rejected</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" [ngClass]="{'d-none': div_show_endorsement_status }">
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn datatable"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--  Send message Modal -->
+    <div id="send_mail_pop" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <form [formGroup]="formUpdateGST" method="post" (ngSubmit)="submitForm()">
+                    <input formControlName="invoiceid" type="hidden" class="form-control">
+                    <input formControlName="invoiceno" type="hidden" class="form-control">
+                    <div class="modal-header">
+                        <h5 class="modal-title">GST Action</h5>
+                        <button #closebutton type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12 col-12">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select class="form-control" formControlName="status" (change)="comment_box($event)">
+                                                    <option value="">Select Status</option>
+                                                    <option value="1">Approve</option>
+                                                    <option value="2">Referback</option>
+                                                    <!--<option value="3">Cancel</option>-->
+                                                    <option value="4">Rejected</option>
+                                                </select>
+                                    <div class="error" *ngIf="submitted && formUpdateGST.controls.status.errors">
+                                        <div *ngIf="submitted && formUpdateGST.controls.status.errors.required">
+                                            Please select status
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-12" [ngClass]="{'d-none': gst_comment_box_hide }">
+                                <label>Comment</label>
+                                <textarea formControlName="gst_comment" class="form-control" rows="4"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn btn-custom green submit-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Content -->
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

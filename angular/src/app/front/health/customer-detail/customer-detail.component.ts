@@ -31,10 +31,22 @@ export class CustomerDetailComponent implements OnInit {
   minDateForBirthdatemother : any;
   maxDateForBirthdatefather : any;
   minDateForBirthdatefather : any;
-  maxDateForBirthdateson : any;
-  minDateForBirthdateson : any;
-  maxDateForBirthdatedaughter : any;
-  minDateForBirthdatedaughter : any;
+  maxDateForBirthdateson1 : any;
+  minDateForBirthdateson1 : any;
+  maxDateForBirthdateson2 : any;
+  minDateForBirthdateson2 : any;
+  maxDateForBirthdateson3 : any;
+  minDateForBirthdateson3 : any;
+  maxDateForBirthdateson4 : any;
+  minDateForBirthdateson4 : any;
+  maxDateForBirthdatedaughter1 : any;
+  minDateForBirthdatedaughter1 : any;
+  maxDateForBirthdatedaughter2 : any;
+  minDateForBirthdatedaughter2 : any;
+  maxDateForBirthdatedaughter3 : any;
+  minDateForBirthdatedaughter3 : any;
+  maxDateForBirthdatedaughter4 : any;
+  minDateForBirthdatedaughter4 : any;
   date_picker_birthday: NgbDateStruct;
   loaderActive: boolean = false;
   loginUserId: any; 
@@ -146,13 +158,14 @@ export class CustomerDetailComponent implements OnInit {
   daughter4_age_y:any;
   plan_id:any;
   showForSup:any;
-  claim_ins:any;
+  claim_ins_div:any;
   smoke_div:any;
   validation_for_pan :any = "^[a-zA-Z]{3}[cphfatbljgCPHFATBLJG]{1}[a-zA-Z]{1}[0-9]{4}[a-zA-Z]{1}$";
+  validation_for_aadhar_card :any = "^[2-9]{1}[0-9]{11}$";
   validation_for_email :any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   validation_for_mobile_no :any = "^[6-9][0-9]{9}$";
-
-  
+  maxDate:any;
+  policy_type_name_div:any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private renderer: Renderer2,
@@ -166,6 +179,7 @@ export class CustomerDetailComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.policy_type_name_div = false;
     this.loginUserId = sessionStorage.getItem("user_id");
     this.selectedproducttypeid = sessionStorage.getItem(
       "selected_product_type_id"
@@ -177,10 +191,18 @@ export class CustomerDetailComponent implements OnInit {
     this.getIndex();
     //this.getOccupationList();
     this.insured = false;
+    const current = new Date();
+    this.maxDateForBirthdate = {
+      year: current.getFullYear() - 18,
+      month: 12,
+      day: 31
+    };
+
+    this.maxDate = this.maxDateForBirthdate.year+'-'+this.maxDateForBirthdate.month+'-'+this.maxDateForBirthdate.day;
   }
 
   getIndex() {
-    this.claim_ins = false;
+    this.claim_ins_div = true;
     this.loaderActive = true;
     var sendData = new FormData();
     sendData.append("loginUserId", this.loginUserId);
@@ -189,6 +211,7 @@ export class CustomerDetailComponent implements OnInit {
     sendData.append("quote_data_health_id", this.buy_policy_id);
     sendData.append("unique_reference_no", this.unique_reference_no);
     this.healthService.getHealthQuoteListData(sendData).subscribe((res) => {
+      this.loaderActive = false;
       this.insured_type_self = "";
       this.insured_type_spouse = "";
       this.insured_type_mother = "";
@@ -201,7 +224,6 @@ export class CustomerDetailComponent implements OnInit {
       this.insured_type_daughter2 = "";
       this.insured_type_daughter3 = "";
       this.insured_type_daughter4 = "";
-      this.loaderActive = false;
       var result: any = res;      
       this.policy_type_name = result.result.user_data.policy_type_name;
       this.policy_subtype_name = result.result.user_data.policy_subtype_name;
@@ -404,6 +426,102 @@ export class CustomerDetailComponent implements OnInit {
       
       this.minDateForBirthdatefather = {
         year: current.getFullYear() - this.father_age,
+        month: current.getMonth() + 1,
+        day: current.getDate()
+      };
+
+      this.maxDateForBirthdateson1 = {
+        year: current.getFullYear() - this.son1_age_y,
+        month: current.getMonth() + 1,
+        day: current.getDate()
+      };
+      
+      this.minDateForBirthdateson1 = {
+        year: current.getFullYear() - this.son1_age,
+        month: current.getMonth() + 1,
+        day: current.getDate()
+      };
+
+      this.maxDateForBirthdateson2 = {
+        year: current.getFullYear() - this.son2_age_y,
+        month: current.getMonth() + 1,
+        day: current.getDate()
+      };
+      
+      this.minDateForBirthdateson2 = {
+        year: current.getFullYear() - this.son2_age,
+        month: current.getMonth() + 1,
+        day: current.getDate()
+      };
+
+      this.maxDateForBirthdateson3 = {
+        year: current.getFullYear() - this.son3_age_y,
+        month: current.getMonth() + 1,
+        day: current.getDate()
+      };
+      
+      this.minDateForBirthdateson3 = {
+        year: current.getFullYear() - this.son3_age,
+        month: current.getMonth() + 1,
+        day: current.getDate()
+      };
+
+      this.maxDateForBirthdateson4 = {
+        year: current.getFullYear() - this.son4_age_y,
+        month: current.getMonth() + 1,
+        day: current.getDate()
+      };
+      
+      this.minDateForBirthdateson4 = {
+        year: current.getFullYear() - this.son4_age,
+        month: current.getMonth() + 1,
+        day: current.getDate()
+      };
+
+      this.maxDateForBirthdatedaughter1 = {
+        year: current.getFullYear() - this.daughter1_age_y,
+        month: current.getMonth() + 1,
+        day: current.getDate()
+      };
+      
+      this.minDateForBirthdatedaughter1 = {
+        year: current.getFullYear() - this.daughter1_age,
+        month: current.getMonth() + 1,
+        day: current.getDate()
+      };
+
+      this.maxDateForBirthdatedaughter2 = {
+        year: current.getFullYear() - this.daughter2_age_y,
+        month: current.getMonth() + 1,
+        day: current.getDate()
+      };
+      
+      this.minDateForBirthdatedaughter2 = {
+        year: current.getFullYear() - this.daughter2_age,
+        month: current.getMonth() + 1,
+        day: current.getDate()
+      };
+
+      this.maxDateForBirthdatedaughter3 = {
+        year: current.getFullYear() - this.daughter3_age_y,
+        month: current.getMonth() + 1,
+        day: current.getDate()
+      };
+      
+      this.minDateForBirthdatedaughter3 = {
+        year: current.getFullYear() - this.daughter3_age,
+        month: current.getMonth() + 1,
+        day: current.getDate()
+      };
+
+      this.maxDateForBirthdatedaughter4 = {
+        year: current.getFullYear() - this.daughter4_age_y,
+        month: current.getMonth() + 1,
+        day: current.getDate()
+      };
+      
+      this.minDateForBirthdatedaughter4 = {
+        year: current.getFullYear() - this.daughter4_age,
         month: current.getMonth() + 1,
         day: current.getDate()
       };
@@ -681,106 +799,20 @@ export class CustomerDetailComponent implements OnInit {
           nominee_marital:result.result.user_data.customer_action_data[0].nominee_marital,
           consume_oth_subs:result.result.user_data.customer_action_data[0].consume_oth_subs,
           oth_ins_pol:result.result.user_data.customer_action_data[0].oth_ins_pol,
-
-          
-
-
-        //  appointeeself_salutation:result.result.user_data.customer_action_data[0].appointeeself_salutation,
-        //  appointeeself_firstname:result.result.user_data.customer_action_data[0].appointeeself_firstname,
-        //  appointeeself_middlename:result.result.user_data.customer_action_data[0].appointeeself_middlename,
-        //  appointeeself_lastname:result.result.user_data.customer_action_data[0].appointeeself_lastname,
-        //  appointeeself_relationship:result.result.user_data.customer_action_data[0].appointeeself_relationship,
-        //  appointeeself_dob:result.result.user_data.customer_action_data[0].appointeeself_dob,
-        //  appointeeself_marital:result.result.user_data.customer_action_data[0].appointeeself_marital,
-        //  appointeespouse_salutation:result.result.user_data.customer_action_data[0].appointeespouse_salutation,
-        //  appointeespouse_firstname:result.result.user_data.customer_action_data[0].appointeespouse_firstname,
-        //  appointeespouse_middlename:result.result.user_data.customer_action_data[0].appointeespouse_middlename,
-        //  appointeespouse_lastname:result.result.user_data.customer_action_data[0].appointeespouse_lastname,
-        //  appointeespouse_relationship:result.result.user_data.customer_action_data[0].appointeespouse_relationship,
-        //  appointeespouse_dob:result.result.user_data.customer_action_data[0].appointeespouse_dob,
-        //  appointeespouse_marital:result.result.user_data.customer_action_data[0].appointeespouse_marital,
-        //  appointeemother_salutation:result.result.user_data.customer_action_data[0].appointeemother_salutation,
-        //  appointeemother_firstname:result.result.user_data.customer_action_data[0].appointeemother_firstname,
-        //  appointeemother_middlename:result.result.user_data.customer_action_data[0].appointeemother_middlename,
-        //  appointeemother_lastname:result.result.user_data.customer_action_data[0].appointeemother_lastname,
-        //  appointeemother_relationship:result.result.user_data.customer_action_data[0].appointeemother_relationship,
-        //  appointeemother_dob:result.result.user_data.customer_action_data[0].appointeemother_dob,
-        //  appointeemother_marital:result.result.user_data.customer_action_data[0].appointeemother_marital,
-        //  appointeefather_salutation:result.result.user_data.customer_action_data[0].appointeefather_salutation,
-        //  appointeefather_firstname:result.result.user_data.customer_action_data[0].appointeefather_firstname,
-        //  appointeefather_middlename:result.result.user_data.customer_action_data[0].appointeefather_middlename,
-        //  appointeefather_lastname:result.result.user_data.customer_action_data[0].appointeefather_lastname,
-        //  appointeefather_relationship:result.result.user_data.customer_action_data[0].appointeefather_relationship,
-        //  appointeefather_dob:result.result.user_data.customer_action_data[0].appointeefather_dob,
-        //  appointeefather_marital:result.result.user_data.customer_action_data[0].appointeefather_marital,
-        //  appointeeson1_salutation:result.result.user_data.customer_action_data[0].appointeeson1_salutation,
-        //  appointeeson1_firstname:result.result.user_data.customer_action_data[0].appointeeson1_firstname,
-        //  appointeeson1_middlename:result.result.user_data.customer_action_data[0].appointeeson1_middlename,
-        //  appointeeson1_lastname:result.result.user_data.customer_action_data[0].appointeeson1_lastname,
-        //  appointeeson1_relationship:result.result.user_data.customer_action_data[0].appointeeson1_relationship,
-        //  appointeeson1_dob:result.result.user_data.customer_action_data[0].appointeeson1_dob,
-        //  appointeeson1_marital:result.result.user_data.customer_action_data[0].appointeeson1_marital,
-        //  appointeeson2_salutation:result.result.user_data.customer_action_data[0].appointeeson2_salutation,
-        //  appointeeson2_firstname:result.result.user_data.customer_action_data[0].appointeeson2_firstname,
-        //  appointeeson2_middlename:result.result.user_data.customer_action_data[0].appointeeson2_middlename,
-        //  appointeeson2_lastname:result.result.user_data.customer_action_data[0].appointeeson2_lastname,
-        //  appointeeson2_relationship:result.result.user_data.customer_action_data[0].appointeeson2_relationship,
-        //  appointeeson2_dob:result.result.user_data.customer_action_data[0].appointeeson2_dob,
-        //  appointeeson2_marital:result.result.user_data.customer_action_data[0].appointeeson2_marital,
-        //  appointeeson3_salutation:result.result.user_data.customer_action_data[0].appointeeson3_salutation,
-        //  appointeeson3_firstname:result.result.user_data.customer_action_data[0].appointeeson3_firstname,
-        //  appointeeson3_middlename:result.result.user_data.customer_action_data[0].appointeeson3_middlename,
-        //  appointeeson3_lastname:result.result.user_data.customer_action_data[0].appointeeson3_lastname,
-        //  appointeeson3_relationship:result.result.user_data.customer_action_data[0].appointeeson3_relationship,
-        //  appointeeson3_dob:result.result.user_data.customer_action_data[0].appointeeson3_dob,
-        //  appointeeson3_marital:result.result.user_data.customer_action_data[0].appointeeson3_marital,
-        //  appointeeson4_salutation:result.result.user_data.customer_action_data[0].appointeeson4_salutation,
-        //  appointeeson4_firstname:result.result.user_data.customer_action_data[0].appointeeson4_firstname,
-        //  appointeeson4_middlename:result.result.user_data.customer_action_data[0].appointeeson4_middlename,
-        //  appointeeson4_lastname:result.result.user_data.customer_action_data[0].appointeeson4_lastname,
-        //  appointeeson4_relationship:result.result.user_data.customer_action_data[0].appointeeson4_relationship,
-        //  appointeeson4_dob:result.result.user_data.customer_action_data[0].appointeeson4_dob,
-        //  appointeeson4_marital:result.result.user_data.customer_action_data[0].appointeeson4_marital,
-        //  appointeedaughter1_salutation:result.result.user_data.customer_action_data[0].appointeedaughter1_salutation,
-        //  appointeedaughter1_firstname:result.result.user_data.customer_action_data[0].appointeedaughter1_firstname,
-        //  appointeedaughter1_middlename:result.result.user_data.customer_action_data[0].appointeedaughter1_middlename,
-        //  appointeedaughter1_lastname:result.result.user_data.customer_action_data[0].appointeedaughter1_lastname,
-        //  appointeedaughter1_relationship:result.result.user_data.customer_action_data[0].appointeedaughter1_relationship,
-        //  appointeedaughter1_dob:result.result.user_data.customer_action_data[0].appointeedaughter1_dob,
-        //  appointeedaughter1_marital:result.result.user_data.customer_action_data[0].appointeedaughter1_marital,
-        //  appointeedaughter2_salutation:result.result.user_data.customer_action_data[0].appointeedaughter2_salutation,
-        //  appointeedaughter2_firstname:result.result.user_data.customer_action_data[0].appointeedaughter2_firstname,
-        //  appointeedaughter2_middlename:result.result.user_data.customer_action_data[0].appointeedaughter2_middlename,
-        //  appointeedaughter2_lastname:result.result.user_data.customer_action_data[0].appointeedaughter2_lastname,
-        //  appointeedaughter2_relationship:result.result.user_data.customer_action_data[0].appointeedaughter2_relationship,
-        //  appointeedaughter2_dob:result.result.user_data.customer_action_data[0].appointeedaughter2_dob,
-        //  appointeedaughter2_marital:result.result.user_data.customer_action_data[0].appointeedaughter2_marital,
-        //  appointeedaughter3_salutation:result.result.user_data.customer_action_data[0].appointeedaughter3_salutation,
-        //  appointeedaughter3_firstname:result.result.user_data.customer_action_data[0].appointeedaughter3_firstname,
-        //  appointeedaughter3_middlename:result.result.user_data.customer_action_data[0].appointeedaughter3_middlename,
-        //  appointeedaughter3_lastname:result.result.user_data.customer_action_data[0].appointeedaughter3_lastname,
-        //  appointeedaughter3_relationship:result.result.user_data.customer_action_data[0].appointeedaughter3_relationship,
-        //  appointeedaughter3_dob:result.result.user_data.customer_action_data[0].appointeedaughter3_dob,
-        //  appointeedaughter3_marital:result.result.user_data.customer_action_data[0].appointeedaughter3_marital,
-        //  appointeedaughter4_salutation:result.result.user_data.customer_action_data[0].appointeedaughter4_salutation,
-        //  appointeedaughter4_firstname:result.result.user_data.customer_action_data[0].appointeedaughter4_firstname,
-        //  appointeedaughter4_middlename:result.result.user_data.customer_action_data[0].appointeedaughter4_middlename,
-        //  appointeedaughter4_lastname:result.result.user_data.customer_action_data[0].appointeedaughter4_lastname,
-        //  appointeedaughter4_relationship:result.result.user_data.customer_action_data[0].appointeedaughter4_relationship,
-        //  appointeedaughter4_dob:result.result.user_data.customer_action_data[0].appointeedaughter4_dob,
-        //  appointeedaughter4_marital:result.result.user_data.customer_action_data[0].appointeedaughter4_marital,
-         appointee_salutation:result.result.user_data.customer_action_data[0].appointee_salutation,
-         appointee_firstname:result.result.user_data.customer_action_data[0].appointee_firstname,
-         appointee_middlename:result.result.user_data.customer_action_data[0].appointee_middlename,
-         appointee_lastname:result.result.user_data.customer_action_data[0].appointee_lastname,
-         appointee_relationship:result.result.user_data.customer_action_data[0].appointee_relationship,
-         appointee_dob:result.result.user_data.customer_action_data[0].appointee_dob,
-         appointee_marital:result.result.user_data.customer_action_data[0].appointee_marital,
+          appointee_salutation:result.result.user_data.customer_action_data[0].appointee_salutation,
+          appointee_firstname:result.result.user_data.customer_action_data[0].appointee_firstname,
+          appointee_middlename:result.result.user_data.customer_action_data[0].appointee_middlename,
+          appointee_lastname:result.result.user_data.customer_action_data[0].appointee_lastname,
+          appointee_relationship:result.result.user_data.customer_action_data[0].appointee_relationship,
+          appointee_dob:result.result.user_data.customer_action_data[0].appointee_dob,
+          appointee_marital:result.result.user_data.customer_action_data[0].appointee_marital,
          //appointee_marital:result.result.user_data.customer_action_data[0].appointee_marital,
           
         });
         this.nomnne_dob=true;
+        
     });
+    this.policy_type_name_div = true;
   }
 
   getOccupationList()
@@ -1068,7 +1100,7 @@ export class CustomerDetailComponent implements OnInit {
       buyer_nationality: [""],
       buyer_marital: ["", [Validators.required]],
       buyer_pan: ["",[Validators.pattern(this.validation_for_pan)]],
-      buyer_adhar: [""],
+      buyer_adhar: ["",[Validators.pattern(this.validation_for_aadhar_card)]],
       buyer_insured: [""],
       memberself_salutation: ["", [Validators.required]],
       memberself_firstname: [""],
@@ -1510,10 +1542,10 @@ export class CustomerDetailComponent implements OnInit {
   claimInsBef(e){
     if(e=='Yes'){
       Swal.fire("Can't processed online", "", "error");
-      this.claim_ins = true;      
+      this.claim_ins_div = false;      
     }
     else if(e=='No'){
-      this.claim_ins = false;
+      this.claim_ins_div = true;
     }
   }
      public name:any;

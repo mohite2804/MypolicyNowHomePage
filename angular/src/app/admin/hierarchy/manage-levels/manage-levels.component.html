@@ -1,0 +1,324 @@
+<!-- Page Header -->
+<div class="page-header">
+  <div class="row align-items-center">
+    <div class="col">
+      <h3 class="page-title">Manage Levels</h3>
+    </div>
+    <div class="col-auto float-right ml-auto">
+      <button (click)="openModel()" data-toggle="modal" [ngStyle]="{'display':displayAddZone}" data-target="#openmodal" class="btn btn-custom green"><i class="fa fa-plus"></i> Add Zone</button>&nbsp;
+      <button (click)="openModel_region()" data-toggle="modal" [ngStyle]="{'display':displayAddRegion}" data-target="#openmodal_region" class="btn btn-custom green"><i class="fa fa-plus"></i> Add Region</button>&nbsp;
+      <button (click)="openmodal_state()" data-toggle="modal" [ngStyle]="{'display':displayAddState}" data-target="#openmodal_state" class="btn btn-custom green"><i class="fa fa-plus"></i> Add State</button>&nbsp;
+    </div>      
+  </div>
+</div>
+<!-- /Page Header -->
+<!-- Page Content -->
+<div class="content container-fluid">
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadowbox">
+        <div class="card-header">
+          <div class="form-group ui form mb-0">
+            <div class="row align-items-center justify-content-center inline fields mb-0">                                      
+              <div class="col-auto px-4 field" >
+                <div class="ui radio checkbox">
+                  <input type="radio" name="searchlevel" id="searchlevel-zone" value="searchlevel-zone" checked="" (click)="searchByLevel('zone');">
+                  <label class="mb-0" for="searchlevel-zone">Zone</label>
+                </div>
+              </div>
+              <div class="col-auto px-4 field" >
+                <div class="ui radio checkbox">
+                  <input type="radio" name="searchlevel" id="searchlevel-region" value="searchlevel-region"  (click)="searchByLevel('region');">
+                  <label class="mb-0" for="searchlevel-region">Region</label>
+                </div>
+              </div>
+              <div class="col-auto px-4 field" >
+                <div class="ui radio checkbox">
+                  <input type="radio" name="searchlevel" id="searchlevel-state" value="searchlevel-state"  (click)="searchByLevel('state');">
+                  <label class="mb-0" for="searchlevel-state">State</label>
+                </div>
+              </div>                                  
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="card-body" [ngClass]="{'d-none': div_show_level_status }">
+          <div class="table-responsive">
+            <table datatable *ngIf="dtRendered" [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn datatable"></table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Zone Form -->
+  <div id="openmodal" class="modal custom-modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <form [formGroup]="formRecodEdit" method="post" (ngSubmit)="submitForm()">
+                <input formControlName="id" type="hidden" class="form-control">
+
+
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ popupTitle }}</h4>
+                    <button (click)="closePopup()" type="button" class="close" data-dismiss="modal" #closeAddExpenseModal>&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Zone Name:<span class="error"> *</span></label>
+                                <input maxlength="30" formControlName="level_zone_name" type="text" list="level_zone_name" class="form-control">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.level_zone_name.errors">
+
+                                    <div *ngIf="submitted && formRecodEdit.controls.level_zone_name.errors">
+                                        Please enter valid level zone name.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Zone Parent:</label>
+                                <select class="form-control" formControlName="level_zone_parent_id" >
+                                    <option value="">Select Level Zone Parent</option>
+                                    <option value="{{ row.admin_user_type_id }}" *ngFor="let row of levelZoneParentData" >{{ row.label }}</option>
+                                </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.level_zone_parent_id.errors" >
+                                    <div *ngIf="submitted && formRecodEdit.controls.level_zone_parent_id.errors.required">
+                                        This Field is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Status:</label>
+                                <select class="form-control" formControlName="status" >
+                                    <option value="">Select Status</option>
+                                    <option value="{{ row.status_type_id }}" *ngFor="let row of statusData" >{{ row.lable }}</option>
+                                </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.status.errors" >
+                                    <div *ngIf="submitted && formRecodEdit.controls.status.errors.required">
+                                        Status is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                   <!--  <div class="col-sm-12">
+                        <div class="form-group">
+                            <div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+                                <strong>{{responseMsg}}</strong>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="submit-section">
+                        <input *ngIf="btnEditSubmit" class="btn btn-custom green btn-lg" type="submit" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+
+  <!--Region Form -->
+  <div id="openmodal_region" class="modal custom-modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          
+            <form [formGroup]="formRecodEdit_region" method="post" (ngSubmit)="submit_region_Form()">
+                <input formControlName="id" type="hidden" class="form-control">
+
+
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ region_popupTitle }}</h4>
+                    <button (click)="closePopup1()" type="button" class="close" data-dismiss="modal" #closeAddExpenseModal1>&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Region Name:<span class="error"> *</span></label>
+                                <input maxlength="30" formControlName="level_region_name" type="text" list="level_region_name" class="form-control">
+                                <div class="error" *ngIf="submitted1 && formRecodEdit_region.controls.level_region_name.errors">
+
+                                    <div *ngIf="submitted1 && formRecodEdit_region.controls.level_region_name.errors">
+                                        Please enter valid level region name.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Zone Parent:</label>
+                                <select class="form-control" formControlName="level_zone_parent_id" (change) ="getFilterZone($event)">
+                                    <option value="">Select Zone Parent</option>
+                                    <option value="{{ row.admin_user_type_id }}" *ngFor="let row of levelZoneParentData" >{{ row.label }}</option>
+                                </select>
+                                <div class="error" *ngIf="submitted1 && formRecodEdit_region.controls.level_zone_parent_id.errors" >
+                                    <div *ngIf="submitted1 && formRecodEdit_region.controls.level_zone_parent_id.errors.required">
+                                        This Field is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Zone:</label>
+                                <select class="form-control" formControlName="level_region_parent_id" >
+                                    <option value="">Select Parent Zone</option>
+                                    <option value="{{ row.level_zone_id }}" *ngFor="let row of levelRegionParentData" >{{ row.level_zone_name }}</option>
+                                </select>
+                                <div class="error" *ngIf="submitted1 && formRecodEdit_region.controls.level_region_parent_id.errors" >
+                                    <div *ngIf="submitted1 && formRecodEdit_region.controls.level_region_parent_id.errors.required">
+                                        This Field is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Status:</label>
+                                <select class="form-control" formControlName="status" >
+                                    <option value="">Select Status</option>
+                                    <option value="{{ row.status_type_id }}" *ngFor="let row of statusData" >{{ row.lable }}</option>
+                                </select>
+                                <div class="error" *ngIf="submitted1 && formRecodEdit_region.controls.status.errors" >
+                                    <div *ngIf="submitted1 && formRecodEdit_region.controls.status.errors.required">
+                                        Status is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="submit-section">
+                        <input *ngIf="btnEditSubmit1" class="btn btn-custom green btn-lg" type="submit" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+
+  <!--State Form -->
+  <div id="openmodal_state" class="modal custom-modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          
+            <form [formGroup]="formRecodEdit_state" method="post" (ngSubmit)="submit_state_Form()">
+                <input formControlName="id" type="hidden" class="form-control">
+
+
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ state_popupTitle }}</h4>
+                    <button (click)="closePopup2()" type="button" class="close" data-dismiss="modal" #closeAddExpenseModal2>&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>State Name:<span class="error"> *</span></label>
+                                <input maxlength="30" formControlName="level_state_name" type="text" list="level_state_name" class="form-control">
+                                <div class="error" *ngIf="submitted2 && formRecodEdit_state.controls.level_state_name.errors">
+
+                                    <div *ngIf="submitted2 && formRecodEdit_state.controls.level_state_name.errors">
+                                        Please enter valid level state name.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Zone Parent:</label>
+                                <select class="form-control" formControlName="level_zone_parent_id" (change) ="getFilterZone($event)">
+                                    <option value="">Select Zone Parent</option>
+                                    <option value="{{ row.admin_user_type_id }}" *ngFor="let row of levelZoneParentData" >{{ row.label }}</option>
+                                </select>
+                                <div class="error" *ngIf="submitted2 && formRecodEdit_state.controls.level_zone_parent_id.errors" >
+                                    <div *ngIf="submitted2 && formRecodEdit_state.controls.level_zone_parent_id.errors.required">
+                                        This Field is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Zone:</label>
+                                <select class="form-control" formControlName="level_region_parent_id" (change) ="getFilterRegion($event)">
+                                    <option value="">Select Parent Zone</option>
+                                    <option value="{{ row.level_zone_id }}" *ngFor="let row of levelRegionParentData" >{{ row.level_zone_name }}</option>
+                                </select>
+                                <div class="error" *ngIf="submitted2 && formRecodEdit_state.controls.level_region_parent_id.errors" >
+                                    <div *ngIf="submitted2 && formRecodEdit_state.controls.level_region_parent_id.errors.required">
+                                        This Field is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Region:</label>
+                                <select class="form-control" formControlName="level_state_parent_id" >
+                                    <option value="">Select Parent Region</option>
+                                    <option value="{{ row.level_region_id }}" *ngFor="let row of filterRegions" >{{ row.level_region_name }}</option>
+                                </select>
+                                <div class="error" *ngIf="submitted2 && formRecodEdit_state.controls.level_state_parent_id.errors" >
+                                    <div *ngIf="submitted2 && formRecodEdit_state.controls.level_state_parent_id.errors.required">
+                                        This Field is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Status:</label>
+                                <select class="form-control" formControlName="status" >
+                                    <option value="">Select Status</option>
+                                    <option value="{{ row.status_id }}" *ngFor="let row of statusData" >{{ row.lable }}</option>
+                                </select>
+                                <div class="error" *ngIf="submitted2 && formRecodEdit_state.controls.status.errors" >
+                                    <div *ngIf="submitted2 && formRecodEdit_state.controls.status.errors.required">
+                                        Status is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="submit-section">
+                        <input *ngIf="btnEditSubmit2" class="btn btn-custom green btn-lg" type="submit" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+
+</div>
+<!-- /Page Content -->
+
+

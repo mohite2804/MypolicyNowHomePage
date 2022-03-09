@@ -1,0 +1,525 @@
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">
+                Set IC Privileges
+            </h3>
+        </div>
+        <div class="col-md-4 float-right ml-auto text-right">
+            <!-- <button *ngIf="tab_hide_for_dp" class="btn btn-custom green btn-sm mr-2" (click)="backToDP()"><i class="fa fa-chevron-left mr-2"></i> Back to DP</button>
+          <button class="btn btn-custom green btn-sm mr-2" (click)="backToMISP()"><i class="fa fa-chevron-left mr-2"></i> Back to MISP</button> -->
+
+            <button class="btn btn-custom green btn-sm" (click)="backPage()"><i class="fa fa-chevron-left mr-2"></i> Back</button>
+        </div>
+    </div>
+</div>
+
+<div class="row align-items-center justify-content-center">
+    <div class="col-lg-9 col-md-10 col-12">
+        <div class="card shadowbox">
+            <div class="card-body">
+                <form method="post">
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+
+                                <li (click)="showProducts()" class="nav-item">
+                                    <a class="nav-link" href="#privileges-tab1" data-toggle="tab">
+                                Product
+                              </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#privileges-tab4" data-toggle="tab">
+                                      Policy Type and Policy Sub Type
+                                    </a>
+                                </li>
+
+                                <li (click)="showPaymentMethods()" class="nav-item">
+                                    <a class="nav-link" href="#privileges-tab2" data-toggle="tab">
+                                      Payment Methods
+                                    </a>
+                                </li>
+
+
+
+                                <!-- <li (click)="showOther()" class="nav-item">
+                                    <a class="nav-link" href="#privileges-tab3" data-toggle="tab">
+                                      Other old
+                                    </a>
+                                </li> -->
+
+                                <li (click)="showOther()" class="nav-item">
+                                    <a class="nav-link" href="#privileges-tab5" data-toggle="tab">
+                                    Other
+                                  </a>
+                                </li>
+
+                            </ul>
+                            <div class="tab-content">
+
+                                <div class="tab-pane show active" id="privileges-tab1">
+                                    <div class="row align-items-center justify-content-center">
+
+                                        <div class="col-lg-9 col-md-10 col-12">
+                                            <div *ngIf="tempUrlId == 0">
+                                                <!-- [value]="productId" -->
+
+
+                                                <select (change)="changeProductType($event)" class="form-control">
+                                            <option value="0">Select Product</option>
+                                            <option *ngFor="let row of getProductTypes"  value="{{ row.product_type_id }}">{{ row.label }}</option>
+                                        </select>
+
+                                            </div>
+                                            <div *ngIf="tempUrlId != 0">
+                                                <input class="form-control" type="text" readonly="readonly" value="{{product_type}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane show" id="privileges-tab4">
+                                    <div class="row align-items-center justify-content-center">
+                                        <div class="col-lg-9 col-md-10 col-12">
+                                            <ngx-treeview [config]="config" [items]="getPolicySubTypes" (filterChange)="onFilterPolicySubTypeChange($event)" (selectedChange)="onSelectedPolicySubTypeChange($event)">
+                                            </ngx-treeview>
+
+                                            <!-- <ngx-treeview [config]="config" [items]="getPolicySubTypes">
+                                            </ngx-treeview> -->
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane show" id="privileges-tab2">
+                                    <div class="row align-items-center justify-content-center">
+                                        <div class="col-lg-9 col-md-10 col-12">
+                                            <ngx-treeview [config]="config" [items]="getPaymentMethods" (filterChange)="onFilterPaymentMethodsChange($event)" (selectedChange)="onSelectedPaymentMethodsChange($event)">
+                                            </ngx-treeview>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane show" id="privileges-tab3">
+                                    <div class="row align-items-center justify-content-center">
+                                        <div class="col-lg-9 col-md-10 col-12">
+                                            <section>
+                                                <div class="row">
+                                                    <!-- <div class="col-md-4">
+                                                        <label>
+                                                    <input [(ngModel)]="other_new_policy" name="other_new_policy" type="checkbox" >
+                                                    &nbsp; New Policy
+                                                  </label>
+                                                    </div> -->
+
+                                                    <!-- <div class="col-md-4">
+                                                        <label>
+                                                    <input [(ngModel)]="other_renewal_policy" name="other_renewal_policy" type="checkbox" >
+                                                    &nbsp; Renewal Policy
+                                                  </label>
+                                                    </div> -->
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                                    <input [(ngModel)]="other_electrical" name="other_electrical" type="checkbox" >
+                                                    &nbsp; Electrical
+                                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                                <input [(ngModel)]="other_electrical_with_oddiscount" name="other_electrical_with_oddiscount" type="checkbox" >
+                                                &nbsp; Electrical with OD discount
+                                              </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_nonelectrical" name="other_nonelectrical" type="checkbox" >
+                                    &nbsp; Non Electrical
+                                  </label>
+                                                    </div>
+
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_nonelectrical_with_discount" name="other_nonelectrical_with_discount" type="checkbox" >
+                                    &nbsp; Non Electrical with Discount
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_cng" name="other_cng" type="checkbox" >
+                                    &nbsp; CNG
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_cng_with_discount" name="other_cng_with_discount" type="checkbox" >
+                                    &nbsp; CNG with Discount
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_geographical" name="other_geographical" type="checkbox" >
+                                    &nbsp; Geographical
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_geographical_split" name="other_geographical_split" type="checkbox" >
+                                    &nbsp; Geographical Split
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_antitheft" name="other_antitheft" type="checkbox" >
+                                    &nbsp; Antitheft
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_autoassociation" name="other_autoassociation" type="checkbox" >
+                                    &nbsp; Auto Association
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_pa_paid_priver" name="other_pa_paid_priver" type="checkbox" >
+                                    &nbsp; PA Paid Driver
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_pa_unnamed_person" name="other_pa_unnamed_person" type="checkbox" >
+                                    &nbsp; PA Covers
+
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_ll_paid_driver" name="other_ll_paid_driver" type="checkbox" >
+                                    &nbsp; LL Paid Driver
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_unnamed_person" name="other_unnamed_person" type="checkbox" >
+                                    &nbsp; Unnamed Person
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_breakin" name="other_breakin" type="checkbox" >
+                                    &nbsp; Breakin
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_thirdparty" name="other_thirdparty" type="checkbox" >
+                                    &nbsp; Third Party
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_custom_decline" name="other_custom_decline" type="checkbox" >
+                                    &nbsp; Custom Decline
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_addon_seg_avl" name="other_addon_seg_avl" type="checkbox" >
+                                    &nbsp; Is Addon Segment Available
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_addon_isperc_avl" name="other_addon_isperc_avl" type="checkbox" >
+                                    &nbsp; Is Addon Percentage Available
+                                  </label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_addon_statecity_avl" name="other_addon_statecity_avl" type="checkbox" >
+                                    &nbsp; Is Addon State City Available
+                                  </label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    <input [(ngModel)]="other_addon_panindia_avl" name="other_addon_panindia_avl" type="checkbox" >
+                                    &nbsp; Is Addon PAN India
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                                          <input [(ngModel)]="other_addon_cap_table" name="other_addon_cap_table" type="checkbox" >
+                                                          &nbsp; Is MPN Addon
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                                        <input [(ngModel)]="other_pa_cover_1year" name="other_pa_cover_1year" type="checkbox" >
+                                                        &nbsp; PA Cover 1 Year
+                                                      </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                                        <input [(ngModel)]="other_pa_cover_3year" name="other_pa_cover_3year" type="checkbox" >
+                                                        &nbsp; PA Cover 3 Year
+                                                      </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                                        <input [(ngModel)]="other_pa_cover_5year" name="other_pa_cover_5year" type="checkbox" >
+                                                        &nbsp; PA Cover 5 Year
+                                                      </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                                      <input [(ngModel)]="is_standalone" name="is_standalone" type="checkbox" >
+                                                      &nbsp; Standalone
+                                                    </label>
+                                                    </div>
+
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                                          &nbsp; PA Owner Value 1 Year &nbsp;<br>
+                                                          <input [(ngModel)]="other_pa_owner_value_1year" name="other_pa_owner_value_1year" type="text" >
+
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    &nbsp; PA Owner Value 3 Year &nbsp;<br>
+                                    <input [(ngModel)]="other_pa_owner_value_3year" name="other_pa_owner_value_3year" type="text" >
+
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    &nbsp; PA Owner Value 5 Year &nbsp;<br>
+                                    <input [(ngModel)]="other_pa_owner_value_5year" name="other_pa_owner_value_5year" type="text" >
+
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                    &nbsp; PA Value &nbsp;<br>
+                                    <input [(ngModel)]="other_pa_value" name="other_pa_value" type="text" >
+
+                                  </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                                          &nbsp; LL Paid Driver Premium &nbsp;<br>
+                                                          <input [(ngModel)]="other_ll_value" name="other_ll_value" type="text" >
+
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                                          &nbsp; Age Upto &nbsp;<br>
+                                                          <input [(ngModel)]="other_age_upto" name="other_age_upto" type="text" >
+
+                                                        </label>
+                                                    </div>
+
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                                        &nbsp; CPA  1 Year &nbsp;<br>
+                                                        <input [(ngModel)]="other_pa_owner_value_1year" name="other_pa_owner_value_1year" type="text" >
+
+                                                      </label>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                                      &nbsp; CPA 5 Years &nbsp;<br>
+                                                      <input [(ngModel)]="other_pa_owner_value_1year" name="other_pa_owner_value_1year" type="text" >
+
+                                                    </label>
+                                                    </div>
+
+
+
+
+
+                                                </div>
+                                            </section>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane show" id="privileges-tab5">
+                                    <div class="row align-items-center justify-content-center">
+                                        <div class="col-lg-9 col-md-10 col-12">
+                                            <section>
+                                                <div class="row">
+
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                                          <!-- <input [(ngModel)]="other_electrical" name="other_electrical" type="checkbox" > -->
+                                                          &nbsp; Accessories
+                                                        </label>
+                                                        <ul class="ml-4">
+                                                            <li>
+                                                                <label>
+                                                              <input [(ngModel)]="other_electrical" name="other_electrical" type="checkbox" >
+                                                              &nbsp; Electrical
+                                                            </label>
+
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                  <input [(ngModel)]="other_nonelectrical" name="other_nonelectrical" type="checkbox" >
+                                                            &nbsp; Non Electrical
+                                                          </label>
+
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                                        <!-- <input [(ngModel)]="other_electrical" name="other_electrical" type="checkbox" > -->
+                                                        &nbsp; Deductibles
+                                                      </label>
+                                                        <ul class="ml-4">
+                                                            <li>
+                                                                <label>
+                                                                  <input [(ngModel)]="other_antitheft" name="other_antitheft" type="checkbox" >
+                                                            &nbsp; Antitheft
+                                                          </label>
+
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                  <input [(ngModel)]="other_autoassociation" name="other_autoassociation" type="checkbox" >
+                                                                &nbsp; Auto Association
+                                                              </label>
+
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                                      <!-- <input [(ngModel)]="other_electrical" name="other_electrical" type="checkbox" > -->
+                                                      &nbsp; Extentions
+                                                    </label>
+                                                        <ul class="ml-4">
+
+
+                                                            <li>
+                                                                <label>
+                                                                <input [(ngModel)]="other_geographical" name="other_geographical" type="checkbox" >
+                                                            &nbsp; Geographical
+                                                          </label>
+
+                                                            </li>
+
+                                                        </ul>
+                                                    </div>
+
+
+                                                    <div class="col-md-4">
+                                                        <label>
+                                                    <!-- <input [(ngModel)]="other_electrical" name="other_electrical" type="checkbox" > -->
+                                                    &nbsp; PA Cover
+                                                  </label>
+                                                        <ul class="ml-4">
+
+
+
+
+                                                            <li>
+                                                                <label>
+                                                              <input [(ngModel)]="other_pa_unnamed_person" name="other_pa_unnamed_person" type="checkbox" >
+                                                        &nbsp; PA Unnamed Person
+                                                      </label>
+
+                                                            </li>
+
+                                                            <li>
+                                                                <label>
+                                                              <input [(ngModel)]="other_ll_paid_driver" name="other_ll_paid_driver" type="checkbox" >
+                                                        &nbsp; LL Paid Driver
+                                                      </label>
+
+                                                            </li>
+
+
+
+
+
+                                                        </ul>
+                                                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                </div>
+                                            </section>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <input (click)="submitForm()" class="btn btn-primary pull-right" type="button" value="Submit">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

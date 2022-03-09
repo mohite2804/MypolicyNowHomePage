@@ -613,7 +613,7 @@ if (e.target.id == "1" ||  e.target.id == "2" || e.target.id == "3" || e.target.
       var result: any = res;
       console.log("Test Output: ", result);
       this.gender_selection = result.gender;
-      // this.policy_types = result.policy_types;
+      //this.policy_types = result.policy_types;
       //this.policy_sub_types = result.policy_sub_types;
       this.insured_types = result.insured_types;
       this.relations = result.relations;

@@ -1,0 +1,327 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Manage Variants</h3>
+        </div>
+        <div class="col-auto float-right ml-auto" *ngIf="access_permission == 'read_write'">
+            <button (click)="openModel()" data-toggle="modal" data-target="#openmodal" class="btn btn-custom green"><i class="fa fa-plus"></i> Add Variant Details</button>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+<div class="row">
+    <div class="col-md-12">
+        <div *ngIf="atLeastOneRequired" class="alert alert-danger">
+            <strong>{{atLeastOneRequired}}</strong>
+        </div>
+    </div>
+    <div class="col-md-12" *ngIf="access_permission == 'read_write'">
+        <div class="card shadowbox">
+            <div class="card-body pb-0">
+                <form class="form-horizontal" [formGroup]="formRecodEdit">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 pull-right">
+                        </div>
+                        <div class="col-lg-4 col-md-4 pull-right">
+                        </div>
+                        <div class="col-lg-4 col-md-4 pull-right">
+                            <label class="d-block">&nbsp;</label>
+                            <button (click)="exportAsXLSX()" class="btn btn-custom red w-43 pull-right"><i class="fa fa-download"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadowbox">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="openmodal" class="modal custom-modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <form [formGroup]="formRecodEdit" method="post" (ngSubmit)="submitForm()">
+                <input formControlName="id" type="hidden" class="form-control">
+                <input formControlName="vehicle_id" type="hidden" class="form-control">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ popupTitle }}</h4>
+                    <button (click)="closePopup()" type="button" class="close" data-dismiss="modal" #closeAddExpenseModal>&times;</button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Products:<span class="error"> *</span></label>
+                                <!-- <select class="form-control" formControlName="product" (change)="setProductId($event.target.value)">
+                <option value="">Select Product</option>
+                <option value="{{ row.product_type_id }}" *ngFor="let row of productData | sortBy: 'asc':'label'">{{ row.label }}</option>
+              </select> -->
+                                <ng-select placeholder="Select Product" (clear)="clearValue('product',$event)" (change)="changeSelectBox('product',$event)" [(ngModel)]="selectedProduct" [ngModelOptions]="{standalone: true}">
+                                    <ng-option *ngFor="let row of productData" [value]="row.product_type_id">{{row.label}}</ng-option>
+                                </ng-select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.product.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.product.errors.required">
+                                        Product is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <!-- (click)="getmodelDataByMakeId($event.target.value)"  -->
+                                <label>Make:<span class="error"> *</span></label>
+                                <select class="form-control" formControlName="make" (change)="getmodelDataByMakeId($event.target.value)">
+                <option value="">Select Product</option>
+                <option value="{{ row.vehicle_make_id }}" *ngFor="let row of makeData | sortBy: 'asc':'make'">{{ row.make }}</option>
+              </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.make.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.make.errors.required">
+                                        Make is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Model:<span class="error"> *</span></label>
+                                <ng-select placeholder="Select Model" (clear)="clearValue('model',$event)" (change)="changeSelectBox('model',$event)" [(ngModel)]="selectedModel" [ngModelOptions]="{standalone: true}">
+                                    <ng-option *ngFor="let row of modelData" [value]="row.vehicle_model_id">{{row.model}}</ng-option>
+                                </ng-select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.model.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.model.errors.required">
+                                        Model is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Fuel:<span class="error"> *</span></label>
+                                <!-- <select class="form-control" formControlName="fuel" (change)="ShowCcWatt($event)">
+                <option value="">Select Fuel</option>
+                <option value="{{ row.vehicle_fuel_id }}" *ngFor="let row of fuelData | sortBy: 'asc':'name' "  >{{ row.name }}</option>
+              </select> -->
+                                <ng-select placeholder="Select Fuel" (clear)="clearValue('fuel',$event)" (change)="changeSelectBox('fuel',$event)" [(ngModel)]="selectedFuel" [ngModelOptions]="{standalone: true}">
+                                    <ng-option *ngFor="let row of fuelData" [value]="row.vehicle_fuel_id">{{row.name}}</ng-option>
+                                </ng-select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.fuel.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.fuel.errors.required">
+                                        Fuel is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12" [ngStyle]="{'display':cc}">
+                            <div class="form-group">
+                                <label>CC:<span class="error"> *</span></label>
+                                <input maxlength="4" formControlName="cc" type="text" class="form-control" OnlyNumber="true" [(ngModel)]="selectedCC" >
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.cc.errors">
+
+                                    <div *ngIf="submitted && formRecodEdit.controls.cc.errors">
+                                        Please enter valid CC.
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12" [ngStyle]="{'display':watt}">
+                            <div class="form-group">
+                                <label>Watt:<span class="error"> *</span></label>
+                                <input formControlName="watt" type="text" class="form-control">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.watt.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.watt.errors.required">
+                                        Watt is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.watt.errors.pattern">
+                                        Please enter valid watt.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Variant:<span class="error"> *</span></label>
+                                <input maxlength="15" formControlName="variant" type="text" list="variant" class="form-control">
+                                <datalist id="variant">
+              <option value="{{ row.variant_cleaned }}" *ngFor="let row of variantData | sortBy: 'asc':'variant_cleaned'">
+                </datalist>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.variant.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.variant.errors">
+                                        Please enter valid variant name.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Segment Type:</label>
+                                <!-- <select class="form-control" formControlName="segment_type">
+                  <option value="">Select Segment Type</option>
+                  <option value="{{ row.vehicle_segment_type_id }}" *ngFor="let row of segmentTypeData | sortBy: 'asc':'segment_type'"  >{{ row.segment_type }}</option>
+                </select> -->
+
+                                <ng-select placeholder="Select Segment Type" (clear)="clearValue('segment_type',$event)" (change)="changeSelectBox('segment_type',$event)" [(ngModel)]="selectedSegment_type" [ngModelOptions]="{standalone: true}">
+                                    <ng-option *ngFor="let row of segmentTypeData" [value]="row.vehicle_segment_type_id">{{row.segment_type}}</ng-option>
+                                </ng-select>
+
+                                <div class="error" *ngI f="submitted && formRecodEdit.controls.segment_type.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.segment_type.errors.required">
+                                        Segment Type is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Ex Showroom Price:<span class="error"> *</span></label>
+                                <input maxlength="15" formControlName="ex_showroom_price" type="text" class="form-control">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.ex_showroom_price.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.ex_showroom_price.errors">
+                                        Please enter valid showroom price.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Main Reference Code:<span class="error"> *</span></label>
+                                <select class="form-control" formControlName="main_reference_code" [(ngModel)]="SelectedReferenceCode">
+                  <option value="">Select Main Reference</option>
+                  <option value="invoice">Invoice</option>
+                  <option value="google">Google</option>
+                  <option value="oem-data">OEM Data</option>
+                </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.main_reference_code.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.main_reference_code.errors.required">
+                                        Main reference code is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12" [ngStyle]="{'display':bodytype}">
+                            <div class="form-group">
+                                <label>Body Type:<span class="error"> *</span></label>
+                                <select class="form-control" formControlName="body_type">
+                  <option value="">Select Body Type</option>
+                  <option value="{{ row.vehicle_bodytype_id }}" *ngFor="let row of bodyTypeData | sortBy: 'asc':'body_type'"  >{{ row.body_type }}</option>
+                </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.body_type.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.body_type.errors.required">
+                                        Body Type is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--   <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label>Vehicle Class Id:</label>
+                <select class="form-control" formControlName="vehicle_class_id">
+                  <option value="">Select Vehicle Class ID</option>
+                  <option value="{{ row.vehicle_class_id }}" *ngFor="let row of vehicleclassData | sortBy: 'asc':'vehicle_class'"  >{{ row.vehicle_class }}</option>
+                </select>
+                <div class="error" *ngIf="submitted && formRecodEdit.controls.vehicle_class_id.errors" >
+                  <div *ngIf="submitted && formRecodEdit.controls.vehicle_class_id.errors.required">
+                    Vehicle class is required.
+                  </div>
+                </div>
+              </div>
+            </div> -->
+                        <div class="col-md-4 col-12" [ngStyle]="{'display':gvw}">
+                            <div class="form-group">
+                                <label>GVW:</label>
+                                <input maxlength="10" formControlName="gvw" type="number" min="0" step="1" class="form-control" [(ngModel)]="SelectedGVW">
+                                <!-- <div class="error" *ngIf="submitted && formRecodEdit.controls.gvw.errors" >
+                  <div *ngIf="submitted && formRecodEdit.controls.gvw.errors.required">
+                    GVW is required.
+                  </div> -->
+                                <!--  <div *ngIf="submitted && formRecodEdit.controls.gvw.errors.pattern">
+                    Please enter valid GVW.
+                  </div> -->
+                                <!--   </div> -->
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Seating Capacity:<span class="error"> *</span></label>
+                                <select class="form-control" formControlName="seating_capacity"  [(ngModel)]="SelectedSeatingCapacity">
+                    <option value="">Select Seating Capacity</option>
+                    <option value="{{ number }}" *ngFor="let number of seatingcapacity">{{ number }}</option>
+                  </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.seating_capacity.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.seating_capacity.errors.required">
+                                        Seating Capacity is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>No of Wheels:<span class="error"> *</span></label>
+                                <select class="form-control" formControlName="no_of_wheels" [(ngModel)]="SelectedNoWheels">
+                    <option value="">Select No Of Wheels</option>
+                    <option value="{{ number }}" *ngFor="let number of noofwheels">{{ number }}</option>
+                  </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.no_of_wheels.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.no_of_wheels.errors.required">
+                                        No of wheels is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12" [ngStyle]="{'display':frametype}">
+                            <div class="form-group">
+                                <label>Frame Type:<span class="error"> *</span></label>
+                                <select class="form-control" formControlName="frame_type" [(ngModel)]="SelectedFrameType">
+                                    <option value="">Select Frame</option>
+                                    <option value="{{ row.vehicle_frametype_id }}" *ngFor="let row of frameTypeData | sortBy: 'asc':'frame' "  >{{ row.frame }}</option>
+                                </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.frame_type.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.frame_type.errors.required">
+                                        Frame Type is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Status:<span class="error"> *</span></label>
+                                <select class="form-control" formControlName="status"  [(ngModel)]="SelectedStatus">
+                    <option value="">Select Status</option>
+                    <option value="{{ row.status_id }}" *ngFor="let row of statusData"  >{{ row.lable }}</option>
+                  </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.status.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.status.errors.required">
+                                        Status is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+                                <strong>{{responseMsg}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <input *ngIf="btnEditSubmit" class="btn btn-custom green btn-lg" type="submit" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<app-managemotor-loader [loaderActive]="loaderActive"></app-managemotor-loader>

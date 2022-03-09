@@ -1,0 +1,388 @@
+<!--Page Wrapper -->
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content container-fluid">
+        <div class="page-header">
+
+
+
+<div class="row">
+ 
+  <div class="col-md-12">
+
+  </div>
+
+  <div id="openmodal" class="modal custom-modal fade" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form [formGroup]="formComissionUpload" method="post" (ngSubmit)="submitComissionFile()" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h4 class="modal-title">Upload Invoice Two</h4>
+                    <button #closebutton type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                
+                <div class="modal-body">
+                    <!-- Attachment 1 -->
+                    <div class="row">
+                        <div class="col-md-12 col-12 mb-5 text-center">
+                 
+                        </div>
+                        <div class="col-md-12 col-12">
+                            <div class="box fileuploadbox">
+                                <p><b>Note: </b>Allowed file type "xslx"</p>
+                                <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" id="file-1" class="inputfile" (change)="uploadComission($event)">
+                                <div class="error" *ngIf="submitted && formComissionUpload.controls.comission_file_upload.errors">
+                                    <div *ngIf="submitted && formComissionUpload.controls.comission_file_upload.errors.required">
+                                        Claims is required.
+                                    </div>
+                                </div>
+                                <label for="file-1"><figure><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg></figure>
+                                    <span>{{claims_grievances_file_upload_label}}</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- //Attachment 1 -->
+                    <div class="submit-section">
+                        <input *ngIf="btnEditSubmit" class="btn btn-custom green btn-lg" type="submit" value="Upload">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>
+
+
+               <div class="row align-items-center">
+      
+                    <div class="col">
+                        <h3 class="page-title">Invoice List</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="myaccount/index.php">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Invoice List</li>
+                        </ul>
+                    </div>
+
+          <div class="card-body pb-0">
+
+        <div class="col-auto float-left ml-auto" *ngIf="access_permission == 'read_write'">
+
+
+
+<div class="col-lg-12 col-md-12 float-right ml-auto">
+   
+
+   <div class="col-lg-4 col-md-4 float-right ml-auto">
+                        <div class="form-group form-focus mb-0">
+                            <div class="cal-icon">
+                                <input type="text"  name="invoice_date" outsideDays="collapsed" (dateSelect)="selectDate('invoice_date',$event)"  class="form-control floating datetimepicker-month" (click)="h.toggle()" ngbDatepicker #h="ngbDatepicker">
+                                <div class="error" *ngIf="submitted && formGetInvoiceByDate.controls.invoice_date.errors" >
+                                    <div *ngIf="submitted && formGetInvoiceByDate.controls.invoice_date.errors.required">
+                                        Invoice date is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+   <div class="col-lg-4 col-md-4 float-right ml-auto">
+                        <div class="form-group form-focus mb-0">
+    <button (click) = "submitInvoiceDetails()" type="button" class="btn btn-custom red w-10"><i class="fa fa-download">&nbsp;Download&nbsp;Invoice</i></button>
+    
+                        </div>
+                    </div>
+
+
+
+
+   <div class="col-lg-4 col-md-4 float-right ml-auto">
+                        <div class="form-group form-focus mb-0">
+    <button (click)="openModel()" data-toggle="modal" data-target="#openmodal" class="btn btn-custom green"><i class="fa fa-plus"></i>Upload&nbsp;Invoice</button>
+
+                        </div>
+                    </div>
+
+
+
+
+
+        </div>
+        </div>
+        </div>
+        </div>
+       </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card shadowbox">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col-12">
+            <div class="card shadowbox">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered custom-table srn action-table datatable">
+                            <thead>
+                                <tr>
+                                    <th>Sr. No.</th>
+                                    <th>Invoice No.</th>
+                                    <th>Invoice Date</th>
+                                    <th>Invoice Month</th>
+                                    <th>Total Payable Comission</th>
+                                    <th>Created On</th>
+                                    <th>Invoice Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>SQ011554</td>
+                                    <td>2020-07-27 00:00:00</td>
+                                    <td>2020-07</td>
+                                    <td>2256.86</td>
+                                    <td>2020-07-27 03:28:22</td>
+                                    <td><span class="badge bg-inverse-success">Approved</span></td>
+                                    <td class="action-btns">
+                                        <a class="btn btn-custom btn-sm green" href="javascript:void(0);"><i class="fa fa-download"></i> Download</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>SQ011554</td>
+                                    <td>2020-07-27 00:00:00</td>
+                                    <td>2020-07</td>
+                                    <td>2256.86</td>
+                                    <td>2020-07-27 03:28:22</td>
+                                    <td><span class="badge bg-inverse-warning">Pending</span></td>
+                                    <td class="action-btns">
+                                        <a class="btn btn-custom btn-sm green" href="javascript:void(0);"><i class="fa fa-download"></i> Download</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>SQ011554</td>
+                                    <td>2020-07-27 00:00:00</td>
+                                    <td>2020-07</td>
+                                    <td>2256.86</td>
+                                    <td>2020-07-27 03:28:22</td>
+                                    <td><span class="badge bg-inverse-success">Approved</span></td>
+                                    <td class="action-btns">
+                                        <a class="btn btn-custom btn-sm green" href="javascript:void(0);"><i class="fa fa-download"></i> Download</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>SQ011554</td>
+                                    <td>2020-07-27 00:00:00</td>
+                                    <td>2020-07</td>
+                                    <td>2256.86</td>
+                                    <td>2020-07-27 03:28:22</td>
+                                    <td><span class="badge bg-inverse-success">Approved</span></td>
+                                    <td class="action-btns">
+                                        <a class="btn btn-custom btn-sm green" href="javascript:void(0);"><i class="fa fa-download"></i> Download</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>SQ011554</td>
+                                    <td>2020-07-27 00:00:00</td>
+                                    <td>2020-07</td>
+                                    <td>2256.86</td>
+                                    <td>2020-07-27 03:28:22</td>
+                                    <td><span class="badge bg-inverse-warning">Pending</span></td>
+                                    <td class="action-btns">
+                                        <a class="btn btn-custom btn-sm green" href="javascript:void(0);"><i class="fa fa-download"></i> Download</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>SQ011554</td>
+                                    <td>2020-07-27 00:00:00</td>
+                                    <td>2020-07</td>
+                                    <td>2256.86</td>
+                                    <td>2020-07-27 03:28:22</td>
+                                    <td><span class="badge bg-inverse-warning">Pending</span></td>
+                                    <td class="action-btns">
+                                        <a class="btn btn-custom btn-sm green" href="javascript:void(0);"><i class="fa fa-download"></i> Download</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>SQ011554</td>
+                                    <td>2020-07-27 00:00:00</td>
+                                    <td>2020-07</td>
+                                    <td>2256.86</td>
+                                    <td>2020-07-27 03:28:22</td>
+                                    <td><span class="badge bg-inverse-success">Approved</span></td>
+                                    <td class="action-btns">
+                                        <a class="btn btn-custom btn-sm green" href="javascript:void(0);"><i class="fa fa-download"></i> Download</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>SQ011554</td>
+                                    <td>2020-07-27 00:00:00</td>
+                                    <td>2020-07</td>
+                                    <td>2256.86</td>
+                                    <td>2020-07-27 03:28:22</td>
+                                    <td><span class="badge bg-inverse-success">Approved</span></td>
+                                    <td class="action-btns">
+                                        <a class="btn btn-custom btn-sm green" href="javascript:void(0);"><i class="fa fa-download"></i> Download</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>SQ011554</td>
+                                    <td>2020-07-27 00:00:00</td>
+                                    <td>2020-07</td>
+                                    <td>2256.86</td>
+                                    <td>2020-07-27 03:28:22</td>
+                                    <td><span class="badge bg-inverse-success">Approved</span></td>
+                                    <td class="action-btns">
+                                        <a class="btn btn-custom btn-sm green" href="javascript:void(0);"><i class="fa fa-download"></i> Download</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>SQ011554</td>
+                                    <td>2020-07-27 00:00:00</td>
+                                    <td>2020-07</td>
+                                    <td>2256.86</td>
+                                    <td>2020-07-27 03:28:22</td>
+                                    <td><span class="badge bg-inverse-warning">Pending</span></td>
+                                    <td class="action-btns">
+                                        <a class="btn btn-custom btn-sm green" href="javascript:void(0);"><i class="fa fa-download"></i> Download</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>SQ011554</td>
+                                    <td>2020-07-27 00:00:00</td>
+                                    <td>2020-07</td>
+                                    <td>2256.86</td>
+                                    <td>2020-07-27 03:28:22</td>
+                                    <td><span class="badge bg-inverse-success">Approved</span></td>
+                                    <td class="action-btns">
+                                        <a class="btn btn-custom btn-sm green" href="javascript:void(0);"><i class="fa fa-download"></i> Download</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</div>
+<!-- /Page Content -->
+<!--  Modal -->
+<div id="invoice_pop" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <form [formGroup]="formInvoiceDetailsData" method="post" (ngSubmit)="submitInvoiceFormDetails()" >
+            <input type="hidden" formControlName="tds_percentage" value="">
+            <input type="hidden" formControlName="policy_raw_data" value="">
+            <!-- <input type="hidden" formControlName="total_calculated_data" value=""> -->
+            <div class="modal-header">
+                <h5 class="modal-title">Invoice Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered custom-table  action-table">
+                                <thead>
+                                    <tr>
+                                        <th>Sr. No.</th>
+                                        <th>Policy Type</th>
+                                        <th>Policy No.</th>
+                                        <th>Policy Premium</th>
+                                        <th>Commission</th>
+                                        <th>GST Amount</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of invoiceDetailsData; let i = index">
+                                        <td>{{ i+1 }}</td>
+                                        <td>{{ row.policy_type }}</td>
+                                        <td>{{ row.policy_no }}</td>
+                                        <td>{{ row.policy_premium }}</td>
+                                        <td>{{ row.commission }}</td>
+                                        <td>{{ row.gst_commission }}</td>
+                                        <td>{{ row.total }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><b>Total</b></td>
+                                        <td>{{ no_of_policy }}</td>
+                                        <td>{{ total_policy_premium }}</td>
+                                        <td>{{ total_policy_commission }}</td>
+                                        <td>{{ total_gst_on_commission }}</td>
+                                        <td>{{ grand_total }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center justify-content-center mt-3 mb-2">
+                    <div class="col-lg-3 col-md-4">
+                        <div class="form-group form-focus mb-0">
+                            <input type="text" class="form-control floating" formControlName="invoice_number">
+                            <div class="error" *ngIf="submittedInvoice && formInvoiceDetailsData.controls.invoice_number.errors" >
+                                    <div *ngIf="submittedInvoice && formInvoiceDetailsData.controls.invoice_number.errors.required">
+                                        Invoice no is required.
+                                    </div>
+                                </div>
+                            <label class="focus-label">Invoice No.</label>
+                        </div>
+                    </div>
+                    <!--   <div class="col-lg-3 col-md-4">
+                        <div class="form-group form-focus mb-0">
+                            <div class="cal-icon">
+                                <input type="text" class="form-control floating datetimepicker">
+                            </div>
+                            <label class="focus-label">Invoice Date</label>
+                        </div>
+                    </div> -->
+                    <div class="col-lg-3 col-md-4">
+                        <div class="form-group form-focus mb-0">
+                            <div class="cal-icon">
+                                <input type="text"  name="invoice_update_date" outsideDays="collapsed" (dateSelect)="selectDate('invoice_update_date',$event)"  class="form-control floating datetimepicker-month" (click)="u.toggle()" ngbDatepicker #u="ngbDatepicker">
+                                <div class="error" *ngIf="submittedInvoice && formInvoiceDetailsData.controls.invoice_update_date.errors" >
+                                    <div *ngIf="submittedInvoice && formInvoiceDetailsData.controls.invoice_update_date.errors.required">
+                                        Invoice date is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <label class="focus-label">Invoice Date</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4">
+                        <button type="submit" class="btn btn-custom green w-100">Submit</button>
+                    </div>
+                </div>              
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- / Modal -->
+</div>
+<!-- /Page Wrapper-->

@@ -1,0 +1,294 @@
+<!-- Page Header -->
+<div class="page-header">
+	<div class="row align-items-center">
+		<div class="col">
+			<h3 class="page-title">Manage Special OD Discount</h3>
+		</div>
+		<div class="col-auto float-right ml-auto" *ngIf="access_permission == 'read_write'">
+			<button (click)="openModel()" data-toggle="modal" data-target="#openmodal" class="btn btn-custom green"><i class="fa fa-plus"></i> Add Special OD Discount</button>&nbsp;
+
+		</div>
+	</div>
+</div>
+
+
+<!-- /Page Header -->
+<div class="row">
+	<div class="col-md-12">
+		<div class="card shadowbox">
+			<div class="card-body">
+				<div class="table-responsive">
+					<table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100" id="excel-table"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- ADD DISOCUNT FORM -->
+<div id="openmodal" class="modal custom-modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+			<form [formGroup]="formRecodEdit"  method="post" (ngSubmit)="submitForm()" >
+				<!-- <input formControlName="id"  type="hidden" class="form-control" > -->
+				<div class="modal-header">
+					<h5 class="modal-title">{{ popupTitle }}</h5>
+					<button (click)="closePopup()"  type="button" class="close" data-dismiss="modal" #closeAddExpenseModal>&times;</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<!-- IC -->
+						<div class="col-12 col-md-4">
+							<div class="form-group">
+								<label>Insurance Company Name :<span class="error"> *</span></label>
+								<select class="form-control" formControlName="ic_id" >
+									<option value="">Select IC</option>
+									<option value="{{ row.id }}" *ngFor="let row of icList" >{{ row.code }}</option>
+								</select>
+								<div class="error" *ngIf="submitted && formRecodEdit.controls.ic_id.errors" >
+									<div *ngIf="submitted && formRecodEdit.controls.ic_id.errors.required">
+										Insurance Company is required.
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Product Type-->
+						<div class="col-12 col-md-4">
+							<div class="form-group">
+								<label>Product Type :<span class="error"> *</span></label>
+								<select class="form-control" formControlName="product_type_id" (change)="getFilterModel($event)">
+									<option value="">Select Product</option>
+									<option value="{{ row.product_type_id }}" *ngFor="let row of productList" >{{ row.label }}</option>
+								</select>
+								<div class="error" *ngIf="submitted && formRecodEdit.controls.product_type_id.errors" >
+									<div *ngIf="submitted && formRecodEdit.controls.product_type_id.errors.required">
+										Product Type is required.
+									</div>
+								</div>
+							</div>	
+						</div>
+
+						<!-- MISP -->
+						<div class="col-12 col-md-4">
+							<div class="form-group">
+								<label>Business Partner :<span class="error"> *</span></label>
+								<select class="form-control" formControlName="business_partner_master_id" (change)="getFilterDp($event)">
+									<option value="">Select Business Partner</option>
+									<option value="{{ row.business_partner_master_id }}" *ngFor="let row of mispList" >{{ row.bp_name }}</option>
+								</select>
+							</div>	
+						</div>
+
+					</div>	
+
+					<div class="row">
+						<!-- DP List-->
+						<div class="col-12 col-md-6">
+							<div class="form-group">
+								<label>POS :(<span class='dropdown_note'><i>To select multiple POS, Press 'Ctrl' and select POS from dropdown</i></span>)</label>
+								<select class="form-control multiple_select_dropdown" formControlName="dp_id" multiple>
+                                  	<option value="" selected>Select POS</option>
+                                  	<option *ngFor="let row of dpList"  value="{{ row.pos_id }}">{{ row.app_fullname }}</option>                                  	
+                              	</select>
+							</div>	
+						</div>
+
+						<!-- IS FLAT SPECIAl -->
+						<div class="col-12 col-md-2">
+							<div class="form-group">
+								<p><b>Is Flat Special ?	<span class="error"> *</span></b></p>
+								<label>
+									<input type="radio" formControlName="is_flat_special" value="1" (click)="hideModelDropdown($event.target.value)"> : Yes 
+								</label>&nbsp;&nbsp;
+								<label>
+									<input type="radio" formControlName="is_flat_special" value="0" (click)="showModelDropdown($event.target.value)"> : No 
+								</label>&nbsp;&nbsp;
+								<div class="error" *ngIf="submitted && formRecodEdit.controls.is_flat_special.errors" >
+									<div *ngIf="submitted && formRecodEdit.controls.is_flat_special.errors.required">
+										This field is required.
+									</div>
+								</div>
+							</div>
+						</div> 
+
+						<!-- Min Discount Age -->
+						<div class="col-md-2 col-12">
+							<div class="form-group">		
+								<label>Minimum Discount Age :<span class="error"> *</span></label>					
+								<input formControlName="discount_age_min" type="number" class="form-control" >     
+								<div class="error" *ngIf="submitted && formRecodEdit.controls.discount_age_min.errors" >
+									<div *ngIf="submitted && formRecodEdit.controls.discount_age_min.errors.required">
+										Please enter minimum discount age.
+									</div>
+									<div *ngIf="submitted && formRecodEdit.controls.discount_age_min.errors.pattern">
+										Please enter valid minimum discount age.
+									</div>
+								</div>                       
+							</div>
+						</div>
+
+						<!-- Max Discount Age -->
+						<div class="col-md-2 col-12">
+							<div class="form-group">		
+								<label>Maximum Discount Age :<span class="error"> *</span> </label>					
+								<input formControlName="discount_age_max" type="number" class="form-control" >     
+								<div class="error" *ngIf="submitted && formRecodEdit.controls.discount_age_max.errors" >
+									<div *ngIf="submitted && formRecodEdit.controls.discount_age_max.errors.required">
+										Please enter maximum discount age.
+									</div>
+									<div *ngIf="submitted && formRecodEdit.controls.discount_age_max.errors.pattern">
+										Please enter valid maximum discount age.
+									</div>
+								</div>                        
+							</div>
+						</div>
+						
+					</div>	
+
+					
+					<div class="row">
+						<!-- Maximum Available Discount -->
+						<div class="col-md-4 col-12">
+							<div class="form-group">		
+								<label>Maximum Available Discount :<span class="error"> *</span> </label>					
+								<input formControlName="max_available_discount" type="number" class="form-control" >     
+								<div class="error" *ngIf="submitted && formRecodEdit.controls.max_available_discount.errors" >
+									<div *ngIf="submitted && formRecodEdit.controls.max_available_discount.errors.required">
+										Please enter maximum available discount.
+									</div>
+									<div *ngIf="submitted && formRecodEdit.controls.max_available_discount.errors.pattern">
+										Please enter valid maximum available discount.
+									</div>
+								</div>                       
+							</div>
+						</div>
+
+						<!-- Expiry date -->
+						<div class="col-md-4 col-12">
+							<div class="form-group">		
+								<label>Expiry Date :<span class="error"> *</span></label>					
+								<div class="cal-icon">
+			                    	<input select-other-detail="other_field"  (click)="e.toggle()"  class="form-control" placeholder="yyyy-mm-dd" formControlName="discount_expiry_date" [(ngModel)]="discount_expiry_date" ngbDatepicker #e="ngbDatepicker" placeholder="yyyy-mm-dd" autocomplete="off" readonly>
+			                  	</div>
+							</div>
+							<div class="error" *ngIf="submitted && formRecodEdit.controls.discount_expiry_date.errors" >
+								<div *ngIf="submitted && formRecodEdit.controls.discount_expiry_date.errors.required">
+									Please select expiry date.
+								</div>
+							</div>
+						</div>
+
+						<!-- Minimum NCB -->
+						<div class="col-md-4 col-12">
+							<div class="form-group">
+								<label>Minimum NCB  :</label>
+								<input formControlName="min_ncb" type="number" class="form-control">     
+							</div>
+							<div class="error" *ngIf="submitted && formRecodEdit.controls.min_ncb.errors" >									
+								<div *ngIf="submitted && formRecodEdit.controls.min_ncb.errors.pattern">
+									Please enter value between 0 to 99
+								</div>
+							</div> 
+						</div>	
+
+						
+										
+					</div>	
+
+					<div class="row">						
+						<!-- Maxmum NCB -->
+						<div class="col-md-3 col-12">
+							<div class="form-group">
+								<label>Maximum NCB  :</label>
+								<input formControlName="max_ncb" type="number" class="form-control">     
+							</div>
+							<div class="error" *ngIf="submitted && formRecodEdit.controls.max_ncb.errors" >									
+								<div *ngIf="submitted && formRecodEdit.controls.max_ncb.errors.pattern">
+									Please enter value between 0 to 99
+								</div>
+							</div> 
+						</div>
+
+						<!-- Status -->
+						<div class="col-12 col-md-3">
+							<div class="form-group">
+								<label>Status :<span class="error"> *</span></label>
+								<select class="form-control" formControlName="status" >
+									<option value="">Select Status</option>
+									<option value="{{ row.status_type_id }}" *ngFor="let row of statusList" >{{ row.lable }}</option>
+								</select>
+								<div class="error" *ngIf="submitted && formRecodEdit.controls.status.errors" >
+									<div *ngIf="submitted && formRecodEdit.controls.status.errors.required">
+										Please select status.
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Model-->
+						<div class="col-12 col-md-6" [ngStyle]="{'display':displayModelDrodown}">
+							<div class="form-group">
+								<label>Model :<span class="error"> *</span>(<span class='dropdown_note'><i>To select multiple model, Press 'Ctrl' and select model from dropdown</i></span>)</label>
+								<select class="form-control multiple_select_dropdown" formControlName="model_id"  multiple>
+                                  	<option value="" selected>Select Model</option>
+                                  	<option *ngFor="let row of modelList"  value="{{ row.vehicle_model_id }}">{{ row.model }}</option>          	
+                              	</select>                
+                              	<div class="error" *ngIf="submitted && formRecodEdit.controls.model_id.errors" >
+									<div *ngIf="submitted && formRecodEdit.controls.model_id.errors.required">
+										Please select at least one model.
+									</div>
+								</div>               	
+							</div>	
+						</div>
+
+						
+					</div>
+
+
+					<div class="col-sm-12">
+						<div class="form-group">
+							<div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+								<strong>{{responseMsg}}</strong>
+							</div>
+						</div>
+					</div>
+
+					<div class="submit-section">
+						<input *ngIf="btnEditSubmit" class="btn btn-custom green btn-lg" type="submit" value="Submit">
+					</div>
+				</div>
+						
+				
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<!-- Models Listing Modal--> 
+<div id="openmodal2" class="modal custom-modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-dialog-centered modal-m" role="document">
+        <div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Models List</h5>
+				<button type="button" class="close" data-dismiss="modal" #closeAddExpenseModal>&times;</button>
+			</div>
+			<div class="modal-body">
+				<div class="model_list_div">
+					<!-- <h4>{{models_name}}</h4> -->
+					<ul style="list-style-type: square !important;">
+		                <li *ngFor="let row of models_name">
+		                  <h4>{{row.models_name}}</h4>
+		                </li>
+		            </ul>
+				</div>
+			</div>							
+		</div>
+	</div>
+</div>
+
+
+
+
+<app-managemotor-loader  [loaderActive]="loaderActive"></app-managemotor-loader>

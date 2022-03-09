@@ -1,0 +1,95 @@
+<section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Theme Setting</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a [routerLink]="['/admin/dashboard']" href="javascript:void(0)">Dashboard</a></li>     
+            <li class="breadcrumb-item active">Theme Setting</li>
+                  
+          </ol>
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="card">
+        <div class="card-body login-card-body">
+            
+          <form [formGroup] ="submitForm" (ngSubmit)="getFormData()" >
+            <label>Top Bar Color</label>
+            <div class="input-group mb-3">           
+                <input formControlName="topBarColor"  type="color" class="form-control" placeholder="Top Bar Color">
+            </div>  
+            <div class="input-group mb-3">
+              <div *ngIf="submitted && submitForm.controls.topBarColor.errors" class="error">
+                <div *ngIf="submitForm.controls.topBarColor.errors.required" class="font-11">Top Bar Color is required</div>
+              </div>
+            </div>
+    
+            <label>Side Bar Color</label>
+            <div class="input-group mb-3">
+                <input formControlName="sideBarColor" type="color" class="form-control" placeholder="Side Bar Color">
+            </div>  
+            <div class="input-group mb-3">
+            <div *ngIf="submitted && submitForm.controls.sideBarColor.errors" class="error">
+                <div *ngIf="submitForm.controls.sideBarColor.errors.required" class="font-11">Side Bar Color is required</div>
+            </div>
+            </div>
+    
+            <label>Sidebar Text Color</label>
+            <div class="input-group mb-3">
+                <input formControlName="sidebarTextColor" type="color" class="form-control" placeholder="Sidebar Text Color">
+            </div>  
+            <div class="input-group mb-3">
+                <div *ngIf="submitted && submitForm.controls.sidebarTextColor.errors" class="error">
+                    <div *ngIf="submitForm.controls.sidebarTextColor.errors.required" class="font-11">Sidebar Text Color is required</div>
+                </div>
+            </div>
+    
+            <label>Logo Background Color</label>
+            <div class="input-group mb-3">
+                <input formControlName="logoBackgroundColor" type="color" class="form-control" placeholder="Logo Background Color">
+            </div>  
+            <div class="input-group mb-3">
+                <div *ngIf="submitted && submitForm.controls.logoBackgroundColor.errors" class="error">
+                    <div *ngIf="submitForm.controls.logoBackgroundColor.errors.required" class="font-11">Logo Background Color is required</div>
+                </div>
+            </div>
+    
+            <label>Logo Background Color</label>
+            <div class="input-group mb-3">
+                <input formControlName="sideBarActiveTabColor" type="color" class="form-control" placeholder="Logo Background Color">
+            </div>  
+            <div class="input-group mb-3">
+                <div *ngIf="submitted && submitForm.controls.sideBarActiveTabColor.errors" class="error">
+                    <div *ngIf="submitForm.controls.sideBarActiveTabColor.errors.required" class="font-11">SideBar Active Tab Color is required</div>
+                </div>
+            </div>
+    
+    
+            
+    
+    
+    
+            
+      
+            <div class="input-group mb-3">
+              <input type="submit" class="form-control btn btn-primary" value="Theme Apply">
+              
+            </div>
+            
+          </form>
+      
+       
+          
+        </div>
+        
+    </div>
+</section>
+
+
+  

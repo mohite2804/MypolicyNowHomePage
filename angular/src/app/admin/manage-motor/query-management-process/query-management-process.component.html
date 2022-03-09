@@ -1,0 +1,268 @@
+<!-- Page Header -->
+<div class="page-header">
+  <div class="row align-items-center justify-content-center">
+    <div class="col-lg-9 col-md-10 col-12 mt-3">
+      <h3 class="page-title text-center">Query Details</h3>
+    </div>
+  </div>
+</div>
+<!-- /Page Header -->
+<div class="row align-items-center justify-content-center">
+  <div class="col-lg-10 col-md-11 col-12">
+    <div class="card shadowbox">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+              <li class="nav-item"><a class="nav-link active" href="#querydetails-tab1" data-toggle="tab">Query Details</a></li>
+              <li class="nav-item"><a class="nav-link" href="#querydetails-tab2" data-toggle="tab">Attachments</a></li>
+              <li class="nav-item"><a class="nav-link" href="#querydetails-tab3" data-toggle="tab">Update Query Details</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane show active" id="querydetails-tab1">
+                <ul class="row endorsement-infolist mx-0">
+                  <li class="col-md-6 col-12">
+                    <div class="title">Query No.:</div>
+                    <div class="text">{{query_detail_query_no}}</div>
+                  </li>
+                  <li class="col-md-6 col-12">
+                    <div class="title">Current Status:</div>
+                    <div class="text"><b class='text-secondary'><i class="fa fa-asterisk"></i> {{query_detail_status_name}}</b></div>
+                  </li>
+                  <li class="col-md-6 col-12">
+                    <div class="title">Query Type:</div>
+                    <div class="text">{{query_detail_query_type}}</div>
+                  </li>
+                  <li class="col-md-6 col-12">
+                    <div class="title">Query Sub-Type:</div>
+                    <div class="text">{{query_detail_query_sub_type}}</div>
+                  </li>
+                  <li class="col-md-6 col-12">
+                    <div class="title">Query Description:</div>
+                    <div class="text">{{query_detail_query_description}}</div>
+                  </li>
+                  <li class="col-md-6 col-12">
+                    <div class="title">Query Remark:</div>
+                    <div class="text">{{query_detail_query_remarks}}</div>
+                  </li>
+                  <li class="col-md-6 col-12">
+                    <div class="title">Policy No.:</div>
+                    <div class="text">{{query_detail_policy_no}}</div>
+                  </li>
+                  <li class="col-md-6 col-12">
+                    <div class="title">Insurance Company:</div>
+                    <div class="text">{{query_detail_insurance_company}}</div>
+                  </li>
+                  <li class="col-md-6 col-12">
+                    <div class="title">Query Priority:</div>
+                    <div class="text"><b style="color:{{query_detail_priority_text_style}}">{{query_detail_priority}}</b></div>
+                  </li>
+                  <li class="col-md-6 col-12">
+                    <div class="title">TAT:</div>
+                    <div class="text">{{query_detail_tat}}</div>
+                  </li>
+                </ul>
+              </div>
+              <div class="tab-pane show" id="querydetails-tab2">
+                <div *ngIf="divQueryAttachments">
+                  <div class="row" *ngFor="let row of documents_list">
+                    <div class="col-md-12 col-12">
+                      <ul class="row endorsement-infolist mx-0">
+                        <li class="col-md-6 col-12">
+                          <div class="title">Attachment: </div>
+                          <div class="row">
+                            <div class="col-4">
+                              <br>
+                              <div class="text"><a href="{{public_path}}qms_files/{{row.file}}" class="btn btn-secondary px-3 mr-2 btn-sm" target="_blank" >Download</a></div>
+                            </div>
+                            <div class="col-4 text-right">
+                              <div class="uploaded-img"><img src="{{public_path}}qms_files/{{row.file}}" alt=""></div>
+                            </div>
+                            <div class="col-4">
+                            </div>
+                          </div>
+                        </li>
+                        <li class="col-md-6 col-12">
+                          <div class="title">Description: </div>
+                          <div class="text">{{row.description}}</div>
+                        </li>
+                      </ul>
+                    </div>
+                    
+                  </div>
+                </div>
+
+                <div *ngIf="divEmptyQueryAttachments" class="text-center">
+                  <div class="card">
+                    <div class="card-body">
+                      <br><br>
+                      <h3 class="text-danger"><b>No documents attached by user</b></h3>
+                      <br><br>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+              <div class="tab-pane show" id="querydetails-tab3">
+                <div class="card">
+                  <div class="card-body">
+
+                    <div *ngIf="divQueryNotResolvedClosed">
+                      <form [formGroup]="formUpdateQuery"  method="post" (ngSubmit)="submitForm()" >
+                        <div class="row">
+                          <div class="col-md-4 col-12">
+                              <div class="form-group">
+                                  <label>Status <b><sup class="text-danger">*</sup></b></label>
+                                  <select class="form-control" formControlName="query_status" >
+                                      <option value="" selected>Select Status</option>
+                                      <option *ngFor="let row of result_query_status_update_allowed_master"  value="{{ row.id }}">{{ row.query_status }}</option>
+                                  </select>
+                                  <div class="error" *ngIf="submitted && formUpdateQuery.controls.query_status.errors" >
+                                      <div *ngIf="submitted && formUpdateQuery.controls.query_status.errors.required">
+                                          Please select status.
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>     
+                          <div class="col-md-8 col-12">
+                              <div class="form-group">
+                                  <label>Remarks <b><sup class="text-danger">*</sup></b></label>
+                                  <textarea class="form-control" formControlName="remarks" rows="4"></textarea>
+                                  <div class="error" *ngIf="submitted && formUpdateQuery.controls.remarks.errors" >
+                                      <div *ngIf="submitted && formUpdateQuery.controls.remarks.errors.required">
+                                          Enter remarks.
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>     
+                        </div>
+                        <!-- Attachment 1 -->
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <div class="card shadowbox">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <h5 class="my-2"><b>Attachment: </b></h5>
+                                                </div>
+                                                <div class="col-8">
+                                                    <div class="box fileuploadbox">
+                                                        <input type="file" formControlName="attachment_1" id="attachment_1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadAttachment1($event)">
+                                                        <label for="attachment_1">
+                                                            <figure>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                                    <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                                </svg>
+                                                            </figure> 
+                                                            <span>Choose a file…</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="uploaded-img">
+                                                        <img [src]="attachment_1_url" alt="">
+                                                        <span class="delete-img">
+                                                            <i class="fa fa-times"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                 <div *ngIf="submitted &&  formUpdateQuery.controls.attachment_1.errors">
+                                                  <small  *ngIf="formUpdateQuery.controls.attachment_1.errors?.requiredFileType" class="text-danger">
+                                                    Allowed file type "jpg", "png", "jpeg", "pdf" 
+                                                  </small>
+                                                  <small *ngIf="formUpdateQuery.controls.attachment_1.errors?.fileSizeValidator" class="text-danger">
+                                                    Allowed file size is 5 MB.
+                                                  </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label>Attachment Description:</label>
+                                    <textarea class="form-control" formControlName="attachment_1_description" rows="4"></textarea>
+                                    <small class="text-danger"><b>{{ errMsgDescription1 }}</b></small>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //Attachment 1 -->
+                        <input type="hidden" formControlName="query_from_usertype" value="">
+                        <div class="row">
+                          <div class="col-md-12 col-12">
+                              <div class="form-group">
+                                  <div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+                                      <strong>{{responseMsg}}</strong>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-md-12 col-12">
+                            <div class="submit-section text-right">
+                              <input *ngIf="btnEditSubmit" class="btn btn-custom green" type="submit" value="Submit">
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div *ngIf="divQueryResolved" class="text-center">
+                      <br><br>
+                      <h3 class="text-success"><b>Query Resolved</b></h3>
+                      <br><br>
+                    </div>
+
+                    <div *ngIf="divQueryRejected" class="text-center">
+                      <br><br>
+                      <h3 class="text-success"><b>Query Rejected</b></h3>
+                      <br><br>
+                    </div>
+
+                    <div *ngIf="divQueryClosed" class="text-center">
+                      <br><br>
+                      <h3 class="text-success"><b>Query Closed</b></h3>
+                      <br><br>
+                    </div>
+
+                  </div>
+                </div>
+                <br>
+                <br>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered custom-table srn">
+                      <tr>
+                        <th colspan="6" bgcolor='#d9e6f0' style="text-align: center;font-size: 16px;">Query Log Summary</th>
+                      </tr>
+                      <tr>
+                        <th style="width:15%!important;">User</th>
+                        <th>Action</th>
+                        <th>Remark</th>
+                        <th>Attachments</th>
+                        <th>Status</th>
+                        <th>Created On</th>
+                      </tr>
+                      <tr  *ngFor="let row of result_query_log_details">
+                        <td>{{row.query_from_name}}</td>
+                        <td>{{row.event}}</td>
+                        <td>{{row.remarks}}</td>
+                        <td>
+                          <b *ngFor="let files of row.documents">
+                            <a href="{{public_path}}qms_files/{{files.file}}" class="btn btn-info px-3 mr-2 btn-sm" target="_blank" title="{{files.description}}"><i class="fa fa-download"></i></a>
+                          </b>
+                        </td>
+                        <td>{{row.query_status_name}}</td>
+                        <td>{{row.query_created_date}}</td>
+                      </tr>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <app-loader [loaderActive]="loaderActive"></app-loader>
+      </div>
+    </div>
+  </div>
+</div>

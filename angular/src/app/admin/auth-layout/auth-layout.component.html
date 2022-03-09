@@ -1,0 +1,132 @@
+<html>
+
+<app-header></app-header>
+
+<body class="mini-sidebar">
+    <div class="main-wrapper admin-page">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <a href="javascript:void(0);" class="logo">
+                    <img *ngIf="!dynamicLogoUrl" class="logo-full" src="assets/front/img/mpn-logo.png " alt="">
+                    <img *ngIf="!dynamicLogoUrl" class="logo-small" src="assets/front/img/mpn-logo-small.png" alt="">
+
+                    <img *ngIf="dynamicLogoUrl" #set_theme_logo class="logo-full" [src]="[dynamicLogoUrl]" alt="">
+                    <img *ngIf="dynamicLogoUrl" #set_theme_logo class="logo-small" [src]="[dynamicLogoUrl]" alt="">
+                </a>
+
+            </div>
+            <!-- /Logo -->
+
+            <a id="toggle_btn" href="javascript:void(0);">
+                <span class="bar-icon">
+            <span></span>
+                <span></span>
+                <span></span>
+                </span>
+            </a>
+            <!-- Header Title -->
+            <div class="page-title-box">
+                <h3>Welcome, {{admin_name | titlecase}}.</h3>
+            </div>
+            <!-- /Header Title -->
+
+            <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
+
+            <!-- Header Menu -->
+            <ul class="nav user-menu">
+                <!-- <li class="nav-item">
+                      <a href="javascript:void(0);" [routerLink]="['/home']" class="nav-link"><i class="fa fa-home"></i></a>
+                  </li>
+
+                  <li class="nav-item dropdown">
+                      <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                          <i class="fa fa-bell-o"></i> <span class="badge badge-pill">3</span>
+                      </a>
+                      <div class="dropdown-menu notifications">
+                          <div class="topnav-dropdown-header">
+                              <span class="notification-title">Notifications</span>
+                              <a href="javascript:void(0)" class="clear-noti"> Clear All </a>
+                          </div>
+                          <div class="noti-content">
+                              <ul class="notification-list ">
+                                  <li class="notification-message">
+                                      <a href="#">
+                                          <div class="media">
+                                              <span class="avatar">
+                                                  <img alt="" src="assets/front/img/profiles/avatar-01.jpg">
+                                              </span>
+                                              <div class="media-body">
+                                                  <p class="noti-details"><span class="noti-title">Deepak Shinde</span> Lorem ipsum dolor, sit<span class="noti-title"> amet consectetur adipisicing elit. Facilis, necessitatibus?</span></p>
+                                                  <p class="noti-time"><span class="notification-time">4 mins ago</span></p>
+                                              </div>
+                                          </div>
+                                      </a>
+                                  </li>
+                                  <li class="notification-message">
+                                      <a href="#">
+                                          <div class="media">
+                                              <span class="avatar">
+                                                  <img alt="" src="assets/front/img/profiles/avatar-02.jpg">
+                                              </span>
+                                              <div class="media-body">
+                                                  <p class="noti-details"><span class="noti-title">Sushant Rokade</span> Lorem ipsum dolor, sit<span class="noti-title"> amet consectetur adipisicing elit. Facilis, necessitatibus?</span></p>
+                                                  <p class="noti-time"><span class="notification-time">10 mins ago</span></p>
+                                              </div>
+                                          </div>
+                                      </a>
+                                  </li>
+                                  <li class="notification-message">
+                                      <a href="#">
+                                          <div class="media">
+                                              <span class="avatar">
+                                                  <img alt="" src="assets/front/img/profiles/avatar-03.jpg">
+                                              </span>
+                                              <div class="media-body">
+                                                  <p class="noti-details"><span class="noti-title">Boobish Balan</span> Lorem ipsum dolor, sit<span class="noti-title"> amet consectetur adipisicing elit. Facilis, necessitatibus?</span></p>
+                                                  <p class="noti-time"><span class="notification-time">25 mins ago</span></p>
+                                              </div>
+                                          </div>
+                                      </a>
+                                  </li>
+                              </ul>
+                          </div>
+                          <div class="topnav-dropdown-footer">
+                              <a href="#">View all Notifications</a>
+                          </div>
+                      </div>
+                  </li> -->
+
+                <li class="nav-item dropdown has-arrow main-drop">
+                    <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <span class="user-img"><img src="assets/front/img/profiles/avatar-01.jpg" alt="">
+                          <span class="status online"></span></span>
+                        <span></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <!-- <a class="dropdown-item" href="javascript:void(0);" [routerLink]="['/dashboard']">Dashboard</a> -->
+                        <!-- <a class="dropdown-item" href="javascript:void(0);" [routerLink]="['/admin/profile']">Profile</a>
+                        <a class="dropdown-item" href="javascript:void(0);" [routerLink]="['/admin/change-password']">Change Password</a> -->
+                        <a class="dropdown-item" [routerLink]="['/admin/logout']" href="javascript:void(0);" class="dropdown-item">Sign Out</a>
+                    </div>
+                </li>
+            </ul>
+            <!-- /Header Menu -->
+        </div>
+        <!-- /Header -->
+
+        <app-sidebar></app-sidebar>
+
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <router-outlet (topBarColor)="receiveTopBarColor($event)"></router-outlet>
+            </div>
+        </div>
+
+        <app-footer></app-footer>
+
+    </div>
+
+</body>
+
+</html>

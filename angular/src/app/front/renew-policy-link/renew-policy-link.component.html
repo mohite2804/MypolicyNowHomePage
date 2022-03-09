@@ -1,0 +1,120 @@
+<!-- Main Wrapper -->
+<div class="main-wrapper" *ngIf="quoteData">
+
+    <!-- Page Wrapper -->
+    <div class="page-wrapper sharescreen">
+
+        <!-- Page Content -->
+        <div class="content">
+
+            <section class="py-0">
+                <div class="container-md">
+                    <div class="row mb-4 align-items-center justify-content-center">
+                        <div class="col-lg-10 col-md-11 text-center text-md-left">
+                            <img src="assets/front/img/hib-logo.png" alt="" width="160">
+                        </div>
+                    </div>
+                    <!-- <form [formGroup]="formchSearchDetails" (ngSubmit)="submitFormSearchDetails()" class="ui form"> -->
+                    <form [formGroup]="formchSearchDetails" (ngSubmit)="submitConfirmDetails()" class="ui form">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-10 col-md-11 border quotes-topinfo shadowbox py-2">
+                                <div class="row py-2">
+                                    <div class="col-md-6 col-sm-5 col-12 quotes-box">
+                                        <div>
+                                            <span class="text-muted white">Your Vehicle:</span>
+                                            <h4 class="mb-0">
+
+                                                {{quoteData.rto_label | uppercase}} {{quoteData.registration_no_part_3 | uppercase}} {{quoteData.registration_no_part_4}},{{quoteData.make | uppercase}},{{quoteData.model | uppercase}}, {{quoteData.variant | uppercase}}, ({{quoteData.vehicle_fuel | uppercase}}
+                                                {{quoteData.cc}} CC)
+                                            </h4>
+                                            <h4 class="mb-0"><span class="text-muted white">Registered:</span>{{quoteData.registration_date}} </h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-4 col-12 quotes-box">
+                                        <div>
+                                            <span class="text-muted white">Previous Policy:</span>
+                                            <h4 class="mb-0"><span class="text-muted white">Type:</span> {{quoteData.policy_subtype_label}}</h4>
+                                            <h4 class="mb-0"><span class="text-muted white">Expiry:</span> {{quoteData.policy_end_date}}</h4>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-12">
+                                    <div class="card cardshadow blue-border">
+                                        <div class="card-header">
+                                            <h3>Previous Policy Details</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row align-items-center">
+                                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                                                    <div class="field">
+                                                        <div class="ui form">
+                                                            <label class="ui label mb-2 req">Change In Ownership In Last 1 Yr?</label>
+                                                            <div class="inline fields">
+                                                                <div class="field">
+                                                                    <div class="ui radio checkbox">
+                                                                        <input id="change_owner_ship_yes" (click)="changeOwnerShip($event.target.value)" formControlName="change_owner_ship" type="radio" value='true'>
+                                                                        <label for="change_owner_ship_yes">Yes</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="field">
+                                                                    <div class="ui radio checkbox">
+                                                                        <input id="change_owner_ship_no" (click)="changeOwnerShip($event.target.value)" formControlName="change_owner_ship" type="radio" value='false' [checked]="true">
+                                                                        <label for="change_owner_ship_no">No</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div [ngClass]="{'d-none': !div_show_for_previous_policy_extra_data }" class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                                                    <div class="ui form">
+                                                        <label class="ui label mb-2 req">Have You Made A Claim?</label>
+                                                        <div class="inline fields">
+                                                            <div class="field">
+                                                                <div class="ui radio checkbox">
+                                                                    <input select-other-detail="other_field" id="made_claim_yes" type="radio" value="true" formControlName="made_claim">
+                                                                    <label for="made_claim_yes">Yes</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="field">
+                                                                <div class="ui radio checkbox">
+                                                                    <input select-other-detail="other_field" id="made_claim_no" type="radio" value="false" formControlName="made_claim" [checked]="true">
+                                                                    <label for="made_claim_no">No</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+
+                            <div class="row align-items-center justify-content-center">
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-custom green quotebtn"> Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+
+        </div>
+        <!-- /Page Content -->
+    </div>
+    <!-- /Page Wrapper end-->
+</div>
+<!-- Main Wrapper end-->
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

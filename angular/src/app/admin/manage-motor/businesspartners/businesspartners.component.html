@@ -1,0 +1,437 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Manage Business Partners</h3>
+        </div>
+        <div class="col-auto float-right ml-auto" *ngIf="access_permission == 'read_write'">
+            <button (click)="openModel()" data-toggle="modal" data-target="#openmodal" class="btn btn-custom green"><i class="fa fa-plus"></i> Add Business Partners Details</button>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+
+<div class="page-header">
+  <div class="row align-items-center">
+
+    <!-- <div class="col-auto float-right ml-auto">
+      <button (click)="openModel()" data-toggle="modal" data-target="#openmodal" class="btn btn-custom green"><i class="fa fa-plus"></i> Add Misp Details</button>
+    </div> -->
+    <div class="col-md-12">
+        <div class="card shadowbox">
+            <div class="card-body pb-0">
+                <form class="form-horizontal" [formGroup] = formMispExport>
+                    <div class="row" >
+                        
+                        <div class="col-lg-2 col-md-3" >
+                            <div class="form-group">
+                                <label>From Date:</label>
+                                <div class="cal-icon">
+                                    <input select-other-detail="other_field"  (click)="e.toggle()"  class="form-control" placeholder="yyyy-mm-dd" formControlName="from_date" [(ngModel)]="date_picker_from_date" ngbDatepicker #e="ngbDatepicker" placeholder="yyyy-mm-dd" autocomplete="off" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3" >
+                            <div class="form-group">
+                                <label>To Date:</label>
+                                <div class="cal-icon">
+                                    <input select-other-detail="other_field"  (click)="f.toggle()"  class="form-control" placeholder="yyyy-mm-dd" formControlName="to_date" [(ngModel)]="date_picker_to_date" ngbDatepicker #f="ngbDatepicker" placeholder="yyyy-mm-dd" autocomplete="off" readonly />
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div>
+                            <label class="d-block">&nbsp;</label>
+                            <button type="submit" (click)="submitDateFilterForm()" class="btn btn-custom green w-43" title="Search"><i class="fa fa-search"></i></button>&nbsp;
+                        </div>
+                        <div>
+                            <label class="d-block">&nbsp;</label>
+                            <button type="button" (click)="resetDateFilterForm()" class="btn btn-custom green w-43" title="Reset"><i class="fa fa-refresh"></i></button>&nbsp;
+                        </div>
+                        <div>
+                            <label class="d-block">&nbsp;</label>
+                            <button (click)="exportAsXLSX()" class="btn btn-custom green"  title="Export To Excel">Export <i class="fa fa-download"></i></button>  
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadowbox">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="openmodal" class="modal custom-modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"  data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+
+        <div class="modal-content">
+            <form [formGroup]="formRecodEdit" method="post" (ngSubmit)="submitForm()" enctype="multipart/form-data">
+                <input formControlName="id" type="hidden" class="form-control">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ popupTitle }}</h4>
+                    <button (click)="closePopup()" type="button" class="close" data-dismiss="modal">&times;</button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Business Partner:</label>
+                                <select class="form-control" formControlName="business_partner">
+                <option value="">Select Business Partner</option>
+                <option value="{{ row.business_tieup_type_id }}" *ngFor="let row of businesspartnerData"  >{{ row.partner_type }}</option>
+              </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.business_partner.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.business_partner.errors.required">
+                                        Business Partner is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Name:</label>
+                                <input formControlName="name" type="text" class="form-control" minlength="2" maxlength="25">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.name.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.name.errors.required">
+                                        Name is required.
+                                    </div>
+                                    <div class="error" *ngIf="submitted && formRecodEdit.controls.name.errors.pattern">
+                                        Please enter valid name.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.name.errors.minlength">
+                                        Please enter at least 2 characters.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.name.errors.maxlength">
+                                        Please enter no more than 25 characters..
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12" [ngStyle]="{'display':accessdisplay}">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Partner Code:</label>
+                                <input formControlName="partner_code" type="text" class="form-control">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.partner_code.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.partner_code.errors.required">
+                                        Partner Code is required.
+                                    </div>
+                                    <div class="error" *ngIf="submitted && formRecodEdit.controls.partner_code.errors.pattern">
+                                        Please enter valid partner.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Address:</label>
+                                <input formControlName="address" type="text" class="form-control"  minlength="2" maxlength="50">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.address.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.address.errors.required">
+                                        Address is required.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.address.errors.minlength">
+                                        Please enter at least 2 characters.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.address.errors.maxlength">
+                                        Please enter no more than 50 characters..
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Email:</label>
+                                <input formControlName="email" type="text" class="form-control"  minlength="5" maxlength="50">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.email.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.email.errors.required">
+                                        Email is required.
+                                    </div>
+                                    <div class="error" *ngIf="submitted && formRecodEdit.controls.email.errors.pattern">
+                                        Please enter valid email.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.email.errors.minlength">
+                                        Please enter at least 5 characters.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.email.errors.maxlength">
+                                        Please enter no more than 50 characters..
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Mobile:</label>
+                                <input formControlName="mobile_no" type="text" class="form-control" maxlength="10">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.mobile_no.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.mobile_no.errors.required">
+                                        Mobile No is required.
+                                    </div>
+                                    <div class="error" *ngIf="submitted && formRecodEdit.controls.mobile_no.errors.pattern">
+                                        Please enter valid mobile.
+                                    </div>
+                                    
+                                </div>
+                                <div class="error"  *ngIf="formRecodEdit.hasError('MatchMobileError')">
+                                    Please enter valid mobile.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Alternate Mobile No:</label>
+                                <input formControlName="alternate_mobile_no" type="text" class="form-control"  maxlength="10">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.alternate_mobile_no.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.alternate_mobile_no.errors.required">
+                                        Alternate Mobile No is required.
+                                    </div>
+                                    <div class="error" *ngIf="submitted && formRecodEdit.controls.alternate_mobile_no.errors.pattern">
+                                        Please enter valid alternate no.
+                                    </div>
+                                </div>
+                                <div class="error"  *ngIf="formRecodEdit.hasError('aMatchMobileError')">
+                                    Please enter valid mobile.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Pancard No:</label>
+                                <input formControlName="pancard_no" type="text" class="form-control"  minlength="10" maxlength="10">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.pancard_no.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.pancard_no.errors.required">
+                                        Pancard No is required.
+                                    </div>
+                                    <div class="error" *ngIf="submitted && formRecodEdit.controls.pancard_no.errors.pattern">
+                                        Please enter valid pancard no.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.pancard_no.errors.minlength">
+                                        Please enter at least 10 characters.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.pancard_no.errors.maxlength">
+                                        Please enter no more than 10 characters..
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>GST No:</label>
+                                <input formControlName="gst_no" type="text" class="form-control"  minlength="15" maxlength="18">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.gst_no.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.gst_no.errors.required">
+                                        GST no is required.
+                                    </div>
+                                    <div class="error" *ngIf="submitted && formRecodEdit.controls.gst_no.errors.pattern">
+                                        Please enter valid GST no.
+                                    </div>
+                                </div>
+                                <div class="error"  *ngIf="formRecodEdit.hasError('panNotMatchGST')">
+                                    Please Enter Valid GST Number..
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Tan No:</label>
+                                <input formControlName="tan_no" type="text" class="form-control">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.tan_no.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.tan_no.errors.required">
+                                        Tan no is required.
+                                    </div>
+                                    <div class="error" *ngIf="submitted && formRecodEdit.controls.tan_no.errors.pattern">
+                                        Please enter valid TAN no.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Contact Person Name:</label>
+                                <input formControlName="contact_person_name" type="text" class="form-control"  minlength="2" maxlength="25">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.contact_person_name.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.contact_person_name.errors.required">
+                                        Contact Person Name is required.
+                                    </div>
+                                    <div class="error" *ngIf="submitted && formRecodEdit.controls.contact_person_name.errors.pattern">
+                                        Please enter valid person name.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.contact_person_name.errors.minlength">
+                                        Please enter at least 2 characters.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.contact_person_name.errors.maxlength">
+                                        Please enter no more than 25 characters..
+                                    </div>
+                                </div>
+                                <div class="error"  *ngIf="formRecodEdit.hasError('cpMatchMobileError')">
+                                    Please enter valid mobile.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Contact Person Mobile:</label>
+                                <input formControlName="contact_person_mobile" type="text" class="form-control"  maxlength="10">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.contact_person_mobile.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.contact_person_mobile.errors.required">
+                                        Contact Person Mobile is required.
+                                    </div>
+                                    <div class="error" *ngIf="submitted && formRecodEdit.controls.contact_person_mobile.errors.pattern">
+                                        Please enter valid contact person mobile.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Contact Person Email:</label>
+                                <input formControlName="contact_person_email" type="text" class="form-control" minlength="2" maxlength="50">
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.contact_person_email.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.contact_person_email.errors.required">
+                                        Contact Person Email is required.
+                                    </div>
+                                    <div class="error" *ngIf="submitted && formRecodEdit.controls.contact_person_email.errors.pattern">
+                                        Please enter valid contact person email.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.contact_person_email.errors.minlength">
+                                        Please enter at least 2 characters.
+                                    </div>
+                                    <div *ngIf="submitted && formRecodEdit.controls.contact_person_email.errors.maxlength">
+                                        Please enter no more than 50 characters..
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Hierarchy Levels:</label>
+                                <select class="form-control" formControlName="hierarchy_levels">
+                                    <option value="">Select Hierarchy Levels</option>
+                                    <option value="{{ row.level_id }}" *ngFor="let row of hierarchylevelsData"  >{{ row.level_label }}</option>
+                                </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.hierarchy_levels.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.hierarchy_levels.errors.required">
+                                        Hierarchy Levels is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>CSS File:</label>
+                                <input type="file" accept="text/css"   (change)="uploadCSS($event)" class="form-control">
+                                <div><b>Note: </b>Allowed file type "css"</div> 
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.css_file_name.errors">
+                                    <!-- <input type="hidden"  formControlName="logo_image"/> -->
+                                    <div *ngIf="submitted && formRecodEdit.controls.css_file_name.errors.required">
+                                        CSS File is required.
+                                    </div>
+                                    <input type="hidden" formControlName="css_file_name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label><span class="error">*</span>Status:</label>
+                                <select class="form-control" formControlName="status">
+                                    <option value="">Select Status</option>
+                                    <option value="{{ row.status_id }}" *ngFor="let row of statusData"  >{{ row.lable }}</option>
+                                </select>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.status.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.status.errors.required">
+                                        Status is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Logo:</label>
+                                <input  type="file"  accept="image/jpeg,image/png" (change)="uploadLogo($event)" class="form-control"  accept="image/jpeg,image/gif">
+                                <div><b>Note: </b>Allowed file type "jpg", "png", "jpeg"</div>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.logo_image.errors">
+                                    <!-- <input type="hidden"  formControlName="logo_image"/> -->
+                                    <div *ngIf="submitted && formRecodEdit.controls.logo_image.errors.required">
+                                        Logo is required.
+                                    </div>
+                                </div>
+                                <img *ngIf="logo_image" style="width: 100px; height: 100px" [src]="logo_image">
+                                <input type="hidden" formControlName="logo_img">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label><span class="error" [ngStyle]="{'display':accessdisplayinline}">*</span>Pancard Doc:</label>
+                                <input (change)="uploadPanDoc($event)" accept="image/jpeg,image/png,application/pdf"  type="file" class="form-control">
+                                <div><b>Note: </b>Allowed file type "jpg", "png", "jpeg", "pdf"</div>
+                                <!-- <input type="hidden"  formControlName="pancard_doc"/> -->
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.pancard_doc.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.pancard_doc.errors.required">
+                                        Pancard Doc is required.
+                                    </div>
+                                </div>
+                                <img *ngIf="pancard_doc" style="width: 100px; height: 100px" [src]="pancard_doc">
+                                <input type="hidden" formControlName="pancard_img">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label><span class="error" [ngStyle]="{'display':accessdisplayinline}">*</span>GST Doc:</label>
+                                <input (change)="uploadGSTDoc($event)"  accept="image/jpeg,image/png,application/pdf" type="file" class="form-control">
+                                <div><b>Note: </b>Allowed file type "jpg", "png", "jpeg", "pdf"</div>
+                                <!--  <input type="hidden"  formControlName="gst_doc"/> -->
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.gst_doc.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.gst_doc.errors.required">
+                                        GST doc is required.
+                                    </div>
+                                </div>
+                                <img *ngIf="gst_doc" style="width: 100px; height: 100px" [src]="gst_doc">
+                                <input type="hidden" formControlName="gst_img">
+                            </div>
+                        </div>
+                     <!--    <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label class="d-block">&nbsp;</label>
+                                <div class="ui checkbox">
+                                    <input formControlName="is_theme" (change)="isTheme($event)" type="checkbox" id="is_theme">
+                                    <label class="mb-0" for="is_theme">Is Theme:</label>
+                                </div>
+                                <div class="error" *ngIf="submitted && formRecodEdit.controls.is_theme.errors">
+                                    <div *ngIf="submitted && formRecodEdit.controls.is_theme.errors.required">
+                                        Is Theme is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+                                <strong>{{responseMsg}}</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="submit-section">
+                        <input *ngIf="btnEditSubmit" class="btn btn-custom green btn-lg" type="submit" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<app-managemotor-loader [loaderActive]="loaderActive"></app-managemotor-loader>

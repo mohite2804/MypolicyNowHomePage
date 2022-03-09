@@ -1,0 +1,840 @@
+<div class="page-wrapper">
+    <div class="content">
+        <section>
+            <div class="container">
+
+
+                <div class="card shadowbox topsearchbar">
+                    <div class="card-body py-2 px-3">
+                        <div class="row align-items-center">
+                            <div class="col-lg-3 col-md-4">
+                                <div class="row align-items-center quoteproicon">
+                                    <div class="col-auto">
+
+                                        <img [src]="product_type_image" alt="{{product_type_name}} Insurance">
+                                    </div>
+                                    <div class="col-auto">
+                                        <h1><span class="text-brand-red">{{product_type_name}}</span> Insurance</h1>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-9 col-md-8">
+                                <form [formGroup]="formchSearchVahanDetails" (ngSubmit)="submitFormSearchDetails()">
+                                    <div class="row align-items-center justify-content-center">
+                                        <div class="col-12">
+                                            <div class="searchbar">
+                                                <div class="quote-serchbox">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-lg-7 col-sm-12">
+                                                            <div class="row align-items-center">
+                                                                <div class="col-lg-8 col-sm-8 ui form">
+                                                                    <div class="field" [ngClass]="{'error': submiteedSearchVahanDetails && formchSearchVahanDetails.controls.search_regi_no.errors}">
+                                                                        <div class="form-group form-focus asd" [ngClass]="{'focused': formchSearchVahanDetails.controls.search_regi_no.value}">
+
+                                                                            <input formControlName="search_regi_no" type="text" class="text-uppercase form-control floating" maxlength="22">
+                                                                            <label class="focus-label">Your registration number ex MH01AB1234</label>
+                                                                            <div class="text-left" *ngIf="(submiteedSearchVahanDetails || formchSearchVahanDetails.controls.search_regi_no.invalid && (formchSearchVahanDetails.controls.search_regi_no.dirty || formchSearchVahanDetails.controls.search_regi_no.touched)) && formchSearchVahanDetails.controls.search_regi_no.errors">
+                                                                                <small *ngIf="(submiteedSearchVahanDetails || formchSearchVahanDetails.controls.search_regi_no.invalid && (formchSearchVahanDetails.controls.search_regi_no.dirty || formchSearchVahanDetails.controls.search_regi_no.touched)) && formchSearchVahanDetails.controls.search_regi_no.errors"
+                                                                                    class="errorbox mt-2 error">
+                                                                            Please Enter Vehicle Registration Number.
+                                                                        </small>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4 col-sm-4">
+                                                                    <button type="submit" class="btn btn-custom h50 green w-100">
+                                                              <i class="fa fa-search mr-1"></i> Search
+                                                            </button>
+                                                                </div>
+
+
+
+                                                                <div class="col-12">
+                                                                    <div *ngIf="success_message" class="alert alert-success" role="alert">
+                                                                        {{ success_message }}
+                                                                    </div>
+
+                                                                    <div *ngIf="error_message" class="alert alert-danger" role="alert">
+                                                                        {{ error_message }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="col-lg-5 col-sm-12">
+                                                            <div class="row">
+
+                                                                <div class="col-auto">
+                                                                    <button (click)="resetForm()" type="button" class="btn btn-custom h50 btn-danger">
+                                                                Reset Form
+                                                            </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="ui form" [formGroup]="formQuoteDetails" (ngSubmit)="submitFormQuoteDetails()">
+                    <div  class="row align-items-center justify-content-strat">
+                        <div class="col-12">
+                            <div class="card cardshadow productbar">
+                                <div class="card-body">
+                                    <div class="row justify-content-center mt-4">
+                                        <div class="col-auto">
+                                            <div class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.policy_type_id.invalid && (formQuoteDetails.controls.policy_type_id.dirty || formQuoteDetails.controls.policy_type_id.touched)) && formQuoteDetails.controls.policy_type_id.errors}">
+                                                <div class="ui form">
+                                                    <div class="inline fields mb-0">
+                                                        <label class="ui label">Select Policy type:</label>
+
+                                                        <div *ngFor="let row of result_policy_types" class="field">
+                                                            <div class="ui radio checkbox">
+                                                                <input (click)="selectPolicyType(row.policy_type_id,'angular')" id="policy_type_{{ row.policy_type_id }}" formControlName="policy_type_id" type="radio" [value]="row.policy_type_id">
+                                                                <label for="policy_type_{{ row.policy_type_id }}">{{ row.label }}</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center" *ngIf="(submittedQuoteDetails ||formQuoteDetails.controls.policy_type_id.invalid && (formQuoteDetails.controls.policy_type_id.dirty || formQuoteDetails.controls.policy_type_id.touched)) && formQuoteDetails.controls.policy_type_id.errors">
+                                                <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.policy_type_id.invalid && (formQuoteDetails.controls.policy_type_id.dirty || formQuoteDetails.controls.policy_type_id.touched)) && formQuoteDetails.controls.policy_type_id.errors.required"
+                                                    class="errorbox">
+                                             Please Select Policy Type.
+                                          </small>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-12 d-sm-block d-lg-none my-2"></div>
+
+                                        <div [ngClass]="{'d-none': div_show_for_policy_subtypes }" class="col-auto">
+                                            <div class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.policy_subtype_id.invalid && (formQuoteDetails.controls.policy_subtype_id.dirty || formQuoteDetails.controls.policy_subtype_id.touched)) && formQuoteDetails.controls.policy_subtype_id.errors}">
+                                                <div class="ui form">
+                                                    <div class="inline fields mb-0">
+                                                        <label class="ui label">Select Option:</label>
+
+                                                        <div *ngFor="let row of result_policy_subtypes_changes" class="field">
+                                                            <div class="ui radio checkbox">
+                                                                <input (click)="selectPolicySubType(row.policy_subtype_id)" id="sub_type_{{ row.policy_subtype_id }}" formControlName="policy_subtype_id" type="radio" [value]="row.policy_subtype_id">
+                                                                <label for="sub_type_{{ row.policy_subtype_id }}">{{row.code}}</label>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center" *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.policy_subtype_id.invalid && (formQuoteDetails.controls.policy_subtype_id.dirty || formQuoteDetails.controls.policy_subtype_id.touched)) && formQuoteDetails.controls.policy_subtype_id.errors">
+                                                <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.policy_subtype_id.invalid && (formQuoteDetails.controls.policy_subtype_id.dirty || formQuoteDetails.controls.policy_subtype_id.touched)) && formQuoteDetails.controls.policy_subtype_id.errors.required"
+                                                    class="errorbox">
+                                            Please Select Sub Type.
+                                          </small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-12">
+
+                                <div class="card cardshadow blue-border">
+                                    <div class="card-header">
+                                        <h3>Vehicle Info</h3>
+
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+
+                                            <div class="col-xl-9 col-lg-12">
+                                                <div class="row align-items-center">
+                                                    <div class="col-md-2">
+                                                        <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.make.invalid && (formQuoteDetails.controls.make.dirty || formQuoteDetails.controls.make.touched)) && formQuoteDetails.controls.make.errors}">
+                                                            <div class="form-group form-focus select-focus">
+                                                                <label class="focus-label req">Make</label>
+                                                                <ng-select placeholder="Select Make" (clear)="clearValue('make',$event)" (click)="clickSelectBox('make', $event)" (change)="changeSelectBox('make',$event)" [(ngModel)]="selectedMake" [ngModelOptions]="{standalone: true}">
+                                                                    <ng-option *ngFor="let row of result_makes" [value]="row.vehicle_make_id">{{row.make}}</ng-option>
+                                                                </ng-select>
+
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                            <label>Make: </label>
+                                                            <h4>{{result_selected_quote_data.make}}</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.model.invalid && (formQuoteDetails.controls.model.dirty || formQuoteDetails.controls.model.touched)) && formQuoteDetails.controls.model.errors}">
+                                                            <div class="form-group form-focus select-focus">
+                                                                <label class="focus-label req">Model</label>
+                                                                <ng-container *ngIf="result_models_changes">
+                                                                    <ng-select placeholder="Select Model" (clear)="clearValue('model',$event)" (click)="clickSelectBox('model', $event)" (change)="changeSelectBox('model',$event)" [(ngModel)]="selectedModel" [ngModelOptions]="{standalone: true}">
+                                                                        <ng-option *ngFor="let row of result_models_changes" [value]="row.vehicle_model_id">{{row.model}}</ng-option>
+                                                                    </ng-select>
+                                                                </ng-container>
+
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                            <label>Model: </label>
+                                                            <h4>{{result_selected_quote_data.model}}</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.variants.invalid && (formQuoteDetails.controls.variants.dirty || formQuoteDetails.controls.variants.touched)) && formQuoteDetails.controls.variants.errors}">
+                                                            <div class="form-group form-focus select-focus">
+                                                                <label class="focus-label req">Variant</label>
+                                                                <ng-container *ngIf="result_variant">
+                                                                    <ng-select placeholder="Select Variant" (clear)="clearValue('variants',$event)" (click)="clickSelectBox('variants', $event)" (change)="changeSelectBox('variants',$event)" [(ngModel)]="selectedVariants" [ngModelOptions]="{standalone: true}">
+                                                                        <ng-option *ngFor="let row of result_variant" [value]="row.vehicle_master_id+'|'+row.variant_id">{{row.variant}}</ng-option>
+                                                                    </ng-select>
+                                                                </ng-container>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                            <label>Variant: </label>
+                                                            <h4>{{result_selected_quote_data.variant}}</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-lg-12">
+                                                <div class="row align-items-center">
+                                                    <div class="col-md-12 col-sm-12">
+                                                        <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.rto.invalid && (formQuoteDetails.controls.rto.dirty || formQuoteDetails.controls.rto.touched)) && formQuoteDetails.controls.rto.errors}">
+                                                            <div class="form-group form-focus select-focus">
+                                                                <label class="focus-label req">RTO</label>
+                                                                <ng-select placeholder="Select RTO" (clear)="clearValue('rto',$event)" (click)="clickSelectBox('rto', $event)" (change)="changeSelectBox('rto',$event)" [(ngModel)]="selectedRto" [ngModelOptions]="{standalone: true}">
+                                                                    <ng-option *ngFor="let row of result_rto" [value]="row.rto_id">{{row.label}}</ng-option>
+                                                                </ng-select>
+
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                            <label>RTO: </label>
+                                                            <h4>{{result_selected_quote_data.registration_no_part_1}} {{result_selected_quote_data.registration_no_part_2}}</h4>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-xl-7 col-lg-12">
+                                                <div class="row align-items-center">
+
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.manufacturer_year.invalid && (formQuoteDetails.controls.manufacturer_year.dirty || formQuoteDetails.controls.manufacturer_year.touched)) && formQuoteDetails.controls.manufacturer_year.errors}">
+                                                            <div class="form-group form-focus select-focus">
+                                                                <label class="focus-label req">Manufacturing Year</label>
+                                                                <select select-other-detail="other_field" (change)="selectManufactureYear($event.target.value,'angular')" formControlName="manufacturer_year">
+                                                            <option value="">Select Year</option>
+
+                                                            <option *ngFor="let row of result_years_changes"  value="{{ row.id }}">{{ row.name }}</option>
+                                                        </select>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                            <label>Manufacturer Year: </label>
+                                                            <h4>{{result_selected_quote_data.manufacturing_year}}</h4>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4 col-sm-12" [ngClass]="{'d-none': manufacturing_year_selected }">
+                                                        <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.manufacturer_month_1.invalid && (formQuoteDetails.controls.manufacturer_month_1.dirty || formQuoteDetails.controls.manufacturer_month_1.touched)) && formQuoteDetails.controls.manufacturer_month_1.errors}">
+                                                            <div class="form-group form-focus select-focus">
+                                                                <label class="focus-label req">Manufacturing Month</label>
+                                                                <select select-other-detail="other_field" (change)="selectManufactureMonth($event)" formControlName="manufacturer_month_1">
+                                                          <option value="">Select Month</option>
+                                                          <option *ngFor="let row of result_months_changes"  value="{{ row.id }}">{{ row.name }}</option>
+                                                      </select>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                            <label>Manufacturer Month : </label>
+                                                            <h4>{{result_selected_quote_data.manufacturing_month_name}}</h4>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.pr_date.invalid && (formQuoteDetails.controls.pr_date.dirty || formQuoteDetails.controls.pr_date.touched)) && formQuoteDetails.controls.pr_date.errors}">
+                                                            <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.controls.pr_date.value}">
+                                                                <div class="cal-icon">
+                                                                    <input select-other-detail="other_field" readonly [minDate]="minDateRegistration" [maxDate]="maxDate" [ngModelOptions]="{standalone: true}" (click)="d.toggle()" (dateSelect)="selectDate('pr_date',$event)" class="form-control" placeholder="dd-mm-yyyy"
+                                                                        name="dp" [(ngModel)]="date_picker_date_picker_pr_date" ngbDatepicker #d="ngbDatepicker" placeholder="" autocomplete="off">
+                                                                </div>
+                                                                <label class="focus-label req">Purchase/Registration Date</label>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                            <label>Registration Date: </label>
+                                                            <h4>{{result_selected_quote_data.registration_date}}</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="askpolicyholdertype" class="col-xl-3 col-md-4 col-sm-12">
+                                                <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.policyholdertype.invalid && (formQuoteDetails.controls.policyholdertype.dirty || formQuoteDetails.controls.policyholdertype.touched)) && formQuoteDetails.controls.policyholdertype.errors}">
+                                                    <div class="ui form">
+                                                        <label class="ui label mb-2 req">Policy Holder Type:</label>
+                                                        <div class="inline fields">
+                                                            <div *ngFor="let row of result_proposer_types" class="field">
+                                                                <div class="ui radio checkbox">
+                                                                    <input select-other-detail="other_field" id="policy_holder_type_{{row.proposer_type_id}}" (click)="selectPolicyHolderType(row.proposer_type_id)" formControlName="policyholdertype" type="radio" [value]="row.proposer_type_id">
+                                                                    <label for="policy_holder_type_{{row.proposer_type_id}}">{{ row.lable | titlecase }}</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                    <label>Policy Holder Type: </label>
+                                                    <h4>{{result_selected_quote_data.policy_holder_type}}</h4>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-md-4 col-sm-12 d-none">
+                                                <div class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.od_discount.invalid && (formQuoteDetails.controls.od_discount.dirty || formQuoteDetails.controls.od_discount.touched)) && formQuoteDetails.controls.od_discount.errors}">
+                                                    <div class="form-group form-focus select-focus">
+                                                        <label class="focus-label req">OD Discount</label>
+                                                        <select select-other-detail="other_field" formControlName="od_discount">
+                                                      <option value="max" selected="selected">Max Discount</option>
+                                                      <option *ngFor="let row of result_od_discount"  value="{{ row.id }}">{{ row.name }}</option>
+                                                  </select>
+                                                    </div>
+                                                </div>
+                                                <!-- <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                              <label>OD Discount: </label>
+                                              <h4>{{result_selected_quote_data.selected_od_discount}}</h4>
+                                          </div> -->
+                                            </div>
+
+
+                                            <div [ngClass]="{'d-none': div_not_show_for_carrier_type }" class="col-xl-2 col-md-4 col-sm-12">
+                                                <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.carrier_type_id.invalid && (formQuoteDetails.controls.carrier_type_id.dirty || formQuoteDetails.controls.carrier_type_id.touched)) && formQuoteDetails.controls.carrier_type_id.errors}">
+                                                    <div class="form-group form-focus select-focus">
+                                                        <label class="focus-label req">Carrier Type</label>
+                                                        <select select-other-detail="other_field" formControlName="carrier_type_id">
+                                                      <option value="">Select</option>
+                                                      <option  *ngFor="let row of result_career_types" value="{{ row.carrier_type_id }}">{{ row.lable | titlecase }}</option>
+                                                  </select>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                    <label>Carrier Type: </label>
+                                                    <h4>{{result_selected_quote_data.carrier_type_id}}</h4>
+                                                </div>
+                                            </div>
+
+
+                                            <div [ngClass]="{'d-none': div_not_show_for_no_of_trailer }" class="col-xl-2 col-md-4 col-sm-12">
+                                                <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.no_of_trailer.invalid && (formQuoteDetails.controls.no_of_trailer.dirty || formQuoteDetails.controls.no_of_trailer.touched)) && formQuoteDetails.controls.no_of_trailer.errors}">
+                                                    <div class="form-group form-focus select-focus">
+                                                        <label class="focus-label">No of Trailor</label>
+                                                        <select select-other-detail="other_field" formControlName="no_of_trailer" (change)="SelectNoOfTrailer($event)">
+                                                          <option value="">Select</option>
+                                                          <option  *ngFor="let row of result_no_of_trailer" value="{{ row.id }}">{{ row.name | titlecase }}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div [ngClass]="{'d-none': is_trailor }" class="col-xl-2 col-md-4 col-sm-12">
+                                                <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.trailor_idv.invalid && (formQuoteDetails.controls.trailor_idv.dirty || formQuoteDetails.controls.trailor_idv.touched)) && formQuoteDetails.controls.trailor_idv.errors}">
+
+                                                    <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.trailor_idv}">
+                                                        <label class="focus-label" [ngClass]="{'req': formQuoteDetails.controls.trailor_idv.errors && formQuoteDetails.controls.trailor_idv.errors.required}">
+                                                          Enter Body / Trailor IDV
+                                                        </label>
+                                                        <input select-other-detail="other_field" formControlName="trailor_idv" class="form-control floating">
+
+                                                    </div>
+                                                    <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.trailor_idv.invalid && (formQuoteDetails.controls.trailor_idv.dirty || formQuoteDetails.controls.trailor_idv.touched)) && formQuoteDetails.controls.trailor_idv.errors">
+                                                            <small *ngIf="formQuoteDetails.controls.trailor_idv.invalid && (formQuoteDetails.controls.trailor_idv.dirty || formQuoteDetails.controls.trailor_idv.touched) && formQuoteDetails.controls.trailor_idv.errors.pattern" class="text-danger">
+                                                        Please Enter Valid Trailor IDV.
+                                                      </small>
+                                                        </div>
+                                                </div>
+                                            </div>
+
+
+                                            <!-- <div class="col-xl-3 col-md-4 col-sm-12" *ngIf="!invoice_price_disabled_enabled">
+                                                <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.invoice_price.invalid && (formQuoteDetails.controls.invoice_price.dirty || formQuoteDetails.controls.invoice_price.touched)) && formQuoteDetails.controls.invoice_price.errors}">
+                                                    <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.value.invoice_price}">
+                                                        <label class="focus-label">Invoice Price</label>
+                                                        <input maxlength="15" select-other-detail="other_field" [readonly]="invoice_price_disabled_enabled" formControlName="invoice_price" type="text" class="form-control floating" min="{{this.min_invoice_price}}" max="{{this.max_invoice_price}}">
+
+                                                        <small style="color:black" *ngIf="min_invoice_price && max_invoice_price">
+                                                   <b>Note:</b> Invoice Price Between {{min_invoice_price}} to {{max_invoice_price}}.
+                                                  </small>
+
+                                                        <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.invoice_price.invalid && (formQuoteDetails.controls.invoice_price.dirty || formQuoteDetails.controls.invoice_price.touched)) && formQuoteDetails.controls.invoice_price.errors">
+                                                            <small *ngIf="formQuoteDetails.controls.invoice_price.invalid && (formQuoteDetails.controls.invoice_price.dirty || formQuoteDetails.controls.invoice_price.touched) && formQuoteDetails.controls.invoice_price.errors.pattern" class="text-danger">
+                                                        Please Enter Valid Invoice Price.
+                                                      </small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                    <label>Invoice Price: </label>
+                                                    <h4>{{(result_selected_quote_data.invoice_price == "" || result_selected_quote_data.invoice_price == null) ? "--" : result_selected_quote_data.invoice_price}}</h4>
+                                                </div>
+                                            </div> -->
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div [ngClass]="{'d-none': div_show_cpa_cover }" class="row align-items-center justify-content-center">
+                            <div class="col-12">
+                                <div class="card cardshadow blue-border">
+                                    <div class="card-header">
+                                        <h3>Compulsory Personal Accident (CPA) Cover</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div id="askCPATerm" class="col-xl-5 col-lg-5 col-md-6 col-12">
+                                                <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.cpa_cover_term.invalid && (formQuoteDetails.controls.cpa_cover_term.dirty || formQuoteDetails.controls.cpa_cover_term.touched)) && formQuoteDetails.controls.cpa_cover_term.errors}">
+                                                    <div class="ui form">
+                                                        <div class="inline fields">
+                                                            <label class="ui label req">Select CPA Term:</label>
+                                                            <div class="field">
+                                                                <div class="ui radio checkbox">
+                                                                    <input select-other-detail="other_field" id="None_cpa" formControlName="cpa_cover_term" (click)="selectCpaCoverTerm(0)" type="radio" [value]="0">
+                                                                    <label for="None_cpa">None</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="field">
+                                                                <div class="ui radio checkbox">
+                                                                    <input select-other-detail="other_field" id="1_Year_cpa" formControlName="cpa_cover_term" (click)="selectCpaCoverTerm(1)" type="radio" [value]="1">
+                                                                    <label for="1_Year_cpa">1 Year CPA</label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div [ngClass]="{'d-none': div_show_cpa_reason_3_year }" class="field" *ngIf="selected_product_type_id==1">
+                                                                <div class="ui radio checkbox">
+                                                                    <input select-other-detail="other_field" id="3_Year_cpa" formControlName="cpa_cover_term" (click)="selectCpaCoverTerm(1)" type="radio" [value]="3">
+                                                                    <label for="3_Year_cpa">3 Year CPA</label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div [ngClass]="{'d-none': div_show_cpa_reason_5_year }" class="field">
+                                                                <div class="ui radio checkbox">
+                                                                    <input select-other-detail="other_field" id="5_Year_cpa" formControlName="cpa_cover_term" (click)="selectCpaCoverTerm(5)" type="radio" [value]="5">
+                                                                    <label for="5_Year_cpa">5 Year CPA</label>
+                                                                </div>
+                                                            </div>
+
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                    <label>CPA Term: </label>
+                                                    <h4>{{result_selected_quote_data.cpa_cover_term}}</h4>
+                                                </div>
+                                            </div>
+
+                                            <div [ngClass]="{'d-none': !div_show_cpa_reason }" class="col-xl-5 col-lg-7 col-md-6 col-12">
+                                                <div class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.cpa_cover_reason.invalid && (formQuoteDetails.controls.cpa_cover_reason.dirty || formQuoteDetails.controls.cpa_cover_reason.touched)) && formQuoteDetails.controls.cpa_cover_reason.errors}">
+                                                    <div *ngIf="url_engine_no == null" class="form-group form-focus select-focus">
+                                                        <label class="focus-label req">Reason for opting out CPA </label>
+                                                        <select select-other-detail="other_field" formControlName="cpa_cover_reason">
+                                                  <option value="">Select Reason</option>
+                                                    <option *ngFor="let row of result_cpa_reason"  value="{{ row.cpa_waiver_reason_id }}">{{ row.lable }}</option>
+                                                  </select>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                    <label>Reason for opting out CPA: </label>
+                                                    <h4>{{result_selected_quote_data.cpa_cover_reason}}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div [ngClass]="{'d-none': div_previous_policy_details_section }" class="row align-items-center justify-content-center">
+                            <div class="col-12">
+                                <div class="card cardshadow blue-border">
+                                    <div class="card-header">
+                                        <h3>Previous Policy Details</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div [ngClass]="{'d-none': div_show_change_in_ownersip }" class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                                                <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.change_owner_ship.invalid && (formQuoteDetails.controls.change_owner_ship.dirty || formQuoteDetails.controls.change_owner_ship.touched)) && formQuoteDetails.controls.change_owner_ship.errors}">
+                                                    <div class="ui form">
+                                                        <label class="ui label mb-2 req">Change In Ownership In Last 1 Yr?</label>
+                                                        <div class="inline fields">
+                                                            <div class="field">
+                                                                <div class="ui radio checkbox">
+                                                                    <input id="change_owner_ship_yes" (click)="changeOwnerShip($event.target.value)" formControlName="change_owner_ship" type="radio" value='true'>
+                                                                    <label for="change_owner_ship_yes">Yes</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="field">
+                                                                <div class="ui radio checkbox">
+                                                                    <input id="change_owner_ship_no" (click)="changeOwnerShip($event.target.value)" formControlName="change_owner_ship" type="radio" value='false'>
+                                                                    <label for="change_owner_ship_no">No</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                    <label>Change In Ownership In Last 1 Yr : </label>
+                                                    <h4>{{(result_selected_quote_data.is_changes_in_ownership == 0) ? "No" : "Yes"}}</h4>
+                                                </div>
+                                            </div>
+
+                                            <div [ngClass]="{'d-none': div_show_do_you_have_previous_policy }" class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                                                <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.previous_policy.invalid && (formQuoteDetails.controls.previous_policy.dirty || formQuoteDetails.controls.previous_policy.touched)) && formQuoteDetails.controls.previous_policy.errors}">
+                                                    <div class="ui form">
+                                                        <label class="ui label mb-2 req">Do You Have Previous Policy?</label>
+                                                        <div class="inline fields">
+                                                            <div class="field">
+                                                                <div class="ui radio checkbox">
+                                                                    <input select-other-detail="other_field" id="previous_policy_yes" (click)="previousPolicy($event.target.value)" formControlName="previous_policy" type="radio" value='true'>
+                                                                    <label for="previous_policy_yes">Yes</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="field">
+                                                                <div class="ui radio checkbox">
+                                                                    <input select-other-detail="other_field" id="previous_policy_no" (click)="previousPolicy($event.target.value)" formControlName="previous_policy" type="radio" value='false'>
+                                                                    <label for="previous_policy_no">No</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                    <label>Do You Have Previous Policy : </label>
+                                                    <h4>{{(result_selected_quote_data.is_prev_policy_available == 0) ? "No" : "Yes"}}</h4>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 mt-2" [ngClass]="{'d-none': div_show_for_previous_policy_extra_data }">
+                                                <div class="row">
+                                                    <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
+                                                        <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.pre_previous_type.invalid && (formQuoteDetails.controls.pre_previous_type.dirty || formQuoteDetails.controls.pre_previous_type.touched)) && formQuoteDetails.controls.pre_previous_type.errors}">
+                                                            <div class="ui form">
+                                                                <label class="ui label mb-2 req">Previous Policy Type:</label>
+                                                                <div class="inline fields">
+
+                                                                    <div *ngFor="let row of result_policy_subtypes_bundle_changes" class="field">
+                                                                        <div class="ui radio checkbox">
+                                                                            <input (click)="previousPolicySubType(row.policy_subtype_id)" select-other-detail="other_field" id="pre_previous_type__{{ row.policy_subtype_id }}" formControlName="pre_previous_type" type="radio" [value]="row.policy_subtype_id">
+                                                                            <label for="pre_previous_type__{{ row.policy_subtype_id }}">{{row.label}}</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                        <label>Previous Policy Type : </label>
+                                                        <h4>{{result_selected_quote_data.pre_policy_subtype}}</h4>
+                                                    </div>
+
+                                                    <div [ngClass]="{'d-none': div_show_for_previous_policy_expiry_date }" class="col-xl-2 col-lg-3 col-md-6 col-sm-12">
+                                                        <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.pre_policy_expire_date.invalid && (formQuoteDetails.controls.pre_policy_expire_date.dirty || formQuoteDetails.controls.pre_policy_expire_date.touched)) && formQuoteDetails.controls.pre_policy_expire_date.errors}">
+                                                            <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.controls.pre_policy_expire_date.value}">
+                                                                <div class="cal-icon">
+                                                                    <input readonly select-other-detail="other_field" [minDate]="minDateForPreviousPolicy" [maxDate]="maxDateForPreviousPolicy" [ngModelOptions]="{standalone: true}" (click)="e.toggle()" (dateSelect)="selectDate('pre_policy_expire_date',$event)" class="form-control"
+                                                                        placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="date_picker_pre_policy_expire_date" ngbDatepicker #e="ngbDatepicker" placeholder="" autocomplete="off">
+                                                                </div>
+                                                                <label class="focus-label req">Prev. Policy Expiry Date:</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                        <label>Prev. Policy Expiry Date : </label>
+                                                        <h4>{{result_selected_quote_data.prev_policy_expiry_date}}</h4>
+                                                    </div>
+
+
+                                                    <div [ngClass]="{'d-none': div_show_for_previous_policy_expiry_date_od }" class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                                                        <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.pre_policy_expire_date_for_od.invalid && (formQuoteDetails.controls.pre_policy_expire_date_for_od.dirty || formQuoteDetails.controls.pre_policy_expire_date_for_od.touched)) && formQuoteDetails.controls.pre_policy_expire_date_for_od.errors}">
+                                                            <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.controls.pre_policy_expire_date_for_od.value}">
+                                                                <div class="cal-icon">
+                                                                    <input readonly [minDate]="minDateRegistration" [maxDate]="maxDateOd" select-other-detail="other_field" [ngModelOptions]="{standalone: true}" (click)="f.toggle()" (dateSelect)="selectDate('pre_policy_expire_date_for_od',$event)" class="form-control" placeholder="yyyy-mm-dd"
+                                                                        name="dp" [(ngModel)]="date_picker_pre_policy_expire_date_for_od" ngbDatepicker #f="ngbDatepicker" placeholder="" autocomplete="off">
+                                                                </div>
+                                                                <label class="focus-label req">Prev. Policy OD Expiry Date:</label>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                            <label>Prev. Policy OD Expiry Date : </label>
+                                                            <h4>{{result_selected_quote_data.od_pre_policy_expiry_date}}</h4>
+                                                        </div>
+                                                    </div>
+
+
+
+
+
+
+
+                                                    <div [ngClass]="{'d-none': div_show_for_previous_policy_expiry_date_tp }" class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                                                        <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.pre_policy_expire_date_for_tp.invalid && (formQuoteDetails.controls.pre_policy_expire_date_for_tp.dirty || formQuoteDetails.controls.pre_policy_expire_date_for_tp.touched)) && formQuoteDetails.controls.pre_policy_expire_date_for_tp.errors}">
+                                                            <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.controls.pre_policy_expire_date_for_tp.value}">
+                                                                <div class="cal-icon">
+                                                                    <input readonly [minDate]="minCurrentDate" [maxDate]="maxDateTp" select-other-detail="other_field" [ngModelOptions]="{standalone: true}" (click)="g.toggle()" (dateSelect)="selectDate('pre_policy_expire_date_for_tp',$event)" class="form-control" placeholder="yyyy-mm-dd"
+                                                                        name="dp" [(ngModel)]="date_picker_pre_policy_expire_date_for_tp" ngbDatepicker #g="ngbDatepicker" placeholder="" autocomplete="off">
+                                                                </div>
+                                                                <label class="focus-label req">Prev. Policy TP Expiry Date:</label>
+                                                                <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.pre_policy_expire_date_for_tp.invalid && (formQuoteDetails.controls.pre_policy_expire_date_for_tp.dirty || formQuoteDetails.controls.pre_policy_expire_date_for_tp.touched)) && formQuoteDetails.controls.pre_policy_expire_date_for_tp.errors">
+                                                                    <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.pre_policy_expire_date_for_tp.invalid && (formQuoteDetails.controls.pre_policy_expire_date_for_tp.dirty || formQuoteDetails.controls.pre_policy_expire_date_for_tp.touched)) && formQuoteDetails.controls.pre_policy_expire_date_for_tp.errors.tpPolicyExpire"
+                                                                        class="text-danger">
+                                                                  <!-- Your tp policy expired so you can not buy STANDALONEOD policy. -->
+                                                                  Your TP policy expired.
+                                                              </small>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                            <label>Prev. Policy TP Expiry Date : </label>
+                                                            <h4>{{result_selected_quote_data.tp_pre_policy_expiry_date}}</h4>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- <div [ngClass]="{'d-none': div_show_for_previous_policy_expiry_date_tp }" class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                                                      <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.previose_policy_no_tp.invalid && (formQuoteDetails.controls.previose_policy_no_tp.dirty || formQuoteDetails.controls.previose_policy_no_tp.touched)) && formQuoteDetails.controls.previose_policy_no_tp.errors}">
+                                                          <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.controls.previose_policy_no_tp.value}">
+                                                              <input select-other-detail="other_field" maxlength="25" formControlName="previose_policy_no_tp" type="text" class="form-control floating">
+                                                              <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.previose_policy_no_tp.invalid && (formQuoteDetails.controls.previose_policy_no_tp.dirty || formQuoteDetails.controls.previose_policy_no_tp.touched)) && formQuoteDetails.controls.previose_policy_no_tp.errors">
+                                                                  <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.previose_policy_no_tp.invalid && (formQuoteDetails.controls.previose_policy_no_tp.dirty || formQuoteDetails.controls.previose_policy_no_tp.touched)) && formQuoteDetails.controls.previose_policy_no_tp.errors"
+                                                                      class="text-danger">
+                                                              Please Enter valid TP Previous Policy Number.
+                                                            </small>
+                                                              </div>
+                                                              <label class="focus-label req">Enter TP Previous Policy No.</label>
+                                                          </div>
+                                                      </div>
+                                                      <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                          <label>TP Previous Policy No : </label>
+                                                          <h4>{{result_selected_quote_data.other_tp_policy_no}}</h4>
+                                                      </div>
+                                                  </div> -->
+
+                                                    <!-- <div [ngClass]="{'d-none': div_show_for_previous_policy_expiry_date_tp }" class="col-xl-3 col-lg-8 col-md-12 col-sm-12">
+                                                      <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.previose_insurance_company_tp.invalid && (formQuoteDetails.controls.previose_insurance_company_tp.dirty || formQuoteDetails.controls.previose_insurance_company_tp.touched)) && formQuoteDetails.controls.previose_insurance_company_tp.errors}">
+                                                          <div class="form-group form-focus select-focus">
+                                                              <label class="focus-label req">Select TP Previous Insurance</label>
+                                                              <select select-other-detail="other_field" formControlName="previose_insurance_company_tp">
+                                                            <option value="">Select</option>
+                                                             <option *ngFor="let row of result_ic_master"  value="{{ row.id }}">{{ row.code }}</option>
+                                                        </select>
+                                                          </div>
+                                                      </div>
+                                                      <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                          <label>TP Previous Insurance : </label>
+                                                          <h4>{{result_selected_quote_data.other_tp_code}}</h4>
+                                                      </div>
+                                                  </div> -->
+
+                                                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-8">
+                                                                <div *ngIf="url_engine_no == null" [ngClass]="{'d-none': div_show_maid_claim, 'error': (submittedQuoteDetails || formQuoteDetails.controls.made_claim.invalid && (formQuoteDetails.controls.made_claim.dirty || formQuoteDetails.controls.made_claim.touched)) && formQuoteDetails.controls.made_claim.errors}"
+                                                                    class="field">
+                                                                    <div class="ui form">
+                                                                        <label class="ui label mb-2 req">Have You Made A Claim?</label>
+                                                                        <div class="inline fields">
+                                                                            <div class="field">
+                                                                                <div class="ui radio checkbox">
+                                                                                    <input select-other-detail="other_field" id="made_claim_yes" (click)="maidClaim($event.target.value,'angular')" formControlName="made_claim" type="radio" value="true">
+                                                                                    <label for="made_claim_yes">Yes</label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="field">
+                                                                                <div class="ui radio checkbox">
+                                                                                    <input select-other-detail="other_field" id="made_claim_no" (click)="maidClaim($event.target.value,'angular')" formControlName="made_claim" type="radio" value="false">
+                                                                                    <label for="made_claim_no">No</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                    <label>Have You Made A Claim : </label>
+                                                                    <h4>{{(result_selected_quote_data.is_ncb == 0) ? "Yes" : "No"}}</h4>
+                                                                </div>
+                                                            </div>
+
+                                                            <div [ngClass]="{'d-none': div_show_ncb }" class="col-4">
+                                                                <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.previous_ncb.invalid && (formQuoteDetails.controls.previous_ncb.dirty || formQuoteDetails.controls.previous_ncb.touched)) && formQuoteDetails.controls.previous_ncb.errors}">
+                                                                    <div class="form-group form-focus select-focus">
+                                                                        <label class="focus-label pl-0 req">NCB</label>
+                                                                        <select select-other-detail="other_field" formControlName="previous_ncb">
+                                                                      <option value="">Select</option>
+                                                                      <option *ngFor="let row of result_previous_ncb"  value="{{ row.id }}">{{ row.name }}</option>
+                                                                  </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                    <label>NCB : </label>
+                                                                    <h4>{{result_selected_quote_data.prev_policy_ncb_per}}%</h4>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                                                        <div class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.pre_policy_nil_dep.invalid && (formQuoteDetails.controls.pre_policy_nil_dep.dirty || formQuoteDetails.controls.pre_policy_nil_dep.touched)) && formQuoteDetails.controls.pre_policy_nil_dep.errors}">
+
+                                                            <div [ngClass]="{'d-none': div_show_previos_policy_nil_dep }" class="ui form">
+                                                                <div *ngIf="url_engine_no == null">
+                                                                    <label class="ui label mb-2 req">Previous Policy Nil Dep:</label>
+                                                                    <div class="inline fields">
+                                                                        <div class="field">
+                                                                            <div class="ui radio checkbox">
+                                                                                <input select-other-detail="other_field" id="pre_policy_nil_dep_yes" formControlName="pre_policy_nil_dep" type="radio" value="true">
+                                                                                <label for="pre_policy_nil_dep_yes">Yes</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="field">
+                                                                            <div class="ui radio checkbox">
+                                                                                <input select-other-detail="other_field" id="pre_policy_nil_dep_no" formControlName="pre_policy_nil_dep" type="radio" value="false">
+                                                                                <label for="pre_policy_nil_dep_no">No</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                                    <label>Previous Policy Nil Dep : </label>
+                                                                    <h4>{{(result_selected_quote_data.is_prev_policy_nil_dep == 0) ? "No" : "Yes"}}</h4>
+
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-12 mt-2" [ngClass]="{'d-none': div_show_for_previous_policy_extra_data_no }">
+                                                <div class="row">
+                                                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                                                        <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.pre_policy_expire_date_for_tp.invalid && (formQuoteDetails.controls.pre_policy_expire_date_for_tp.dirty || formQuoteDetails.controls.pre_policy_expire_date_for_tp.touched)) && formQuoteDetails.controls.pre_policy_expire_date_for_tp.errors}">
+                                                            <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.controls.pre_policy_expire_date_for_tp.value}">
+                                                                <div class="cal-icon">
+                                                                    <input readonly [minDate]="minDateRegistration" [maxDate]="maxDateTp" select-other-detail="other_field" [ngModelOptions]="{standalone: true}" (click)="n.toggle()" (dateSelect)="selectDate('pre_policy_expire_date_for_tp',$event)" class="form-control" placeholder="yyyy-mm-dd"
+                                                                        name="dp" [(ngModel)]="date_picker_pre_policy_expire_date_for_tp" ngbDatepicker #n="ngbDatepicker" placeholder="" autocomplete="off">
+                                                                </div>
+                                                                <label class="focus-label req">Prev. Policy TP Expiry Date:</label>
+                                                                <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.pre_policy_expire_date_for_tp.invalid && (formQuoteDetails.controls.pre_policy_expire_date_for_tp.dirty || formQuoteDetails.controls.pre_policy_expire_date_for_tp.touched)) && formQuoteDetails.controls.pre_policy_expire_date_for_tp.errors">
+                                                                    <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.pre_policy_expire_date_for_tp.invalid && (formQuoteDetails.controls.pre_policy_expire_date_for_tp.dirty || formQuoteDetails.controls.pre_policy_expire_date_for_tp.touched)) && formQuoteDetails.controls.pre_policy_expire_date_for_tp.errors.tpPolicyExpire"
+                                                                        class="text-danger">
+                                                                  Your TP policy expired.
+                                                              </small>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                            <label>Prev. Policy TP Expiry Date</label>
+                                                            <h4>{{result_selected_quote_data.pre_policy_expire_date_for_tp}}</h4>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                                                        <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.previose_policy_no_tp.invalid && (formQuoteDetails.controls.previose_policy_no_tp.dirty || formQuoteDetails.controls.previose_policy_no_tp.touched)) && formQuoteDetails.controls.previose_policy_no_tp.errors}">
+                                                            <div class="form-group form-focus" [ngClass]="{'focused': formQuoteDetails.controls.previose_policy_no_tp.value}">
+                                                                <input select-other-detail="other_field" maxlength="25" formControlName="previose_policy_no_tp" type="text" class="form-control floating">
+                                                                <div *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.previose_policy_no_tp.invalid && (formQuoteDetails.controls.previose_policy_no_tp.dirty || formQuoteDetails.controls.previose_policy_no_tp.touched)) && formQuoteDetails.controls.previose_policy_no_tp.errors">
+                                                                    <small *ngIf="(submittedQuoteDetails || formQuoteDetails.controls.previose_policy_no_tp.invalid && (formQuoteDetails.controls.previose_policy_no_tp.dirty || formQuoteDetails.controls.previose_policy_no_tp.touched)) && formQuoteDetails.controls.previose_policy_no_tp.errors"
+                                                                        class="text-danger">
+                                                              Please Enter valid TP Previous Policy Number.
+                                                            </small>
+                                                                </div>
+                                                                <label class="focus-label req">Enter TP Previous Policy No.</label>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                            <label>TP Previous Policy No.</label>
+                                                            <h4>{{result_selected_quote_data.other_tp_policy_no}}</h4>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-xl-3 col-lg-8 col-md-12 col-sm-12">
+                                                        <div *ngIf="url_engine_no == null" class="field" [ngClass]="{'error': (submittedQuoteDetails || formQuoteDetails.controls.previose_insurance_company_tp.invalid && (formQuoteDetails.controls.previose_insurance_company_tp.dirty || formQuoteDetails.controls.previose_insurance_company_tp.touched)) && formQuoteDetails.controls.previose_insurance_company_tp.errors}">
+                                                            <div class="form-group form-focus select-focus">
+                                                                <label class="focus-label req">Select TP Previous Insurance</label>
+                                                                <select select-other-detail="other_field" formControlName="previose_insurance_company_tp">
+                                                            <option value="">Select</option>
+                                                             <option *ngFor="let row of result_ic_master"  value="{{ row.id }}">{{ row.code }}</option>
+                                                        </select>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="url_engine_no != null && result_selected_quote_data" class="form-group">
+                                                            <label>TP Previous Insurance</label>
+                                                            <h4>{{result_selected_quote_data.other_tp_code}}</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-custom green quotebtn"> Get Quote</button>
+                        </div>
+                    </div>
+
+
+                </form>
+
+
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

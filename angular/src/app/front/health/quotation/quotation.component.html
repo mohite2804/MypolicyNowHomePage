@@ -1,8 +1,5 @@
 <div class="page-wrapper">
-
-    <!-- Page Content -->
-    <div class="content">
-
+    <div class="content"  *ngIf="policy_type_name_div">
         <section class="py-0">                    
             <div class="row">
                 <div class="col-md-12 border quotes-topinfo shadowbox py-2">
@@ -37,7 +34,7 @@
                             </div>
                             <div class="col-md-3 col-sm-4 col-12 quotes-box">
                                 <div>
-                                    <h4 class="mb-0"><span class="text-muted white">Child Planning:</span> {{childplanning}}</h4>
+                                    <h4 class="mb-0"><span class="text-muted white">Child Planning:</span> No</h4>
                                     <h4 class="mb-0" *ngIf="membersdisease == 'membersdiseaseNo'"><span class="text-muted white">Disease:</span> No</h4>
                                     <h4 class="mb-0" *ngIf="membersdisease == 'membersdiseaseYes'"><span class="text-muted white">Disease:</span> Yes</h4>
                                     <h4 class="mb-0"><span class="text-muted white">Pincode:</span> {{pincode}}</h4>
@@ -52,7 +49,7 @@
                             </div>
                             <div class="col-md-1 col-sm-1 col-12 quotes-box d-none d-md-block">
                                 <div>
-                                    <a  routerLink ="../quote" class="actionbtn edit-btn" href="javascript:void(0);"><i class="fa fa-pencil"></i></a>
+                                    <a  routerLink ="../health-insurance-quote" class="actionbtn edit-btn" href="javascript:void(0);"><i class="fa fa-pencil"></i></a>
                                 </div>
                             </div>                                    
                         </div>
@@ -148,6 +145,13 @@
                                             <h2 class="premiumamt mb-0"><i class="fa fa-inr"></i> {{row.TotalPremium}} <span>(Incl. GST)</span></h2>
                                         </div>
                                         <div class="col-lg-2 col-sm-6 col-6 text-right quoteitembox buypolicy-box" *ngIf="row.is_error =='0'">
+                                            <div class="card-body">
+                                                <div class="ui checkbox">
+                                                    <input select-other-detail="other_field" type="checkbox"
+                                                        value="{{row.quote_id}}" formControlName="compare_{{row.quote_id}}"  id="compare_{{row.quote_id}}" (change)="ToggleButton1($event, row.quote_id,row.plan_name, row.sum_insured, row.logo)">
+                                                    <label class="mb-0" id="compareclass" for="Compare">Add to Compare</label>
+                                                </div>
+                                            </div>
                                             <a href="javascript:void(0);" (click)="quote_customerDetails(row.quote_id, row.unique_reference_no)" class="btn btn-custom green">Buy Policy</a>
                                         </div>
                                     </div>
@@ -173,7 +177,7 @@
                                             </ul>
                                         </div>
                                         <div class="col-xl-2 col-lg-3 col-md-12 text-lg-right" *ngIf="row.is_error =='0'">
-                                            <span class="text-muted">Addon Premium:</span>
+                                            <span class="text-muted">GST Amt:</span>
                                             <h4 class="mb-0 addonpremium"><i class="fa fa-inr"></i> {{row.ServiceTax}} <span>(Incl. GST)</span></h4>
                                         </div>
                                     </div>
@@ -325,14 +329,68 @@
                                     
                                 </div>
                             </div>
+                            <div *ngIf="div_show_for_compare_policy" class="fixed-bottom">
+                                <div class="row" id="rowclass">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-2" style="border: 1px solid #d3d3d3; border-radius: 5px; margin-left: 15px;"*ngIf="div_show_for_compare_plan_1">
+                                        <a href="javascript:void(0)" (click)="removeComparePlan(compare_quote_id_1, compare_count_1,compare_count)"><span style="float:right; font-size:13px;"><i class="fa fa-close"></i></span></a>
+                                        <div class="col-md-6" style="padding: 10px;">
+                                            <img src="assets/front/img/partners-logos/{{compare_logo_1}}" alt="" style="width:100px; float:left; padding-bottom: 10px;">
+                                        </div>
+                                        <div class="col-md-6" style="float: left; padding: 15px; padding-top: 0px;">
+                                            <h4 class="mb-0">{{compare_plan_name_1}}</h4>
+                                            <h4 class="mb-0" style="font-size: 11px; color: #797979;">SUM IN: ₹{{compare_sum_insured_1}}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="border: 1px solid #d3d3d3; border-radius: 5px;  margin-left: 15px;" *ngIf="div_show_for_compare_plan_2">
+                                        <a href="javascript:void(0)" (click)="removeComparePlan(compare_quote_id_2, compare_count_2,compare_count)"><span style="float:right; font-size:13px;"><i class="fa fa-close"></i></span></a>
+                                        <div class="col-md-6" style="padding: 10px;">
+                                            <img src="assets/front/img/partners-logos/{{compare_logo_2}}" alt="" style="width:100px; float:left; padding-bottom: 10px;">
+                                        </div>
+                                        <div class="col-md-6" style="float: left; padding: 15px; padding-top: 0px;">
+                                            <h4 class="mb-0">{{compare_plan_name_2}}</h4>
+                                            <h4 class="mb-0" style="font-size: 11px; color: #797979;">SUM IN: ₹{{compare_sum_insured_2}}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="border: 1px solid #d3d3d3; border-radius: 5px; margin-left: 15px;" *ngIf="div_show_for_compare_plan_3">
+                                        <a href="javascript:void(0)" (click)="removeComparePlan(compare_quote_id_3, compare_count_3,compare_count)"><span style="float:right; font-size:13px;"><i class="fa fa-close"></i></span></a>
+                                        <div class="col-md-6" style="padding: 10px;">
+                                            <img src="assets/front/img/partners-logos/{{compare_logo_3}}" alt="" style="width:100px; float:left; padding-bottom: 10px;">
+                                        </div>
+                                        <div class="col-md-6" style="float: left; padding: 15px; padding-top: 0px;">
+                                            <h4 class="mb-0">{{compare_plan_name_3}}</h4>
+                                            <h4 class="mb-0" style="font-size: 11px; color: #797979;">SUM IN: ₹{{compare_sum_insured_3}}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="border: 1px dashed #d3d3d3; border-radius: 5px; margin-left: 15px;" *ngIf="blank_quote_id_1">
+                                        <div class="col-md-12" style="padding: 10px;">
+                                            <h4 class="mb-0" style="color: #797979; padding: 30px;">Add a Plan</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="border: 1px dashed #d3d3d3; border-radius: 5px; margin-left: 15px;"   *ngIf="blank_quote_id_2">
+                                        <div class="col-md-12" style="padding: 10px;">
+                                            <h4 class="mb-0" style="color: #797979; padding: 30px;">Add a Plan</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="col-md-12" style="padding:30px;">
+                                            <button class="btn btn-custom green" (click)="getComparePlan(compare_quote_id_1, compare_quote_id_2,compare_quote_id_3)" *ngIf="compare_count > 1">Compare now</button>
+                                            <button class="btn btn-custom green" *ngIf="compare_count == 1" disabled="true">Compare now</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="col-md-12" style="padding:38px;">
+                                            <a href="javascript:void(0)" style="color: #797979; text-decoration:none; font-size: 17px;" (click)="clocsecomparediv(compare_quote_id_1,compare_quote_id_2,compare_quote_id_3)">Close</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>                                                  
                 </div>
             </div>
         </section>
-
     </div>
-    <!-- /Page Content -->
 </div>
 <div id="div_class"></div>
 <app-loader [loaderActive]="loaderActive"></app-loader>

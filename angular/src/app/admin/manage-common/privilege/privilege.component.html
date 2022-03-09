@@ -1,0 +1,49 @@
+<!-- Page Header -->
+<div class="page-header">
+  <div class="row align-items-center">
+    <div class="col">
+      <h3 class="page-title"> <span *ngIf="!back_to_dp">MISP</span> <span *ngIf="back_to_dp">DP</span>  Privilege  ( {{name}} )</h3>
+    </div>
+    <div class="col-md-4 float-right ml-auto text-right">
+        <button class="btn btn-custom green btn-sm" (click)="backToMISP()"><i class="fa fa-chevron-left mr-2"></i> Back to MISP</button>
+        <button *ngIf="back_to_dp" class="btn btn-custom green btn-sm" (click)="backToDP()"> <i class="fa fa-chevron-left mr-2"></i>Back to DP</button>
+        <button *ngIf="show_add_btn" class="btn btn-custom green btn-sm" (click)="addPrivilege()"><i class="fa fa-plus mr-2"></i> Add Privilege</button>
+    </div>
+  </div>
+</div>
+<!-- /Page Header -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadowbox">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table datatable class="table table-striped table-bordered custom-table srn action-table datatable w-100" [dtOptions]="dtOptions[0]" [dtTrigger]="dtTrigger">
+                        <thead>
+                            <tr>
+                            <th>Sr. No.</th>
+                            <th>Product Type</th>
+                            <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let row of result; let i = index">
+                                <td>{{ i+1 }}</td>
+                                <td>{{row.product_type}}</td>  
+                                <td>
+                                    
+                                    <button (click)="editPrivilege(row)" title="Edit Privilege" class="btn btn-custom green btn-sm edit-user">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Change Privilege
+                                    </button>
+                                </td>                                
+                            </tr>                           
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

@@ -1,0 +1,599 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Query Management System</h3>
+        </div>
+        <div class="col-auto float-right ml-auto"  *ngIf="access_permission == 'read_write'">
+            <button (click)="openModel()" data-toggle="modal" data-target="#openmodal" class="btn btn-custom green"><i class="fa fa-plus"></i> New Query</button>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+<!-- Page Content -->
+<div class="content container-fluid">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadowbox">
+                <div class="card-body pb-0">
+                    <form class="form-horizontal" [formGroup]="filterFormQuery">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-4">
+                                <div class="form-group">
+                                    <label>Query Number </label>
+                                    <input formControlName="filter_query_no" type="text" class="form-control" (keyup)="getFilterQueryNoResult($event)">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-4">
+                                <div class="form-group">
+                                    <label>Query Type </label>
+                                    <select class="form-control" formControlName="filter_query_type" (change)="getFilterQueryTypeResult($event)">
+                                          <option value="" selected>Select Query Type</option>
+                                          <option *ngFor="let row of result_query_types"  value="{{ row.query_type_id }}">{{ row.name }}</option>
+                                      </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-4">
+                                <div class="form-group">
+                                    <label>Query Sub-Type</label>
+                                    <select class="form-control" formControlName="filter_query_sub_type" (change)="getFilterQuerySubTypeResult($event)">
+                                          <option value="" selected>Select Query Sub Type</option>
+                                          <option *ngFor="let row of result_filter_query_sub_type"  value="{{ row.query_sub_type_id }}">{{ row.name }}</option>
+                                          <!-- <option value="9">Other</option> -->
+                                          <option *ngIf="result_filter_query_sub_type && filterQueryTypeFilter_id != 5" value="9">Other</option>
+                                      </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-4">
+                                <div class="form-group">
+                                    <label>Assigned Department</label>
+                                    <select class="form-control" formControlName="filter_assigned_department" (change)="getFilterQueryAssignedDepartmentResult($event)">
+                                          <option value="" selected>Select Department</option>
+                                          <option *ngFor="let row of result_department_master"  value="{{ row.department_id }}">{{ row.name }}</option>
+                                      </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-4">
+                                <div class="form-group">
+                                    <label>Priority</label>
+                                    <select class="form-control" formControlName="filter_priority" (change)="getFilterQueryPriorityResult($event)">
+                                          <option value="" selected>Select Priority</option>
+                                          <option *ngFor="let row of result_priority_master"  value="{{ row.query_priority_id }}">{{ row.priority_label }}</option>
+                                      </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-4">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select class="form-control" formControlName="filter_status" (change)="getFilterQueryStatusResult($event)">
+                                          <option value="" selected>Select Status</option>
+                                          <option *ngFor="let row of result_query_status_master"  value="{{ row.id }}">{{ row.query_status }}</option>
+                                      </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadowbox">
+
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn datatable"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="openmodal" class="modal custom-modal fade" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <form [formGroup]="formNewQuery" method="post" (ngSubmit)="submitForm()">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">{{ popupTitle }}</h4>
+                        <button #closebutton (click)="closePopup()" type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Query Type <b><sup class="text-danger">*</sup></b></label>
+                                    <select class="form-control" formControlName="query_type" (change)="getQuerySubTypeByQueryTypeId($event)">
+                                        <option value="" selected>Select Query Type</option>
+                                        <option *ngFor="let row of result_query_types"  value="{{ row.query_type_id }}">{{ row.name }}</option>
+                                    </select>
+                                    <div class="error" *ngIf="submitted && formNewQuery.controls.query_type.errors">
+                                        <div *ngIf="submitted && formNewQuery.controls.query_type.errors.required">
+                                            Query type is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Query Sub Type <b><sup class="text-danger">*</sup></b></label>
+                                    <select (change)="selectSubType($event)" class="form-control" formControlName="query_sub_type">
+                                        <option value="" selected>Select Query Sub Type</option>
+                                        <option *ngFor="let row of result_query_sub_type"  value="{{ row.query_sub_type_id }}">{{ row.name }}</option>
+                                        <!-- <option value="9">Other</option> -->
+                                        <option *ngIf="result_query_sub_type && query_type_id != 5" value="9">Other</option>
+                                    </select>
+                                    <div class="error" *ngIf="submitted && formNewQuery.controls.query_sub_type.errors">
+                                        <div *ngIf="submitted && formNewQuery.controls.query_sub_type.errors.required">
+                                            Query sub type is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Query Description</label>
+                                    <textarea class="form-control" formControlName="query_description" placeholder="" rows="3"></textarea>
+                                    <div class="error" *ngIf="submitted && formNewQuery.controls.query_description.errors">
+                                        <div *ngIf="submitted && formNewQuery.controls.query_description.errors.required">
+                                            Query Description is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Quotation/Proposal/Policy Number</label>
+                                    <input type='text' class="form-control" formControlName="policy_no" placeholder="">
+                                    <div class="error" *ngIf="submitted && formNewQuery.controls.policy_no.errors">
+                                        <div *ngIf="submitted && formNewQuery.controls.policy_no.errors.required">
+                                            Quotation/Proposal/Policy Number is required.
+                                        </div>
+                                        <div *ngIf="submitted && formNewQuery.controls.policy_no.errors.pattern">
+                                            Only Numeric, Alphabets,'-','/' allowed.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label>Insurance Company</label>
+                                    <select class="form-control" formControlName="insurance_company">
+                                        <option value="" selected>Select Insurance Company</option>
+                                        <option *ngFor="let row of result_ic_master"  value="{{ row.id }}">{{ row.code }}</option>
+                                    </select>
+                                    <div class="error" *ngIf="submitted && formNewQuery.controls.insurance_company.errors">
+                                        <div *ngIf="submitted && formNewQuery.controls.insurance_company.errors.required">
+                                            Insurance Company is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <div class="form-group">
+                                    <label>Remarks</label>
+                                    <textarea class="form-control" formControlName="remarks" placeholder="" rows="3"></textarea>
+                                    <div class="error" *ngIf="submitted && formNewQuery.controls.remarks.errors">
+                                        <div *ngIf="submitted && formNewQuery.controls.remarks.errors.required">
+                                            Remarks is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Priority <b><sup class="text-danger">*</sup></b></label>
+                                    <select class="form-control" formControlName="priority">
+                                      <option value="">Select Priority</option>
+                                        <option *ngFor="let row of result_priority_master"  value="{{ row.query_priority_id }}">{{ row.priority_label }}</option>
+                                    </select>
+                                    <div class="error" *ngIf="submitted && formNewQuery.controls.priority.errors">
+                                        <div *ngIf="submitted && formNewQuery.controls.priority.errors.required">
+                                            Priority is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Attachment 1 -->
+                        <div class="row">
+                            <div class="col-md-6 col-12" [ngStyle]="{'display':display_attachment_1}">
+                                <div class="form-group">
+                                    <div class="card shadowbox">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <b>Note: </b> Allowed file type "jpg", "png", "jpeg", "pdf"
+                                                </div>
+                                                <div class="col-12">
+                                                    <h5 class="my-2"><b>Attachment 1: <sup class="text-danger"></sup></b></h5>
+                                                </div>
+                                                <div class="col-8">
+                                                    <div class="box fileuploadbox">
+                                                        <input type="file" formControlName="attachment_1" id="attachment_1" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadAttachment1($event)">
+                                                        <label for="attachment_1">
+                                                            <figure>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                                    <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                                </svg>
+                                                            </figure>
+                                                            <span>{{attachment_1_label}}</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="uploaded-img">
+                                                        <img [src]="attachment_1_url" alt="">
+                                                        <!-- <span class="delete-img">
+                                                            <i class="fa fa-times"></i>
+                                                        </span> -->
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="submitted &&  formNewQuery.controls.attachment_1.errors">
+                                                    <small *ngIf="formNewQuery.controls.attachment_1.errors?.requiredFileType" class="text-danger">
+                                                    Allowed file type "jpg", "png", "jpeg", "pdf"
+                                                  </small>
+                                                    <small *ngIf="formNewQuery.controls.attachment_1.errors?.fileSizeValidator" class="text-danger">
+                                                    Allowed file size is 5 MB.
+                                                  </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-12" [ngStyle]="{'display':display_attachment_1}">
+                                <div class="form-group">
+                                    <label>Description-1</label>
+                                    <input type='text' class="form-control" formControlName="attachment_1_description" placeholder="">
+                                    <small class="text-danger"><b>{{ errMsgDescription1 }}</b></small>
+                                </div>
+                                <div>
+                                    <div class="row">
+                                        <!-- <button (click)="removeAttachment(1)" type="button" class="btn btn-sm red"><i class="fa fa-times"></i> Remove </button>&nbsp;&nbsp; -->
+                                        <button (click)="showAttachment(2)" type="button" class="btn btn-sm blue" [ngStyle]="{'display':display_attachment_button_1}"><i class="fa fa-plus"></i> More Attachment</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //Attachment 1 -->
+
+                        <!-- Attachment 2 -->
+                        <div class="row">
+                            <div class="col-md-6 col-12" [ngStyle]="{'display':display_attachment_2}">
+                                <div class="form-group">
+                                    <div class="card shadowbox">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <h5 class="my-2"><b>Attachment 2: <sup class="text-danger"></sup></b></h5>
+                                                </div>
+                                                <div class="col-8">
+                                                    <div class="box fileuploadbox">
+                                                        <input type="file" formControlName="attachment_2" id="attachment_2" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadAttachment2($event)">
+                                                        <label for="attachment_2">
+                                                            <figure>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                                    <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                                </svg>
+                                                            </figure>
+                                                            <span>{{attachment_2_label}}</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="uploaded-img">
+                                                        <img [src]="attachment_2_url" alt="">
+                                                        <!-- <span class="delete-img">
+                                                            <i class="fa fa-times"></i>
+                                                        </span> -->
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="submitted &&  formNewQuery.controls.attachment_2.errors">
+                                                    <small *ngIf="formNewQuery.controls.attachment_2.errors?.requiredFileType" class="text-danger">
+                                                    Allowed file type "jpg", "png", "jpeg", "pdf"
+                                                  </small>
+                                                    <small *ngIf="formNewQuery.controls.attachment_2.errors?.fileSizeValidator" class="text-danger">
+                                                    Allowed file size is 5 MB.
+                                                  </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-12" [ngStyle]="{'display':display_attachment_2}">
+                                <div class="form-group">
+                                    <label>Description-2</label>
+                                    <input type='text' class="form-control" formControlName="attachment_2_description" placeholder="">
+                                    <small class="text-danger"><b>{{ errMsgDescription2 }}</b></small>
+                                </div>
+                                <div>
+                                    <div class="row">
+                                        <button (click)="removeAttachment(2)" type="button" class="btn btn-sm red"><i class="fa fa-times"></i> Remove </button>&nbsp;&nbsp;
+                                        <button (click)="showAttachment(3)" type="button" class="btn btn-sm blue" [ngStyle]="{'display':display_attachment_button_2}"><i class="fa fa-plus"></i> More Attachment</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //Attachment 2 -->
+
+                        <!-- Attachment 3 -->
+                        <div class="row">
+                            <div class="col-md-6 col-12" [ngStyle]="{'display':display_attachment_3}">
+                                <div class="form-group">
+                                    <div class="card shadowbox">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <h5 class="my-2"><b>Attachment 3: <sup class="text-danger"></sup></b></h5>
+                                                </div>
+                                                <div class="col-8">
+                                                    <div class="box fileuploadbox">
+                                                        <input type="file" formControlName="attachment_3" id="attachment_3" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadAttachment3($event)">
+                                                        <label for="attachment_3">
+                                                            <figure>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                                    <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                                </svg>
+                                                            </figure>
+                                                            <span>{{attachment_3_label}}</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="uploaded-img">
+                                                        <img [src]="attachment_3_url" alt="">
+                                                        <!-- <span class="delete-img">
+                                                            <i class="fa fa-times"></i>
+                                                        </span> -->
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="submitted &&  formNewQuery.controls.attachment_3.errors">
+                                                    <small *ngIf="formNewQuery.controls.attachment_3.errors?.requiredFileType" class="text-danger">
+                                                    Allowed file type "jpg", "png", "jpeg", "pdf"
+                                                  </small>
+                                                    <small *ngIf="formNewQuery.controls.attachment_3.errors?.fileSizeValidator" class="text-danger">
+                                                    Allowed file size is 5 MB.
+                                                  </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-12" [ngStyle]="{'display':display_attachment_3}">
+                                <div class="form-group">
+                                    <label>Description-3</label>
+                                    <input type='text' class="form-control" formControlName="attachment_3_description" placeholder="">
+                                    <small class="text-danger"><b>{{ errMsgDescription3 }}</b></small>
+                                </div>
+                                <div>
+                                    <div class='row'>
+                                        <button (click)="removeAttachment(3)" type="button" class="btn btn-sm red"><i class="fa fa-times"></i> Remove </button>&nbsp;&nbsp;
+                                        <button (click)="showAttachment(4)" type="button" class="btn btn-sm blue" [ngStyle]="{'display':display_attachment_button_3}"><i class="fa fa-plus"></i> More Attachment</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //Attachment 3 -->
+
+                        <!-- Attachment 4 -->
+                        <div class="row">
+                            <div class="col-md-6 col-12" [ngStyle]="{'display':display_attachment_4}">
+                                <div class="form-group">
+                                    <div class="card shadowbox">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <h5 class="my-2"><b>Attachment 4: <sup class="text-danger"></sup></b></h5>
+                                                </div>
+                                                <div class="col-8">
+                                                    <div class="box fileuploadbox">
+                                                        <input type="file" formControlName="attachment_4" id="attachment_4" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadAttachment4($event)">
+                                                        <label for="attachment_4">
+                                                            <figure>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                                    <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                                </svg>
+                                                            </figure>
+                                                            <span>{{attachment_4_label}}</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="uploaded-img">
+                                                        <img [src]="attachment_4_url" alt="">
+                                                        <!-- <span class="delete-img">
+                                                            <i class="fa fa-times"></i>
+                                                        </span> -->
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="submitted &&  formNewQuery.controls.attachment_4.errors">
+                                                    <small *ngIf="formNewQuery.controls.attachment_4.errors?.requiredFileType" class="text-danger">
+                                                    Allowed file type "jpg", "png", "jpeg", "pdf"
+                                                  </small>
+                                                    <small *ngIf="formNewQuery.controls.attachment_4.errors?.fileSizeValidator" class="text-danger">
+                                                    Allowed file size is 5 MB.
+                                                  </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-12" [ngStyle]="{'display':display_attachment_4}">
+                                <div class="form-group">
+                                    <label>Description-4</label>
+                                    <input type='text' class="form-control" formControlName="attachment_4_description" placeholder="">
+                                    <small class="text-danger"><b>{{ errMsgDescription4 }}</b></small>
+                                </div>
+                                <div>
+                                    <div class='row'>
+                                        <button (click)="removeAttachment(4)" type="button" class="btn btn-sm red"><i class="fa fa-times"></i> Remove </button>&nbsp;&nbsp;
+                                        <button (click)="showAttachment(5)" type="button" class="btn btn-sm blue" [ngStyle]="{'display':display_attachment_button_4}"><i class="fa fa-plus"></i> More Attachment</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //Attachment 4 -->
+
+                        <!-- Attachment 5 -->
+                        <div class="row">
+                            <div class="col-md-6 col-12" [ngStyle]="{'display':display_attachment_5}">
+                                <div class="form-group">
+                                    <div class="card shadowbox">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <h5 class="my-2"><b>Attachment 5: <sup class="text-danger"></sup></b></h5>
+                                                </div>
+                                                <div class="col-8">
+                                                    <div class="box fileuploadbox">
+                                                        <input type="file" formControlName="attachment_5" id="attachment_5" class="inputfile" data-multiple-caption="{count} files selected" (change)="uploadAttachment5($event)">
+                                                        <label for="attachment_5">
+                                                            <figure>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                                    <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                                                                </svg>
+                                                            </figure>
+                                                            <span>{{attachment_5_label}}</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="uploaded-img">
+                                                        <img [src]="attachment_5_url" alt="">
+                                                        <!-- <span class="delete-img">
+                                                            <i class="fa fa-times"></i>
+                                                        </span> -->
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="submitted &&  formNewQuery.controls.attachment_5.errors">
+                                                    <small *ngIf="formNewQuery.controls.attachment_5.errors?.requiredFileType" class="text-danger">
+                                                    Allowed file type "jpg", "png", "jpeg", "pdf"
+                                                  </small>
+                                                    <small *ngIf="formNewQuery.controls.attachment_5.errors?.fileSizeValidator" class="text-danger">
+                                                    Allowed file size is 5 MB.
+                                                  </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-12" [ngStyle]="{'display':display_attachment_5}">
+                                <div class="form-group">
+                                    <label>Description-5</label>
+                                    <input type='text' class="form-control" formControlName="attachment_5_description" placeholder="">
+                                    <small class="text-danger"><b>{{ errMsgDescription5 }}</b></small>
+                                </div>
+                                <div>
+                                    <div class='row'>
+                                        <button (click)="removeAttachment(5)" type="button" class="btn btn-sm red"><i class="fa fa-times"></i> Remove </button>&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //Attachment 5 -->
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+                                    <strong>{{responseMsg}}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit-section">
+                            <input *ngIf="btnEditSubmit" class="btn btn-custom green btn-lg" type="submit" value="Submit">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="reassignQueryModal" class="modal custom-modal fade" tabindex="-1" role="dialog" [ngStyle]="{'display':displayReassign}">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <form [formGroup]="formReassignQuery" method="post" (ngSubmit)="submitReassignForm()">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">{{ popupTitleReassign }}</h4>
+                        <button #closebutton (click)="closePopupReassign()" type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12 text-center">
+                                <div class="form-group">
+                                    <label>Current Department <b><sup class="text-danger">*</sup></b></label>
+                                    <h4 style="color:blue;"><b>{{currentAssignedDepartment}}</b></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Assign New Department <b><sup class="text-danger">*</sup></b></label>
+                                    <select class="form-control" formControlName="re_assigned_department">
+                                        <option value="" selected>Select Department</option>
+                                        <option *ngFor="let row of result_department_master"  value="{{ row.department_id }}">{{ row.name }}</option>
+                                    </select>
+                                    <div class="error" *ngIf="submittedReassign && formReassignQuery.controls.re_assigned_department.errors">
+                                        <div *ngIf="submittedReassign && formReassignQuery.controls.re_assigned_department.errors.required">
+                                            Select department to assign this query.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Reason <b><sup class="text-danger">*</sup></b></label>
+                                    <textarea class="form-control" formControlName="re_assigned_remarks" placeholder="Remarks"></textarea>
+                                    <div class="error" *ngIf="submittedReassign && formReassignQuery.controls.re_assigned_remarks.errors">
+                                        <div *ngIf="submittedReassign && formReassignQuery.controls.re_assigned_remarks.errors.required">
+                                            Please enter reason to reassign department.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <div class="alert {{msgClassReassign}}" [ngStyle]="{'display':displayReassign}">
+                                    <strong>{{responseMsgReassign}}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit-section">
+                            <input *ngIf="btnEditSubmitReassign" class="btn btn-custom green" type="submit" value="Reassign Query">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <app-loader [loaderActive]="loaderActive"></app-loader>
+</div>
+<!-- /Page Content -->

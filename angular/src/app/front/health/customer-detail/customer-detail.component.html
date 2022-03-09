@@ -1,6 +1,6 @@
 <div class="page-wrapper">
     <!-- Page Content -->
-    <div class="content">
+    <div class="content"  *ngIf="policy_type_name_div">
         <section class="py-0">
             <div class="row">
                 <div class="col-md-12 border quotes-topinfo shadowbox py-2">
@@ -119,7 +119,7 @@
                                                 <div class="row align-items-center" style="margin-top:20px;"> 
                                                         <div class="col-lg-3 col-md-9 col-12">
                                                             <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_salutation.invalid && (formCustomerDetails.controls.buyer_salutation.dirty || formCustomerDetails.controls.buyer_salutation.touched)) && formCustomerDetails.controls.buyer_salutation.errors}">
-                                                                <div class="form-group form-focus select-focus">
+                                                                <div class="form-group form-focus mb-0 select-focus">
                                                                     <label class="focus-label req">Salutation</label>
                                                                     <select formControlName="buyer_salutation" id="buyer_salutation" data-plaseholder="Select Salutation">
                                                                         <option value="">Select</option>
@@ -154,7 +154,7 @@
                                                         </div>    
                                                     </div>
                                                 </div> 
-                                                <div class="row align-items-center" style="margin-top:20px">  
+                                                <div class="row align-items-center">  
                                                    
                                                     <div class="col-lg-3 col-md-4 col-12" style="margin-top:23px;">
                                                         <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_marital.invalid && (formCustomerDetails.controls.buyer_marital.dirty || formCustomerDetails.controls.buyer_marital.touched)) && formCustomerDetails.controls.buyer_marital.errors}">
@@ -170,7 +170,7 @@
                                                     </div>                                                     
                                                     <div class="col-lg-3 col-md-4 col-12">
                                                         <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_occupation.invalid && (formCustomerDetails.controls.buyer_occupation.dirty || formCustomerDetails.controls.buyer_occupation.touched)) && formCustomerDetails.controls.buyer_occupation.errors}">
-                                                            <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_occupation.value}">
+                                                            <div class="form-group form-focus mb-0 select-focus" [ngClass]="{'focused': formCustomerDetails.controls.buyer_occupation.value}">
                                                                 <div class="focus-label req">Select Occupation</div>
                                                                 <select formControlName="buyer_occupation" id="buyer_occupation">
                                                                     <option value="">Select Occupation</option>
@@ -180,11 +180,7 @@
                                                         </div>    
                                                     </div>   
                                                     <div class="col-lg-3 col-md-4 col-12">
-                                                    <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_dob.value}">
-                                                        <label class="focus-label req">DOB</label>
-                                                        <input type="date" formControlName="buyer_dob" id="buyer_dob" class="form-control">
-                                                    </div>                                                        
-<!--                                                         <div *ngIf="insured == true">
+                                                        <div *ngIf="insured == true">
                                                             <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_dob.invalid && (formCustomerDetails.controls.buyer_dob.dirty || formCustomerDetails.controls.buyer_dob.touched)) && formCustomerDetails.controls.buyer_dob.errors}">
                                                                 <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_dob.value}">
                                                                     <div class="cal-icon">
@@ -194,8 +190,8 @@
                                                                     <label class="focus-label req">Date of Birth</label>
                                                                 </div>    
                                                             </div>
-                                                        </div> -->
-                                                        <!--<div *ngIf="insured == false">
+                                                        </div>
+                                                        <div *ngIf="insured == false">
                                                             <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_dob.invalid && (formCustomerDetails.controls.buyer_dob.dirty || formCustomerDetails.controls.buyer_dob.touched)) && formCustomerDetails.controls.buyer_dob.errors}">
                                                                 <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_dob.value}">
                                                                     <div class="cal-icon">
@@ -205,7 +201,7 @@
                                                                     <label class="focus-label req">Date of Birth</label>
                                                                 </div>    
                                                             </div>
-                                                        </div>  -->
+                                                        </div> 
                                                     </div> 
                                                     <div class="col-lg-3 col-md-6 col-12">
                                                         <div class="form-group ui form">                            
@@ -229,7 +225,7 @@
                                                                 </div>    
                                                             </div>
                                                         </div>
-                                                    </div>                                                                                                        
+                                                   </div>
                                                 <!--<div class="col-lg-3 col-md-4 col-12">
                                                         <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberself_dob.value}">
                                                             <label class="focus-label req">DOB</label>
@@ -237,7 +233,7 @@
                                                         </div>
                                                     </div>  -->   
                                                 </div>
-                                                <div class="row align-items-center" style="margin-top:20px;"> 
+                                                <div class="row align-items-center"> 
                                                     <div class="col-lg-3 col-md-4 col-12">
                                                         <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_address1.invalid && (formCustomerDetails.controls.buyer_address1.dirty || formCustomerDetails.controls.buyer_address1.touched)) && formCustomerDetails.controls.buyer_address1.errors}">
                                                             <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_address1.value}">
@@ -323,14 +319,13 @@
                                                         <div class="col-lg-4 col-md-4 col-12">
                                                             <div class="field" [ngClass]="{'error': (submitFormCustomerData || formCustomerDetails.controls.buyer_adhar.invalid && (formCustomerDetails.controls.buyer_adhar.dirty || formCustomerDetails.controls.buyer_adhar.touched)) && formCustomerDetails.controls.buyer_adhar.errors}">
                                                                 <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.buyer_adhar.value}">
-                                                                    <input type="text" formControlName="buyer_adhar" id="buyer_adhar" class="form-control">
-                                                                    <label class="focus-label">Aadhar Number</label>
+                                                                    <input type="text" formControlName="buyer_adhar" id="buyer_adhar" class="form-control floating" maxlength="12">
+                                                                    <label class="focus-label">Aadhar Number</label> 
                                                                 </div>
                                                             </div>    
                                                         </div>
                                                     </div>  
                                                 </div> 
-
                                                 <div class="row align-items-center" style="margin-top:20px;" *ngIf="showForSup">
                                                     <div class="col-lg-12 col-12">
                                                         <div class="form-group ui form">                            
@@ -406,7 +401,7 @@
                                                 <div class="row align-items-center" style="margin-top:20px;">     
                                                     <div class="col-lg-4 col-md-4 col-12">
                                                         <div class="ui checkbox">
-                                                            <input type="checkbox"   formControlName="buyer_insured" id="buyer_insured" (change)="ToggleButton1($event)">
+                                                            <input type="checkbox" formControlName="buyer_insured" id="buyer_insured" (change)="ToggleButton1($event)">
                                                             <label class="mb-0" for="insured">Proposer is an insured</label>
                                                         </div>
                                                     </div>
@@ -473,19 +468,96 @@
                                                         </div>
                                                     </div>  -->       
                                                     <div class="col-lg-4 col-md-4 col-12"  style="margin-top:-22px;">
-                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberself_dob.value}" >
-                                                                <!-- <div class="cal-icon"> -->
-                                                                    <!-- <label class="focus-label req">DOB</label> -->
-                                                                    <!-- <input (dateSelect)="selectDateDob('memberself_dob',$event)"  formControlName="member{{item.user_type.toLowerCase()}}_dob" id="member{{item.user_type.toLowerCase()}}_dob" 
-                                                                    [(ngModel)]="date_picker_birthday" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" class="form-control">-->
-                                                            <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberself_dob.value}">
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberself_dob.value}" *ngIf="item.type == 'Self'">
+                                                            <div class="cal-icon">
                                                                 <label class="focus-label req">DOB</label>
-                                                                <input type="date" formControlName="member{{item.user_type.toLowerCase()}}_dob" id="member{{item.user_type.toLowerCase()}}_dob" class="form-control">
+                                                                <input (dateSelect)="selectDateDob('memberself_dob',$event)" [minDate]="minDateForBirthdateself" [maxDate]="maxDateForBirthdateself"
+                                                                [(ngModel)]="date_picker_birthday" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" class="form-control">
                                                             </div>
-                                                            <!-- </div> -->
-                                                                <!--minDate="minDateForBirthdateself" maxDate="maxDateForBirthdateself"-->
-                                                            <!-- </div> -->
+                                                        </div>  
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberspouse_dob.value}" *ngIf="item.type == 'Spouse'">
+                                                            <div class="cal-icon">
+                                                                <label class="focus-label req">DOB</label>
+                                                                <input (dateSelect)="selectDateDob('memberspouse_dob',$event)" [minDate]="minDateForBirthdatespouse" [maxDate]="maxDateForBirthdatespouse"
+                                                                [(ngModel)]="date_picker_birthday" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" class="form-control">
+                                                            </div>
                                                         </div>
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.membermother_dob.value}" *ngIf="item.type == 'Mother'">
+                                                            <div class="cal-icon">
+                                                                <label class="focus-label req">DOB</label>
+                                                                <input (dateSelect)="selectDateDob('membermother_dob',$event)" [minDate]="minDateForBirthdatespouse" [maxDate]="maxDateForBirthdatespouse"
+                                                                [(ngModel)]="date_picker_birthday" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberfather_dob.value}" *ngIf="item.type == 'Father'">
+                                                            <div class="cal-icon">
+                                                                <label class="focus-label req">DOB</label>
+                                                                <input (dateSelect)="selectDateDob('memberfather_dob',$event)" [minDate]="minDateForBirthdatefather" [maxDate]="maxDateForBirthdatefather"
+                                                                [(ngModel)]="date_picker_birthday" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" class="form-control">
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberson1_dob.value}" *ngIf="item.type == 'Son1'">
+                                                            <div class="cal-icon">
+                                                                <label class="focus-label req">DOB</label>
+                                                                <input (dateSelect)="selectDateDob('memberson1_dob',$event)" [minDate]="minDateForBirthdateson1" [maxDate]="maxDateForBirthdateson1"
+                                                                [(ngModel)]="date_picker_birthday" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberson2_dob.value}" *ngIf="item.type == 'Son2'">
+                                                            <div class="cal-icon">
+                                                                <label class="focus-label req">DOB</label>
+                                                                <input (dateSelect)="selectDateDob('memberson2_dob',$event)" [minDate]="minDateForBirthdateson2" [maxDate]="maxDateForBirthdateson2"
+                                                                [(ngModel)]="date_picker_birthday" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberson3_dob.value}" *ngIf="item.type == 'Son3'">
+                                                            <div class="cal-icon">
+                                                                <label class="focus-label req">DOB</label>
+                                                                <input (dateSelect)="selectDateDob('memberson3_dob',$event)" [minDate]="minDateForBirthdateson3" [maxDate]="maxDateForBirthdateson3"
+                                                                [(ngModel)]="date_picker_birthday" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberson4_dob.value}" *ngIf="item.type == 'Son4'">
+                                                            <div class="cal-icon">
+                                                                <label class="focus-label req">DOB</label>
+                                                                <input (dateSelect)="selectDateDob('memberson4_dob',$event)" [minDate]="minDateForBirthdateson4" [maxDate]="maxDateForBirthdateson4"
+                                                                [(ngModel)]="date_picker_birthday" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberdaughter1_dob.value}" *ngIf="item.type == 'Daughter1'">
+                                                            <div class="cal-icon">
+                                                                <label class="focus-label req">DOB</label>
+                                                                <input (dateSelect)="selectDateDob('memberdaughter1_dob',$event)" [minDate]="minDateForBirthdatedaughter1" [maxDate]="maxDateForBirthdatedaughter1"
+                                                                [(ngModel)]="date_picker_birthday" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberdaughter2_dob.value}" *ngIf="item.type == 'Daughter2'">
+                                                            <div class="cal-icon">
+                                                                <label class="focus-label req">DOB</label>
+                                                                <input (dateSelect)="selectDateDob('memberdaughter2_dob',$event)" [minDate]="minDateForBirthdatedaughter2" [maxDate]="maxDateForBirthdatedaughter2"
+                                                                [(ngModel)]="date_picker_birthday" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberdaughter3_dob.value}" *ngIf="item.type == 'Daughter3'">
+                                                            <div class="cal-icon">
+                                                                <label class="focus-label req">DOB</label>
+                                                                <input (dateSelect)="selectDateDob('memberdaughter3_dob',$event)" [minDate]="minDateForBirthdatedaughter3" [maxDate]="maxDateForBirthdatedaughter3"
+                                                                [(ngModel)]="date_picker_birthday" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberdaughter4_dob.value}" *ngIf="item.type == 'Daughter4'">
+                                                            <div class="cal-icon">
+                                                                <label class="focus-label req">DOB</label>
+                                                                <input (dateSelect)="selectDateDob('memberdaughter4_dob',$event)" [minDate]="minDateForBirthdatedaughter4" [maxDate]="maxDateForBirthdatedaughter4"
+                                                                [(ngModel)]="date_picker_birthday" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <!-- <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.memberself_dob.value}">
+                                                            <label class="focus-label req">DOB</label>
+                                                            <input type="date" formControlName="member{{item.user_type.toLowerCase()}}_dob" id="member{{item.user_type.toLowerCase()}}_dob" class="form-control" max="{{maxDate}}">
+                                                        </div> -->
                                                     </div>
 
                                                     <div class="col-lg-4 col-md-4 col-12">
@@ -605,17 +677,17 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4 col-md-4 col-12"  style="margin-top:-22px;">
-                                                        <!-- <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.nominee_dob.value}"> -->
-<!--                                                             <div class="cal-icon">
+                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.nominee_dob.value}">
+                                                             <div class="cal-icon">
                                                                 <input  class="form-control" (dateSelect)="selectDate('nominee_dob',$event)"  placeholder="yyyy-mm-dd"
                                                                  [(ngModel)]="date_picker_birthday" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()">
                                                               </div>
-                                                            <label class="focus-label req">Date of Birth</label> -->
-                                                    <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.nominee_dob.value}">
+                                                            <label class="focus-label req">Date of Birth</label>
+                                                    <!-- <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.nominee_dob.value}">
                                                              <label class="focus-label req">DOB</label>
                                                              <input type="date" formControlName="nominee_dob" id="nominee_dob" class="form-control">
-                                                    </div>
-                                                        <!-- </div> -->
+                                                    </div> -->
+                                                      </div> 
                                                     </div>
                                                     <div class="col-lg-4 col-md-4 col-12">
                                                         <div class="form-group form-focus select-focus">
@@ -652,29 +724,29 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4 col-md-9 col-12" style="margin-top:-22px;">
-                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.appointee_firstname.value}">
+                                                    <div class="col-lg-4 col-md-9 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formCustomerDetails.controls.appointee_firstname.value}">
                                                             <input type="text" formControlName="appointee_firstname" id="appointee_firstname" class="form-control">
                                                             <label class="focus-label req">First Name</label>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-3 col-md-6 col-12"  style="margin-top:-22px;">
-                                                        <div class="form-group form-focus mb-0">
+                                                    <div class="col-lg-3 col-md-6 col-12">
+                                                        <div class="form-group form-focus">
                                                             <input type="text" formControlName="appointee_middlename" id="appointee_middlename" class="form-control">
                                                             <label class="focus-label">Middle Name</label>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-3 col-md-6 col-12"  style="margin-top:-22px;">
-                                                        <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.appointee_lastname.value}">
+                                                    <div class="col-lg-3 col-md-6 col-12">
+                                                        <div class="form-group form-focus" [ngClass]="{'focused': formCustomerDetails.controls.appointee_lastname.value}">
                                                             <input type="text" formControlName="appointee_lastname" id="appointee_lastname" class="form-control">
                                                             <label class="focus-label req">Last Name</label>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4 col-md-4 col-12">
-                                                        <div class="form-group form-focus select-focus">
+                                                        <div class="form-group form-focus mb-0 select-focus">
                                                             <div class="focus-label req">Relationship</div>
                                                             <select formControlName="appointee_relationship" id="appointee_relationship">
-                                                                <option>Select</option>
+                                                                <option value="">Select</option>
                                                                 <option value="son">Son</option>
                                                                 <option value="daughter">Daughter</option>
                                                                 <option value="brother">Brother</option>
@@ -689,15 +761,15 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4 col-md-4 col-12"  style="margin-top:-22px;">
+                                                    <div class="col-lg-4 col-md-4 col-12">
                                                         <div class="form-group form-focus mb-0" [ngClass]="{'focused': formCustomerDetails.controls.appointee_dob.value}">
                                                             <label class="focus-label req">DOB</label>
-                                                            <input type="date" formControlName="appointee_dob" id="appointee_dob" class="form-control">
+                                                            <input type="date" formControlName="appointee_dob" id="appointee_dob" class="form-control" max="{{maxDate}}">
                                                             
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4 col-md-4 col-12">
-                                                        <div class="form-group form-focus select-focus">
+                                                        <div class="form-group form-focus mb-0 select-focus">
                                                             <div class="focus-label req">Select Marital Status</div>
                                                             <select formControlName="appointee_marital" id="appointee_marital">
                                                                 <option value="">Select Marital</option>
@@ -711,7 +783,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mt-2 pt-4 align-items-center proposal-groupbtns" *ngIf="claim_ins == false">
+                                <div class="row mt-2 pt-4 align-items-center proposal-groupbtns" *ngIf="claim_ins_div">
                                     <div class="col-12 text-center">
                                         <button type="submit" class="btn next-step btn-lg btn-custom green"><i class="fa fa-arrow-circle-right mr-1"> </i> Submit</button>
                                     </div>

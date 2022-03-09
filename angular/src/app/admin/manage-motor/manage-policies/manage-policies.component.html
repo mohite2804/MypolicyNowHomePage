@@ -1,0 +1,93 @@
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Manage Policies</h3>
+                </div>
+                <div class="col-auto float-right ml-auto">
+                    <button (click)="downloadSampleExcel()" class="btn custom-btn blue btn-sm"><i class="fa fa-download"></i> Download Sample Excel</button>
+                    <button (click)="allDataDownloadExcel()" class="btn custom-btn blue btn-sm ml-2"><i class="fa fa-download"></i> Download Excel</button>
+                    <button (click)="uploadExcel()" class="btn custom-btn blue btn-sm ml-2"><i class="fa fa-upload"></i> Upload Excel</button>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <!-- <div class="card-header">
+                <div class="text-right">
+                  <button (click)="openMake()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Add Make Details</button>
+                </div>
+              </div> -->
+              <div class="card-body">
+                <div class="table-responsive">
+                    <table datatable [dtOptions]="dtOptions" class="table table-striped custom-table datatable w-100"></table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+    
+
+<div *ngIf="popupTitle" class="modal custom-modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <form [formGroup]="formRecodEdit"  method="post" (ngSubmit)="submitForm()" >
+      <input formControlName="id"  type="hidden" class="form-control" >
+      <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title">{{ popupTitle }}</h5>
+          <button (click)="closePopup()"  type="button" class="close" data-dismiss="modal">&times;</button>         
+        </div>
+        <div class="modal-body">
+          <div class="row justify-content-md-center">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Make:</label>
+                <input formControlName="make"  type="text" class="form-control" >
+                <div class="error" *ngIf="submitted && formRecodEdit.controls.make.errors" >
+                  <div *ngIf="submitted && formRecodEdit.controls.make.errors.required">
+                    Make is required.
+                  </div>
+                </div>
+              </div>
+            </div>       
+          
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Status:</label>
+                <select class="form-control" formControlName="status" >
+                  <option value="">Select Status</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                  <option value="deleted">Deleted</option>
+                </select>
+                <div class="error" *ngIf="submitted && formRecodEdit.controls.status.errors" >
+                  <div *ngIf="submitted && formRecodEdit.controls.status.errors.required">
+                   Status is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-12">
+              <div class="form-group">
+                <div class="alert {{msgClass}}" [ngStyle]="{'display':display}">
+                  <strong>{{responseMsg}}</strong>
+                </div>
+              </div>
+            </div>
+          <div class="submit-section">
+            <input *ngIf="btnEditSubmit" class="btn btn-primary btn-lg" type="submit" value="Submit">
+          </div>
+        </div>  
+      </div>
+    </form>
+  </div>
+</div>

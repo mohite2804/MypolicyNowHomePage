@@ -1,0 +1,87 @@
+<!-- Page Header -->
+<div class="page-header">
+  <div class="row align-items-center">
+    <div class="col">
+      <h3 class="page-title">Download Feed File</h3>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div *ngIf="atLeastOneRequired" class="alert alert-danger">
+      <strong>{{atLeastOneRequired}}</strong>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="card shadowbox">
+      <div class="card-body pb-0">
+        <form class="form-horizontal" [formGroup]="formRecodEdit" (ngSubmit)="exportAsXLSX()">
+          <div class="row" >
+            <div class="col-lg-2 col-md-4" *ngIf="isIcListShow">
+              <div class="form-group">
+                <label>Insurance Name :<span class="error">*</span></label>
+                <select class="form-control" formControlName="insurance_name">
+                  <option value="">Select Insurance Name</option>
+                  <option *ngFor="let row of icList"  value="{{ row.id }}">{{ row.code }}</option>
+                </select>
+                 <div class="error" *ngIf="submitted && formRecodEdit.controls.insurance_name.errors" >
+                    <div *ngIf="submitted && formRecodEdit.controls.insurance_name.errors">
+                      Please enter valid Label.
+                  </div>
+                </div>
+             
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4" >
+              <div class="form-group">
+                <label>START DATE :<span class="error">*</span></label>
+                <div class="cal-icon">
+                <input select-other-detail="other_field" ngbDatepicker #e="ngbDatepicker"  [minDate]="minDatePolicyFrom" [maxDate]="minCurrentDate" (click)="e.toggle()"  class="form-control" placeholder="yyyy-mm-dd" 
+                 placeholder="yyyy-mm-dd" autocomplete="off" (dateSelect)="selectDate('start_date',$event)" name="start_date">
+                </div>
+                <div class="error" *ngIf="submitted && formRecodEdit.controls.startDate.errors" >
+                  <div *ngIf="submitted && formRecodEdit.controls.startDate.errors.required">
+                    Start Date is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4" >
+              <div class="form-group">
+                <label>END DATE :<span class="error">*</span></label>
+                <div class="cal-icon">
+                  <input  select-other-detail="other_field" ngbDatepicker #f="ngbDatepicker" [minDate]="maxDatePolicyTo" [maxDate]="minCurrentDate"  (click)="f.toggle()" class="form-control" placeholder="yyyy-mm-dd"   placeholder="yyyy-mm-dd" autocomplete="off" (dateSelect)="selectDate('end_date',$event)" name="end_date">
+                  </div>
+                  <div class="error" *ngIf="submitted && formRecodEdit.controls.endDate.errors" >
+                    <div *ngIf="submitted && formRecodEdit.controls.endDate.errors.required">
+                      End Date is required.
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4">
+              <label class="d-block">&nbsp;</label>
+              <!-- <button (click)="submitForm()" type="submit" class="btn btn-custom green w-50"><i class="fa fa-search"></i></button> -->
+              <!-- &nbsp; -->
+              <button type="submit" class="btn btn-custom red w-50"><i class="fa fa-download"></i></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Page Header -->
+<!-- <div class="row">
+  <div class="col-md-12">
+    <div class="card shadowbox">
+      <div class="card-body">
+        <div class="table-responsive">
+        <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table action-table datatable w-100 my-dataTable"></table>
+        <table datatable *ngIf="dtRendered" [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn datatable"></table>
+      </div>
+    </div>
+  </div>
+</div>
+</div> -->
+<!-- <app-loading [loaderActive]="loaderActive" ></app-loading> -->

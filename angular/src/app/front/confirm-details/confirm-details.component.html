@@ -1,0 +1,496 @@
+<div class="page-wrapper" *ngIf="result_quote_data">
+    <div class="content">
+
+        <section class="py-0">
+            <div class="row">
+                <div class="col-md-12 border customerdetail-infobar shadowbox py-2">
+                    <div class="container">
+                        <div class="row py-2">
+                            <div class="col-xl-4 col-lg-3 col-sm-6 col-12 customerdetail-box">
+                                <div>
+                                    <span class="text-muted white">Your Vehicle:</span>
+                                    <h3 class="mb-0">{{result_quote_data.rto_label | uppercase }} {{result_quote_data.registration_no_part_3 | uppercase}} {{result_quote_data.registration_no_part_4 | uppercase}},</h3>
+                                    <h4 class="mb-0">
+                                        {{result_quote_data.make | uppercase}} {{result_quote_data.model | uppercase}} {{result_quote_data.variant | uppercase}} ({{result_quote_data.cc}} cc)
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-sm-6 col-12  customerdetail-box">
+                                <div>
+                                    <span class="text-muted white">Selected Insurer:</span>
+                                    <div class="row selectedinsurer align-items-center">
+                                        <div class="col-xl-2 col-lg-3 col-sm-3 col-3">
+                                            <img src="assets/front/img/partners-logos/{{result_quote_data.ic_logo}}" alt="{{result_quote_data.ic_code}}">
+                                        </div>
+
+                                        <div class="col-xl-10 col-lg-9 col-sm-9 col-9 ">
+                                            <h4 class="mb-0">{{result_quote_data.product_type}} Insurance Policy</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-sm-6 col-12 customerdetail-box">
+                                <div>
+                                    <span class="text-muted white">IDV & NCB:</span>
+                                    <h4 class="mb-0"><span class="text-muted white">IDV: </span>
+                                        <i class="fa fa-inr">
+                                        </i>{{result_quote_data.idv}}</h4>
+                                    <h4 class="mb-0"><span class="text-muted white">New NCB:</span> {{result_quote_data.current_ncb_per}} %</h4>
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-lg-3 col-sm-6 col-12 customerdetail-box">
+                                <div>
+                                    <span class="text-muted white">Policy Period:</span>
+                                    <h4 class="mb-0"><span class="text-muted white">Start Date:</span> {{result_quote_data.proposal_start_date}}</h4>
+                                    <h4 class="mb-0"><span class="text-muted white">End Date:</span> {{result_quote_data.proposal_end_date}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row mx-0">
+                    <div class="col-lg-3 col-md-4 customerdetailform-sidebar my-3">
+                        <div class="totalpremium-box">
+                            <ul>
+                                <li>Own Damage Premium: <span class="float-right"><i class="fa fa-inr"></i> {{result_quote_data.total_basic_od}}</span></li>
+                                <li>Addon Premium: <span class="float-right"><i class="fa fa-inr"></i> {{result_quote_data.total_addon_premium}}  </span></li>
+                                <li>Third Party Premium: <span class="float-right"><i class="fa fa-inr"></i> {{result_quote_data.net_liability_premium_b}}</span></li>
+                                <li>Discount: <span class="float-right"> - <i class="fa fa-inr"></i> {{result_quote_data.total_discount}} </span></li>
+                                <li>
+                                    <h4>Premium <span class="float-right"><i class="fa fa-inr"></i> {{result_quote_data.gross_premium_without_gst}}</span></h4>
+                                </li>
+                                <li>GST @18% <span class="float-right"><i class="fa fa-inr"></i> {{result_quote_data.service_tax}}</span></li>
+
+                                <li *ngIf="result_quote_data.cess_amt_1 > 0">
+                                    CESS @1% <span class="float-right"><i class="fa fa-inr"></i> {{result_quote_data.cess_amt_1}}</span>
+                                </li>
+
+                                <li class="finalpremium">
+                                    <h4>Final Premium <em class="d-lg-inline d-md-block d-inline">(Incl. GST)</em> <span><i class="fa fa-inr"></i> {{result_quote_data.gross_premium}}</span></h4>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8 customerdetailform mt-3">
+                        <div class="customerdetailform-container">
+                            <ng-container *ngIf="result_quote_data.policy_subtype_label!='THIRDPARTY'">
+
+
+                                <div class="padding-one text-center margin-one no-margin-bottom border radius-10 text-small bg-gray red-text font-weight-500 " *ngIf="(is_breakin && product_type_id==2)">
+                                    <span class="bg-red padding-left-right-px white-text radius-10"> NOTE: </span>
+                                    <span class="padding-left-right-px"> Current policy has resulted in
+                                    <span class="font-weight-800"><strong>BREAK IN CASE</strong></span>. Policy will start after {{bike_breakin_days}} day(s).
+                                    </span>
+                                </div>
+
+                                <div class="padding-one text-center margin-one no-margin-bottom border radius-10 text-small bg-gray red-text font-weight-500 " *ngIf="(is_breakin && product_type_id!=2)">
+                                    <span class="bg-red padding-left-right-px white-text radius-10"> NOTE: </span>
+                                    <span class="padding-left-right-px"> Current policy has resulted in
+                                    <span class="font-weight-800"><strong>BREAK IN CASE</strong></span>. Inspection of your vehicle will be required before you can buy the policy.
+                                    </span>
+                                </div>
+                            </ng-container>
+
+                            <div class="card cardshadow">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 py-2">
+                                            <div class="customerdetailform-stepbox">
+                                                <h3 class="step-title">Just make sure, all details are correct</h3>
+                                                <div class="card shadowbox completeddetailsbox filled-ownerdetails">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-12 border-right">
+                                                                <h4>Owner Details</h4>
+                                                                <ul class="filledinfo">
+                                                                    <li *ngIf="result_quote_data.proposer_type_id == 2">
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Company Name</div>
+                                                                                <div class="text">
+                                                                                    {{result_quote_data.company_name}}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Company GST Number</div>
+                                                                                <div class="text">{{result_quote_data.company_gst_no}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Company PAN Number</div>
+                                                                                <div class="text">
+                                                                                    {{result_quote_data.company_pan_no}}
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Company Owner</div>
+                                                                                <div class="text">{{result_quote_data.company_full_name}}</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+
+                                                                    <li *ngIf="result_quote_data.proposer_type_id == 2">
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Company User Email</div>
+                                                                                <div class="text">
+                                                                                    {{result_quote_data.company_owner_email}}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Company User Mobile Number</div>
+                                                                                <div class="text">{{result_quote_data.company_owner_mobile}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Company User Address 1</div>
+                                                                                <div class="text">
+                                                                                    {{result_quote_data.company_owner_address_1}}
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Company User Address 2</div>
+                                                                                <div class="text">{{result_quote_data.company_owner_address_2}}</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+
+                                                                    <li *ngIf="result_quote_data.proposer_type_id == 1">
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Insured Name (Age)</div>
+                                                                                <div class="text">
+                                                                                    {{result_quote_data.full_name | titlecase}} ({{result_quote_data.proposer_age}})
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Previous Policy Number</div>
+                                                                                <div class="text">{{(result_quote_data.prev_policy_no) ? result_quote_data.prev_policy_no : '-'}}</div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Nominee Name (Age)</div>
+                                                                                <div class="text">
+                                                                                    {{(result_quote_data.nominee_full_name | titlecase) ? result_quote_data.nominee_full_name : '-' | titlecase}} {{(result_quote_data.nominee_age) ? '('+result_quote_data.nominee_age+')' : '-'}}
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Relation With Nominee</div>
+                                                                                <div class="text">{{(result_quote_data.nominee_relation) ? result_quote_data.nominee_relation : '-'}}</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+
+                                                                    <li *ngIf="result_quote_data.proposer_type_id == 1">
+                                                                        <div class="row">
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Appointee Name (Age)</div>
+                                                                                <div class="text">
+                                                                                    {{ (result_quote_data.appointee_full_name | titlecase) ? result_quote_data.appointee_full_name : '-' | titlecase}} {{ (result_quote_data.appointee_age) ? '('+result_quote_data.appointee_age+')' : '-'}}
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Relation With Appointee</div>
+                                                                                <div class="text">
+                                                                                    {{ (result_quote_data.appointee_relation) ? result_quote_data.appointee_relation : '-'}}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Insured Aadhaar Number</div>
+                                                                                <div class="text">
+                                                                                    {{ (result_quote_data.proposer_adhaar_no) ? result_quote_data.proposer_adhaar_no : '-'}}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-3 col-sm-6 col-12">
+                                                                                <div class="title">Gstin Number</div>
+                                                                                <div class="text">
+                                                                                    {{ (result_quote_data.proposer_gst_no) ? result_quote_data.proposer_gst_no : '-'}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+
+                                                                    <li *ngIf="result_quote_data.proposer_type_id == 1">
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="title">Insured Address</div>
+                                                                                <div class="text">
+                                                                                    {{ result_quote_data.proposer_address1 | titlecase}} {{ result_quote_data.proposer_address2 | titlecase}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card shadowbox completeddetailsbox filled-vehicledetails">
+                                                    <div class="card-body vehicleinfowrap">
+                                                        <h4>Vehicle Details</h4>
+                                                        <div class="row">
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Make</span>
+                                                                    <h5>{{ result_quote_data.make }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Model</span>
+                                                                    <h5>{{ result_quote_data.model }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Variant</span>
+                                                                    <h5>{{ result_quote_data.variant }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Cubic Capacity</span>
+                                                                    <h5>{{ result_quote_data.cc }} CC</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Color</span>
+                                                                    <h5>{{ result_quote_data.vehicle_color }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Seating Capacity</span>
+                                                                    <h5>{{ result_quote_data.seating_capacity }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Body Type</span>
+                                                                    <h5>{{ (result_quote_data.body_type) ? result_quote_data.body_type : '-' }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Registration Date</span>
+                                                                    <h5>{{ result_quote_data.registration_date }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Rto</span>
+                                                                    <h5>{{ result_quote_data.rto_label | uppercase }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Registration No.</span>
+                                                                    <h5>
+                                                                        {{ result_quote_data.rto_label | uppercase }} {{ result_quote_data.registration_no_part_3 | uppercase}} {{ result_quote_data.registration_no_part_4 | uppercase}}
+                                                                    </h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Fuel Type</span>
+                                                                    <h5>{{ result_quote_data.vehicle_fuel | uppercase }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Chassis No.</span>
+                                                                    <h5>{{ result_quote_data.chassis_no }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Elec.accessories</span>
+                                                                    <h5>{{ result_quote_data.electric_acc_idv !=0 ? result_quote_data.electric_acc_idv : '-' }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Non-elec.accs</span>
+                                                                    <h5>{{ result_quote_data.non_electric_acc_idv != 0 ? result_quote_data.non_electric_acc_idv : '-' }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Cng / Lpg</span>
+
+                                                                    <h5>{{ (result_quote_data.bifuel_kit_idv && result_quote_data.bifuel_kit_idv != 0 ) ? result_quote_data.bifuel_kit_idv : '-' }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Carrier Type</span>
+                                                                    <h5>{{ (result_quote_data.carrier_type_name) ? result_quote_data.carrier_type_name : '-' }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Cng/lpg Kit</span>
+                                                                    <h5>{{ (result_quote_data.is_bifuel == 1) ? 'Yes' : 'No' }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Engine No.</span>
+                                                                    <h5>{{ result_quote_data.engine_no }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Mfg. Year</span>
+                                                                    <h5>{{ result_quote_data.manufacturing_year }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Vehicle Idv</span>
+                                                                    <h5>{{ result_quote_data.idv }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">Hypothecation/lease/hp*</span>
+                                                                    <h5>{{ (result_quote_data.agreement_type) ? result_quote_data.agreement_type : '-' }}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
+                                                                <div class="vehicleinfo">
+                                                                    <span class="text-muted">GVW</span>
+                                                                    <h5>{{ result_quote_data.gvw != 0 ? result_quote_data.gvw : '-' }}</h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row border-top mt-2 pt-4 align-items-center proposal-groupbtns">
+                                                    <div class="col-lg-4 col-md-5 col-12 text-center text-sm-left">
+                                                        <!-- <div *ngIf="is_dealer_url_with_login" class="col-lg-4 col-md-5 col-12 text-center text-sm-left"> -->
+                                                        <a (click)="editConfirmDetailPage()" href="javascript:void(0)" class="btn btn-secondary btn-custom mr-2">
+                                                            <i class="fa fa-pencil mr-1"></i> Edit
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-lg-8 col-md-7 col-12 text-center text-sm-right">
+                                                        <!-- <a (click)="generateProposal()" href="javascript:void(0)" class="btn  next-step btn-lg btn-custom green">
+                                                            <i class="fa fa-arrow-circle-right mr-1"> -->
+
+                                                        <a (click)="checkPancardRequiredOrNot()" href="javascript:void(0)" class="btn  next-step btn-lg btn-custom green">
+                                                            <i class="fa fa-arrow-circle-right mr-1">
+                                                        </i> Generate Proposal</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+
+
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayPancadModel}">
+        <!-- <div class="modal custom-modal fade" role="dialog"> -->
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">PAN Card</h5>
+                    <button (click)="closePopupPancard()" type="button" class="close" data-dismiss="modal">&times;</button>
+
+                </div>
+                <form [formGroup]="formPanCard" method="post" (ngSubmit)="submitPancard()">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div *ngIf="success_message" class="alert alert-success" role="alert">
+                                    {{ success_message }}
+                                </div>
+
+                                <div *ngIf="error_message" class="alert alert-danger" role="alert">
+                                    {{ error_message }}
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-sm">
+                                        <tbody>
+                                            <tr *ngIf="result_quote_data.proposer_type_id == 2 && result_quote_data.proposer_type_id == '2'">
+                                                <td class="align-middle">Pancard</td>
+                                                <td>
+                                                    <input formControlName="company_pan_no" type="text" class="form-control">
+                                                    <div class="error" *ngIf="submittedPancard && formPanCard.controls.company_pan_no.errors">
+                                                        <div *ngIf="submittedPancard && formPanCard.controls.company_pan_no.errors.required">
+                                                            Please enter PAN card number
+                                                        </div>
+                                                        <div *ngIf="submittedPancard && formPanCard.controls.company_pan_no.errors.pattern">
+                                                            Please enter valid PAN card number
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div *ngIf="(submittedPancard || formPanCard.controls.company_pan_no.invalid && (formPanCard.controls.company_pan_no.dirty || formPanCard.controls.company_pan_no.touched)) && formPanCard.controls.company_pan_no.errors || formPanCard.hasError('panNotMatchForCompany')">
+                                                        <small *ngIf="(submittedPancard || formPanCard.controls.company_pan_no.invalid && (formPanCard.controls.company_pan_no.dirty || formPanCard.controls.company_pan_no.touched)) && formPanCard.controls.company_pan_no.errors.pattern || formPanCard.hasError('panNotMatchForCompany')"
+                                                            class="text-danger">
+                                                            Pan card not match to GST number.
+                                                        </small>
+                                                    </div>
+
+
+                                                </td>
+                                            </tr>
+
+                                            <tr *ngIf="result_quote_data.proposer_type_id == 1 && result_quote_data.proposer_type_id == '1'">
+                                                <td class="align-middle">Pancard</td>
+                                                <td>
+                                                    <input formControlName="proposer_pan_no" type="text" class="form-control">
+                                                    <div class="error" *ngIf="submittedPancard && formPanCard.controls.proposer_pan_no.errors">
+                                                        <div *ngIf="submittedPancard && formPanCard.controls.proposer_pan_no.errors.required">
+                                                            Please enter PAN card number
+                                                        </div>
+                                                        <div *ngIf="submittedPancard && formPanCard.controls.proposer_pan_no.errors.pattern">
+                                                            Please enter valid PAN card number
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div *ngIf="(submittedPancard || formPanCard.controls.proposer_pan_no.invalid && (formPanCard.controls.proposer_pan_no.dirty || formPanCard.controls.proposer_pan_no.touched)) && formPanCard.controls.proposer_pan_no.errors || formPanCard.hasError('panNotMatchForOwner')">
+                                                        <small *ngIf="(submittedPancard || formPanCard.controls.proposer_pan_no.invalid && (formPanCard.controls.proposer_pan_no.dirty || formPanCard.controls.proposer_pan_no.touched)) && formPanCard.controls.proposer_pan_no.errors.pattern || formPanCard.hasError('panNotMatchForOwner')"
+                                                            class="text-danger">
+                                                          Pan card not match to GST number.
+                                                      </small>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <button type="submit" class="btn btn btn-custom green submit-btn">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<app-loader [loaderActive]="loaderActive"></app-loader>

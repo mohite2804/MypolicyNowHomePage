@@ -1,0 +1,96 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">
+            POS
+            <button style="float: right" class="btn btn-success" (click)="backToBusinessPartner()" >Back to Business Partner</button>
+            </h3>
+            
+        </div>
+
+    </div>
+</div>
+<!-- /Page Header -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadowbox">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered custom-table srn action-table datatable w-100"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="popupTitle" class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+    <div class="modal-lg modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{ popupTitle }}</h4>
+                <button (click)="closePopup()" type="button" class="close" >&times;</button>
+            </div>
+            <div *ngIf="editResult" class="modal-body row">
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Name: </label>&nbsp; <span>{{ editResult.app_fullname}}</span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Eamil: </label>&nbsp; <span>{{ editResult.email}}</span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Mobile: </label>&nbsp; <span>{{ editResult.mobile_no}}</span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Address: </label>&nbsp; <span>{{ editResult.address1}} {{ editResult.address2}} {{ editResult.address3}} {{ editResult.pincode}}</span>
+                    </div>
+                </div>
+
+                
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>City: </label>&nbsp; <span>{{ editResult.city_name | uppercase}}</span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Aadhar Number: </label>&nbsp; <span>{{ editResult.aadhar_no}}</span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>PAN Number: </label>&nbsp; <span>{{ editResult.	pan_no}}</span>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="modal-footer">
+                <button (click)="closePopup()" type="button" class="btn btn-default">
+                      Close
+                    </button>
+
+                <input *ngIf="btnEditSubmit" class="btn btn-primary" type="submit" value="Save">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<app-loader [loaderActive]="loaderActive"></app-loader>
