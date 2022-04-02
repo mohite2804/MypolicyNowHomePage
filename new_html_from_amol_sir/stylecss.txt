@@ -29,10 +29,14 @@
 }
 
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css");
+
+
+
 body {
     font-family: "graphik" !important;
     background-color: #ffffff !important;
 }
+
 
 .flex_row {
     display: flex;
@@ -71,7 +75,7 @@ body {
 
 .lightBluebtn:hover {
     background: #0F97CE !important;
-}
+  }
 
 .orangebtn:hover {
     background: #F59302 !important;
@@ -141,24 +145,24 @@ body {
     font-family: "graphik bold";
 }
 
-.subheading {
-    font-size: 26px !important;
-    font-family: "graphik semibold" !important;
-    margin-bottom: 4rem !important;
+.subheading{
+font-size: 26px !important;
+font-family: "graphik semibold" !important;
+margin-bottom: 4rem !important;
 }
 
-.subheading span {
-    font-size: 26px !important;
-    font-family: "graphik" !important;
-    margin-bottom: 4rem !important;
-    color: #000 !important;
+.subheading span{
+font-size: 26px !important;
+font-family: "graphik" !important;
+margin-bottom: 4rem !important;
+color:#000 !important;
 }
 
 .secHead h2 {
-    font-size: 40px !important;
-    position: relative !important;
-    margin-bottom: 4rem !important;
-    font-family: "graphik" !important;
+font-size: 40px !important;
+position: relative !important;
+margin-bottom: 4rem !important;
+font-family: "graphik" !important;
 }
 
 .secHead h2 span {
@@ -179,6 +183,8 @@ nav {
     padding: 30px 0 !important;
 }
 
+
+
 p {
     font-size: 14px !important;
     line-height: 24px !important;
@@ -196,7 +202,7 @@ section.sliderSec {
     color: #24AAE0
 }
 
-.banner_content {
+.banner_content{
     padding: 0px 20px !important;
 }
 
@@ -233,8 +239,8 @@ section.sliderSec {
 }
 
 section.vidSec {
-    padding: 6rem 0 7rem !important;
-    position: relative !important;
+padding: 6rem 0 7rem !important;
+position: relative !important;
 }
 
 .vidSec .secHead h2 span,
@@ -270,23 +276,23 @@ section.vidSec {
 
 .timeLine ul li:nth-child(1)::before {
     top: 41px !important;
-}
+  }
 
 .timeLine ul li {
-    display: flex !important;
-    margin-bottom: 0 !important;
-    position: relative !important;
+    display: flex  !important;
+    margin-bottom: 0  !important;
+    position: relative  !important;
 }
 
 .timeLine ul li .icons {
-    margin-right: 25px !important;
+    margin-right: 25px  !important;
 }
 
 .timeLine ul li .icons:before {
     content: "" !important;
     position: absolute !important;
     width: 40px !important;
-    height: 2px !important;
+    height:2px !important;
     background: #707070 !important;
     left: -40px !important;
 }
@@ -365,13 +371,14 @@ section.vidSec {
     font-family: "graphik semibold";
 }
 
+
 .advisorOffer .offer img {
     max-width: 60px;
     height: auto !important;
 }
 
 .insureMarketPlace {
-    padding: 5rem 0 7rem !important;
+    padding: 5rem 0 7rem !important; 
 }
 
 .numbersCount {
@@ -392,7 +399,7 @@ section.vidSec {
     font-size: 5rem !important;
     top: 94px !important;
     font-family: "graphik extralight";
-}
+  }
 
 .numbersCount h4 {
     font-family: "Impact";
@@ -430,6 +437,10 @@ section.vidSec {
     padding: 5rem 0 7rem !important;
 }
 
+
+
+
+
 .products .secHead h2:after {
     left: 0
 }
@@ -450,22 +461,24 @@ section.vidSec {
     border-bottom: 4px solid #fff;
 }
 
-.products ul li:hover {
+.products ul li:hover{
     background: #F7F7F7;
     border-bottom: 4px solid #FBAF40 !important;
 }
+
+
 
 .products .product img {
     max-width: 100px;
 }
 
-.product h4 {
-    color: #24AAE0 !important;
-    font-family: "graphik semibold";
-    margin-top: 24px !important;
+.product  h4{
+color: #24AAE0 !important;
+font-family: "graphik semibold";
+margin-top: 24px !important;
 }
 
-.partners {
+.partners{
     padding: 5rem 0 7rem !important;
 }
 
@@ -483,15 +496,16 @@ section.vidSec {
     align-items: center;
     display: flex;
     opacity: .1 !important;
-    transition: all 0.5s !important;
+transition: all 0.5s !important;
 }
 
 .partners ul li img {
-    max-width: 100px !important;
-    margin: 0 auto;
+max-width: 100px !important;
+margin: 0 auto;
+
 }
 
-.partners ul li:hover {
+.partners ul li:hover{
     opacity: 1 !important;
 }
 
@@ -567,9 +581,11 @@ section.vidSec {
     font-size: 24px
 }
 
-.become_posp {
+
+.become_posp{
     padding: 5rem 0 0rem !important;
 }
+
 
 .become_posp .secHead h2 span {
     color: #39B549
@@ -645,65 +661,58 @@ section.vidSec {
     margin-top: 20px
 }
 
-footer {
-    background: #1B2835 !important;
-    color: #fff !important;
-    padding: 6rem 0 1rem !important;
+footer{
+background: #1B2835 !important;
+color: #fff !important;
+padding: 6rem 0 1rem !important;
 }
 
-footer ul {
-    list-style: none !important;
-    padding-left: 0
+footer ul{
+list-style: none !important;
+padding-left: 0
+}
+footer p , footer ul li a{
+color: #fff !important;
+}
+footer ul li a:hover{
+text-decoration: underline !important;
+color: #fff !important;
+}
+footer i{
+color: #EE4036 !important;
 }
 
-footer p,
-footer ul li a {
-    color: #fff !important;
+
+footer .social{
+display: flex !important;
+}
+footer .social li{
+margin-right: 15px !important;
+}
+footer .social li:hover a{
+opacity: 0.5 !important;
+}
+footer h3{
+position: relative !important;
+margin-bottom: 3rem !important;
+}
+footer h3:after{
+position: absolute !important;
+content: "" !important;
+width: 30px !important;
+height: 1px !important;
+background: #FBAF40 !important;
+bottom: -1.5rem !important;
+left: 0 !important;
 }
 
-footer ul li a:hover {
-    text-decoration: underline !important;
-    color: #fff !important;
+.links li{
+margin-bottom: 15px !important;
+text-transform: uppercase !important;
+font-size: 15px !important;
 }
 
-footer i {
-    color: #EE4036 !important;
-}
-
-footer .social {
-    display: flex !important;
-}
-
-footer .social li {
-    margin-right: 15px !important;
-}
-
-footer .social li:hover a {
-    opacity: 0.5 !important;
-}
-
-footer h3 {
-    position: relative !important;
-    margin-bottom: 3rem !important;
-}
-
-footer h3:after {
-    position: absolute !important;
-    content: "" !important;
-    width: 30px !important;
-    height: 1px !important;
-    background: #FBAF40 !important;
-    bottom: -1.5rem !important;
-    left: 0 !important;
-}
-
-.links li {
-    margin-bottom: 15px !important;
-    text-transform: uppercase !important;
-    font-size: 15px !important;
-}
-
-.sbscrbForm .form-control {
+.sbscrbForm .form-control{
     background: transparent !important;
     border: 2px solid #fbaf40 !important;
     min-height: 45px !important;
@@ -711,42 +720,39 @@ footer h3:after {
     border-radius: 5px !important;
 }
 
-.sbscrbForm .btn {
-    background: #24AAE0 !important;
-    font-family: "graphik semibold" !important;
-    color: #fff !important;
-    padding: 10px 40px !important;
-    transition: all 0.5s !important;
-}
 
-.sbscrbForm .btn:hover {
-    background: #0E99D1 !important;
+.sbscrbForm .btn{
+background: #24AAE0 !important;
+font-family: "graphik semibold" !important;
+color: #fff !important;
+padding: 10px 40px !important;
+transition: all 0.5s !important;
 }
-
-.copyRight {
-    border-top: 1px solid #A6B2BA !important;
-    margin-top: 3rem !important;
+.sbscrbForm .btn:hover{
+background: #0E99D1 !important;
 }
-
-.copyRight p {
-    color: #8F8F8F !important;
-    text-align: center !important;
-    margin: 15px 0 0 !important;
+.copyRight{
+border-top: 1px solid #A6B2BA !important;
+margin-top: 3rem !important;
 }
-
-.sbscrbForm .form-control::placeholder {
-    color: #fff !important;
+.copyRight p{
+color: #8F8F8F !important;
+text-align: center !important;
+margin: 15px 0 0 !important;
+}
+.sbscrbForm .form-control::placeholder{
+color: #fff !important;
 }
 
 .carousel-indicators li {
-    position: relative !important;
-    -webkit-box-flex: 0 !important;
-    width: 8px !important;
-    height: 8px !important;
-    text-indent: -999px !important;
-    border: 1px solid #FCB040 !important;
-    margin-bottom: 20px !important;
-    border-radius: 20px !important;
+position: relative !important;
+-webkit-box-flex: 0 !important;
+width: 8px !important;
+height: 8px !important;
+text-indent: -999px !important;
+border: 1px solid #FCB040 !important;
+margin-bottom: 20px !important;
+border-radius: 20px !important;
 }
 
 .carousel-indicators li.active {
@@ -878,7 +884,7 @@ footer h3:after {
     }
 }
 
-.titleheading {
+.titleheading{
     color: #000 !important;
     font-size: 1.8rem !important;
     font-family: "graphik light"
@@ -949,9 +955,9 @@ footer h3:after {
 }
 
 .ourStory .readMore {
-    font-family: "graphik bold" !important;
-    color: #000000 !important;
-    font-size: 16px !important;
+font-family: "graphik bold" !important;
+color: #000000 !important;
+font-size: 16px !important;
 }
 
 .our_promise h4 {
@@ -976,8 +982,8 @@ footer h3:after {
 }
 
 .promise p {
-    padding-left: 15px;
-    text-align: left !important;
+padding-left: 15px;
+text-align: left !important;
 }
 
 .our_team .contect_botder {
@@ -1358,8 +1364,8 @@ footer h3:after {
 
 
 /*.posp_Sec .container-fluid{
-padding-left: 0;
-padding-right: 0
+  padding-left: 0;
+  padding-right: 0
 }*/
 
 .accordion-button i {

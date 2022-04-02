@@ -3,7 +3,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataTablesModule } from 'angular-datatables';
 import { CountdownModule } from 'ngx-countdown';
 import { ChartsModule } from 'ng2-charts';
-
+import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
@@ -239,7 +239,7 @@ import { PaymentDetailsComponent } from './my-account/payment-details/payment-de
   ],
   imports: [
     CommonModule,
-
+    SlickCarouselModule,
     FrontRoutingModule,
     ShareModule,
     FormsModule,

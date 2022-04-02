@@ -36,8 +36,11 @@
                         "styles": [
                             "node_modules/bootstrap/dist/css/bootstrap.min.css",
 
-                            "src/assets/front/landing_page/css/slick.css",
-                            "src/assets/front/landing_page/css/slick-theme.css",
+
+
+                            "node_modules/slick-carousel/slick/slick.scss",
+                            "node_modules/slick-carousel/slick/slick-theme.scss",
+
                             "src/assets/front/landing_page/css/style.css",
 
                             "src/assets/plugins/fontawesome-free/css/all.min.css",
@@ -52,12 +55,15 @@
                             "src/assets/front/css/semantic.min.css",
                             "src/assets/front/css/bootstrap-datetimepicker.min.css",
                             "src/assets/front/css/dataTables.bootstrap4.min.css",
-                            "src/assets/front/css/owl.carousel.min.css",
-                            "src/assets/front/css/owl.theme.default.css",
+
+
+
+
                             "src/assets/front/css/style.css",
                             "src/assets/front/css/responsive.css",
                             "node_modules/ngx-lightbox/lightbox.css",
                             "src/assets/front/css/login.css",
+
                             {
                                 "input": "src/isuzu.css",
                                 "bundleName": "isuzu",
@@ -72,7 +78,7 @@
                         "scripts": [
                             "src/assets/plugins/jquery/jquery.min.js",
                             "src/assets/plugins/bootstrap/js/bootstrap.bundle.min.js",
-                            "src/assets/front/landing_page/js/slick.min.js",
+
 
                             "src/assets/front/js/popper.min.js",
                             "src/assets/front/js/login.js",
@@ -83,10 +89,15 @@
                             "src/assets/front/js/jquery.dataTables.min.js",
                             "src/assets/front/js/jquery.dataTables.buttons.min.js",
                             "src/assets/front/js/dataTables.bootstrap4.min.js",
-                            "src/assets/front/js/owl.carousel.min.js",
+
+
+                            "node_modules/slick-carousel/slick/slick.min.js",
+
 
                             "node_modules/datatables.net/js/jquery.dataTables.js",
                             "src/assets/front/js/main.js"
+
+
 
 
 

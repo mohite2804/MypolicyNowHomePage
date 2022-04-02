@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "ngx-owl-carousel-o": "^7.0.1",
+    "slick-carousel": "^1.8.1",
+    "slick-slider": "^1.8.2"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^13.3.1"
+  }
+}
